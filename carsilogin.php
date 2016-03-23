@@ -72,7 +72,7 @@ if(mysql_num_rows($res) > 0){
 				while($row = mysql_fetch_assoc($res)){
 					$ret = sql_query("SELECT * FROM users WHERE id = $row[tjuptid]");
 					$row_ = mysql_fetch_assoc($ret);
-					if(!$row_){sql_query("DELETE FROM carsimapping WHERE tjuptid = $row[tjuptid]");header("Location: " . $_SERVER['PHP_SELF']);}//É¾³ı²»´æÔÚµÄ°ó¶¨¹ØÏµ¡£
+					if(!$row_){sql_query("DELETE FROM carsimapping WHERE tjuptid = $row[tjuptid]");header("Location: " . $_SERVER['PHP_SELF']);}//åˆ é™¤ä¸å­˜åœ¨çš„ç»‘å®šå…³ç³»ã€‚
 					else $show .= "<option value=\"$row[tjuptid]\">".$row_[username]."</option>";
 				}
 				echo($show);
