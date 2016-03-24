@@ -213,13 +213,15 @@ function formatUrl($url, $newWindow = false, $text = '', $linkClass = '') {
 	$url_host = strtolower(parse_url($url, PHP_URL_HOST));
 	$host_whitelist = array('pt.tju.edu.cn',
 							'pt.tju6.edu.cn',
-							'', //no domain
+                            'pt.twt.edu.cn',
+							NULL, //no domain
 							);
 
 	if (!in_array($url_host, $host_whitelist))
 	{
 	    return addTempCode ( "<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"/jump_external.php?ext_url=" . urlencode($url) ."\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>" );
 	}
+    $url = preg_replace('/(https?:\/\/)?pt.(twt|tju6?).edu.cn/i', '', $url);
 	return addTempCode ( "<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"$url\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>" );
 }
 function formatCode($text) {
