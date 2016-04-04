@@ -39,11 +39,15 @@ if ($username=$_POST[account])
 	{stdmsg("出错了！","没有输入密码 <input type=button value=\"返回上一页\" onclick=\"location.href='javascript:history.go(-1)'\" />",0);
 	stdfoot();}
 	else{
-	$res = sql_query("SELECT id, passhash, secret, seedbonus, enabled, status FROM users WHERE username = " . sqlesc($username));
+	$res = sql_query("SELECT id, passhash, secret, seedbonus, enabled, status, downloadpos FROM users WHERE username = " . sqlesc($username));
 	$row = mysql_fetch_array($res);
 		if ($row["passhash"] != md5($row["secret"] . $password . $row["secret"]))
 				{stdmsg("出错了！","密码不正确 <input type=button value=\"返回上一页\" onclick=\"location.href='javascript:history.go(-1)'\" />", 0);
 		stdfoot();}
+		if ($row['downloadpos'] == 'no') {
+            stdmsg("出错了！","被管理员禁封的账号不能使用魔力值解封 <input type=button value=\"返回上一页\" onclick=\"location.href='javascript:history.go(-1)'\" />", 0);
+            stdfoot();
+        }
 		elseif($row["seedbonus"]< $enable_bonus)
 		{stdmsg("抱歉！","您的魔力值（ ".(int)$row["seedbonus"]."）不足以复活您的账号，因为目前复活价格是 $enable_bonus 。不过，您可以请求您的朋友用<b>魔力值使用</b>里的<b>复活</b>功能来复活您的账号。<input type=button value=\"返回上一页\" onclick=\"location.href='javascript:history.go(-1)'\" />", 0);
 		stdfoot();}
