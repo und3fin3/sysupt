@@ -547,7 +547,7 @@ function format_comment($text, $strip_html = true, $xssclean = false, $newtab = 
 	                                         // check
 	                                         // if it exist before hand
 		if ($enableflash) {
-			$s = preg_replace_callback("/\[flash(\,([1-9][0-9]*)\,([1-9][0-9]*))?\]((http|ftp):\/\/[^\s'\"<>]+(\.(swf)))\[\/flash\]/i", function ($matches){
+			$s = preg_replace_callback("/\[flash(\,([1-9][0-9]*)\,([1-9][0-9]*))?\]((http|ftp):\/\/[^\s'\"<>]+(\.(swf))(\?[^\s]*)?)\[\/flash\]/i", function ($matches){
 			    return formatFlash($matches[4], $matches[2], $matches[3]);
 			}, $s );
 		} else {
