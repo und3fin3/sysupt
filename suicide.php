@@ -19,7 +19,7 @@ if (!isset($_POST['suicide_option'])) {
         <td class="rowhead" width="300px">请选择：</td>
         <td class="rowfollow">
             <input type="radio" name="suicide_option" value="ban"/>我要禁用我的账户<br/>
-            <input type="radio" name="suicide_option" value="delete"/>我要彻底删除我的账户<br/>
+            <input type="radio" name="suicide_option" value="delete"/>我要彻底删除我的账户(此操作不可逆)<br/>
         </td>
     </tr>
     <tr>
