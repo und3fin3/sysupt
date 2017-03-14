@@ -6352,3 +6352,39 @@ function check_emotion($text)
 		else return 0;
 	}
 // ***********************************************//结束
+/**
+ * delete your account
+ */
+function suicide($thorough=false){
+	global $CURUSER;
+	$user_id=$CURUSER["id"];
+	$user_name=$CURUSER['username'];
+	if($thorough){
+		sql_query("delete from users where id=$user_id");
+		write_log("用户$user_id($user_name)删除了自己的账户",'mod');
+	}
+	else{
+		sql_query("update users set enabled='no' where id=$user_id");
+		write_log("用户$user_id($user_name)禁用了自己的账户",'mod');
+	}
+}
+
+function check_password($password, $user_id = null)
+{
+	global $CURUSER;
+	if (!$user_id) {
+		$user_id = $CURUSER['id'];
+	}
+	if ($user_id) {
+		$res = sql_query("SELECT id, passhash, secret, enabled, status FROM users WHERE id = $user_id") or sqlerr();
+		$row = mysql_fetch_array($res);
+		if ($row && $row["passhash"] == md5($row["secret"] . $password . $row["secret"])) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+
+}
