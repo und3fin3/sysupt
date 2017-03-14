@@ -12,7 +12,7 @@ stdhead('自杀');
 if (!isset($_POST['suicide_option'])) {
     $form = <<<HTML
 <h1>你确定删除或禁用你的账号吗？</h1>
-<form action="suicide.php">
+<form action="suicide.php" method="post">
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tbody>
     <tr>
