@@ -7,7 +7,6 @@
  */
 require "include/bittorrent.php";
 dbconn(true);
-require_once(get_langfile_path());
 loggedinorreturn(true);
 stdhead('自杀');
 if (!isset($_POST['suicide_option'])) {
