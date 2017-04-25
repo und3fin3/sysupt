@@ -52,7 +52,7 @@ $lang_functions = array
 	'text_rules' => "&nbsp;规&nbsp;&nbsp;则&nbsp;",
 	'text_faq' => "&nbsp;常见问题&nbsp;",
 	'text_staff' => "管&nbsp;理&nbsp;组",
-	'std_site_down_for_maintenance' => '<h1><img border=0 src="pic/smilies/515.gif">北洋媛正在休整中，请稍后再来...</h1><h2><img border=0 src="pic/smilies/519.gif">不如刷刷微博神马的吧，媛媛休息好了会通知大家的哦~</h2><ul><li><a href="http://weibo.com/tjupt">媛媛的新浪微博</a></li><li><a href="http://page.renren.com/601396265">媛媛的人人网主页</a></li></ul>',
+	'std_site_down_for_maintenance' => file_get_contents(__DIR__ . '/../../502.html'),
 	'text_click_view_full_image' => "点击这里查看完整图像",
 	'text_image_resized' => "图像被缩小，点击这里查看完整图像",
 	'text_click_view_small_image' => "点击这里查看缩小图像",
