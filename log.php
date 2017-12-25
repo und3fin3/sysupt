@@ -945,7 +945,6 @@ else {
 	print ("<h4>&lt;" . $cachetimeat . " &nbsp;&nbsp;" . $cachetimeuntil . "&gt;</h4>" . $lang_log ['time_zone_note']) ;
 	stdfoot ();
 	die ();
-	break;
 }
 
 ?>
