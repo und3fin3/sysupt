@@ -245,8 +245,7 @@ if ($anninterthreeage && ($anninterthree > $announce_wait) && (TIMENOW - $torren
 elseif ($annintertwoage && ($annintertwo > $announce_wait) && (TIMENOW - $torrent ['ts']) >= ($annintertwoage * 86400))
 	$real_annnounce_interval = $annintertwo;
 
-$real_annnounce_interval *= rand(1000, 1400)/1000; // random interval avoid BOOM
-$real_annnounce_interval = ceil($real_annnounce_interval);
+$real_annnounce_interval *= rand(950, 1300)/1000; // random interval avoid BOOM
 
 $peer_list = "";
 unset ( $self );
