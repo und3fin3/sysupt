@@ -100,7 +100,7 @@ if ($nip) { // $nip would be false for IPv6 address
 	$res = sql_query ( "SELECT * FROM bans WHERE $nip >= first AND $nip <= last" ) or sqlerr ( __FILE__, __LINE__ );
 	if (mysql_num_rows ( $res ) > 0) {
 		// header("HTTP/1.0 403 Forbidden");
-		err ( "403-该IP被封禁，请与PTadmin@tju.edu.cn联系！" );
+		err ( "403-该IP被封禁，请与PTadmin@TJUPT.org联系！" );
 		// die;
 	}
 	
@@ -116,7 +116,7 @@ if ($nip) { // $nip would be false for IPv6 address
 	}
 	$ipv4 = $ip;
 } elseif (! validateIPv6 ( $ip )) { // 校验IP地址的合法性
-	err ( "403-IP地址不合法，请与PTadmin@tju.edu.联系！" );
+	err ( "403-IP地址不合法，请与PTadmin@TJUPT.org联系！" );
 }
 
 if (isset ( $ipv6 )) { // IPv6地址封禁
@@ -126,7 +126,7 @@ if (isset ( $ipv6 )) { // IPv6地址封禁
 	( ip4=$longipv6[4] AND ip5=$longipv6[5] AND ip6=$longipv6[6] AND ip7=$longipv6[7] )))" ) or sqlerr ( __FILE__, __LINE__ );
 	
 	if (mysql_num_rows ( $res ) > 0) {
-		err ( "403-该IP被封禁，请与PTadmin@tju.edu.cn联系！" );
+		err ( "403-该IP被封禁，请与PTadmin@TJUPT.org联系！" );
 	}
 }
 
