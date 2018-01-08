@@ -54,20 +54,9 @@ if (@ini_get('output_handler') == 'ob_gzhandler' AND @ob_get_length() !== false)
 	header('Content-Encoding:');
 }
 */
-if ($_COOKIE["c_secure_tracker_ssl"] == base64("yeah"))
-    $tracker_ssl = true;
-else
-    $tracker_ssl = false;
-if ($tracker_ssl == true) {
-    $ssl_torrent = "https://";
-    if ($https_announce_urls[0] != "")
-        $base_announce_url = $https_announce_urls[0];
-    else
-        $base_announce_url = $announce_urls[0];
-} else {
-    $ssl_torrent = "http://";
-    $base_announce_url = $announce_urls[0];
-}
+// HTTPS Tracker Only
+$ssl_torrent = "https://";
+$base_announce_url = $announce_urls[0];
 
 $res = sql_query("SELECT name, filename, save_as,  size, owner,banned FROM torrents WHERE pulling_out ='0' AND id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 $row = mysql_fetch_assoc($res);
