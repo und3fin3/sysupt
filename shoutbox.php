@@ -9,7 +9,7 @@ if (isset ( $_GET ['del'] )) {
 		}
 	}
 }
-$where = ($_POST ["type"] ? $_POST ["type"] : $_GET ["type"]);
+$where = preg_replace("/[^A-Za-z0-9 ]/", '', $_POST ["type"] ? $_POST ["type"] : $_GET ["type"]);
 $refresh = ($CURUSER ['sbrefresh'] ? $CURUSER ['sbrefresh'] : 120)?>
 <html>
 <head>
