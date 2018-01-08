@@ -233,7 +233,7 @@ if ($newnumpeers > $rsize)
 else
 	$limit = "";
 
-$announce_wait = 120;
+$announce_wait = 30;
 
 $fields = "seeder, peer_id, ipv4, ipv6, port, uploaded, downloaded, (" . TIMENOW . " - UNIX_TIMESTAMP(last_action)) AS announcetime, UNIX_TIMESTAMP(prev_action) AS prevts, connectable";
 $peerlistsql = "SELECT " . $fields . " FROM peers WHERE torrent = " . $torrentid . " " . $only_leech_query . $limit;
