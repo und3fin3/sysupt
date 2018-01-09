@@ -83,16 +83,33 @@ if (! validateIPv6 ( $ip )) {
 		unset ( $ipv6 );
 } else {
 	$ipv6 = $ip;
-	
-	// if (substr($ipv6,0,12)=='2001:0:4137:') unset($ipv6);
-	// if (substr($ipv6,0,5)=='2002:') unset($ipv6);
-	// if (substr($ipv6,0,26)=='2001:da8:200:900e:200:5efe') unset($ipv6);
+}
+/*
+IPv6 Tracker only
+
+Seems that we cannot get CloudFlare to not report an A record
+And after on campus users dial via PPPoE, Windows will
+use IPv4 instead of IPv6 to contact the tracker.
+
+This way we validate IPv6 connectivity inside the tracker
+*/
+if (!validateIPv6($ipv6)){
+	err ( "403-目前仅允许IPv6用户访问");
 }
 
-if ($ipv6)
-	$compact = 0;
+// This is a validated IPv6 address
+if ($ipv6){
+	// IPv6 does not support compact peer list
+    $compact = 0;
+    // Then we try to make our lives easier by assuming that the user got here via IPv6
+	// Of course this is not the case, but let's just assume that
+	$ip = $ipv6;
+	// and set $ipv4 to empty
+	$ipv4 = '';
+}
+
 	
-	// ----check ip
+// ----check ip
 
 $nip = ip2long ( $ip );
 
@@ -292,8 +309,9 @@ if (! isset ( $self )) {
 	}
 }
 
-if (validateIPv6 ( $ip ))
-	$ipv4 = $self ['ipv4'];
+// NO IPv4 !
+//if (validateIPv6 ( $ip ))
+//	$ipv4 = $self ['ipv4'];
 	
 	// if($self['prevts'] > (TIMENOW - 120))$real_annnounce_interval += 60;
 	
