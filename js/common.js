@@ -384,7 +384,7 @@ function autofill(){
 		if(data.title.indexOf(" /") === -1) {
             document.getElementById("cname").value = data.title;
         }else{
-			document.getElementById("cname").value = data.title.substring(0,data.title.indexOf(" /"))
+			document.getElementById("cname").value = data.title.substring(0,data.title.indexOf(" /"));
 		}
 		document.getElementById("ename").value = data.ename;
 		document.getElementById("issuedate").value = data.year;
@@ -400,19 +400,19 @@ function autofill(){
 		document.getElementsByName("url")[0].value = data.imdb_link;
 		document.getElementById("descr").value = data.format;
 		if(filename.indexOf("Bluray") !== -1|filename.indexOf("Blu-ray") !== -1||filename.indexOf("BDRip") !== -1|filename.indexOf("BLURAY") !== -1) {
-            document.getElementsByName("source_sel")[0].value = "1"
+            document.getElementsByName("source_sel")[0].value = "1";
         }else if (filename.indexOf("HDDVD") !== -1||filename.indexOf("HDVD") !== -1){
-            document.getElementsByName("source_sel")[0].value = "2"
+            document.getElementsByName("source_sel")[0].value = "2";
 		}else if (filename.indexOf("DVD") !== -1){
-            document.getElementsByName("source_sel")[0].value = "3"
+            document.getElementsByName("source_sel")[0].value = "3";
 		}else if (filename.indexOf("HDTV") !== -1){
-            document.getElementsByName("source_sel")[0].value = "4"
+            document.getElementsByName("source_sel")[0].value = "4";
 		}else if (filename.indexOf("TV") !== -1){
-            document.getElementsByName("source_sel")[0].value = "5"
+            document.getElementsByName("source_sel")[0].value = "5";
 		}else if (filename.indexOf("WEB-DL") !== -1){
-            document.getElementsByName("source_sel")[0].value = "7"
+            document.getElementsByName("source_sel")[0].value = "7";
 		}else{
-            document.getElementsByName("source_sel")[0].value = "8"
+            document.getElementsByName("source_sel")[0].value = "8";
 		}
 	});
 }
