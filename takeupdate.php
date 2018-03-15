@@ -15,6 +15,8 @@ if ($_POST['bonus']){
 	$_POST['bonus']=1000;
 	if($_POST['bonus']< -1000 )
 	$_POST['bonus']=-1000;
+	// injection bug here?
+    // seems that implode does not take two strings anyways
 	$reportres = sql_query("SELECT * FROM reports WHERE dealtwith=0 AND id IN (" . implode(", ", $_POST[delreport]) . ")");
 	while ($row = mysql_fetch_array($reportres)){
 		$dt = sqlesc ( date ( "Y-m-d H:i:s" ) );

@@ -84,6 +84,7 @@ if (! validateIPv6 ( $ip )) {
 } else {
 	$ipv6 = $ip;
 }
+
 /*
 IPv6 Tracker only
 
@@ -93,19 +94,14 @@ use IPv4 instead of IPv6 to contact the tracker.
 
 This way we validate IPv6 connectivity inside the tracker
 */
-if (!validateIPv6($ipv6)){
-	err ( "403-目前仅允许IPv6用户访问");
+if ($_SERVER['SERVER_NAME'] == 'pttracker6.tjupt.org' && !validateIPv6($ipv6)){
+    err ( "403-目前仅允许IPv6用户访问");
 }
 
 // This is a validated IPv6 address
 if ($ipv6){
 	// IPv6 does not support compact peer list
     $compact = 0;
-    // Then we try to make our lives easier by assuming that the user got here via IPv6
-	// Of course this is not the case, but let's just assume that
-	$ip = $ipv6;
-	// and set $ipv4 to empty
-	$ipv4 = '';
 }
 
 	
