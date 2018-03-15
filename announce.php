@@ -85,17 +85,23 @@ if (! validateIPv6 ( $ip )) {
 	$ipv6 = $ip;
 }
 
+/*
+IPv6 Tracker only
+
+Seems that we cannot get CloudFlare to not report an A record
+And after on campus users dial via PPPoE, Windows will
+use IPv4 instead of IPv6 to contact the tracker.
+
+This way we validate IPv6 connectivity inside the tracker
+*/
+if ($_SERVER['SERVER_NAME'] == 'pttracker6.tjupt.org' && !validateIPv6($ipv6)){
+    err ( "403-目前仅允许IPv6用户访问");
+}
+
 // This is a validated IPv6 address
 if ($ipv6){
 	// IPv6 does not support compact peer list
     $compact = 0;
-    if ($_SERVER['SERVER_NAME'] == 'pttracker6.tjupt.org') {
-    	// Disable IPv4 for the public domain name
-		// Something is wrong here, but let's just leave it this way
-		// until a better way is implemented
-        $ip = $ipv6;
-        $ipv4 = '';
-	}
 }
 
 	
