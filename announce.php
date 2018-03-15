@@ -89,6 +89,13 @@ if (! validateIPv6 ( $ip )) {
 if ($ipv6){
 	// IPv6 does not support compact peer list
     $compact = 0;
+    if ($_SERVER['SERVER_NAME'] == 'pttracker6.tjupt.org') {
+    	// Disable IPv4 for the public domain name
+		// Something is wrong here, but let's just leave it this way
+		// until a better way is implemented
+        $ip = $ipv6;
+        $ipv4 = '';
+	}
 }
 
 	
