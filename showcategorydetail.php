@@ -74,7 +74,7 @@ function tr_uploadinfo($x,$y){
 }
 
 function tr_autofill(){
-	$show = "<tr class=\"rowfollow\" ><td class=\"no_border\" valign=\"top\" align=\"right\" onclick=autofill()>自动填写种子信息<font color=\"#FF0000\">（重要：试验性功能，请自行检查填写正误，欢迎去论坛汇报错误）</font>";
+	$show = "<tr class=\"rowfollow\" ><input type=\"button\" value=\"一键填写种子信息\" onclick=\"javascript:autofill();\"><font color=\"#FF0000\">（重要：试验性功能，请自行检查正误，欢迎去论坛汇报错误）</font>";
     $show .= "</td></tr><div class=\"clear1\"></div>";
     print($show);
 }
