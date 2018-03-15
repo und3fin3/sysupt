@@ -376,6 +376,46 @@ noext = noext.replace(/2_1/g,"2.1");
 document.getElementById("name").value=noext;
 }
 
+// in upload.php
+function autofill(){
+	var movieApiBaseUrl = "https://api.tongyifan.me/gen";
+	var filename = document.getElementById("torrent").value;
+	$.get(movieApiBaseUrl,{n:filename},function(data){
+		if(data.title.indexOf(" /") === -1) {
+            document.getElementById("cname").value = data.title;
+        }else{
+			document.getElementById("cname").value = data.title.substring(0,data.title.indexOf(" /"));
+		}
+		document.getElementById("ename").value = data.ename;
+		document.getElementById("issuedate").value = data.year;
+		document.getElementById("language").value = data.lang;
+		if(filename.indexOf("1080p") !== -1){
+            document.getElementById("format").value = "1080p";
+		}else if(filename.indexOf("720p") !== -1){
+            document.getElementById("format").value = "720p";
+		}else if(filename.indexOf("2160p") !== -1|filename.indexOf("4k") !== -1||filename.indexOf("4K") !== -1){
+            document.getElementById("format").value = "2160p";
+		}
+		document.getElementById("district").value = data.countries;
+		document.getElementsByName("url")[0].value = data.imdb_link;
+		document.getElementById("descr").value = data.format;
+		if(filename.indexOf("Bluray") !== -1|filename.indexOf("Blu-ray") !== -1||filename.indexOf("BDRip") !== -1|filename.indexOf("BLURAY") !== -1) {
+            document.getElementsByName("source_sel")[0].value = "1";
+        }else if (filename.indexOf("HDDVD") !== -1||filename.indexOf("HDVD") !== -1){
+            document.getElementsByName("source_sel")[0].value = "2";
+		}else if (filename.indexOf("DVD") !== -1){
+            document.getElementsByName("source_sel")[0].value = "3";
+		}else if (filename.indexOf("HDTV") !== -1){
+            document.getElementsByName("source_sel")[0].value = "4";
+		}else if (filename.indexOf("TV") !== -1){
+            document.getElementsByName("source_sel")[0].value = "5";
+		}else if (filename.indexOf("WEB-DL") !== -1){
+            document.getElementsByName("source_sel")[0].value = "7";
+		}else{
+            document.getElementsByName("source_sel")[0].value = "8";
+		}
+	});
+}
 // in userdetails.php
 function getusertorrentlistajax(userid, type, blockid)
 {
