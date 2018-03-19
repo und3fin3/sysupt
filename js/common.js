@@ -380,15 +380,19 @@ document.getElementById("name").value=noext;
 function autofill(){
 	var movieApiBaseUrl = "https://api.tongyifan.me/gen";
 	var filename = document.getElementById("torrent").value;
+	document.getElementById("autofill").disabled="disabled";
+	document.getElementById("autofill").value="请稍等…";
 	$.get(movieApiBaseUrl,{n:filename},function(data){
-		if(data.title.indexOf(" /") === -1) {
-            document.getElementById("cname").value = data.title;
-        }else{
-			document.getElementById("cname").value = data.title.substring(0,data.title.indexOf(" /"));
+		if(data.errcode){
+			alert(data.msg);
+            document.getElementById("autofill").disabled="";
+            document.getElementById("autofill").value="一键填写种子信息";
+			return false;
 		}
-		document.getElementById("ename").value = data.ename;
-		document.getElementById("issuedate").value = data.year;
-		document.getElementById("language").value = data.lang;
+        document.getElementById("cname").value = data.chinese_title;
+        document.getElementById("ename").value = data.ename;
+		document.getElementById("issuedate").value = data.playdate;
+		document.getElementById("language").value = data.language;
 		if(filename.indexOf("1080p") !== -1){
             document.getElementById("format").value = "1080p";
 		}else if(filename.indexOf("720p") !== -1){
@@ -396,10 +400,12 @@ function autofill(){
 		}else if(filename.indexOf("2160p") !== -1|filename.indexOf("4k") !== -1||filename.indexOf("4K") !== -1){
             document.getElementById("format").value = "2160p";
 		}
-		document.getElementById("district").value = data.countries;
-		document.getElementsByName("url")[0].value = data.imdb_link;
+		document.getElementById("district").value = data.region;
+		if(data.imdb_link) {
+            document.getElementsByName("url")[0].value = data.imdb_link;
+        }
 		document.getElementById("descr").value = data.format;
-		if(filename.indexOf("Bluray") !== -1|filename.indexOf("Blu-ray") !== -1||filename.indexOf("BDRip") !== -1|filename.indexOf("BLURAY") !== -1) {
+		if(filename.indexOf("Blu") !== -1||filename.indexOf("BDRip") !== -1|filename.indexOf("BLU") !== -1) {
             document.getElementsByName("source_sel")[0].value = "1";
         }else if (filename.indexOf("HDDVD") !== -1||filename.indexOf("HDVD") !== -1){
             document.getElementsByName("source_sel")[0].value = "2";
@@ -414,6 +420,8 @@ function autofill(){
 		}else{
             document.getElementsByName("source_sel")[0].value = "8";
 		}
+        document.getElementById("autofill").disabled="";
+        document.getElementById("autofill").value="一键填写种子信息";
 	});
 }
 // in userdetails.php
