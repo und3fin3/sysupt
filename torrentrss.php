@@ -7,7 +7,10 @@ function hex_esc($matches) {
 $dllink = false;
 $passkey = $_GET['passkey'];
 $where = "";
-if ($passkey){
+
+if (empty($passkey)) {
+	die("Empty passkey");
+} else {
 	$res = sql_query("SELECT id, enabled, parked FROM users WHERE passkey=". sqlesc($passkey)." LIMIT 1");
 	$user = mysql_fetch_array($res);
 	if (!$user)
