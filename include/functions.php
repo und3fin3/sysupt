@@ -2146,7 +2146,7 @@ if($detail){
 if($rowip['school'] != "")
 	$school = "[".$rowip['school']."]";
 else
-	$school = "<a href=\"http://www.ipv6home.cn/ip/?ip=$ip\" target=\"_blank\">[转至IPV6之家查询该IP]</a>";
+	$school = "<a href=\"https://myip.ms/info/whois/$ip\" target=\"_blank\">[转至myip.ms查询该IP]</a>";
 }else{
 if($rowip['school'] != "")
 	$school = $rowip['school'];
