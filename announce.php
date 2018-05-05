@@ -94,7 +94,7 @@ use IPv4 instead of IPv6 to contact the tracker.
 
 This way we validate IPv6 connectivity inside the tracker
 */
-if ($_SERVER['SERVER_NAME'] == 'pttracker6.tjupt.org') {
+if ($_SERVER['HTTP_HOST'] == 'pttracker6.tjupt.org') {
 	if (!validateIPv6($ipv6)){
         err ( "403-目前仅允许IPv6用户访问");
     }
