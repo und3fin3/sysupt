@@ -34,10 +34,10 @@ if ($passkey) {
     }
 }
 // IPv4 Tracker come back!
-if (ip2long(getip()) || substr(getip(), 0, 14) == '2001:da8:a000:' || substr(getip(), 0, 10) == '2403:ac00:'){
-    $announce_urls[0] = "pttrackertju.tjupt.org/announce.php";
-    $announce_urls[1] = "pttracker6.tjupt.org/announce.php";
-} else $announce_urls[0] = "pttracker6.tjupt.org/announce.php";
+// pttracker4 is public network IPv4 tracker for future consideration
+$announce_urls[0] = "pttrackertju.tjupt.org/announce.php";
+$announce_urls[1] = "pttracker6.tjupt.org/announce.php";
+$announce_urls[2] = "pttracker4.tjupt.org/announce.php";
 
 //User may choose to download torrent from RSS. So log ip changes when downloading torrents.
 if ($iplog1 == "yes") {
@@ -85,26 +85,22 @@ $dict['value']['announce']['value'] = $ssl_torrent . $base_announce_url . "?pass
 $dict['value']['announce']['string'] = strlen($dict['value']['announce']['value']) . ":" . $dict['value']['announce']['value'];
 $dict['value']['announce']['strlen'] = strlen($dict['value']['announce']['string']);
 
-if ($announce_urls[1] != "") // add multi-tracker
+if (count($announce_urls) > 1) // add multi-tracker
 {
     $dict['value']['announce-list']['type'] = "list";
-    $dict['value']['announce-list']['value'][0]['type'] = "list";
-    $dict['value']['announce-list']['value'][0]['value'][0]["type"] = "string";
-    $dict['value']['announce-list']['value'][0]['value'][0]["value"] = $ssl_torrent . $announce_urls[0] . "?passkey=$CURUSER[passkey]";
-    $dict['value']['announce-list']['value'][0]['value'][0]["string"] = strlen($dict['value']['announce-list']['value'][0]['value'][0]["value"]) . ":" . $dict['value']['announce-list']['value'][0]['value'][0]["value"];
-    $dict['value']['announce-list']['value'][0]['value'][0]["strlen"] = strlen($dict['value']['announce-list']['value'][0]['value'][0]["string"]);
-    $dict['value']['announce-list']['value'][0]['string'] = "l" . $dict['value']['announce-list']['value'][0]['value'][0]["string"] . "e";
-    $dict['value']['announce-list']['value'][0]['strlen'] = strlen($dict['value']['announce-list']['value'][0]['string']);
-    $dict['value']['announce-list']['value'][1]['type'] = "list";
-    $dict['value']['announce-list']['value'][1]['value'][0]["type"] = "string";
-    $dict['value']['announce-list']['value'][1]['value'][0]["value"] = $ssl_torrent . $announce_urls[1] . "?passkey=$CURUSER[passkey]";
-    $dict['value']['announce-list']['value'][1]['value'][0]["string"] = strlen($dict['value']['announce-list']['value'][0]['value'][0]["value"]) . ":" . $dict['value']['announce-list']['value'][0]['value'][0]["value"];
-    $dict['value']['announce-list']['value'][1]['value'][0]["strlen"] = strlen($dict['value']['announce-list']['value'][0]['value'][0]["string"]);
-    $dict['value']['announce-list']['value'][1]['string'] = "l" . $dict['value']['announce-list']['value'][0]['value'][0]["string"] . "e";
-    $dict['value']['announce-list']['value'][1]['strlen'] = strlen($dict['value']['announce-list']['value'][0]['string']);
-    $dict['value']['announce-list']['string'] = "l" . $dict['value']['announce-list']['value'][0]['string'] . $dict['value']['announce-list']['value'][1]['string'] . "e";
+    $dict['value']['announce-list']['string'] = "l";
+    for($i = 0; $i < count($announce_urls); $i++){
+        $dict['value']['announce-list']['value'][$i]['type'] = "list";
+        $dict['value']['announce-list']['value'][$i]['value'][0]["type"] = "string";
+        $dict['value']['announce-list']['value'][$i]['value'][0]["value"] = $ssl_torrent . $announce_urls[$i] . "?passkey=$CURUSER[passkey]";
+        $dict['value']['announce-list']['value'][$i]['value'][0]["string"] = strlen($dict['value']['announce-list']['value'][$i]['value'][0]["value"]) . ":" . $dict['value']['announce-list']['value'][$i]['value'][0]["value"];
+        $dict['value']['announce-list']['value'][$i]['value'][0]["strlen"] = strlen($dict['value']['announce-list']['value'][$i]['value'][0]["string"]);
+        $dict['value']['announce-list']['value'][$i]['string'] = "l" . $dict['value']['announce-list']['value'][$i]['value'][0]["string"] . "e";
+        $dict['value']['announce-list']['value'][$i]['strlen'] = strlen($dict['value']['announce-list']['value'][$i]['string']);
+        $dict['value']['announce-list']['string'] = $dict['value']['announce-list']['string'] . $dict['value']['announce-list']['value'][$i]['string'];
+    }
+    $dict['value']['announce-list']['string'] = $dict['value']['announce-list']['string'] . "e";
     $dict['value']['announce-list']['strlen'] = strlen($dict['value']['announce-list']['string']);
-
 }
 /*
 header ("Expires: Tue, 1 Jan 1980 00:00:00 GMT");
