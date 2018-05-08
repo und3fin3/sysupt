@@ -33,8 +33,11 @@ if ($passkey) {
         header("Location: downloadnotice.php?torrentid=" . $id . "&type=ratio");
     }
 }
-// IPv6 Tracker Only, at the moment
-$announce_urls[0] = "pttracker6.tjupt.org/announce.php";
+// IPv4 Tracker come back!
+if (ip2long(getip()) || substr(getip(), 0, 14) == '2001:da8:a000:' || substr(getip(), 0, 10) == '2403:ac00:'){
+    $announce_urls[0] = "pttrackertju.tjupt.org/announce.php";
+    $announce_urls[1] = "pttracker6.tjupt.org/announce.php";
+} else $announce_urls[0] = "pttracker6.tjupt.org/announce.php";
 
 //User may choose to download torrent from RSS. So log ip changes when downloading torrents.
 if ($iplog1 == "yes") {
