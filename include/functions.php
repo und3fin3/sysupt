@@ -2327,6 +2327,8 @@ function dbconn($autoclean = false) {
 	userlogin ();
 
 	$nip = ip2long ( getip() );
+	// Open for public IPv4
+	/*
 	if($nip) // Only IPv4
 	{
 	    if (!check_tjuip($nip) && !(get_user_class () >= UC_MODERATOR)) {
@@ -2335,6 +2337,7 @@ function dbconn($autoclean = false) {
             die ();
         }
 	}
+	*/
 
 	if (! $useCronTriggerCleanUp && $autoclean) {
 		register_shutdown_function ( "autoclean" );

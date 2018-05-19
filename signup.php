@@ -2,6 +2,19 @@
 require_once("include/bittorrent.php");
 dbconn();
 
+// ban not-tjuip
+$ip = getip();
+$nip = ip2long($ip);
+if ($nip){
+    if (!check_tjuip($nip))
+    {
+        stdhead("没有权限");
+        stdmsg("没有访问权限", "你正在使用校外IP地址访问本站，不允许浏览本页面");
+        stdfoot();
+        exit;
+    }
+}
+
 $langid = 0 + $_GET['sitelanguage'];
 if ($langid)
 {
@@ -118,7 +131,7 @@ tr($lang_signup['row_school'], "<select name=school>$schools</select>", 1);
 <input type=checkbox name=faqverify value=yes><?php echo $lang_signup['checkbox_read_faq'] ?> <br />
 <input type=checkbox name=ageverify value=yes><?php echo $lang_signup['checkbox_age'] ?></td></tr>
 <input type=hidden name=hash value=<?php echo $code?>>
-<tr><td class=toolbox colspan="2" align="center"><font color=red><b><?php echo $lang_signup['text_all_fields_required'] ?></b><p></font><input type=submit value=<?php echo $lang_signup['submit_sign_up'] ?> name="Submit1" class="anniu"  style='height: 25px' disabled></td></tr>
+<tr><td class=toolbox colspan="2" align="center"><font color=red><p><b><?php echo $lang_signup['text_all_fields_required'] ?></b></p></font><input type=submit value=<?php echo $lang_signup['submit_sign_up'] ?> name="Submit1" class="anniu"  style='height: 25px' disabled></td></tr>
 </table>
 </form>
 <?php
