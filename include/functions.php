@@ -2719,28 +2719,29 @@ function menu($selected = "home") {
 		print ("<li" . ($selected == "forums" ? " class=\"selected\"" : "") . "><a href=\"forums.php\">" . $lang_functions ['text_forums'] . "</a></li>") ;
 	else
 		print ("<li" . ($selected == "forums" ? " class=\"selected\"" : "") . "><a href=\"" . $extforumurl . "\" target=\"_blank\">" . $lang_functions ['text_forums'] . "</a></li>") ;
-
+    /*
 	$ip = getip ();
 	$nip = ip2long ( $ip );
 	if ($nip)
 		$res = sql_query ( "SELECT * FROM nontjuip WHERE $nip >= first AND $nip <= last" ) or sqlerr ( __FILE__, __LINE__ );
 
 	if ( (get_user_class()>=UC_MODERATOR) || !(ip2long ( $ip )) || ($nip && mysql_num_rows ( $res ) == 0)) {
-		if ($CURUSER ['downloadpos'] == "yes")
-			print ("<li" . ($selected == "torrents" ? " class=\"selected\"" : "") . "><a href=\"torrents.php\">" . $lang_functions ['text_torrents'] . "</a></li>") ;
-		if ($enablespecial == 'yes')
-			print ("<li" . ($selected == "music" ? " class=\"selected\"" : "") . "><a href=\"music.php\">" . $lang_functions ['text_music'] . "</a></li>") ;
-		if ($enableoffer == 'yes' && $CURUSER ['uploadpos'] == "yes")
-			print ("<li" . ($selected == "offers" ? " class=\"selected\"" : "") . "><a href=\"offers.php\">" . $lang_functions ['text_offers'] . "</a></li>") ;
-		if ($enabletest == 'yes') // 在导航处显示试种标签
-			print ("<li" . ($selected == "test" ? " class=\"selected\"" : "") . "><a href=\"req.php\">" . $lang_functions ['text_test'] . "</a></li>") ;
-		if ($enablerequest == 'yes')
-			print ("<li" . ($selected == "requests" ? " class=\"selected\"" : "") . "><a href=\"viewrequests.php\">" . $lang_functions ['text_request'] . "</a></li>") ;
-		if ($CURUSER ['uploadpos'] == "yes")
-			print ("<li" . ($selected == "upload" ? " class=\"selected\"" : "") . "><a href=\"upload.php\">" . $lang_functions ['text_upload'] . "</a></li>") ;
-		/*print ("<li" . ($selected == "subtitles" ? " class=\"selected\"" : "") . "><a href=\"subtitles.php\">" . $lang_functions ['text_subtitles'] . "</a></li>") ;*/
-		print ("<li" . ($selected == "bonusapps" ? " class=\"selected\"" : "") . "><a href=\"mybonusapps.php\">茉 莉 园</a></li>") ;
-	}
+	*/
+    if ($CURUSER ['downloadpos'] == "yes")
+        print ("<li" . ($selected == "torrents" ? " class=\"selected\"" : "") . "><a href=\"torrents.php\">" . $lang_functions ['text_torrents'] . "</a></li>") ;
+    if ($enablespecial == 'yes')
+		print ("<li" . ($selected == "music" ? " class=\"selected\"" : "") . "><a href=\"music.php\">" . $lang_functions ['text_music'] . "</a></li>") ;
+	if ($enableoffer == 'yes' && $CURUSER ['uploadpos'] == "yes")
+		print ("<li" . ($selected == "offers" ? " class=\"selected\"" : "") . "><a href=\"offers.php\">" . $lang_functions ['text_offers'] . "</a></li>") ;
+	if ($enabletest == 'yes') // 在导航处显示试种标签
+		print ("<li" . ($selected == "test" ? " class=\"selected\"" : "") . "><a href=\"req.php\">" . $lang_functions ['text_test'] . "</a></li>") ;
+	if ($enablerequest == 'yes')
+		print ("<li" . ($selected == "requests" ? " class=\"selected\"" : "") . "><a href=\"viewrequests.php\">" . $lang_functions ['text_request'] . "</a></li>") ;
+	if ($CURUSER ['uploadpos'] == "yes")
+		print ("<li" . ($selected == "upload" ? " class=\"selected\"" : "") . "><a href=\"upload.php\">" . $lang_functions ['text_upload'] . "</a></li>") ;
+	/*print ("<li" . ($selected == "subtitles" ? " class=\"selected\"" : "") . "><a href=\"subtitles.php\">" . $lang_functions ['text_subtitles'] . "</a></li>") ;*/
+	print ("<li" . ($selected == "bonusapps" ? " class=\"selected\"" : "") . "><a href=\"mybonusapps.php\">茉 莉 园</a></li>") ;
+	//}
 
 	print ("<li" . ($selected == "usercp" ? " class=\"selected\"" : "") . "><a href=\"usercp.php\">" . $lang_functions ['text_user_cp'] . "</a></li>") ;
 	print ("<li" . ($selected == "topten" ? " class=\"selected\"" : "") . "><a href=\"topten.php\">" . $lang_functions ['text_top_ten'] . "</a></li>") ;
