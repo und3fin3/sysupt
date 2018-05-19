@@ -8,8 +8,6 @@ if ($showextinfo ['imdb'] == 'yes')
 	require_once ("imdb/imdb2.class.php");
 loggedinorreturn ();
 
-assert_tjuip_or_mod();
-
 $id = 0 + $_GET ["id"];
 
 int_check ( $id );

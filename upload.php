@@ -1,21 +1,12 @@
 <?php
 require_once("include/bittorrent.php");
+require_once ("include/tjuip_helper.php");
 dbconn();
 require_once(get_langfile_path());
 loggedinorreturn();
 parked();
 
-$ip = getip();
-$nip = ip2long($ip);
-if ($nip){
-	if (!check_tjuip($nip))
-	{
-		stdhead("没有权限");
-		stdmsg("没有访问权限", "你正在使用校外IP地址访问本站，不允许浏览本页面");
-		stdfoot();
-		exit;
-	}
-}
+assert_tjuip_or_mod();
 
 
 if ($CURUSER["uploadpos"] == 'no')
@@ -103,7 +94,10 @@ else
 				tr($lang_upload['refer_upload'], $lang_upload['refer_inupt']."\n".				
 					"<input type=\"text\" id=\"referid\" name=\"referid\" size=5 />&nbsp;<input type=\"button\" value=\"".$lang_upload['refer_yes']."\" onclick=\"javascript:location.href='upsimilartorrent.php?id=' + document.getElementById('referid').value;\">\n", 1);
 				?>
-		
+                <?php
+                if(get_user_class() >= 15)
+                    tr("引用外站种子","")
+                ?>
 	
 				<?php			
 				tr($lang_upload['row_torrent_file']."<font color=\"red\">*</font>", "<input type=\"file\" class=\"file\" id=\"torrent\" name=\"file\" onchange=\"getname()\" />\n", 1);

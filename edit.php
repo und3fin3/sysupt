@@ -5,8 +5,6 @@ dbconn ();
 require_once (get_langfile_path ());
 loggedinorreturn ();
 
-assert_tjuip_or_mod();
-
 $id = 0 + $_GET ['id'];
 if (! $id)
 	die ();

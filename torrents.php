@@ -6,8 +6,6 @@ require_once(get_langfile_path("torrents.php"));
 loggedinorreturn();
 parked();
 
-assert_tjuip_or_mod();
-
 if ($showextinfo['imdb'] == 'yes')
 	require_once ("imdb/imdb.class.php");
 //check searchbox

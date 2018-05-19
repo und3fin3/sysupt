@@ -17,8 +17,6 @@ function bark($msg) {
 	exit ();
 }
 
-assert_tjuip_or_mod();
-
 if ($_GET ["category"]) {
 	$categ = isset ( $_GET ['category'] ) ? ( int ) $_GET ['category'] : 0;
 	if (! is_valid_id ( $categ ))

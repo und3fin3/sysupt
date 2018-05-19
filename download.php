@@ -4,7 +4,7 @@ require_once("include/bittorrent.php");
 require_once("include/tjuip_helper.php");
 dbconn();
 
-assert_tjuip();
+assert_tjuip_or_mod();
 
 set_time_limit(120);
 $id = (int)$_GET["id"];

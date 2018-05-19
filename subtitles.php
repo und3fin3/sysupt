@@ -1,22 +1,12 @@
 <?php
 require "include/bittorrent.php";
+require_once("include/tjuip_helper.php");
 dbconn();
 require_once(get_langfile_path());
 require_once(get_langfile_path("",true));
 loggedinorreturn();
 
-$ip = getip();
-$nip = ip2long($ip);
-if ($nip){
-$res = sql_query("SELECT * FROM nontjuip WHERE $nip >= first AND $nip <= last") or sqlerr(__FILE__, __LINE__);
-if (mysql_num_rows($res) > 0)
-	{
-		stdhead("没有权限");
-		stdmsg("没有访问权限", "你正在使用校外IP地址访问本站，不允许浏览本页面");
-		stdfoot();
-		exit;
-	}
-}
+assert_tjuip_or_mod();
 
 if (!isset($CURUSER))
 	stderr($lang_subtitles['std_error'],$lang_subtitles['std_must_login_to_upload']);
