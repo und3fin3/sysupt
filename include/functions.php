@@ -4032,13 +4032,13 @@ function torrenttable($res, $variant = "torrent") {
 		if (! $displaysmalldescr || $row ["small_descr"] == "") // maximum length
 		                                                        // of
 		                                                        // torrent name
-			$max_length_of_torrent_name = 120;
+			$max_length_of_torrent_name = 150;
 		elseif ($CURUSER ['fontsize'] == 'large')
-			$max_length_of_torrent_name = 60;
+			$max_length_of_torrent_name = 105;
 		elseif ($CURUSER ['fontsize'] == 'small')
-			$max_length_of_torrent_name = 80;
+			$max_length_of_torrent_name = 135;
 		else
-			$max_length_of_torrent_name = 70;
+			$max_length_of_torrent_name = 120;
 
 		if ($count_dispname > $max_length_of_torrent_name)
 			$dispname = mb_substr ( $dispname, 0, $max_length_of_torrent_name - 2, "UTF-8" ) . "..";
@@ -4083,7 +4083,9 @@ function torrenttable($res, $variant = "torrent") {
 			if ($count_dissmall_descr > $max_lenght_of_small_descr) {
 				$dissmall_descr = mb_substr ( $dissmall_descr, 0, $max_lenght_of_small_descr - 2, "UTF-8" ) . "..";
 			}
-			print ($dissmall_descr == "" ? "" : "<br />" . htmlspecialchars ( $dissmall_descr )) ;
+			$dissmall_descr = ($row ["exclusive"] == 'yes'?"<b><font color='red'>禁转</font></b>":"").$dissmall_descr;
+            $dissmall_descr = ($row ["tjuptrip"] == 'yes'?"<b><font color='#ff8c00'>TJUPT小组</font></b>":"").$dissmall_descr;
+            print ($dissmall_descr == "" ? "" : "<br />" . htmlspecialchars ( $dissmall_descr )) ;
 		}
 		print ("</td>") ;
 		if ($row[needkeepseed]=='yes')
