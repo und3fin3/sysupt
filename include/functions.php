@@ -4083,8 +4083,8 @@ function torrenttable($res, $variant = "torrent") {
 			if ($count_dissmall_descr > $max_lenght_of_small_descr) {
 				$dissmall_descr = mb_substr ( $dissmall_descr, 0, $max_lenght_of_small_descr - 2, "UTF-8" ) . "..";
 			}
-			$dissmall_descr = ($row ["exclusive"] == 'yes'?"<b><font color='red'>禁转</font></b>":"").$dissmall_descr;
-            $dissmall_descr = ($row ["tjuptrip"] == 'yes'?"<b><font color='#ff8c00'>TJUPT小组</font></b>":"").$dissmall_descr;
+			$dissmall_descr = ($row ["exclusive"] == 'yes'?"<b><font color='red'> [禁转] </font></b>":"").$dissmall_descr;
+            $dissmall_descr = ($row ["tjuptrip"] == 'yes'?"<b><font color='#ff8c00'> [TJUPT小组] </font></b>":"").$dissmall_descr;
             print ($dissmall_descr == "" ? "" : "<br />" . $dissmall_descr ) ;
 		}
 		print ("</td>") ;
