@@ -1,5 +1,4 @@
 <?php
-ini_set('memory_limit', '64M');
 require_once("include/bittorrent.php");
 require_once("include/tjuip_helper.php");
 dbconn();
