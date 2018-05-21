@@ -4085,7 +4085,7 @@ function torrenttable($res, $variant = "torrent") {
 			}
 			$dissmall_descr = ($row ["exclusive"] == 'yes'?"<b><font color='red'>禁转</font></b>":"").$dissmall_descr;
             $dissmall_descr = ($row ["tjuptrip"] == 'yes'?"<b><font color='#ff8c00'>TJUPT小组</font></b>":"").$dissmall_descr;
-            print ($dissmall_descr == "" ? "" : "<br />" . htmlspecialchars ( $dissmall_descr )) ;
+            print ($dissmall_descr == "" ? "" : "<br />" . $dissmall_descr ) ;
 		}
 		print ("</td>") ;
 		if ($row[needkeepseed]=='yes')
