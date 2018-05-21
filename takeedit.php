@@ -99,15 +99,9 @@ if(get_user_class() >= UC_UPLOADER){
     }
     if ($_POST ["tjuptrip"]) {
         $updateset [] = "tjuptrip = 'yes'";
-        if (! isset ( $_POST ["sel_spstate"] ) || $_POST ["sel_spstate"] == 1){
-            $_POST ["sel_spstate"] = 4;
-            $_POST ["promotionuntil"] = date("Y-m-d H:m:s",strtotime("+2 day"));
-        }
-        if ($_POST ["sel_posstate"] != 1){
-            $_POST ["sel_posstate"] = 1;
-            $_POST ["posstateuntil"] = date("Y-m-d H:m:s",strtotime("+2 day"));
-        }
-    }else $updateset [] = "tjuptrip = 'no'";
+    }else {
+        $updateset [] = "tjuptrip = 'no'";
+    }
 }
 
 if (get_user_class () >= $torrentsticky_class) {
