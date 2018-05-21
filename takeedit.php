@@ -90,6 +90,26 @@ if (get_user_class () >= $torrentmanage_class) {
 		$updateset [] = "banned = 'no'";
 }
 $updateset [] = "visible = '" . ($_POST ["visible"] ? "yes" : "no") . "'";
+// 禁转&TJUPT作品
+if(get_user_class() >= UC_UPLOADER){
+    if ($_POST ["exclusive"]) {
+        $updateset [] = "exclusive = 'yes'";
+    }else{
+        $updateset [] = "exclusive = 'no'";
+    }
+    if ($_POST ["tjuptrip"]) {
+        $updateset [] = "tjuptrip = 'yes'";
+        if (! isset ( $_POST ["sel_spstate"] ) || $_POST ["sel_spstate"] == 1){
+            $_POST ["sel_spstate"] = 4;
+            $_POST ["promotionuntil"] = date("Y-m-d H:m:s",strtotime("+2 day"));
+        }
+        if ($_POST ["sel_posstate"] != 1){
+            $_POST ["sel_posstate"] = 1;
+            $_POST ["posstateuntil"] = date("Y-m-d H:m:s",strtotime("+2 day"));
+        }
+    }else $updateset [] = "tjuptrip = 'no'";
+}
+
 if (get_user_class () >= $torrentsticky_class) {
 	if (! isset ( $_POST ["sel_spstate"] ) || $_POST ["sel_spstate"] == 1) {
 		$updateset [] = "sp_state = 1";
@@ -481,15 +501,23 @@ if ($catid == 4013)
  * *********************************************************************************************
  */
 $Cache->delete_value ( 'torrent_' . $id . '_seed_name' );
-
+$feature_info = "";
+if($_POST ["exclusive"]) {
+    $feature_info .= "禁转 ";
+}
+if($_POST ["tjuptrip"]) {
+    $spstate = "";
+    $pick_info = "";
+    $feature_info .= "TJUPT作品";
+}
 if ($CURUSER ["id"] == $row ["owner"]) {
 	if ($row ["anonymous"] == 'yes') {
-		write_log ( "匿名发布者编辑了资源 $id ($row[name]) " . $pick_info . $place_info );
+		write_log ( "匿名发布者编辑了资源 $id ($row[name]) " . $pick_info . $place_info . $feature_info );
 	} else {
-		write_log ( "发布者 $CURUSER[username] 编辑了资源 $id ($row[name]) " . $pick_info . $place_info );
+		write_log ( "发布者 $CURUSER[username] 编辑了资源 $id ($row[name]) " . $pick_info . $place_info . $feature_info);
 	}
 } else {
-	write_log ( "管理员 $CURUSER[username] 编辑了资源 $id ($row[name]) " . $spstate . $posstate . $pick_info . $place_info );
+	write_log ( "管理员 $CURUSER[username] 编辑了资源 $id ($row[name]) " . $spstate . $posstate . $pick_info . $place_info . $feature_info);
 }
 $returl = "details.php?id=$id&edited=1";
 if (isset ( $_POST ["returnto"] ))

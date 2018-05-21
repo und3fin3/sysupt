@@ -61,6 +61,8 @@ $lang_edit = array
 	'text_team' => "地区",
 	'text_audio_codec' => "音频编码",
 	'row_content' => "内容",
+	'checkbox_exclusive' => "禁转",
+	'checkbox_tjuptrip' => "TJUPT小组作品"
 );
 
 ?>

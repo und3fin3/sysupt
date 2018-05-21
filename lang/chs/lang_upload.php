@@ -109,6 +109,9 @@ $lang_upload = array
 	'refer_upload'=>"引用发布",
 	'refer_inupt'=>"被引用的种子ID：",
 	'refer_yes'=>"引用！",
+    'row_feature' => "特性",
+    'checkbox_exclusive' => "禁转",
+    'checkbox_tjuptrip' => "TJUPT小组作品"
 );
 
 ?>

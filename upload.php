@@ -212,6 +212,9 @@ else
 				{
 					tr($lang_upload['row_show_uploader'], "<input type=\"checkbox\" name=\"uplver\" value=\"yes\" />".$lang_upload['checkbox_hide_uploader_note'], 1);
 				}
+				if(get_user_class() >= UC_UPLOADER){
+                    tr($lang_upload['row_feature'],"<input type = 'checkbox' name = 'exclusive' value = '1' />" . $lang_upload ['checkbox_exclusive'] . "&nbsp;&nbsp;&nbsp;" . "<input type = 'checkbox' name = 'tjuptrip' value = '1' />" . $lang_upload ['checkbox_tjuptrip']);
+	            }
 				?>
 				<tr><td class="toolbox" align="center" colspan="2"><b><?php echo $lang_upload['text_read_rules']?></b> <input id="qr" type="submit" class="btn" value="<?php echo $lang_upload['submit_upload']?>" /></td></tr>
 		</table>

@@ -40,6 +40,11 @@ if (get_user_class () >= $beanonymous_class && $_POST ['uplver'] == 'yes') { // 
 	$anonymous = "no";
 	$anon = "用户 " . $CURUSER ["username"];
 }
+// 禁转&TJUPT小组作品
+if (get_user_class() >= UC_UPLOADER){
+	$exclusive = $_POST ['exclusive']?"yes":"no";
+    $tjuptrip = $_POST ['tjuptrip']?"yes":"no";
+}
 
 $url = parse_imdb_id ( $_POST ['url'] );
 
@@ -447,6 +452,10 @@ if ($largesize_torrent && $totallen > ($largesize_torrent * 1073741824)) // Larg
 }
 if ($catid == 404)
 	$sp_state = 11; // 资料类特殊优惠
+// TJUPT作品优惠
+if ($tjuptrip == 'yes'){
+	$sp_state = 4;
+}
 
 if ($altname_main == 'yes') {
 	$cnname_part = unesc ( trim ( $_POST ["cnname"] ) );
@@ -519,7 +528,7 @@ if (! count ( $errfile )) {
 	if (is_array ( mysql_fetch_row ( sql_query ( "select info_hash from torrents where pulling_out = '0' AND " . hash_where ( "info_hash", $infohash ) ) ) )) {
 		bark ( $lang_takeupload ['std_torrent_existed'] );
 	}
-	$ret = sql_query ( "INSERT INTO torrents (filename, owner, visible, anonymous, name, size, numfiles, type, url, small_descr, descr, ori_descr, category, source, medium, codec, audiocodec, standard, processing, team, save_as, sp_state, added, sp_time, last_action, nfo, info_hash) VALUES (" . sqlesc ( $fname ) . ", " . sqlesc ( $CURUSER ["id"] ) . ", 'yes', " . sqlesc ( $anonymous ) . ", " . sqlesc ( $torrent ) . ", " . sqlesc ( $totallen ) . ", " . count ( $filelist ) . ", " . sqlesc ( $type ) . ", " . sqlesc ( $url ) . ", " . sqlesc ( $small_descr ) . ", " . sqlesc ( $descr ) . ", " . sqlesc ( $descr ) . ", " . sqlesc ( $catid ) . ", " . sqlesc ( $sourceid ) . ", " . sqlesc ( $mediumid ) . ", " . sqlesc ( $codecid ) . ", " . sqlesc ( $audiocodecid ) . ", " . sqlesc ( $standardid ) . ", " . sqlesc ( $processingid ) . ", " . sqlesc ( $teamid ) . ", " . sqlesc ( $dname ) . ", " . sqlesc ( $sp_state ) . ", " . sqlesc ( date ( "Y-m-d H:i:s" ) ) . ", " . sqlesc ( date ( "Y-m-d H:i:s" ) ) . ", " . sqlesc ( date ( "Y-m-d H:i:s" ) ) . ", " . sqlesc ( $nfo ) . ", " . sqlesc ( $infohash ) . ")" );
+	$ret = sql_query ( "INSERT INTO torrents (filename, owner, visible, anonymous, name, size, numfiles, type, url, small_descr, descr, ori_descr, category, source, medium, codec, audiocodec, standard, processing, team, save_as, sp_state, added, sp_time, last_action, nfo, info_hash, exclusive, tjuptrip) VALUES (" . sqlesc ( $fname ) . ", " . sqlesc ( $CURUSER ["id"] ) . ", 'yes', " . sqlesc ( $anonymous ) . ", " . sqlesc ( $torrent ) . ", " . sqlesc ( $totallen ) . ", " . count ( $filelist ) . ", " . sqlesc ( $type ) . ", " . sqlesc ( $url ) . ", " . sqlesc ( $small_descr ) . ", " . sqlesc ( $descr ) . ", " . sqlesc ( $descr ) . ", " . sqlesc ( $catid ) . ", " . sqlesc ( $sourceid ) . ", " . sqlesc ( $mediumid ) . ", " . sqlesc ( $codecid ) . ", " . sqlesc ( $audiocodecid ) . ", " . sqlesc ( $standardid ) . ", " . sqlesc ( $processingid ) . ", " . sqlesc ( $teamid ) . ", " . sqlesc ( $dname ) . ", " . sqlesc ( $sp_state ) . ", " . sqlesc ( date ( "Y-m-d H:i:s" ) ) . ", " . sqlesc ( date ( "Y-m-d H:i:s" ) ) . ", " . sqlesc ( date ( "Y-m-d H:i:s" ) ) . ", " . sqlesc ( $nfo ) . ", " . sqlesc ( $infohash ) . ", ". sqlesc( $exclusive ) . ", ". sqlesc($tjuptrip) . ")" );
 	if (! $ret) {
 		if (mysql_errno () == 1062)
 			bark ( '(2)' . $lang_takeupload ['std_torrent_existed'] );
