@@ -454,6 +454,7 @@ if ($catid == 404)
 	$sp_state = 11; // 资料类特殊优惠
 // TJUPT作品优惠
 $pos_until = "";
+$pos_state = 'normal';
 if ($tjuptrip == 'yes'){
 	$sp_state = 4;
 	$pos_state = 'sticky';
