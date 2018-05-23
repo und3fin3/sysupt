@@ -191,7 +191,7 @@ if ($type == 'new'){
 			
 			print("<tr><td class=rowfollow>$arr1[invitee]<td class=rowfollow>");
 				
-			print("<a title=\"http://pt.tju.edu.cn/signup.php?type=invite&invitenumber=".$arr1[hash]."\" href=\"javascript:copy_code( 'http://pt.tju.edu.cn/signup.php?type=invite&invitenumber=".$arr1[hash]."')\">".$arr1[hash]."</a></td><td class=rowfollow>$arr1[time_invited]</td></tr>");
+			print("<a title=\"https://tjupt.org/signup.php?type=invite&invitenumber=".$arr1[hash]."\" href=\"javascript:copy_code( 'https://tjupt.org/signup.php?type=invite&invitenumber=".$arr1[hash]."')\">".$arr1[hash]."</a></td><td class=rowfollow>$arr1[time_invited]</td></tr>");
 		}
 	}
 	print("</table>");
