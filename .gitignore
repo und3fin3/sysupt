@@ -75,3 +75,9 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
+# Production env dirs
+torrents
+config
+imdb/cache
+subs
+
