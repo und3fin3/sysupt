@@ -541,6 +541,12 @@ if (! count ( $errfile )) {
 		// mysql_error()));
 	}
 	$id = mysql_insert_id ();
+	if($tjuptrip == 'yes'){
+        $pre_to_shoutbox ['text'] = "TJUPT小组作品[b][color=red]" . $torrent . "[/color][/b]发布啦：[url=details.php?id=" . mysql_real_escape_string ( $id ) . "&hit=1]大家这里使劲戳[/url]";
+        $pre_to_shoutbox ['type'] = "sb";
+        $pre_to_shoutbox ['ip'] = "北洋媛隐身啦～啦啦啦～";
+        sql_query ( "INSERT INTO shoutbox (userid, date, text, type, ip) VALUES (0, " . sqlesc ( time () ) . ", " . sqlesc ( $pre_to_shoutbox ['text'] ) . ", " . sqlesc ( $pre_to_shoutbox ['type'] ) . ", '$pre_to_shoutbox[ip]' )" ) or sqlerr ( __FILE__, __LINE__ );
+    }
 	if ($sp_state > 7 && $sp_state < 14) {
 		sql_query ( "UPDATE torrents SET promotion_time_type = 1 WHERE id=" . $id );
 	}
