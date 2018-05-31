@@ -535,11 +535,11 @@ function format_comment($text, $strip_html = true, $xssclean = false, $newtab = 
 	    {
 	        return formatImg($matches[1], $imageresizer, $image_max_width, $image_max_height);
 	    };
-		$s = preg_replace_callback("/\[img\]([^\<\r\n\"']+?(jpg|png|gif|bmp))\[\/img\]/i", $anon_formatImg_Callback, $s, $imagenum, $imgReplaceCount);
-		$s = preg_replace_callback("/\[img=([^\<\r\n\"']+?(jpg|png|gif|bmp))\]/i", $anon_formatImg_Callback, $s,  ($imagenum != - 1 ? max ( $imagenum - $imgReplaceCount, 0 ) : - 1) );
+		$s = preg_replace_callback("/\[img\]([^\<\r\n\"']+?(jpg|png|gif|bmp|jpeg))\[\/img\]/i", $anon_formatImg_Callback, $s, $imagenum, $imgReplaceCount);
+		$s = preg_replace_callback("/\[img=([^\<\r\n\"']+?(jpg|png|gif|bmp|jpeg))\]/i", $anon_formatImg_Callback, $s,  ($imagenum != - 1 ? max ( $imagenum - $imgReplaceCount, 0 ) : - 1) );
 	} else {
-		$s = preg_replace ( "/\[img\]([^\<\r\n\"']+?(jpg|png|gif|bmp))\[\/img\]/i", '', $s, - 1 );
-		$s = preg_replace ( "/\[img=([^\<\r\n\"']+?(jpg|png|gif|bmp))\]/i", '', $s, - 1 );
+		$s = preg_replace ( "/\[img\]([^\<\r\n\"']+?(jpg|png|gif|bmp|jpeg))\[\/img\]/i", '', $s, - 1 );
+		$s = preg_replace ( "/\[img=([^\<\r\n\"']+?(jpg|png|gif|bmp|jpeg))\]/i", '', $s, - 1 );
 	}
 
 	// [flash,500,400]http://www/image.swf[/flash]
