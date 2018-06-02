@@ -76,6 +76,8 @@ crashlytics.properties
 crashlytics-build.properties
 
 # Production env dirs
+attachments
+bitbucket
 torrents
 config
 imdb/cache
