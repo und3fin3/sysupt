@@ -3386,22 +3386,22 @@ function logincookie($id, $passhash, $updatedb = 1, $expires = 0x7fffffff, $secu
 	if ($expires != 0x7fffffff && $expires != 0)
 		$expires = time () + $expires;
 
-	setcookie ( "c_secure_uid", base64 ( $id ), $expires, ".tjupt.org" );
-	setcookie ( "c_secure_pass", $passhash, $expires, ".tjupt.org" );
+	setcookie ( "c_secure_uid", base64 ( $id ), $expires, "/", ".tjupt.org" );
+	setcookie ( "c_secure_pass", $passhash, $expires, "/", ".tjupt.org" );
 	if ($ssl)
-		setcookie ( "c_secure_ssl", base64 ( "yeah" ), $expires, ".tjupt.org" );
+		setcookie ( "c_secure_ssl", base64 ( "yeah" ), $expires, "/", ".tjupt.org" );
 	else
-		setcookie ( "c_secure_ssl", base64 ( "nope" ), $expires, ".tjupt.org" );
+		setcookie ( "c_secure_ssl", base64 ( "nope" ), $expires, "/", ".tjupt.org" );
 
 	if ($trackerssl)
-		setcookie ( "c_secure_tracker_ssl", base64 ( "yeah" ), $expires, ".tjupt.org" );
+		setcookie ( "c_secure_tracker_ssl", base64 ( "yeah" ), $expires, "/", ".tjupt.org" );
 	else
-		setcookie ( "c_secure_tracker_ssl", base64 ( "nope" ), $expires, ".tjupt.org" );
+		setcookie ( "c_secure_tracker_ssl", base64 ( "nope" ), $expires, "/", ".tjupt.org" );
 
 	if ($securelogin)
-		setcookie ( "c_secure_login", base64 ( "yeah" ), $expires, ".tjupt.org" );
+		setcookie ( "c_secure_login", base64 ( "yeah" ), $expires, "/", ".tjupt.org" );
 	else
-		setcookie ( "c_secure_login", base64 ( "nope" ), $expires, ".tjupt.org" );
+		setcookie ( "c_secure_login", base64 ( "nope" ), $expires, "/", ".tjupt.org" );
 
 	if ($updatedb)
 		sql_query ( "UPDATE users SET last_login = NOW(), lang=" . sqlesc ( get_langid_from_langcookie () ) . " WHERE id = " . sqlesc ( $id ) );
@@ -3410,7 +3410,7 @@ function set_langfolder_cookie($folder, $expires = 0x7fffffff) {
 	if ($expires != 0x7fffffff)
 		$expires = time () + $expires;
 
-	setcookie ( "c_lang_folder", $folder, $expires, ".tjupt.org" );
+	setcookie ( "c_lang_folder", $folder, $expires, "/", ".tjupt.org" );
 }
 function get_protocol_prefix() {
 	global $securelogin;
@@ -3438,12 +3438,12 @@ function make_folder($pre, $folder_name) {
 	return $path;
 }
 function logoutcookie() {
-	setcookie ( "c_secure_uid", "", 0x7fffffff, ".tjupt.org" );
-	setcookie ( "c_secure_pass", "", 0x7fffffff, ".tjupt.org" );
-	// setcookie("c_secure_ssl", "", 0x7fffffff, ".tjupt.org");
-	setcookie ( "c_secure_tracker_ssl", "", 0x7fffffff, ".tjupt.org" );
-	setcookie ( "c_secure_login", "", 0x7fffffff, ".tjupt.org" );
-	// setcookie("c_lang_folder", "", 0x7fffffff, ".tjupt.org");
+	setcookie ( "c_secure_uid", "", 0x7fffffff, "/", ".tjupt.org" );
+	setcookie ( "c_secure_pass", "", 0x7fffffff, "/", ".tjupt.org" );
+	// setcookie("c_secure_ssl", "", 0x7fffffff, "/");
+	setcookie ( "c_secure_tracker_ssl", "", 0x7fffffff, "/", ".tjupt.org" );
+	setcookie ( "c_secure_login", "", 0x7fffffff, "/", ".tjupt.org" );
+	// setcookie("c_lang_folder", "", 0x7fffffff, "/");
 }
 function base64($string, $encode = true) {
 	if ($encode)
