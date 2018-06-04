@@ -424,7 +424,9 @@ $SUBSPATH = "subs";
 // Make sure you have wget installed on your OS
 // replace "http://www.nexusphp.com/" with your own site address
 
-$useCronTriggerCleanUp = false;
+// Because of CloudFlare timeout, we use cron in local to clean up.
+// */5 * * * * curl -k 'https://127.0.0.1/cron.php'
+$useCronTriggerCleanUp = true;
 // some promotion rules
 $promotionrules_torrent = array (
 		0 => array (
