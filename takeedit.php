@@ -496,10 +496,10 @@ if ($catid == 4013)
  */
 $Cache->delete_value ( 'torrent_' . $id . '_seed_name' );
 $feature_info = "";
-if($_POST ["exclusive"] & $row ['exclusive'] != 'yes') {
+if($_POST ["exclusive"] && $row ['exclusive'] != 'yes') {
     $feature_info .= "禁转 ";
 }
-if($_POST ["tjuptrip"] & $row ['tjuptrip'] != 'yes') {
+if($_POST ["tjuptrip"] && $row ['tjuptrip'] != 'yes') {
     $spstate = "";
     $pick_info = "";
     $feature_info .= "TJUPT作品";
