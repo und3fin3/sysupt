@@ -17,7 +17,7 @@ $id = 0 + $id;
 if (! $id)
 	die ();
 
-$res = sql_query ( "SELECT category, owner, pos_state, sp_state, filename, save_as, anonymous, picktype, picktime, name, added FROM torrents WHERE id = " . mysql_real_escape_string ( $id ) );
+$res = sql_query ( "SELECT category, owner, pos_state, sp_state, filename, save_as, anonymous, picktype, picktime, name, added, tjuptrip, exclusive FROM torrents WHERE id = " . mysql_real_escape_string ( $id ) );
 $row = mysql_fetch_array ( $res );
 if (! $row)
 	die ();
@@ -496,10 +496,10 @@ if ($catid == 4013)
  */
 $Cache->delete_value ( 'torrent_' . $id . '_seed_name' );
 $feature_info = "";
-if($_POST ["exclusive"]) {
+if($_POST ["exclusive"] & $row ['exclusive'] != 'yes') {
     $feature_info .= "禁转 ";
 }
-if($_POST ["tjuptrip"]) {
+if($_POST ["tjuptrip"] & $row ['tjuptrip'] != 'yes') {
     $spstate = "";
     $pick_info = "";
     $feature_info .= "TJUPT作品";
