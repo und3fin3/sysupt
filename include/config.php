@@ -152,6 +152,7 @@ $invite_count = $MAIN ['invite_count'];
 $invite_timeout = $MAIN ['invite_timeout'];
 $seeding_leeching_time_calc_start = $MAIN ['seeding_leeching_time_calc_start'];
 $logo_main = $MAIN ['logo'];
+$logo_url = $MAIN ['logo_url'];
 
 $emailnotify_smtp = $SMTP ['emailnotify'];
 $smtptype = $SMTP ['smtptype'];

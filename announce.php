@@ -96,7 +96,7 @@ This way we validate IPv6 connectivity inside the tracker
 */
 if ($_SERVER['HTTP_HOST'] == 'pttracker6.tjupt.org') {
 	if (!validateIPv6($ipv6)){
-        err ( "403-目前仅允许IPv6用户访问");
+        err ( "403-此Tracker仅允许IPv6用户访问");
     }
     $ip = $ipv6;
 	$ipv4 = '';

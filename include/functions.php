@@ -2821,7 +2821,7 @@ function get_style_highlight() {
 }
 function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
 	global $lang_functions;
-	global $CURUSER, $CURLANGDIR, $USERUPDATESET, $iplog1, $oldip, $SITE_ONLINE, $FUNDS, $SITENAME, $SLOGAN, $logo_main, $BASEURL, $offlinemsg, $showversion, $enabledonation, $staffmem_class, $titlekeywords_tweak, $metakeywords_tweak, $metadescription_tweak, $cssdate_tweak, $deletenotransfertwo_account, $neverdelete_account, $iniupload_main;
+	global $CURUSER, $CURLANGDIR, $USERUPDATESET, $iplog1, $oldip, $SITE_ONLINE, $FUNDS, $SITENAME, $SLOGAN, $logo_main, $logo_url, $BASEURL, $offlinemsg, $showversion, $enabledonation, $staffmem_class, $titlekeywords_tweak, $metakeywords_tweak, $metadescription_tweak, $cssdate_tweak, $deletenotransfertwo_account, $neverdelete_account, $iniupload_main;
 	global $tstart;
 	global $Cache;
 	global $Advertisement;
@@ -3007,11 +3007,13 @@ if (false) {
 	} else {
 		?>
 			<div class="logo_img">
+                <a <?php echo $logo_url != ""?"href=\"$logo_url\"":"" ?>>
 					<img src="<?php echo $logo_main?>"
 						alt="<?php echo htmlspecialchars($SITENAME)?>"
 						title="<?php echo htmlspecialchars($SITENAME)?> - <?php echo htmlspecialchars($SLOGAN)?>"
-						width="<?php echo $width?>"/>
-				</div>
+                         width="<?php echo $width?>"/>
+                </a>
+            </div>
 <?php
 	}
 	?>
