@@ -56,7 +56,7 @@ end_frame();
 begin_frame("<span id=\"contact\">".$lang_aboutnexus['text_contact'].PROJECTNAME."</span>");
 print ($lang_aboutnexus['text_contact_note']);
 print ("<br /><br /><table class=\"main\" border=\"1\" cellspacing=\"0\" cellpadding=\"5\" align=\"center\">");
-// tr($lang_aboutnexus['text_web_site'],$website_code ? $website_code : "N/A",1);
+tr($lang_aboutnexus['text_web_site'],$website_code ? $website_code : "N/A",1);
 print ("</table>");
 print ("<br /><br />");
 end_frame();
