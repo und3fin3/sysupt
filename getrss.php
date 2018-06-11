@@ -168,10 +168,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	{
 		$addinclbm="";
 	}
+	$query[] = "passkey=".$CURUSER['passkey'];
 	$queries = implode("&", $query);
 	if ($queries)
 		$link .= "?".$queries;
-	$msg = $lang_getrss['std_use_following_url'] ."\n".$link."\n\n".$lang_getrss['std_utorrent_feed_url']."\n".$link."&linktype=dl&passkey=".$CURUSER['passkey'].$addinclbm;
+	$msg = $lang_getrss['std_use_following_url'] ."\n".$link."\n\n".$lang_getrss['std_utorrent_feed_url']."\n".$link."&linktype=dl".$addinclbm;
 	stdmsg($lang_getrss['std_done'],format_comment($msg));
 	stdfoot();
 	die();
