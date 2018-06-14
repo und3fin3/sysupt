@@ -214,6 +214,8 @@ function formatUrl($url, $newWindow = false, $text = '', $linkClass = '') {
 	$host_whitelist = array('pt.tju.edu.cn',
 							'pt.tju6.edu.cn',
                             'pt.twt.edu.cn',
+                            'www.tjupt.org',
+                            'tjupt.org',
 							NULL, //no domain
 							);
 
@@ -221,7 +223,7 @@ function formatUrl($url, $newWindow = false, $text = '', $linkClass = '') {
 	{
 	    return addTempCode ( "<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"/jump_external.php?ext_url=" . urlencode($url) ."\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>" );
 	}
-    $url = preg_replace('/(https?:\/\/)?pt.(twt|tju6?).edu.cn/i', '', $url);
+    $url = preg_replace('/(https?:\/\/)?(pt.(twt|tju6?).edu.cn|(www.)?tjupt.org)/i', '', $url);
 	return addTempCode ( "<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"$url\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>" );
 }
 function formatCode($text) {
@@ -6114,7 +6116,7 @@ function translate_title($imdb_id) {
 	}
 	$douban_imdb=unserialize($douban_imdb_json);
 	return Sdouban_imdb.alt_title;
-	
+
 }
 
 /*******************end of get imdb******************************/
