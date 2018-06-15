@@ -88,7 +88,7 @@ if ($_GET['action'] == "editclients") {
 	if ($row = mysql_fetch_array($result)) {
 		do {
 ?>
-<h1 align=center><a class=faqlink href=clientsmanage.php><?php echo $lang_clientsmanage['text_clients_management']?></a><b>--></b><?php echo $lang_clientsmanage['text_edit_clients']?></h2>
+<h1 align=center><a class=faqlink href=clientsmanage.php><?php echo $lang_clientsmanage['text_clients_management']?></a><b>--></b><?php echo $lang_clientsmanage['text_edit_clients']?></h1>
 <br />
 <form method=post action="<?php echo $_SERVER["PHP_SELF"];?>">
 <table width="100%"  border="0" cellspacing="0" cellpadding="3" align="center">

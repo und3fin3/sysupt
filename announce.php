@@ -161,7 +161,7 @@ if (isset ( $ipv6 )) { // IPv6地址封禁
 // check port and connectable
 
 if (portblacklisted ( $port ))
-	err ( "005-端口 $port 在黑名单里，请更换端口" );
+	err ( "005-端口 ". $port ." 在黑名单里，请更换端口" );
 	
 	// 5. GET PEER LIST
 	
