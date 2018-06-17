@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     begin_main_frame();
     print("<h2>" . $lang_donate['text_donate'] . "</h2>");
     print("<table width=100%><tr><td colspan=2 class=text align=center>");
-    print("<img id='qrcode' src='" . $qr['qr_code'] . "' width='50%'><br/><br/><font size='3'>" .
+    print("<img id='qrcode' src='" . $qr['qr_code'] . "' width='25%'><br/><br/><font size='3'>" .
         $lang_donate['text_scan'] . "</font></td></tr>");
     print("<tr><td colspan=2 class=text align=center><input type='button' class='btn' onclick='location.href=(\"donate2.php?action=thanks\")' value='" . $lang_donate['btn_paid'] . "' /></td></tr></table>");
     end_main_frame();

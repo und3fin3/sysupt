@@ -5,6 +5,9 @@
  * Date: 6/17/18
  * Time: 12:06 AM
  */
+require "include/bittorrent.php";
+dbconn();
+
 global $youzan_client_id, $youzan_client_secret;
 $request = $GLOBALS['HTTP_RAW_POST_DATA'];
 echo json_encode(['code' => 0, 'msg' => 'success']);
