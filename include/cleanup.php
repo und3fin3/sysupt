@@ -104,8 +104,21 @@ function docleanup($forceAll = 0, $printProgress = false) {
             sql_query("UPDATE donation SET used = 1 WHERE id = ".$donation['id']) or sqlerr ( __FILE__, __LINE__ );
             sql_query("UPDATE users SET seedbonus = seedbonus + " . sqlesc($reward['bonus']) . ", invites = invites + " . sqlesc($reward['invite']) . ", uploaded = uploaded + " . sqlesc($reward['uploaded']) . ", donor = " . sqlesc($star) . ", vip_added = " . sqlesc($vip) . ", bonuscomment = " . sqlesc($bonuscomment) . "WHERE id = " . sqlesc($donation['uid'])) or sqlerr ( __FILE__, __LINE__ );
             $title = "感谢您的捐赠";
-            $msg = "感谢您的捐赠，已为您发放捐赠奖励，以下是奖励详情：\n\t（1）魔力值：".$reward['bonus']."\n".$reward['uploaded'] > 0?("\t（2）上传量：".round($reward['uploaded'] / 1024 / 1024 / 1024, 2)."GB\n".$reward['invite']>0?("\t（3）邀请码：".$reward['invite']."\n".$reward['star'] == 'yes'?("\t（4）捐赠者标识（小黄星，做种将得到2倍的魔力值）\n".$reward['vip'] == 'yes'?("\t（5）VIP身份（不计算下载量，只计算上传量，永久保留账号）\n"):""):""):""):""."[size=4][color=red]北洋园PT衷心感谢您的捐赠，您的支持是我们发展的动力！[/color][/size]";
-			sql_query ( "INSERT INTO messages (sender, receiver, added, msg, subject) VALUES(0, ".$donation['uid'].", ".sqlesc ( date ( "Y-m-d H:i:s" ) ).", ".$msg.", ".$title.")" ) or sqlerr ( __FILE__, __LINE__ );
+            $msg = "感谢您的捐赠，已为您发放捐赠奖励，以下是奖励详情：\n\t（1）魔力值：".$reward['bonus']."\n";
+            if ($reward['uploaded'] > 0){
+                $msg .= "\t（2）上传量：".round($reward['uploaded'] / 1024 / 1024 / 1024, 2)."GB\n";
+            }
+            if ($reward['invite'] > 0){
+                $msg .= "\t（3）邀请码：".$reward['invite']."\n";
+            }
+            if (strcmp($star,'yes')){
+                $msg .= "\t（4）捐赠者标识（小黄星，做种将得到2倍的魔力值）\n";
+            }
+            if (strcmp($vip,'yes')){
+                $msg .= "\t（5）VIP身份（不计算下载量，只计算上传量，永久保留账号）\n";
+            }
+            $msg .= "[size=4][color=red]北洋园PT衷心感谢您的捐赠，您的支持是我们发展的动力！[/color][/size]";
+            sql_query ( "INSERT INTO messages (sender, receiver, added, msg, subject) VALUES(0, ".$donation['uid'].", ".sqlesc ( date ( "Y-m-d H:i:s" ) ).", ".$msg.", ".$title.")" ) or sqlerr ( __FILE__, __LINE__ );
         }
     }
     if ($printProgress){

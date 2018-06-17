@@ -27,7 +27,7 @@ if ($request['test'] == true) {
     // youzan's test
     return;
 }
-$msg = json_decode(urldecode($request['msg']));
+$msg = json_decode(urldecode($request['msg']), true);
 if ($msg['status'] != 'TRADE_SUCCESS' || $msg['status'] != 'TRADE_CLOSED') {
     return;
 }
