@@ -101,7 +101,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
             $user = mysql_fetch_assoc($user_query);
             $star = ($user['donor'] == 'yes' || $reward['star'] == 'yes') ? 'yes' : 'no';
             $vip = ($user['vip_added'] == 'yes' || $reward['vip'] == 'yes') ? 'yes' : 'no';
-            $bonuscomment = date("Y-m-d") . " 捐赠奖励-" . $reward['bonus'] . " 魔力值";
+            $bonuscomment = date("Y-m-d") . " 捐赠奖励 ～ " . $reward['bonus'] . " 魔力值";
             if($reward['invite']>0){
                 $bonuscomment .= "，".$reward['invite'] . " 个邀请码";
             }
