@@ -1,0 +1,5 @@
+{
+  "require": {
+    "hanson/youzan-sdk": "^2.0"
+  }
+}

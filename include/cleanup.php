@@ -93,8 +93,23 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	");
 	
 	printProgress ( "写入统计数据" );
-	
-	$ts = $row [0];
+    $donation_all = sql_query("SELECT * FROM donation WHERE used = 0 AND status = 0");
+    if (mysql_num_rows($donation_all) > 0) {
+        while ($donation = mysql_fetch_array($donation_all)) {
+            $reward = donation_reward($donation['amount']);
+            $user = sql_query("SELECT donor, vip_added, bonuscomment FROM users WHERE id = " . $donation['uid']) or sqlerr ( __FILE__, __LINE__ );
+            $star = ($user['donor'] == 'yes' || $reward['star'] == 'yes') ? 'yes' : 'no';
+            $vip = ($user['vip_added'] == 'yes' || $reward['vip'] == 'yes') ? 'yes' : 'no';
+            $bonuscomment = date("Y-m-d") . " 捐赠奖励 " . $reward['bonus'] . " 魔力值，" . $reward['invite'] . " 个邀请码，" . round($reward['uploaded'] / 1024 / 1024 / 1024, 2) . "GB上传量。 \n" . htmlspecialchars($user['bonuscomment']);
+            sql_query("UPDATE donation SET used = 1 WHERE id = ".$donation['id']) or sqlerr ( __FILE__, __LINE__ );
+            sql_query("UPDATE users SET seedbonus = seedbonus + " . sqlesc($reward['bonus']) . ", invites = invites + " . sqlesc($reward['invite']) . ", uploaded = uploaded + " . sqlesc($reward['uploaded']) . ", donor = " . sqlesc($star) . ", vip_added = " . sqlesc($vip) . ", bonuscomment = " . sqlesc($bonuscomment) . "WHERE id = " . sqlesc($donation['uid'])) or sqlerr ( __FILE__, __LINE__ );
+            sendmessage("感谢您的捐赠，已为您发放捐赠奖励", "以下是奖励详情：\n\t（1）魔力值：".$reward['bonus']."\n".$reward['uploaded'] > 0?("\t（2）上传量：".round($reward['uploaded'] / 1024 / 1024 / 1024, 2)."GB\n".$reward['invite']>0?("\t（3）邀请码：".$reward['invite']."\n".$reward['star'] == 'yes'?("\t（4）捐赠者标识（小黄星，做种将得到2倍的魔力值）\n".$reward['vip'] == 'yes'?("\t（5）VIP身份（不计算下载量，只计算上传量，永久保留账号）\n"):""):""):""):""."[size=4][color=red]北洋园PT衷心感谢您的捐赠，您的支持是我们发展的动力！[/color][/size]", $donation['uid'], 0);
+        }
+    }
+    if ($printProgress){
+        printProgress("发放捐赠奖励");
+	}
+    $ts = $row [0];
 	if ($ts + $autoclean_interval_two > $now && ! $forceAll) {
 		return '一级清理完成';
 	} else {
@@ -112,7 +127,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	if ($printProgress) {
 		printProgress ( "更新幸运抽奖开奖" );
 	}
-		
+	
 	// Priority Class 3: cleanup every 60 mins
 	$res = sql_query ( "SELECT value_u FROM avps WHERE arg = 'lastcleantime3'" );
 	$row = mysql_fetch_array ( $res );
@@ -375,7 +390,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	if ($printProgress) {
 		printProgress ( "删除注册N天依旧无流量的帐号" );
 	}
-/*	
+/*
 	// delete accounts disabled for 50 days
 	if ($deleteunpacked_account) {
 		$secs = 10 * 24 * 60 * 60;
@@ -737,9 +752,9 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	sql_query ( "update torrents set pos_state = 2, pos_state_until = $endtime WHERE id = $tid" ) or sqlerr ( __FILE__, __LINE__ );
 		write_log ( "系统 编辑了资源 $tid (".$tname.") 置顶");}
 	}
-	if ($printProgress) 
+	if ($printProgress)
 		printProgress ( "保种置顶" );
-//===========================================保种置顶==================================	
+//===========================================保种置顶==================================
 	// 7.delete regimage codes
 	sql_query ( "TRUNCATE TABLE `regimages`" ) or sqlerr ( __FILE__, __LINE__ );
 	if ($printProgress) {
@@ -752,7 +767,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 			while ( $arr = mysql_fetch_assoc ( $res ) )
 			write_log ( "系统删除了帐号 $arr[id] ($arr[username]) (被禁用帐号魔力值小于0)", 'normal' );
 		sql_query ( "DELETE FROM users WHERE enabled='no' AND seedbonus<=0" ) or sqlerr ( __FILE__, __LINE__ );
-		sql_query ( "UPDATE users SET seedbonus = seedbonus - 200 WHERE enabled='no' AND seedbonus>0" ) or sqlerr ( __FILE__, __LINE__ );		
+		sql_query ( "UPDATE users SET seedbonus = seedbonus - 200 WHERE enabled='no' AND seedbonus>0" ) or sqlerr ( __FILE__, __LINE__ );
 	}
 	if ($printProgress) {
 		printProgress ( "删除被禁用且魔力值小于0的帐号" );
@@ -996,6 +1011,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 		write_log ( "系统删除了资源 $arr[id] ($arr[name]) (回收站)", 'normal' );
 	}
 	// 删除已被删除的种子的关联字幕
+    global $SUBSPATH;
 	$res = sql_query ( 'SELECT id, torrent_id, title, ext, filename FROM subs WHERE (SELECT COUNT(*) FROM torrents WHERE torrents.id=subs.torrent_id) = 0' );
 	while ( $arr = mysql_fetch_assoc ( $res ) ) {
 		if (file_exists ( "$SUBSPATH/$arr[torrent_id]/$arr[id].$arr[ext]" ) && ! unlink ( "$SUBSPATH/$arr[torrent_id]/$arr[id].$arr[ext]" )) {
@@ -1014,7 +1030,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	$tju_salary_class = UC_MODERATOR;
 	$tju_salary_bonus = 5000;
 	$tju_no_salary_id = array (
-			'74' 
+			'74'
 	);
 	$res = sql_query ( "SELECT salarytime FROM tju_autosalary ORDER BY salarytime DESC limit 1" ) or sqlerr ( __FILE__, __LINE__ );
 	$arr = mysql_fetch_assoc ( $res );
@@ -1060,7 +1076,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	$arr = mysql_fetch_assoc ( $res );
 	$standard = array (
 					'num' => 20,
-					'size' => 30 * 1024 * 1024 * 1024 
+					'size' => 30 * 1024 * 1024 * 1024
 			);
 	if (date ( 'j' ) == 1 && date ( "Y-m-d", strtotime ( $arr ['salarytime'] ) ) < date ( "Y-m-d" )) {
 		$staffmsg = " 上月的发布员工资发放情况：\n";
@@ -1095,7 +1111,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 				$Cache->cache_value ( 'log_uploader', $log_uploader, $time );
 			}
 	foreach ( $usernames as $user ) {
-				if ($log_uploader [$user ['username']] ["thisnum"] == "请假") 
+				if ($log_uploader [$user ['username']] ["thisnum"] == "请假")
 					$salary = 2000;
 				else {
 				$deleted=mysql_fetch_array (sql_query("select deleted_torrents from uploaders where uid = ".$user ['id'].""));

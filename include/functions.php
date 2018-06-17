@@ -6397,3 +6397,77 @@ function check_password($password, $user_id = null)
 	}
 
 }
+
+function youzan_request($method, $params = [], $files = [], $version = '3.0.0'){
+    require("../vendor/autoload.php");
+    global $youzan_client_id, $youzan_client_secret, $youzan_kdt_id;
+    $youzan = new \Hanson\Youzan\Youzan([
+        'client_id' => $youzan_client_id,
+        'client_secret' => $youzan_client_secret,
+        'type' => \Hanson\Youzan\Youzan::PERSONAL,
+        'debug' => false,
+        'kdt_id' => $youzan_kdt_id,
+        'log' => [
+            'name' => 'youzan',
+            'file' => 'youzan.log',
+            'level'      => 'debug',
+            'permission' => 0777,
+        ]
+    ]);
+    $result = $youzan->request($method, $params, $files, $version);
+    return $result;
+}
+
+function donation_reward($amount)
+{
+    global $donation_amount_one, $donation_amount_two, $donation_amount_three, $donation_amount_four, $donation_amount_five, $donation_amount_six, $donation_amount_seven, $donation_amount_eight, $donation_amount_nine;
+    global $donation_reward_zero, $donation_reward_one, $donation_reward_two, $donation_reward_three, $donation_reward_four, $donation_reward_five, $donation_reward_six, $donation_reward_seven, $donation_reward_eight, $donation_reward_nine;
+    if ($amount >= $donation_amount_nine && $donation_amount_nine != 0) {
+        return donation_format_reward($amount, $donation_reward_nine);
+    } else if ($amount >= $donation_amount_eight && $donation_amount_eight != 0) {
+        return donation_format_reward($amount, $donation_reward_eight);
+    } else if ($amount >= $donation_amount_seven && $donation_amount_seven != 0) {
+        return donation_format_reward($amount, $donation_reward_seven);
+    } else if ($amount >= $donation_amount_six && $donation_amount_six != 0) {
+        return donation_format_reward($amount, $donation_reward_six);
+    } else if ($amount >= $donation_amount_five && $donation_amount_five != 0) {
+        return donation_format_reward($amount, $donation_reward_five);
+    } else if ($amount >= $donation_amount_four && $donation_amount_four != 0) {
+        return donation_format_reward($amount, $donation_reward_four);
+    } else if ($amount >= $donation_amount_three && $donation_amount_three != 0) {
+        return donation_format_reward($amount, $donation_reward_three);
+    } else if ($amount >= $donation_amount_two && $donation_amount_two != 0) {
+        return donation_format_reward($amount, $donation_reward_two);
+    } else if ($amount >= $donation_amount_one && $donation_amount_one != 0) {
+        return donation_format_reward($amount, $donation_reward_one);
+    } else {
+        return donation_format_reward($amount, $donation_reward_zero);
+    }
+}
+
+function donation_format_reward($amount = 0, $donation_reward = "0,0,0,0,0")
+{
+    $reward = explode(",", $donation_reward);
+    if (strpos($reward[0], "x") != false) {
+        $bonus = intval(str_replace('x', '', $reward[0])) * $amount;
+    } else {
+        $bonus = intval($reward[0]);
+    }
+    if (strpos($reward[1], "x") != false) {
+        $invite = (float)str_replace('x', '', $reward[1]) * $amount;
+    } else {
+        $invite = intval($reward[1]);
+    }
+    if (strpos($reward[2], "x") != false) {
+        $uploaded = intval((float)str_replace('x', '', $reward[2])) * $amount * 1024 * 1024 * 1024;
+    } else {
+        $uploaded = intval($reward[2]) * 1024 * 1024 * 1024;
+    }
+    return [
+        'bonus' => $bonus,
+        'uploaded' => ceil($uploaded),
+        'invite' => ceil($invite),
+        'star' => $reward[3] == 1 ? 'yes' : 'no',
+        'vip' => $reward[4] == 1 ? 'yes' : 'no',
+    ];
+}

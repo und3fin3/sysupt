@@ -15,7 +15,8 @@ $CONFIGURATIONS = array (
 		'SECURITY',
 		'SMTP',
 		'TORRENT',
-		'TWEAK' 
+		'TWEAK',
+		'DONATION'
 );
 function ReadConfig($configname = NULL) {
 	global $CONFIGURATIONS;
@@ -409,6 +410,30 @@ $thirtypercentleechbecome_torrent = $TORRENT ['thirtypercentleechbecome'];
 $normalbecome_torrent = $TORRENT ['normalbecome'];
 $uploaderdouble_torrent = $TORRENT ['uploaderdouble'];
 $deldeadtorrent_torrent = $TORRENT ['deldeadtorrent'];
+
+$donation_enabled = $DONATION ['enabled'];
+$youzan_client_id = $DONATION ['clientid'];
+$youzan_client_secret = $DONATION ['clientsecret'];
+$youzan_kdt_id = $DONATION ['kdtid'];
+$donation_reward_zero = $DONATION ['rewardzero'];
+$donation_amount_one = $DONATION ['amountone'];
+$donation_reward_one = $DONATION ['rewardone'];
+$donation_amount_two = $DONATION ['amounttwo'];
+$donation_reward_two = $DONATION ['rewardtwo'];
+$donation_amount_three = $DONATION ['amountthree'];
+$donation_reward_three = $DONATION ['rewardthree'];
+$donation_amount_four = $DONATION ['amountfour'];
+$donation_reward_four = $DONATION ['rewardfour'];
+$donation_amount_five = $DONATION ['amountfive'];
+$donation_reward_five = $DONATION ['rewardfive'];
+$donation_amount_six = $DONATION ['amountsix'];
+$donation_reward_six = $DONATION ['rewardsix'];
+$donation_amount_seven = $DONATION ['amountseven'];
+$donation_reward_seven = $DONATION ['rewardseven'];
+$donation_amount_eight = $DONATION ['amounteight'];
+$donation_reward_eight = $DONATION ['rewardeight'];
+$donation_amount_nine = $DONATION ['amountnine'];
+$donation_reward_nine = $DONATION ['rewardnine'];
 
 foreach ( $CONFIGURATIONS as $CONFIGURATION ) {
 	unset ( $GLOBALS [$CONFIGURATION] );
