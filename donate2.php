@@ -45,9 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script type='text/javascript'>
         function amount_change() {
             if (document.getElementById('amount_select').value === '0') {
-                document.getElementById('amount_select').disabled = true;
                 document.getElementById('amount_custom').value = '';
                 document.getElementById('amount_custom').disabled = false;
+            } else {
+                document.getElementById('amount_custom').value = '选择”其它金额“后可用';
+                document.getElementById('amount_custom').disabled = true;
             }
         }
 
