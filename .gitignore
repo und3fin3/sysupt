@@ -84,6 +84,7 @@ config
 imdb/cache
 subs
 
-# Composer dir
+# Composer lock file and dir
 vendor
+composer.lock
 
