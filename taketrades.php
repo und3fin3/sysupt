@@ -28,7 +28,7 @@ if ($request['test'] == true) {
     return;
 }
 $msg = json_decode(urldecode($request['msg']), true);
-if ($msg['status'] != 'TRADE_SUCCESS' || $msg['status'] != 'TRADE_CLOSED') {
+if ($msg['status'] != 'TRADE_SUCCESS' && $msg['status'] != 'TRADE_CLOSED') {
     return;
 }
 $tid = $msg['tid'];
@@ -37,13 +37,14 @@ $params = [
     'with_childs' => false,
 ];
 $trade = youzan_request('youzan.trade.get', $params);
+$trade = $trade['trade'];
 /* status
     0 => SUCCESS
     -1 => CREATED(DEFAULT)
     -2 => CLOSED
 */
 if ($msg['status'] == 'TRADE_SUCCESS') {
-    sql_query("UPDATE donation SET status = 0, success_time = " . sqlesc($trade['pay_time']) . "WHERE qrid = " . sqlesc($trade['qr_id']) . "AND amount = " . sqlesc($trade['price']) . "AND status = -1") or sqlerr(__FILE__, __LINE__);
+    sql_query("UPDATE donation SET status = 0, success_time = " . sqlesc($trade['pay_time']) . " WHERE qrid = " . sqlesc($trade['qr_id']) . " AND amount = " . sqlesc($trade['price']) . " AND status = -1") or sqlerr(__FILE__, __LINE__);
 } elseif ($msg['status'] == 'TRADE_CLOSED') {
-    sql_query("UPDATE donation SET status = -2 WHERE qrid = " . sqlesc($trade['qr_id']) . "AND amount = " . sqlesc($trade['price']) . "AND status = -1") or sqlerr(__FILE__, __LINE__);
+    sql_query("UPDATE donation SET status = -2 WHERE qrid = " . sqlesc($trade['qr_id']) . " AND amount = " . sqlesc($trade['price']) . " AND status = -1") or sqlerr(__FILE__, __LINE__);
 }
