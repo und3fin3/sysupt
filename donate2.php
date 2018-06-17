@@ -14,7 +14,7 @@ if ($donation_enabled != 'yes')
     stderr($lang_donate['std_sorry'], $lang_donate['std_do_not_accept_donation']);
 stdhead($lang_donate['head_donation']);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $amount = round(intval($_POST['amount']), 2);
+    $amount = round((float)$_POST['amount'], 2);
     $message = $_POST['message'];
     $anonymous = $_POST['anonymous'] == 'yes' ? 'yes' : 'no';
     $nickname = $anonymous == 'yes' ? $_POST['nickname'] : "";
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $params = [
         'qr_name' => '捐赠北洋媛',
-        'qr_price' => $amount,
+        'qr_price' => $amount*100,
         'qr_type' => 'QR_TYPE_DYNAMIC',
     ];
     $qr = youzan_request('youzan.pay.qrcode.create', $params);
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     print("<table width=100%><tr><td colspan=2 class=text align=center>");
     print("<img id='qrcode' src='" . $qr['qr_code'] . "' width='50%'><br/><br/><font size='3'>" .
         $lang_donate['text_scan'] . "</font></td></tr>");
-    print("<tr><td><input type='button' class='btn' onclick='location.href=(\"donate2.php?action=thanks\")' value='" . $lang_donate['btn_paid'] . "' /></td></tr></table>");
+    print("<tr><td colspan=2 class=text align=center><input type='button' class='btn' onclick='location.href=(\"donate2.php?action=thanks\")' value='" . $lang_donate['btn_paid'] . "' /></td></tr></table>");
     end_main_frame();
 } else if ($_GET['action'] == 'thanks'){
     stdmsg("完成", $lang_donate['text_thanks']);

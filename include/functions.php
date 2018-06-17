@@ -6399,7 +6399,7 @@ function check_password($password, $user_id = null)
 }
 
 function youzan_request($method, $params = [], $files = [], $version = '3.0.0'){
-    require("../vendor/autoload.php");
+    require(dirname(FILE).'/vendor/autoload.php');
     global $youzan_client_id, $youzan_client_secret, $youzan_kdt_id;
     $youzan = new \Hanson\Youzan\Youzan([
         'client_id' => $youzan_client_id,
