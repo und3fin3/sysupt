@@ -6454,14 +6454,14 @@ function donation_format_reward($amount = 0, $donation_reward = "0,0,0,0,0")
         $bonus = intval($reward[0]);
     }
     if (strpos($reward[1], "x") != false) {
-        $invite = (float)str_replace('x', '', $reward[1]) * $amount;
+        $uploaded = intval((float)str_replace('x', '', $reward[1])) * $amount * 1024 * 1024 * 1024;
     } else {
-        $invite = intval($reward[1]);
+        $uploaded = intval($reward[1]) * 1024 * 1024 * 1024;
     }
     if (strpos($reward[2], "x") != false) {
-        $uploaded = intval((float)str_replace('x', '', $reward[2])) * $amount * 1024 * 1024 * 1024;
+        $invite = (float)str_replace('x', '', $reward[2]) * $amount;
     } else {
-        $uploaded = intval($reward[2]) * 1024 * 1024 * 1024;
+        $invite = intval($reward[2]);
     }
     return [
         'bonus' => $bonus,
