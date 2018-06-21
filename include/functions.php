@@ -2678,7 +2678,7 @@ function get_if_restricted_is_open() {
 function menu($selected = "home") {
 	global $lang_functions;
 	global $BASEURL, $CURUSER;
-	global $enableoffer, $enabletest, $enablerequest, $enablespecial, $enableextforum, $extforumurl, $where_tweak;
+	global $enableoffer, $enabletest, $enablerequest, $enablespecial, $enableextforum, $extforumurl, $where_tweak, $donation_enabled;
 	global $USERUPDATESET;
 	$script_name = $_SERVER ["SCRIPT_FILENAME"];
 	if (preg_match ( "/index/i", $script_name )) {
@@ -2712,7 +2712,9 @@ function menu($selected = "home") {
 	} elseif (preg_match ( "/faq/i", $script_name )) {
 		$selected = "faq";
 	} elseif (preg_match ( "/staff/i", $script_name )) {
-		$selected = "staff";
+        $selected = "staff";
+    } elseif (preg_match( "/donate/i", $script_name )) {
+	    $selected = "donate";
 	} else
 		$selected = "";
 	print ("<div id=\"nav\"><ul id=\"mainmenu\" class=\"menu\">") ;
@@ -2751,6 +2753,8 @@ function menu($selected = "home") {
 	print ("<li" . ($selected == "rules" ? " class=\"selected\"" : "") . "><a href=\"rules.php\">" . $lang_functions ['text_rules'] . "</a></li>") ;
 	print ("<li" . ($selected == "faq" ? " class=\"selected\"" : "") . "><a href=\"faq.php\">" . $lang_functions ['text_faq'] . "</a></li>") ;
 	print ("<li" . ($selected == "staff" ? " class=\"selected\"" : "") . "><a href=\"staff.php\">" . $lang_functions ['text_staff'] . "</a></li>") ;
+    if ($donation_enabled == 'yes')
+        print ("<li" . ($selected == "donate" ? " class=\"selected\"" : "") . "><a href=\"donate.php\">" . $lang_functions ['text_donate'] . "</a></li>") ;
 	print ("</ul></div>") ;
 
 	if ($CURUSER) {
@@ -3029,7 +3033,7 @@ if (false) {
 			echo "<span id=\"ad_header\">" . $headerad [0] . "</span>";
 		}
 	}
-	if ($enabledonation == 'yes') {
+	if (false) {
 		?>
 			<a href="donate.php"><img
 					src="<?php echo get_forum_pic_folder()?>/donate.gif"
@@ -3510,7 +3514,7 @@ function deletetorrent($id,$reasonstr='') {
 	sql_query("insert into messages  (receiver,added,subject,msg)values($receiver,$dt,'".$subject."','".$msg."')");}
 }
 function deletetorrent_meanit($id) {
-	global $torrent_dir, $uploadtorrent_bonus;
+	global $torrent_dir, $uploadtorrent_bonus, $SUBSPATH;
 	$res = sql_query ( "SELECT name,owner,seeders,anonymous FROM torrents WHERE id = $id" );
 	$row = mysql_fetch_array ( $res );
 	KPS ( "-", $uploadtorrent_bonus, $row ["owner"] );
@@ -3790,6 +3794,7 @@ function torrenttable($res, $variant = "torrent") {
 	global $showextinfo;
 	global $torrentmanage_class, $smalldescription_main, $enabletooltip_tweak;
 	global $CURLANGDIR;
+	global $browsecatmode, $specialcatmode;
 
 	if ($variant == "torrent") {
 		$last_browse = $CURUSER ['last_browse'];

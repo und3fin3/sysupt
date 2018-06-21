@@ -2,15 +2,18 @@
 require "include/bittorrent.php";
 dbconn();
 require_once(get_langfile_path());
-if ($enabledonation != 'yes')
+global $donation_enabled;
+if ($donation_enabled != 'yes')
+// if ($enabledonation != 'yes')
 	stderr($lang_donate['std_sorry'], $lang_donate['std_do_not_accept_donation']);
-
+else
+    header("Location: donate2.php");
 $do = $_GET['do'];
 
 if ($do == 'thanks') {
 	stderr($lang_donate['std_success'], $lang_donate['std_donation_success_note_one']."<a href=\"sendmessage.php?receiver=".$ACCOUNTANTID."\"><b>".$lang_donate['std_here']."</b></a>".$lang_donate['std_donation_success_note_two'], false);
 }
-else 
+else
 {
 	$paypal = safe_email($PAYPALACCOUNT);
 	if ($paypal && check_email($paypal))
