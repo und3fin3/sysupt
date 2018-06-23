@@ -15,7 +15,7 @@ if ($donation_enabled != 'yes')
 stdhead($lang_donate['head_donation']);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!is_numeric($amount) || $amount < 1 || is_null($amount)) {
-        stderr($lang_donate['std_error'], "捐赠金额不是合规的数字！", $head = false);
+        stderr($lang_donate['std_error'], "捐赠金额不是合规的数字！", true, false);
     }
     $amount = round((float)$_POST['amount'], 2);
     $message = $_POST['message'];
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ];
     $qr = youzan_request('youzan.pay.qrcode.create', $params);
     if (!isset($qr['qr_id']) || !isset($qr['qr_code'])) {
-        stderr($lang_donate['std_error'], "生成二维码错误，如果这个情况一直发生，请报告管理员！", $head = false);
+        stderr($lang_donate['std_error'], "生成二维码错误，如果这个情况一直发生，请报告管理员！", true, false);
     }
     sql_query("INSERT INTO donation (uid, amount, message, anonymous, nickname, qrid, create_time) VALUES(" . $CURUSER['id'] . ", " . sqlesc($amount) . ", " . sqlesc($message) . ", " . sqlesc($anonymous) . ", " . sqlesc($nickname) . ", " . sqlesc($qr['qr_id']) . ", " . sqlesc(date("Y-m-d H:i:s")) . ")") or sqlerr(__FILE__, __LINE__);
     begin_main_frame();
