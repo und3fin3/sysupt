@@ -101,8 +101,8 @@ function docleanup($forceAll = 0, $printProgress = false) {
             $user = mysql_fetch_assoc($user_query);
             $star = ($user['donor'] == 'yes' || $reward['star'] == 'yes') ? 'yes' : 'no';
             $vip = ($user['class'] < UC_VIP && $reward['vip'] == 'yes') ? UC_VIP : $user['class'];
-            $stafffor = "感谢 " . $user['username'] . " 对北洋园PT的捐赠\n" . $user['stafffor'];
-            $bonuscomment = date("Y-m-d") . " 捐赠奖励 ～ " . $reward['bonus'] . " 魔力值";
+            $stafffor = $reward['vip'] == 'yes' ? ($user['stafffor'] . "\n感谢 " . $user['username'] . " 对北洋园PT的捐赠") : $user['stafffor'];
+            $bonuscomment = date("Y-m-d") . " 捐赠奖励 ★ " . $reward['bonus'] . " 魔力值";
             if ($reward['invite'] > 0) {
                 $bonuscomment .= "，" . $reward['invite'] . " 个邀请码";
             }
@@ -114,18 +114,18 @@ function docleanup($forceAll = 0, $printProgress = false) {
             sql_query("UPDATE donation SET used = 1 WHERE id = " . $donation['id']) or sqlerr(__FILE__, __LINE__);
             sql_query("UPDATE users SET seedbonus = seedbonus + " . sqlesc($reward['bonus']) . ", invites = invites + " . sqlesc($reward['invite']) . ", uploaded = uploaded + " . sqlesc($reward['uploaded']) . ", donor = " . sqlesc($star) . ", class = " . sqlesc($vip) . ", stafffor = " . sqlesc($stafffor) . ", bonuscomment = " . sqlesc($bonuscomment) . "WHERE id = " . sqlesc($donation['uid'])) or sqlerr(__FILE__, __LINE__);
             $title = "感谢您的捐赠！";
-            $msg = "感谢您的捐赠，已为您发放捐赠奖励，以下是奖励详情：\n\t（1）魔力值：" . $reward['bonus'] . "\n";
+            $msg = "感谢您的捐赠，已为您发放捐赠奖励，以下是奖励详情：\n\t ★ 魔力值：" . $reward['bonus'] . "\n";
             if ($reward['uploaded'] > 0) {
-                $msg .= "\t（2）上传量：" . round($reward['uploaded'] / 1024 / 1024 / 1024, 2) . "GB\n";
+                $msg .= "\t ★ 上传量：" . round($reward['uploaded'] / 1024 / 1024 / 1024, 2) . "GB\n";
             }
             if ($reward['invite'] > 0) {
-                $msg .= "\t（3）邀请码：" . $reward['invite'] . "\n";
+                $msg .= "\t ★ 邀请码：" . $reward['invite'] . "\n";
             }
             if ($reward['star'] == 'yes' && $user['donor'] != 'yes') {
-                $msg .= "\t（4）捐赠者标识（小黄星，做种将得到2倍的魔力值）\n";
+                $msg .= "\t ★ 捐赠者标识（小黄星，做种将得到2倍的魔力值）\n";
             }
             if ($reward['vip'] == 'yes' && $user['class'] < UC_VIP) {
-                $msg .= "\t（5）VIP身份（不计算下载量，只计算上传量，永久保留账号）\n";
+                $msg .= "\t ★ VIP身份（不计算下载量，只计算上传量，永久保留账号）\n";
             }
             $msg .= "[size=4][color=red]北洋园PT衷心感谢您的捐赠，您的支持是我们发展的动力！[/color][/size]";
             sql_query("INSERT INTO messages (sender, receiver, added, msg, subject) VALUES(0, " . $donation['uid'] . ", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc($msg) . ", " . sqlesc($title) . ")") or sqlerr(__FILE__, __LINE__);

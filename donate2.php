@@ -14,13 +14,13 @@ if ($donation_enabled != 'yes')
     stderr($lang_donate['std_sorry'], $lang_donate['std_do_not_accept_donation']);
 stdhead($lang_donate['head_donation']);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!is_numeric($amount) || $amount < 1 || is_null($amount)) {
+        stderr($lang_donate['std_error'], "捐赠金额不是合规的数字！", $head = false);
+    }
     $amount = round((float)$_POST['amount'], 2);
     $message = $_POST['message'];
     $anonymous = $_POST['anonymous'] == 'yes' ? 'yes' : 'no';
     $nickname = $anonymous == 'yes' ? $_POST['nickname'] : "";
-    if (!is_numeric($amount) || $amount < 1 || is_null($amount)) {
-        stderr($lang_donate['std_error'], "捐赠金额不是合规的数字！", $head = false);
-    }
     $params = [
         'qr_name' => '捐赠北洋媛',
         'qr_price' => $amount*100,
