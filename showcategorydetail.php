@@ -72,13 +72,13 @@ function tr_uploadinfo($x,$y){
 	$show .= "</td></tr><div class=\"clear1\"></div>";
 	print($show);
 }
-
+/*
 function tr_autofill(){
 	$show = "<tr class=\"rowfollow\" ><input id=\"autofill\" type=\"button\" value=\"一键填写种子信息\" onclick=\"javascript:autofill();\"><font color=\"#FF0000\">（重要：试验性功能，请自行检查正误，欢迎去论坛汇报错误，第一次使用前请按Ctrl+F5刷新缓存）</font>";
     $show .= "</td></tr><div class=\"clear1\"></div>";
     print($show);
 }
-
+*/
 //ajax采用utf编码，从数据库获得的中文字符为gbk编码，iconv函数将从数据库取得的中文字符先编码为utf-8,
 //再交给ajax处理echo输出，解决显示ajax乱码问题.
 $star = "<b><font color=red>*</font></b>";
@@ -86,7 +86,7 @@ $catid = 0 + $_GET["catid"];
 
 if($catid == 401){
 	tr_uploadinfo("电影","forums.php?action=viewtopic&forumid=5&topicid=56");
-	tr_autofill();
+	//tr_autofill();
 	tr_text("中文名","cname",$star);
 	tr_text("英文名","ename",$star."英文名为0day名，如：The.Kings.Speech.2010.BDRip.XviD-AMIABLE");
 	//tr_text("Imdb编号","imdbnum","如：tt0120815");
