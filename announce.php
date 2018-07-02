@@ -102,12 +102,6 @@ if ($_SERVER['HTTP_HOST'] == 'pttracker6.tjupt.org') {
 	$ipv4 = '';
 }
 
-// This is a validated IPv6 address
-if ($ipv6){
-	// IPv6 does not support compact peer list
-    $compact = 0;
-}
-
 	
 // ----check ip
 
@@ -121,7 +115,7 @@ if ($nip) { // $nip would be false for IPv6 address
 		// die;
 	}
 	
-	if (!check_tjuip($nip)) {
+	if (!check_tjuip($nip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org') {
 		// header("HTTP/1.0 403 Forbidden");
 		err ( "004-您正在使用校外IP下载(" . $ip . ")，为了避免给校内用户带来流量负担，我们阻止了您本次的下载请求！" );
 		// die;
@@ -134,6 +128,20 @@ if ($nip) { // $nip would be false for IPv6 address
 	$ipv4 = $ip;
 } elseif (! validateIPv6 ( $ip )) { // 校验IP地址的合法性
 	err ( "403-IP地址不合法，请与PTadmin@TJUPT.org联系！" );
+}
+
+if ($_SERVER['HTTP_HOST'] == 'pttracker4.tjupt.org') {
+    if ($CURUSER['schoolmode'] == 'yes') {
+        err("403-您未开启离校模式，我们禁止了您与公网IPv4用户的连接");
+    }
+    $ip = $ipv4;
+    $ipv6 = '';
+}
+
+// This is a validated IPv6 address
+if ($ipv6) {
+    // IPv6 does not support compact peer list
+    $compact = 0;
 }
 
 if (isset ( $ipv6 )) { // IPv6地址封禁
@@ -283,6 +291,9 @@ while ( $row = mysql_fetch_assoc ( $res ) ) {
 	
 	if ($compact == 1) {
 		$longip = ip2long ( $row ['ipv4'] );
+		if (!check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org'){
+			continue;
+		}
 		if ($longip) // Ignore ipv6 address
 			$peer_list .= pack ( "Nn", sprintf ( "%d", $longip ), $row ['port'] );
 	} elseif ($no_peer_id == 1) {
