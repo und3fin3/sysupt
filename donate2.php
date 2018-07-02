@@ -14,19 +14,24 @@ if ($donation_enabled != 'yes')
     stderr($lang_donate['std_sorry'], $lang_donate['std_do_not_accept_donation']);
 stdhead($lang_donate['head_donation']);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!is_numeric($amount) || $amount < 1 || is_null($amount)) {
+    $amount = $_POST['amount'] + 0;
+    if (!is_numeric($amount) || $amount < 1) {
         stderr($lang_donate['std_error'], "捐赠金额不是合规的数字！", true, false);
     }
-    $amount = round((float)$_POST['amount'], 2);
+    $amount = round($amount, 2);
     $message = $_POST['message'];
     $anonymous = $_POST['anonymous'] == 'yes' ? 'yes' : 'no';
     $nickname = $anonymous == 'yes' ? $_POST['nickname'] : "";
     $params = [
         'qr_name' => '捐赠北洋媛',
-        'qr_price' => $amount*100,
+        'qr_price' => $amount * 100,
         'qr_type' => 'QR_TYPE_DYNAMIC',
     ];
-    $qr = youzan_request('youzan.pay.qrcode.create', $params);
+    try {
+        $qr = youzan_request('youzan.pay.qrcode.create', $params);
+    } catch (Exception $e) {
+        stderr($lang_donate['std_error'], $e, true, false);
+    }
     if (!isset($qr['qr_id']) || !isset($qr['qr_code'])) {
         stderr($lang_donate['std_error'], "生成二维码错误，如果这个情况一直发生，请报告管理员！", true, false);
     }
@@ -38,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $lang_donate['text_scan'] . "</font></td></tr>");
     print("<tr><td colspan=2 class=text align=center><input type='button' class='btn' onclick='location.href=(\"donate2.php?action=thanks\")' value='" . $lang_donate['btn_paid'] . "' /></td></tr></table>");
     end_main_frame();
-} else if ($_GET['action'] == 'thanks'){
+} else if ($_GET['action'] == 'thanks') {
     stdmsg("完成", $lang_donate['text_thanks']);
 } else {
     ?>
