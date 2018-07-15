@@ -100,6 +100,9 @@ if ($action) {
                     $parked = $_POST["parked"];
                     if ($parked != 'yes')
                         $parked = 'no';
+                    $enablepublic4 = $_POST["enablepublic4"];
+                    if ($enablepublic4 != 'yes')
+                        $enablepublic4 = 'no';
                     $acceptpms = $_POST["acceptpms"];
                     $deletepms = ($_POST["deletepms"] != "" ? "yes" : "no");
                     $savepms = ($_POST["savepms"] != "" ? "yes" : "no");
@@ -127,6 +130,7 @@ if ($action) {
                     $info = htmlspecialchars(trim($_POST["info"]));
 
                     $updateset[] = "parked = " . sqlesc($parked);
+                    $updateset[] = "enablepublic4 = " . sqlesc($enablepublic4);
                     $updateset[] = "acceptpms = " . sqlesc($acceptpms);
                     $updateset[] = "deletepms = " . sqlesc($deletepms);
                     $updateset[] = "savepms = " . sqlesc($savepms);
@@ -186,6 +190,9 @@ if ($action) {
                 tr_small($lang_usercp['row_account_parked'],
                     "<input type=checkbox name=parked" . ($CURUSER["parked"] == "yes" ? " checked" : "") . " value=yes>" . $lang_usercp['checkbox_pack_my_account'] . "<br /><font class=small size=1>" . $lang_usercp['text_account_pack_note'] . "</font>"
                     , 1);
+                tr_small($lang_usercp['row_enable_public_ipv4'],
+                    "<input type=checkbox name=enablepublic4" . ($CURUSER["enablepublic4"] == "yes" ? " checked" : "") . " value=yes>" . $lang_usercp['checkbox_enable_public_ipv4'] . "<br />" . $lang_usercp['text_enable_public_ipv4_note'],
+                    1);
                 tr_small($lang_usercp['row_pms'], $lang_usercp['text_accept_pms'] . "<input type=radio name=acceptpms" . ($CURUSER["acceptpms"] == "yes" ? " checked" : "") . " value=yes>" . $lang_usercp['radio_all_except_blocks'] . "<input type=radio name=acceptpms" . ($CURUSER["acceptpms"] == "friends" ? " checked" : "") . " value=friends>" . $lang_usercp['radio_friends_only'] . "<input type=radio name=acceptpms" . ($CURUSER["acceptpms"] == "no" ? " checked" : "") . " value=no>" . $lang_usercp['radio_staff_only'] . "<br/>" . $lang_usercp['text_accept_atpms'] . "<input type=radio name=acceptatpms" . ($CURUSER["acceptatpms"] == "yes" ? " checked" : "") . " value=yes>" . $lang_usercp['radio_all_except_blocks'] . "<input type=radio name=acceptatpms" . ($CURUSER["acceptatpms"] == "friends" ? " checked" : "") . " value=friends>" . $lang_usercp['radio_friends_only'] . "<input type=radio name=acceptatpms" . ($CURUSER["acceptatpms"] == "no" ? " checked" : "") . " value=no>" . $lang_usercp['radio_staff_only'] . "<br /><input type=checkbox name=deletepms" . ($CURUSER["deletepms"] == "yes" ? " checked" : "") . "> " . $lang_usercp['checkbox_delete_pms'] . "<br /><input type=checkbox name=savepms" . ($CURUSER["savepms"] == "yes" ? " checked" : "") . "> " . $lang_usercp['checkbox_save_pms'] . "<br /><input type=checkbox name=commentpm" . ($CURUSER["commentpm"] == "yes" ? " checked" : "") . " value=yes> " . $lang_usercp['checkbox_pm_on_comments'], 1);
 
                 tr_small($lang_usercp['row_gender'],
