@@ -54,9 +54,20 @@ foreach ( array (
 	if (strlen ( $GLOBALS [$x] ) != 20)
 		err ( " $x 的长度为 " . strlen ( $GLOBALS [$x] ) . "( " . rawurlencode ( $GLOBALS [$x] ) . " )" );
 }
+
+// check passkey
 if (strlen ( $passkey ) != 32)
 	err ( "001-错误的passkey( $passkey )! 请从" . $BASEURL . "重新下载torrent文件" );
-	
+
+if (!$az = $Cache->get_value('user_passkey_' . $passkey . '_content')) {
+    $res = sql_query("SELECT id, username, downloadpos, enabled, uploaded, downloaded, class, parked, clientselect, showclienterror, enablepublic4 FROM users WHERE passkey='" . mysql_real_escape_string($passkey) . "' LIMIT 1");
+    $az = mysql_fetch_array($res);
+    $Cache->cache_value('user_passkey_' . $passkey . '_content', $az, 950);
+}
+
+if (!$az)
+    err("001-错误的passkey( $passkey )! 请从" . $BASEURL . "重新下载torrent文件");
+
 	// 4. GET IP AND CHECK PORT
 
 $ip = getip (); // avoid to get the spoof ip from some agent
@@ -131,8 +142,8 @@ if ($nip) { // $nip would be false for IPv6 address
 }
 
 if ($_SERVER['HTTP_HOST'] == 'pttracker4.tjupt.org') {
-    if ($CURUSER['schoolmode'] == 'yes') {
-        err("403-您未开启离校模式，我们禁止了您与公网IPv4用户的连接");
+    if ($az['enablepublic4'] != 'yes') {
+        err("403-您未允许Tracker服务器向您提供公网IPv4地址，如需要请前往控制面板修改");
     }
     $ip = $ipv4;
     $ipv6 = '';
@@ -193,17 +204,6 @@ foreach ( array (
 // set if seeder based on left field
 
 $seeder = ($left == 0) ? "yes" : "no";
-
-// check passkey
-
-if (! $az = $Cache->get_value ( 'user_passkey_' . $passkey . '_content' )) {
-	$res = sql_query ( "SELECT id, username, downloadpos, enabled, uploaded, downloaded, class, parked, clientselect, showclienterror FROM users WHERE passkey='" . mysql_real_escape_string ( $passkey ) . "' LIMIT 1" );
-	$az = mysql_fetch_array ( $res );
-	$Cache->cache_value ( 'user_passkey_' . $passkey . '_content', $az, 950 );
-}
-
-if (! $az)
-	err ( "001-错误的passkey( $passkey )! 请从" . $BASEURL . "重新下载torrent文件" );
 
 $userid = 0 + $az ['id'];
 
@@ -291,19 +291,35 @@ while ( $row = mysql_fetch_assoc ( $res ) ) {
 	
 	if ($compact == 1) {
 		$longip = ip2long ( $row ['ipv4'] );
-		if (!check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org'){
-			continue;
-		}
+        if (!check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org') {
+            continue;
+        } else if (check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttrackertju.tjupt.org') {
+            continue;
+        }
 		if ($longip) // Ignore ipv6 address
 			$peer_list .= pack ( "Nn", sprintf ( "%d", $longip ), $row ['port'] );
 	} elseif ($no_peer_id == 1) {
-		if ($row ['ipv4'] != "")
-			$peer_list .= "d" . benc_str ( "ip" ) . benc_str ( $row ["ipv4"] ) . benc_str ( "port" ) . "i" . $row ["port"] . "e" . "e";
-		if ($row ['ipv6'] != "")
+        if ($row ['ipv4'] != "") {
+            $longip = ip2long($row ['ipv4']);
+            if (!check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org') {
+                continue;
+            } else if (check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttrackertju.tjupt.org') {
+                continue;
+            }
+            $peer_list .= "d" . benc_str("ip") . benc_str($row ["ipv4"]) . benc_str("port") . "i" . $row ["port"] . "e" . "e";
+        }
+			if ($row ['ipv6'] != "")
 			$peer_list .= "d" . benc_str ( "ip" ) . benc_str ( $row ["ipv6"] ) . benc_str ( "port" ) . "i" . $row ["port"] . "e" . "e";
 	} else {
-		if ($row ['ipv4'] != "")
-			$peer_list .= "d" . benc_str ( "ip" ) . benc_str ( $row ["ipv4"] ) . benc_str ( "peer id" ) . benc_str ( $row ["peer_id"] ) . benc_str ( "port" ) . "i" . $row ["port"] . "e" . "e";
+        if ($row ['ipv4'] != "") {
+            $longip = ip2long($row ['ipv4']);
+            if (!check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org') {
+                continue;
+            } else if (check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttrackertju.tjupt.org') {
+                continue;
+            }
+            $peer_list .= "d" . benc_str("ip") . benc_str($row ["ipv4"]) . benc_str("peer id") . benc_str($row ["peer_id"]) . benc_str("port") . "i" . $row ["port"] . "e" . "e";
+        }
 		if ($row ['ipv6'] != "")
 			$peer_list .= "d" . benc_str ( "ip" ) . benc_str ( $row ["ipv6"] ) . benc_str ( "peer id" ) . benc_str ( $row ["peer_id"] ) . benc_str ( "port" ) . "i" . $row ["port"] . "e" . "e";
 	}
