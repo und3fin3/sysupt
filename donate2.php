@@ -37,11 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     sql_query("INSERT INTO donation (uid, amount, message, anonymous, nickname, qrid, create_time) VALUES(" . $CURUSER['id'] . ", " . sqlesc($amount) . ", " . sqlesc($message) . ", " . sqlesc($anonymous) . ", " . sqlesc($nickname) . ", " . sqlesc($qr['qr_id']) . ", " . sqlesc(date("Y-m-d H:i:s")) . ")") or sqlerr(__FILE__, __LINE__);
     begin_main_frame();
-    print("<h2>" . $lang_donate['text_donate'] . "</h2>");
+    begin_frame($lang_donate['text_donate']);
     print("<table width=100%><tr><td colspan=2 class=text align=center>");
     print("<img id='qrcode' src='" . $qr['qr_code'] . "' width='25%'><br/><br/><font size='3'>" .
         $lang_donate['text_scan'] . "</font></td></tr>");
     print("<tr><td colspan=2 class=text align=center><input type='button' class='btn' onclick='location.href=(\"donate2.php?action=thanks\")' value='" . $lang_donate['btn_paid'] . "' /></td></tr></table>");
+    end_frame();
     end_main_frame();
 } else if ($_GET['action'] == 'thanks') {
     stdmsg("完成", $lang_donate['text_thanks']);
@@ -70,11 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </script>
     <?php
     begin_main_frame();
-    print("<h2>" . $lang_donate['text_donate'] . "</h2>");
-    print("<table width=100%><tr>");
-    print("<td colspan=2 class=text align=left>" . $lang_donate['text_donate_explain_note'] . "</td></tr>");
+    begin_frame($lang_donate['text_donate']);
+    print("<table width=100%>");
+    print("<tr><td colspan=2 class=text align=left>" . $lang_donate['text_donate_explain_note'] . "</td></tr>");
     print("<tr><td colspan=2 class=text align=center>");
-    print("<form action='donate2.php' method='post'><table class='main' border='1' cellspacing='0' cellpadding='10'>");
+    print("<form action='donate2.php' method='post'>");
+    begin_table();
     tr($lang_donate['text_select_donation_amount'], "<select id='amount_select' name='amount' onchange='amount_change();'>" .
         "<option value='' selected>" . $lang_donate['select_choose_donation_amount'] . "</option>" .
         "<option value='10'>10" . $lang_donate['text_donation'] . "</option>" .
@@ -92,7 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     print("<tr><td class='toolbox' colspan='2' align='center'>
         <input type='submit' class='btn' value='" . $lang_donate['btn_next'] . "'>&nbsp;
         <input type='reset' class='btn' value='" . $lang_donate['btn_reset'] . "'></td></tr>");
-    print("</td></tr></table>");
+    end_table();
+    print("</form></td></tr></table>");
+    end_frame();
     end_main_frame();
 }
 stdfoot();
