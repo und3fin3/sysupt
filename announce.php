@@ -92,6 +92,9 @@ if (! validateIPv6 ( $ip )) {
 	
 	if (substr ( $ipv6, 0, 26 ) == '2001:da8:200:900e:200:5efe')
 		unset ( $ipv6 );
+	
+	if ($_SERVER['HTTP_HOST'] == 'pttracker4.tjupt.org')
+		unset ( $ipv6 );
 } else {
 	$ipv6 = $ip;
 }
@@ -145,8 +148,7 @@ if ($_SERVER['HTTP_HOST'] == 'pttracker4.tjupt.org') {
     if ($az['enablepublic4'] != 'yes') {
         err("403-您未允许Tracker服务器向您提供公网IPv4地址，如需要请前往控制面板修改");
     }
-    $ip = $ipv4;
-    $ipv6 = '';
+    unset($ipv6);
 }
 
 // This is a validated IPv6 address
@@ -336,9 +338,8 @@ if (! isset ( $self )) {
 	}
 }
 
-// NO IPv4 !
-//if (validateIPv6 ( $ip ))
-//	$ipv4 = $self ['ipv4'];
+if (validateIPv6 ( $ip ))
+	$ipv4 = $self ['ipv4'];
 	
 	// if($self['prevts'] > (TIMENOW - 120))$real_annnounce_interval += 60;
 	
