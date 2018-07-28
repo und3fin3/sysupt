@@ -1,16 +1,8 @@
 <?php
 $domains = array(
-				"tju.edu.cn",
-				"mail.nankai.edu.cn",
-				"nankai.edu.cn",
-				"tijmu.edu.cn",
-				"tmu.cn",
-				"hebut.edu.cn",
-				"nwsuaf.edu.cn",
-				"my.swjtu.edu.cn",
-				"home.swjtu.edu.cn",
-				"live.xauat.edu.cn"
-				
+    "edu.cn",
+    "ac.cn"
+
 );
 
 $lang_self_invite = array
@@ -45,15 +37,15 @@ $lang_self_invite = array
 	'successfully_sent' => "，请前往您的邮箱查收。",
 	'email_address' => "E-mail地址",
 	'email_address_error' => "E-mail地址不正确！",
-	'domain_not_permission' => "该邮件域不能用于自助邀请。你是怎么来到这里的？",
+	'domain_not_permission' => "该邮件域不能用于自助邀请。请使用@*.edu.cn或@*.ac.cn的邮箱注册",
 	'email_address_banned' => "E-mail地址被禁用，请与管理组联系！",
 	'input_email_address' => "请输入你的E-mail地址：",
 	'welcome' => "欢迎来到北洋园PT自助邀请系统。<br />",
-	'readme' => "如果你是天津大学、南开大学、天津医科大学、河北工业大学、西南交通大学、西北农林科技大学、西安建筑科技大学的用户，在这里你可以凭特定的邮箱获得一个本站帐号。<br />当然，你也可以放弃这一权利。作为补偿，你可以得到一定的魔力值，并且还可以使一个被禁用的帐号恢复使用。<br /><a target=_blank class=faqlink href=http://candle.tju.edu.cn>点击这里注册天大邮箱</a>",
+	'readme' => "如果你是教育网用户，在这里你可以凭<font color='red'>*.edu.cn或*.ac.cn</font>为后缀的邮箱获得一个本站帐号。<br />当然，你也可以放弃这一权利。作为补偿，你可以得到一定的魔力值，并且还可以使一个被禁用的帐号恢复使用。<br /><a target=_blank class=faqlink href=http://candle.tju.edu.cn>点击这里注册天大邮箱</a>",
 	'warning' => "<br/><b>注意</b>:<br/>每个邮箱只能申请一次账号，账号、魔力值和复活一个被禁用户三者只能选其一。<br/>如果你已经用你的邮箱申请过一次账号，那么不论此账号是否仍在使用，你都不能通过此邮箱获得第二个账号。请向您的朋友索要邀请码加入本站。",
 	'do_not_treat_us' => "不要试图从非法途径获得邀请。",
 	'testing' => "该功能尚未开放！",
-	'notice' => "注意：tju邮箱用户如果无法收到邮件请检查<b>邮件网关</b>查看<b>拦截记录</b>！"
+	'notice' => "注意：tju邮箱用户如果无法收到邮件请检查<b>邮件网关<b>查看<b>拦截记录</b>！"
 
 );
 

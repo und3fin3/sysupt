@@ -3,8 +3,6 @@ require_once("include/bittorrent.php");
 require_once("include/tjuip_helper.php");
 dbconn();
 
-assert_tjuip_or_mod();
-
 set_time_limit(120);
 $id = (int)$_GET["id"];
 if (!$id)
@@ -19,10 +17,13 @@ if ($passkey) {
         die("account disabed or parked");
     $oldip = $user['ip'];
     $user['ip'] = getip();
+    if (($user['enablepublic4'] != 'yes') && !check_tjuip(ip2long(getip())))
+        die("account disable public IPv4");
     $CURUSER = $user;
 } else {
     loggedinorreturn();
     parked();
+    check_tjuip_or_warning($CURUSER);
     $letdown = $_GET['letdown'];
     if (!$letdown && $CURUSER['showdlnotice'] == 1) {
         header("Location: downloadnotice.php?torrentid=" . $id . "&type=firsttime");

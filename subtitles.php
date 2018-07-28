@@ -6,11 +6,10 @@ require_once(get_langfile_path());
 require_once(get_langfile_path("",true));
 loggedinorreturn();
 
-assert_tjuip_or_mod();
-
 if (!isset($CURUSER))
 	stderr($lang_subtitles['std_error'],$lang_subtitles['std_must_login_to_upload']);
 
+check_tjuip_or_warning($CURUSER);
 
 stdhead($lang_subtitles['head_subtitles']);
 

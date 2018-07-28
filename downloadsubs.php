@@ -2,12 +2,12 @@
 require "include/bittorrent.php";
 require_once("include/tjuip_helper.php");
 dbconn();
-assert_tjuip_or_mod();
 if (!$CURUSER)
 {
 	Header("Location: " . get_protocol_prefix() . "$BASEURL/");
 	die;
 }
+check_tjuip_or_warning($CURUSER);
 
 $filename = $_GET["subid"];
 $dirname = $_GET["torrentid"];

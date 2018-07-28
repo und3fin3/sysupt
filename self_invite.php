@@ -6,6 +6,10 @@ print("<title>" . $lang_self_invite['title'] . "</title>");
 registration_check('invitesystem', true, false);
 failedloginscheck();
 cur_user_check();
+
+require_once("include/tjuip_helper.php");
+assert_tjuip();
+
 global $lang_takesignup;
 global $oneinvite_bonus;
 $revive_bonus = 3000;
@@ -84,10 +88,11 @@ if ($getcode) {
         }
     }
 } elseif ($email || $send_again) {
-    $domain = $_POST['domain'];
+    $email_arr = explode(".", $email);
+    $domain = $email_arr[count($email_arr) - 2] . "." . $email_arr[count($email_arr) - 1];
     if (!in_array($domain, $domains) && !$send_again)
         stderr($lang_self_invite['std_error'], $lang_self_invite['domain_not_permission']);
-    $emailaddress = $email . "@" . $domain;
+    $emailaddress = $email;
     if ($send_again) $emailaddress = $send_again;
     $emailaddress = safe_email($emailaddress);
     $a = (@mysql_fetch_row(@sql_query("select count(*) from self_invite where email=" . sqlesc($emailaddress)))) or die(mysql_error());
@@ -113,9 +118,11 @@ EOD;
 
 } else {
     stdhead($title);
-    print("<table width=700 class=main border=0 cellspacing=0 cellpadding=0>\n<tr><td class=embedded><h2>" . $lang_self_invite['welcome'] . "</h2>\n<table width=\"100%\"><tr><td class=\"text\">\n" . $lang_self_invite['readme'] . "\n" . $lang_self_invite['warning'] . "\n<form method=\"post\" action=\"self_invite.php\" /><br />\n" . $lang_self_invite['input_email_address'] . "<input name=\"email\" value=\"\" />\n@<select name=\"domain\">");
-    foreach ($domains as $getdomain) print("<option value=\"" . $getdomain . "\">" . $getdomain . "</option>");
-    print("</select>\n<input type=\"submit\" name=\"submit\" value=\"" . $lang_self_invite[enter] . "\" /></form></td></tr></table></td></tr>");
+    // print("<table width=700 class=main border=0 cellspacing=0 cellpadding=0>\n<tr><td class=embedded><h2>" . $lang_self_invite['welcome'] . "</h2>\n<table width=\"100%\"><tr><td class=\"text\">\n" . $lang_self_invite['readme'] . "\n" . $lang_self_invite['warning'] . "\n<form method=\"post\" action=\"self_invite.php\" /><br />\n" . $lang_self_invite['input_email_address'] . "<input name=\"email\" value=\"\" />\n@<select name=\"domain\">");
+    print("<table width=700 class=main border=0 cellspacing=0 cellpadding=0>\n<tr><td class=embedded><h2>" . $lang_self_invite['welcome'] . "</h2>\n<table width=\"100%\"><tr><td class=\"text\">\n" . $lang_self_invite['readme'] . "\n" . $lang_self_invite['warning'] . "\n<form method=\"post\" action=\"self_invite.php\" /><br />\n" . $lang_self_invite['input_email_address'] . "<input name=\"email\" value=\"\" />");
+    // foreach ($domains as $getdomain) print("<option value=\"" . $getdomain . "\">" . $getdomain . "</option>");
+    // print("</select>\n<input type=\"submit\" name=\"submit\" value=\"" . $lang_self_invite[enter] . "\" /></form></td></tr></table></td></tr>");
+    print("\n<input type=\"submit\" name=\"submit\" value=\"" . $lang_self_invite['enter'] . "\" /></form></td></tr></table></td></tr>");
     print("<tr><td><h2>" . $lang_self_invite['notice'] . "</h2></td></tr></table>");
 }
 stdfoot();

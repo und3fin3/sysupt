@@ -4,7 +4,7 @@ require_once("include/tjuip_helper.php");
 dbconn();
 require_once(get_langfile_path());
 loggedinorreturn();
-assert_tjuip_or_mod();
+check_tjuip_or_warning($CURUSER);
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")

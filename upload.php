@@ -6,7 +6,7 @@ require_once(get_langfile_path());
 loggedinorreturn();
 parked();
 
-assert_tjuip_or_mod();
+check_tjuip_or_warning($CURUSER);
 
 
 if ($CURUSER["uploadpos"] == 'no')

@@ -5,7 +5,7 @@ dbconn();
 require_once(get_langfile_path("edit.php"));
 loggedinorreturn();
 
-assert_tjuip_or_mod();
+check_tjuip_or_warning($CURUSER);
 //$id = 0 + (int)($_POST['torrentid']);
 $id = 0 + $_GET['id'];
 if (!$id)
