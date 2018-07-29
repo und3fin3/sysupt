@@ -80,7 +80,7 @@ crashlytics-build.properties
 attachments
 bitbucket
 torrents
-config
+config/allconfig.php
 imdb/cache
 subs
 
