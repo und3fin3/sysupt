@@ -16,11 +16,13 @@ subs
 **Please use Mysql/MariaDB**<br/>
 Run *sql\pt.sql* to create table structure<br/>
 Then run *sql\data.sql* to import basic data
-###3.Edit allconfig.php
+###3.Change permission of config
+    chmod -R 777 config
+###4.Edit allconfig.php
 Copy *config/example.allconfig.php* to *config/allconfig.php*,<br/>
 Edit BASIC array, which contains mysql configure
-###4.Something you need know
+###5.Something you need know
 >Please edit the argument *domain*(.tjupt.org) to your domain name or just delete it in include/functions.php #3393-#3455, otherwise you will not be able to log in.
-###5.Login
+###6.Login
 Username: NexusPHP<br/>
 Password: nexusphp
