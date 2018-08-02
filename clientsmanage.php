@@ -251,7 +251,7 @@ else {
 <?php
 echo '<table width="100%"  border="0" align="center" cellpadding="2" cellspacing="0">';
 echo "<tr><td class=colhead align=left>".$lang_clientsmanage['col_id']."</td><td class=colhead>".$lang_clientsmanage['col_family']."</td><td class=colhead>".$lang_clientsmanage['col_start_name']."</td><td class=colhead>".$lang_clientsmanage['col_peer_id_start']."</td><td class=colhead>".$lang_clientsmanage['col_agent_start']."</td><td class=colhead>".$lang_clientsmanage['col_allowhttps']."</td><td class=colhead>".$lang_clientsmanage['col_hits']."</td><td class=colhead>".$lang_clientsmanage['col_modify']."</td></tr>";
-$result = sql_query ("SELECT * FROM agent_allowed_family ");
+$result = sql_query ("SELECT * FROM agent_allowed_family ORDER BY id");
 if ($row = mysql_fetch_array($result)) {
 do {
 echo "<tr><td >".$row['id']."</td><td >".$row['family']."</td><td >".htmlspecialchars($row['start_name'])."</td><td >".htmlspecialchars($row['peer_id_start'])."</td><td >".htmlspecialchars($row['agent_start'])."</td><td >".htmlspecialchars($row['allowhttps'])."</td><td >".htmlspecialchars($row['hits'])."</td><td><b><a href=\"".$PHP_SELF."?action=editclients&id=".$row["id"]."\">".htmlspecialchars($lang_clientsmanage['text_edit'])."</a>&nbsp;|&nbsp;<a href=\"javascript:confirm_delete('".$row["id"]."', '".htmlspecialchars($lang_clientsmanage['js_sure_to_delete_forum'])."', '');\"><font color=red>".htmlspecialchars($lang_clientsmanage['text_delete'])."</font></a></b></td></tr>";
