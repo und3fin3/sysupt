@@ -4154,7 +4154,14 @@ function torrenttable($res, $variant = "torrent") {
 			print ('<td class="embedded" align="left"><div class="probar_a' . $t_bar_class . '" title="' . $t_bar_title . '"><div class="probar_b' . $t_bar_class . '" style="width:' . $t_bar_width . '"></div></div></td>') ;
 			print ('<td class="embedded" align="right"></td>') ;
 		}
-		// -----
+        // -----
+        // ---添加种子连接性信息，开始---
+        print("</tr><tr>");
+		print("<td class='embedded' align='left'></td>");
+		print("<td class='embedded' align='center'>" . $lang_functions[$row['connectable']] . "</td>");
+		print("<td class='embedded' align='right'></td>");
+        // ---添加种子连接性信息，结束---
+        
 		print ("</tr></table></td>") ;
 		if ($wait) {
 			$elapsed = floor ( (TIMENOW - strtotime ( $row ["added"] )) / 3600 );
@@ -6475,4 +6482,62 @@ function donation_format_reward($amount = 0, $donation_reward = "0,0,0,0,0")
         'star' => $reward[3] == 1 ? 'yes' : 'no',
         'vip' => $reward[4] == 1 ? 'yes' : 'no',
     ];
+}
+
+/**
+ * 更新种子连接性提示（torrents-connectable），校内IPv4/IPv6/公网IPv4
+ * 为了降低服务器负载，只更新在peers表中有人做种的和torrents表中连接性不为"no/no/no"的种子
+ * ALTER TABLE torrents ADD COLUMN connectable VARCHAR(11) DEFAULT '-/-/-';
+ */
+function update_torrent_connectable()
+{
+    $tid = array();
+    
+    $peers_tid = sql_query("SELECT torrent FROM peers GROUP BY torrent") or sqlerr(__FILE__, __LINE__);
+    while ($row = mysql_fetch_assoc($peers_tid)) {
+        $tid[] = $row['torrent'];
+    }
+    
+    $torrents_tid = sql_query("SELECT id FROM torrents WHERE connectable != 'no/no/no'") or sqlerr(__FILE__, __LINE__);
+    while ($row = mysql_fetch_assoc($torrents_tid)) {
+        $tid[] = $row['torrent'];
+    }
+    
+    $tid = array_unique($tid, SORT_NUMERIC);
+    
+    foreach ($tid as $id) {
+        $res = sql_query("SELECT ipv4, ipv6, seeder FROM peers WHERE torrent = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+        $public_ipv4_connectable = $school_ipv4_connectable = $ipv6_connectable = 0;
+        $p4_seeder = $s4_seeder = $v6_seeder = 0;
+        while ($row = mysql_fetch_assoc($res)) {
+            if ($row['ipv4']) {
+                $nip = ip2long($row['ipv4']);
+                if (check_tjuip($nip)) {
+                    $school_ipv4_connectable++;
+                    if ($row['seeder'] == 'yes') {
+                        $s4_seeder++;
+                    }
+                } else {
+                    $public_ipv4_connectable++;
+                    if ($row['seeder'] == 'yes') {
+                        $p4_seeder++;
+                    }
+                }
+            }
+            if ($row['ipv6']) {
+                $ipv6_connectable++;
+                if ($row['seeder'] == 'yes') {
+                    $v6_seeder++;
+                }
+            }
+            if ($public_ipv4_connectable && $school_ipv4_connectable && $ipv6_connectable && $p4_seeder && $s4_seeder && $v6_seeder)
+                break;
+        }
+        
+        $connectable = $school_ipv4_connectable ? ($s4_seeder ? "yes/" : "-/") : "no/";
+        $connectable .= $ipv6_connectable ? ($v6_seeder ? "yes/" : "-/") : "no/";
+        $connectable .= $public_ipv4_connectable ? ($p4_seeder ? "yes" : "-") : "no";
+        
+        sql_query("UPDATE torrents SET connectable = " . sqlesc($connectable) . " WHERE id = $id") or sqlerr(__FILE__, __LINE__);
+    }
 }

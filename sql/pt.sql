@@ -2824,6 +2824,7 @@ CREATE TABLE `torrents` (
   `bonus_sale` enum('2up_free','2x_half','2up','free','half_down','normal') NOT NULL DEFAULT 'normal',
   `exclusive` enum('yes','no') NOT NULL DEFAULT 'no',
   `tjuptrip` enum('yes','no') NOT NULL DEFAULT 'no',
+  `connectable` varchar(11) DEFAULT '-/-/-',
   PRIMARY KEY (`id`),
   KEY `owner` (`owner`),
   KEY `visible_pos_id` (`visible`,`pos_state`,`id`),

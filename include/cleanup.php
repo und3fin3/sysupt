@@ -134,6 +134,13 @@ function docleanup($forceAll = 0, $printProgress = false) {
     if ($printProgress){
         printProgress("发放捐赠奖励");
 	}
+    
+    // 更新种子连接性
+    update_torrent_connectable();
+    if ($printProgress) {
+        printProgress ( "更新种子连接性记录" );
+    }
+	
     $ts = $row [0];
 	if ($ts + $autoclean_interval_two > $now && ! $forceAll) {
 		return '一级清理完成';
