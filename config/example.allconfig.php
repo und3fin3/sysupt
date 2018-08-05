@@ -295,6 +295,11 @@ $SMTP=array(
     'smtpport' => '587',
     'accountname' => 'nexusphp@example.com',
     'accountpassword' => 'PASSWORD',
+    'exception_domain' => '',
+    'smtpaddress2' => 'smtp.example.com',
+    'smtpport2' => '587',
+    'accountname2' => 'nexusphp@example.com',
+    'accountpassword2' => 'PASSWORD',
 );
 $TORRENT=array(
     'prorules' => 'no',
