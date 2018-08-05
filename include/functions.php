@@ -1891,7 +1891,7 @@ function check_email($email) {
 }
 function sent_mail($to, $fromname, $fromemail, $subject, $body, $type = "confirmation", $showmsg = true, $multiple = false, $multiplemail = '', $hdr_encoding = 'UTF-8', $specialcase = '') {
 	global $lang_functions;
-	global $rootpath, $SITENAME, $SITEEMAIL, $smtptype, $smtp, $smtp_host, $smtp_port, $smtp_from, $smtpaddress, $smtpport, $accountname, $accountpassword;
+	global $rootpath, $SITENAME, $SITEEMAIL, $smtptype, $smtp, $smtp_host, $smtp_port, $smtp_from, $smtpaddress, $smtpport, $accountname, $accountpassword, $exception_domain, $smtpaddress2, $smtpport2, $accountname2, $accountpassword2;
 	// Is the OS Windows or Mac or Linux?
 	if (strtoupper ( substr ( PHP_OS, 0, 3 ) == 'WIN' )) {
 		$eol = "\r\n";
@@ -1910,7 +1910,7 @@ function sent_mail($to, $fromname, $fromemail, $subject, $body, $type = "confirm
 	} elseif ($smtptype == 'advanced') {
 		$mid = md5 ( getip () . $fromname );
 		$name = $_SERVER ["SERVER_NAME"];
-		$headers .= "From: $fromname <$fromemail>" . $eol;
+		$headers = "From: $fromname <$fromemail>" . $eol;
 		$headers .= "Reply-To: $fromname <$fromemail>" . $eol;
 		$headers .= "Return-Path: $fromname <$fromemail>" . $eol;
 		$headers .= "Message-ID: <$mid thesystem@$name>" . $eol;
@@ -1944,8 +1944,13 @@ function sent_mail($to, $fromname, $fromemail, $subject, $body, $type = "confirm
 		require_once ($rootpath . 'include/smtp/smtp.lib.php');
 		$mail = new smtp ( $hdr_encoding, 'eYou' );
 		$mail->debug ( false );
-		$mail->open ( $smtpaddress, $smtpport );
-		$mail->auth ( $accountname, $accountpassword );
+		if (in_array(explode("@", $to)[1], $exception_domain)){
+            $mail->open ( $smtpaddress2, $smtpport2 );
+            $mail->auth ( $accountname2, $accountpassword2 );
+        }else{
+            $mail->open ( $smtpaddress, $smtpport );
+            $mail->auth ( $accountname, $accountpassword );
+        }
 		// $mail->bcc($multiplemail);
 		$mail->from ( $SITEEMAIL );
 		// $mail->from($accountname);

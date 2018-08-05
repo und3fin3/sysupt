@@ -165,6 +165,11 @@ $smtpaddress = $SMTP ['smtpaddress'];
 $smtpport = $SMTP ['smtpport'];
 $accountname = $SMTP ['accountname'];
 $accountpassword = $SMTP ['accountpassword'];
+$exception_domain = explode(",", str_replace(" ", $SMTP ['exception_domain']));
+$smtpaddress2 = $SMTP ['smtpaddress2'];
+$smtpport2 = $SMTP ['smtpport2'];
+$accountname2 = $SMTP ['accountname2'];
+$accountpassword2 = $SMTP ['accountpassword2'];
 
 $securelogin = $SECURITY ['securelogin'];
 $securetracker = $SECURITY ['securetracker'];

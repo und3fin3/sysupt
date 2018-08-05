@@ -692,7 +692,9 @@ $lang_settings = array (
 		'row_enable_email_notification' => "允许用户收取邮件提示",
 		'text_email_notification_note' => "是否允许用户在收取新短讯、评论等时候收到邮件提示。",
 		'text_users_get' => "首次升级至此等级的用户将获得",
-		'text_invitations_default' => "个邀请名额。默认" 
+    	'text_invitations_default' => "个邀请名额。默认",
+		'row_exception_domain' => "例外邮箱域",
+		'text_exception_domain_note' => "使用下面设置的发信服务器进行发信的邮箱域，以英文逗号(,)分割"
 );
 
 ?>

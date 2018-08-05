@@ -137,7 +137,7 @@ elseif ($action == 'savesettings_smtp') 	// save smtp
 	if ($smtptype == 'advanced') {
 		$validConfig = array_merge($validConfig, array('smtp_host','smtp_port','smtp_from'));
 	} elseif ($smtptype == 'external') {
-		$validConfig = array_merge($validConfig, array('smtpaddress','smtpport','accountname','accountpassword'));
+		$validConfig = array_merge($validConfig, array('smtpaddress','smtpport','accountname','accountpassword','exception_domain','smtpaddress2','smtpport2','accountname2','accountpassword2'));
 	}
 
 	GetVar($validConfig);
@@ -268,7 +268,12 @@ elseif ($action == 'smtpsettings')	// stmp settings
 	tr($lang_settings['row_outgoing_mail_port'], "<input type=text name=smtpport style=\"width: 300px\" ".($SMTP['smtpport'] ? "value=\"".$SMTP['smtpport']."\"" : "")."> ".$lang_settings['text_outgoing_mail_port_note'], 1);
 	tr($lang_settings['row_smtp_account_name'], "<input type=text name=accountname style=\"width: 300px\" ".($SMTP['accountname'] ? "value=\"".$SMTP['accountname']."\"" : "")."> ".$lang_settings['text_smtp_account_name_note'], 1);
 	tr($lang_settings['row_smtp_account_password'], "<input type=password name=accountpassword style=\"width: 300px\" ".($SMTP['accountpassword'] ? "value=\"".$SMTP['accountpassword']."\"" : "")."> ".$lang_settings['text_smtp_account_password_note'], 1);
-	print("</tbody><tbody>");
+    tr($lang_settings['row_exception_domain'], "<input type=text name=exception_domain style=\"width: 300px\" ".($SMTP['exception_domain'] ? "value=\"".$SMTP['exception_domain']."\"" : "")."> ".$lang_settings['text_exception_domain_note'], 1);
+	tr($lang_settings['row_outgoing_mail_address'], "<input type=text name=smtpaddress2 style=\"width: 300px\" ".($SMTP['smtpaddress2'] ? "value=\"".$SMTP['smtpaddress2']."\"" : "")."> ".$lang_settings['text_outgoing_mail_address_note'], 1);
+    tr($lang_settings['row_outgoing_mail_port'], "<input type=text name=smtpport2 style=\"width: 300px\" ".($SMTP['smtpport2'] ? "value=\"".$SMTP['smtpport2']."\"" : "")."> ".$lang_settings['text_outgoing_mail_port_note'], 1);
+    tr($lang_settings['row_smtp_account_name'], "<input type=text name=accountname2 style=\"width: 300px\" ".($SMTP['accountname2'] ? "value=\"".$SMTP['accountname2']."\"" : "")."> ".$lang_settings['text_smtp_account_name_note'], 1);
+    tr($lang_settings['row_smtp_account_password'], "<input type=password name=accountpassword2 style=\"width: 300px\" ".($SMTP['accountpassword2'] ? "value=\"".$SMTP['accountpassword2']."\"" : "")."> ".$lang_settings['text_smtp_account_password_note'], 1);
+    print("</tbody><tbody>");
 	tr($lang_settings['row_save_settings'],"<input type='submit' name='save' value='".$lang_settings['submit_save_settings']."'>", 1);
 print ("<tr><td colspan=2 align=center>".$lang_settings['text_mail_test_note']."<a href=\"mailtest.php\" target=\"_blank\"><b>".$lang_settings['text_here']."</b></a></td></tr>");
 print ("</form>");
