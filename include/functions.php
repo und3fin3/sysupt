@@ -6538,6 +6538,6 @@ function update_torrent_connectable()
         $connectable .= $ipv6_connectable ? ($v6_seeder ? "yes/" : "-/") : "no/";
         $connectable .= $public_ipv4_connectable ? ($p4_seeder ? "yes" : "-") : "no";
         
-        sql_query("UPDATE torrents SET connectable = " . sqlesc($connectable) . " WHERE id = $id") or sqlerr(__FILE__, __LINE__);
+        sql_query("UPDATE torrents SET connectable = " . sqlesc($connectable) . " WHERE id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     }
 }
