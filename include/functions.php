@@ -3109,7 +3109,7 @@ if (false) {
                     break;
             }
             if (mysql_num_rows($res3) > 0) {
-                $connect = $school_ipv4_connectable ? 'yes' : 'no' . '/' . $ipv6_connectable ? 'yes' : 'no' . '/' . $public_ipv4_connectable ? 'yes' : 'no';
+                $connect = ($school_ipv4_connectable ? 'yes' : 'no') . '/' . ($ipv6_connectable ? 'yes' : 'no') . '/' . ($public_ipv4_connectable ? 'yes' : 'no');
             } else {
                 $connect = 'unknown';
             }
