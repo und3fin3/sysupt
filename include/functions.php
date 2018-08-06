@@ -6525,17 +6525,10 @@ function update_torrent_connectable()
 {
     $tid = array();
     
-    $peers_tid = sql_query("SELECT torrent FROM peers GROUP BY torrent") or sqlerr(__FILE__, __LINE__);
+    $peers_tid = sql_query("SELECT DISTINCT A.id FROM ( SELECT torrents.id AS id FROM torrents WHERE connectable != 'no/no/no' UNION ALL SELECT peers.torrent AS id FROM peers ) A") or sqlerr(__FILE__, __LINE__);
     while ($row = mysql_fetch_assoc($peers_tid)) {
-        $tid[] = $row['torrent'];
+        $tid[] = $row['id'];
     }
-    
-    $torrents_tid = sql_query("SELECT id FROM torrents WHERE connectable != 'no/no/no'") or sqlerr(__FILE__, __LINE__);
-    while ($row = mysql_fetch_assoc($torrents_tid)) {
-        $tid[] = $row['torrent'];
-    }
-    
-    $tid = array_unique($tid, SORT_NUMERIC);
     
     foreach ($tid as $id) {
         $res = sql_query("SELECT ipv4, ipv6, seeder FROM peers WHERE torrent = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
