@@ -3084,23 +3084,50 @@ if (false) {
 			$Cache->cache_value ( 'user_' . $CURUSER ["id"] . '_outbox_count', $outmessages, 900 );
 		}
 		if (! $connect = $Cache->get_value ( 'user_' . $CURUSER ["id"] . '_connect' )) {
-			$res3 = sql_query ( "SELECT * FROM peers WHERE userid=" . sqlesc ( $CURUSER ["id"] ) . " AND connectable like '%yes%'" );
-			if (mysql_num_rows ( $res3 ) > 0)
-				$connect = 'yes';
-			elseif (mysql_num_rows ( sql_query ( "SELECT * FROM peers WHERE userid=" . sqlesc ( $CURUSER ["id"] ) ) ) > 0)
-				$connect = 'no';
-			else
-				$connect = 'unknown';
+            // $res3 = sql_query ( "SELECT * FROM peers WHERE userid=" . sqlesc ( $CURUSER ["id"] ) . " AND connectable like '%yes%'" );
+            // if (mysql_num_rows ( $res3 ) > 0)
+            //     $connect = 'yes';
+            // elseif (mysql_num_rows ( sql_query ( "SELECT * FROM peers WHERE userid=" . sqlesc ( $CURUSER ["id"] ) ) ) > 0)
+			// 	$connect = 'no';
+			// else
+			// 	$connect = 'unknown';
+            $res3 = sql_query("SELECT ipv4, ipv6 FROM peers WHERE userid = " . sqlesc($CURUSER['id']));
+            $school_ipv4_connectable = $public_ipv4_connectable = $ipv6_connectable = 0;
+            while ($row = mysql_fetch_assoc($res3)) {
+                if ($row['ipv4']) {
+                    $nip = ip2long($row['ipv4']);
+                    if (check_tjuip($nip)) {
+                        $school_ipv4_connectable++;
+                    } else {
+                        $public_ipv4_connectable++;
+                    }
+                }
+                if ($row['ipv6']) {
+                    $ipv6_connectable++;
+                }
+                if ($public_ipv4_connectable && $school_ipv4_connectable && $ipv6_connectable)
+                    break;
+            }
+            if (mysql_num_rows($res3) > 0) {
+                $connect = $school_ipv4_connectable ? 'yes' : 'no' . '/' . $ipv6_connectable ? 'yes' : 'no' . '/' . $public_ipv4_connectable ? 'yes' : 'no';
+            } else {
+                $connect = 'unknown';
+            }
 			$Cache->cache_value ( 'user_' . $CURUSER ["id"] . '_connect', $connect, 900 );
 		}
 
-		if ($connect == "yes")
-			$connectable = "<b><font color=\"green\">" . $lang_functions ['text_yes'] . "</font></b>";
-		elseif ($connect == 'no')
-			$connectable = "<a href=\"forums.php?action=viewtopic&topicid=1310&page=p7415#pid7415\"><b><font color=\"red\">" . $lang_functions ['text_no'] . "</font></b></a>";
-		else
-			$connectable = "<a href=\"forums.php?action=viewtopic&topicid=1310&page=p7421#pid7421\"><b><font color=\"red\">" . $lang_functions ['text_unknown'] . "</font></b></a>";
+		// if ($connect == "yes")
+		// 	$connectable = "<b><font color=\"green\">" . $lang_functions ['text_yes'] . "</font></b>";
+		// elseif ($connect == 'no')
+		// 	$connectable = "<a href=\"forums.php?action=viewtopic&topicid=1310&page=p7415#pid7415\"><b><font color=\"red\">" . $lang_functions ['text_no'] . "</font></b></a>";
+		// else
+		// 	$connectable = "<a href=\"forums.php?action=viewtopic&topicid=1310&page=p7421#pid7421\"><b><font color=\"red\">" . $lang_functions ['text_unknown'] . "</font></b></a>";
 
+        if ($connect == 'unknown'){
+            $connectable = "<b><font color=\"red\">" . $lang_functions ['text_unknown'] . "</font></b>";
+        }else{
+		    $connectable = str_replace('no', "<b><font color='red'><i class='fa fa-close'></i></font></b>", str_replace('yes', "<b><font color='green'><i class='fa fa-check'></i></font>", $connect));
+		}
 			// // check every 60 seconds //////////////////
 		$activeseed = $Cache->get_value ( 'user_' . $CURUSER ["id"] . '_active_seed_count' );
 		if ($activeseed == "") {
