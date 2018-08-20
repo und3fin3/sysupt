@@ -152,10 +152,10 @@ if ($_SERVER['HTTP_HOST'] == 'pttracker4.tjupt.org') {
 }
 
 // This is a validated IPv6 address
-if ($ipv6) {
+// if ($ipv6) {
     // IPv6 does not support compact peer list
     $compact = 0;
-}
+// }
 
 if (isset ( $ipv6 )) { // IPv6地址封禁
 	$longipv6 = IPv6ToLong ( $ipv6 );
@@ -285,22 +285,22 @@ while ( $row = mysql_fetch_assoc ( $res ) ) {
 		$self = $row;
 		continue;
 	}
-	
-	if ($row ['ipv6'] == "") { // peer中的纯v4地址
-		if (! ($nip || substr ( $ip, 0, 14 ) == '2001:da8:a000:' || substr($ip,0,10)=='2403:ac00:' )) // 如果客户端不是校内地址
-			continue;
-	}
-	
-	if ($compact == 1) {
-		$longip = ip2long ( $row ['ipv4'] );
+    /*
+    if ($row ['ipv6'] == "") { // peer中的纯v4地址
+        if (! ($nip || substr ( $ip, 0, 14 ) == '2001:da8:a000:' || substr($ip,0,10)=='2403:ac00:' )) // 如果客户端不是校内地址
+            continue;
+    }
+    
+    if ($compact == 1) {
+        $longip = ip2long ( $row ['ipv4'] );
         if (!check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org') {
             continue;
         } else if (check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttrackertju.tjupt.org') {
             continue;
         }
-		if ($longip) // Ignore ipv6 address
-			$peer_list .= pack ( "Nn", sprintf ( "%d", $longip ), $row ['port'] );
-	} elseif ($no_peer_id == 1) {
+        if ($longip) // Ignore ipv6 address
+            $peer_list .= pack ( "Nn", sprintf ( "%d", $longip ), $row ['port'] );
+    } elseif ($no_peer_id == 1) {
         if ($row ['ipv4'] != "") {
             $longip = ip2long($row ['ipv4']);
             if (!check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org') {
@@ -310,21 +310,23 @@ while ( $row = mysql_fetch_assoc ( $res ) ) {
             }
             $peer_list .= "d" . benc_str("ip") . benc_str($row ["ipv4"]) . benc_str("port") . "i" . $row ["port"] . "e" . "e";
         }
-			if ($row ['ipv6'] != "")
-			$peer_list .= "d" . benc_str ( "ip" ) . benc_str ( $row ["ipv6"] ) . benc_str ( "port" ) . "i" . $row ["port"] . "e" . "e";
-	} else {
+            if ($row ['ipv6'] != "")
+            $peer_list .= "d" . benc_str ( "ip" ) . benc_str ( $row ["ipv6"] ) . benc_str ( "port" ) . "i" . $row ["port"] . "e" . "e";
+    } else {
+    */
         if ($row ['ipv4'] != "") {
             $longip = ip2long($row ['ipv4']);
             if (!check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org') {
                 continue;
-            } else if (check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttrackertju.tjupt.org') {
+            }
+            if (check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttrackertju.tjupt.org') {
                 continue;
             }
             $peer_list .= "d" . benc_str("ip") . benc_str($row ["ipv4"]) . benc_str("peer id") . benc_str($row ["peer_id"]) . benc_str("port") . "i" . $row ["port"] . "e" . "e";
         }
 		if ($row ['ipv6'] != "")
 			$peer_list .= "d" . benc_str ( "ip" ) . benc_str ( $row ["ipv6"] ) . benc_str ( "peer id" ) . benc_str ( $row ["peer_id"] ) . benc_str ( "port" ) . "i" . $row ["port"] . "e" . "e";
-	}
+	//}
 }
 
 $selfwhere = "torrent = $torrentid AND " . hash_where ( "peer_id", $peer_id );
