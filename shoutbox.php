@@ -221,8 +221,8 @@ else {
 		}
 
 	}
-		print ("<font size=4 color=#FF0000><b>禁止刷屏、求种、求魔、拉票、广告及发布纯表情等无实质意义内容，严禁粗口，否则严惩！</b>(<a class='faqlink' href='faq.php' target='_blank'>常见问题</a>,&nbsp;<a class='faqlink' href='rules.php' target='_blank'>本站规则</a>)</font>\n") ;
-	    print ("<font size=4 color=#FF0000><b>红种、无速度等下载问题请加入北洋园PT新手QQ群咨询：155707364</b></font>\n");
+		print ("<font size=4 color=#FF0000><b>禁止刷屏、求种、求魔、拉票、广告及发布纯表情等无实质意义内容，严禁粗口，否则严惩！</b>(<a class='faqlink' href='faq.php' target='_blank'>常见问题</a>,&nbsp;<a class='faqlink' href='rules.php' target='_blank'>本站规则</a>)</font><br>") ;
+	    print ("<font size=3 color=#FF0000><b>红种、无速度等下载问题请加入北洋园PT新手QQ群咨询：155707364</b></font><br>");
 	while ( $arr = mysql_fetch_assoc ( $res ) ) {
 		if (get_user_class () >= $sbmanage_class) {
 			$del = "[<a href=\"shoutbox.php?del=" . $arr [id] . "\">" . $lang_shoutbox ['text_del'] . "</a>]";
