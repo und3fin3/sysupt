@@ -65,9 +65,10 @@ if ($type == 'new'){
 	$num = mysql_num_rows($ret);
 
 	print("<table border=1 width=737 cellspacing=0 cellpadding=5>".
-	"<h2 align=center>".$lang_invite['text_invite_status']." ($number)</h2><form method=post action=takeconfirm.php?id=".htmlspecialchars($id).">");
-
-	if(!$num){
+	"<h2 align=center>".$lang_invite['text_invite_status']." ($number)</h2>");
+    print("<tr><td colspan=7 align=center><form method=post action=invite.php?id=" . htmlspecialchars($id) . "&type=new><input type=submit " . ($CURUSER[invites] <= 0 ? "disabled " : "") . " value='" . $lang_invite['sumbit_invite_someone'] . "'></form></td></tr>");
+    print("<form method=post action=takeconfirm.php?id=" . htmlspecialchars($id) . ">");
+    if(!$num){
 		print("<tr><td colspan=7 align=center>".$lang_invite['text_no_invites']."</tr>");
 	} else {
 
@@ -117,9 +118,7 @@ if ($type == 'new'){
 		print("<input type=hidden name=email value=$arr[email]>");
 		print("<tr><td colspan=7 align=right><input type=submit style='height: 20px' value=".$lang_invite['submit_confirm_users']."></td></tr>");
 		}
-		print("</form>");
-		print("<tr><td colspan=7 align=center><form method=post action=invite.php?id=".htmlspecialchars($id)."&type=new><input type=submit ".($CURUSER[invites] <= 0 ? "disabled " : "")." value='".$lang_invite['sumbit_invite_someone']."'></form></td></tr>");
-	}
+		print("</form>");}
 	print("</table>");
 
 	$rul = sql_query("SELECT COUNT(*) FROM invites WHERE inviter =".mysql_real_escape_string($id)) or sqlerr();
