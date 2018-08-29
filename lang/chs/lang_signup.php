@@ -1,11 +1,11 @@
-<?php
+﻿<?php
 
 $lang_signup = array
 (
 	'head_signup' => "注册",
 	'text_cookies_note' => "<b>注意</b>：你必须启用cookies才能注册或登录。",
 	'row_desired_username' => "用户名",
-	'text_allowed_characters' => "有效字符：字母、数字、汉字，至多12个字符。包含色情、暴力、反动等内容的用户名将被禁止。",
+    'text_allowed_characters' => "有效字符：<b>汉字</b>、字母、数字，至多12个字符。包含色情、暴力、反动等内容的用户名将被禁止。",
 	'row_pick_a_password' => "输入密码",
 	'text_minimum_six_characters' => "密码长度为6--30个字符。",
 	'text_is_password_strong' => "密码强度",

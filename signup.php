@@ -77,7 +77,7 @@ print ('<script type="text/javascript" src="js/signup_from_ck.js"></script>') ;
 print("<tr><td class=text align=center colspan=2>".$lang_signup['text_cookies_note']."</td></tr>");
 ?>
 <tr><td class=rowhead><?php echo $lang_signup['row_desired_username'] ?></td><td class=rowfollow align=left><input type="text" style="width: 200px" name="wantusername" id="wantusername" onBlur="chkUserName(this)" /><SPAN id="username_notice" >*</SPAN><br />
-<font class=small><?php echo $lang_signup['text_allowed_characters'] ?></font></br>注意：可以不用学号注册哦！</td></tr>
+        <font class=small><?php echo $lang_signup['text_allowed_characters'] ?></font></br>注意：不需要用学号注册，使用中文用户名可以让大家更容易记住你哦！</td></tr>
 <tr><td class=rowhead><?php echo $lang_signup['row_pick_a_password'] ?></td><td class=rowfollow align=left><input type="password" style="width: 200px" name="wantpassword" id="wantpassword" onblur="check_password(this)" onkeyup="checkIntensity(this.value)"  /><SPAN id=password_notice >*</SPAN><br />
 	<font class=small><?php echo $lang_signup['text_minimum_six_characters'] ?></font></td></tr>
 <tr>
@@ -98,7 +98,7 @@ show_image_code ();
 ?>
 <tr><td class=rowhead><?php echo $lang_signup['row_email_address'] ?></td><td class=rowfollow align=left><input type="text" style="width: 200px" name="email" <?php if ($type == 'invite') print("value=\"".$inv["invitee"]."\"");?>  />
 <table width=250 border=0 cellspacing=0 cellpadding=0><tr><td class=embedded><font class=small><?php echo ($restrictemaildomain == 'yes' ? $lang_signup['text_email_note'].allowedemails() : "") ?></td></tr>
-</font></br>不建议用tju邮箱，因为会被邮箱网关拦截。如果一定要用，请查看邮件网关拦截记录。</br>建议网易、新浪、QQ等邮箱，如果收不到验证邮件请查看垃圾箱。</td></tr></table>
+    </font></br>不推荐用edu邮箱，因为这可能不是你的常用邮箱，忘记邮箱密码会导致无法通过邮件找回北洋园PT账号的密码。</br>建议用网易、新浪、QQ等你的常用邮箱，如果收不到验证邮件请查看垃圾箱或邮件网关拦截记录。</td></tr></table>
 </td></tr>
 <?php $countries = "<option value=\"8\">---- ".$lang_signup['select_none_selected']." ----</option>n";
 $ct_r = sql_query("SELECT id,name FROM countries ORDER BY name") or die;
