@@ -424,6 +424,8 @@ if (! isset ( $self )) {
 	}
 	
 	if (! $is_cheater && ($trueupthis > 0 || $truedownthis > 0)) {
+        if ($az ['class'] == UC_VIP)
+            $truedownthis = 0;
 		$global_promotion_state = get_global_sp_state ();
 		if ($global_promotion_state == 1) { // Normal, see individual torrent
 			if ($torrent ['sp_state'] == 3 || $torrent ['sp_state'] == 9) { // 2X
