@@ -109,13 +109,15 @@ while ($arr = mysql_fetch_assoc($res))
 		if ($ppl != "")
 			$ppl .= "<tr height=15><td class=embedded colspan=5 align=right>&nbsp;</td></tr>";
 		$ppl .= "<tr height=15><td class=embedded colspan=5 align=right>" . get_user_class_name($arr["class"],false,true,true) . "</td></tr>";
-		$ppl .= "<tr>" . 
-		"<td class=embedded><b>" . $lang_staff['text_username'] . "</b></td>".
-		"<td class=embedded align=center><b>" . $lang_staff['text_country'] . "</b></td>".
-		"<td class=embedded align=center><b>" . $lang_staff['text_online_or_offline'] . "</b></td>".
-		"<td class=embedded align=center><b>" . $lang_staff['text_contact'] . "</b></td>".
-		"<td class=embedded><b>" . $lang_staff['text_duties'] . "</b></td>".
-		"</tr>";
+        if ($arr['id'] != 10) {
+            $ppl .= "<tr>" .
+                "<td class=embedded><b>" . $lang_staff['text_username'] . "</b></td>" .
+                "<td class=embedded align=center><b>" . $lang_staff['text_country'] . "</b></td>" .
+                "<td class=embedded align=center><b>" . $lang_staff['text_online_or_offline'] . "</b></td>" .
+                "<td class=embedded align=center><b>" . $lang_staff['text_contact'] . "</b></td>" .
+                "<td class=embedded><b>" . $lang_staff['text_duties'] . "</b></td>" .
+                "</tr>";
+        }
 		$ppl .= "<tr height=15><td class=embedded colspan=5><hr color=\"#4040c0\"></td></tr>";
 	}
 	$countryrow = get_country_row($arr['country']);
