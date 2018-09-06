@@ -25,13 +25,13 @@ while ($arr = mysql_fetch_assoc($res))
  <td class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</td>".
 		 "<td class=embedded>&nbsp;</td>".
 		 "<td class=embedded>".$arr['supportlang']."</td>".
-		 "<td class=embedded>".$arr['supportfor']."</td></tr>\n";		
+		 "<td class=embedded>".$arr['supportfor']."</td></tr>\n";
 	} else {
 		$ppl .= "<tr><td class=embedded>". get_username($arr['id']) ."</td><td class=embedded><img width=24 height=15 src=\"pic/flag/".$countryrow[flagpic]."\" title=\"".$countryrow['name']."\" style=\"padding-bottom:1px;\"></td>
  <td class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</td>".
 		 "<td class=embedded><a href=sendmessage.php?receiver=".$arr['id']." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></td>".
 		 "<td class=embedded>".$arr['supportlang']."</td>".
-		 "<td class=embedded>".$arr['supportfor']."</td></tr>\n";		
+		 "<td class=embedded>".$arr['supportfor']."</td></tr>\n";
 	}
 }
 
@@ -109,22 +109,22 @@ while ($arr = mysql_fetch_assoc($res))
 		if ($ppl != "")
 			$ppl .= "<tr height=15><td class=embedded colspan=5 align=right>&nbsp;</td></tr>";
 		$ppl .= "<tr height=15><td class=embedded colspan=5 align=right>" . get_user_class_name($arr["class"],false,true,true) . "</td></tr>";
-        if ($arr['id'] != 10) {
-            $ppl .= "<tr>" .
-                "<td class=embedded><b>" . $lang_staff['text_username'] . "</b></td>" .
-                "<td class=embedded align=center><b>" . $lang_staff['text_country'] . "</b></td>" .
-                "<td class=embedded align=center><b>" . $lang_staff['text_online_or_offline'] . "</b></td>" .
-                "<td class=embedded align=center><b>" . $lang_staff['text_contact'] . "</b></td>" .
-                "<td class=embedded><b>" . $lang_staff['text_duties'] . "</b></td>" .
-                "</tr>";
-        }
+		$ppl .= "<tr>" .
+		"<td class=embedded><b>" . $lang_staff['text_username'] . "</b></td>".
+		"<td class=embedded align=center><b>" . $lang_staff['text_country'] . "</b></td>".
+		"<td class=embedded align=center><b>" . $lang_staff['text_online_or_offline'] . "</b></td>".
+		"<td class=embedded align=center><b>" . $lang_staff['text_contact'] . "</b></td>".
+		"<td class=embedded><b>" . $lang_staff['text_duties'] . "</b></td>".
+		"</tr>";
 		$ppl .= "<tr height=15><td class=embedded colspan=5><hr color=\"#4040c0\"></td></tr>";
 	}
 	$countryrow = get_country_row($arr['country']);
-	$ppl .= "<tr><td class=embedded>". get_username($arr['id']) ."</td><td class=embedded ><img width=24 height=15 src=\"pic/flag/".$countryrow['flagpic']."\" title=\"".$countryrow['name']."\" style=\"padding-bottom:1px;\"></td>
- <td class=embedded> ".(strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg)."</td>".
- "<td class=embedded><a href=".($arr['class']>=UC_ADMINISTRATOR ? "contactstaff.php" : "sendmessage.php?receiver=".$arr['id'] )." title=\"".$lang_staff['title_send_pm']."\">".$sendpmimg."</a></td>".
- "<td class=embedded>".$arr['stafffor']."</td></tr>\n";
+    if ($arr ['id'] != 10) {
+        $ppl .= "<tr><td class=embedded>" . get_username($arr['id']) . "</td><td class=embedded ><img width=24 height=15 src=\"pic/flag/" . $countryrow['flagpic'] . "\" title=\"" . $countryrow['name'] . "\" style=\"padding-bottom:1px;\"></td><td class=embedded> " .
+            (strtotime($arr['last_access']) > $dt ? $onlineimg : $offlineimg) . "</td>" .
+            "<td class=embedded><a href=" . ($arr['class'] >= UC_ADMINISTRATOR ? "contactstaff.php" : "sendmessage.php?receiver=" . $arr['id']) . " title=\"" . $lang_staff['title_send_pm'] . "\">" . $sendpmimg . "</a></td>" .
+            "<td class=embedded>" . $arr['stafffor'] . "</td></tr>\n";
+    }
 }
 
 begin_frame($lang_staff['text_general_staff']."<font class=small> - [<a class=altlink href=contactstaff.php><b>".$lang_staff['text_apply_for_it']."</b></a>]</font>");
