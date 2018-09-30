@@ -2,6 +2,9 @@
 require_once ("include/bittorrent.php");
 dbconn ();
 require_once (get_langfile_path ());
+global $cssupdatedate;
+$css_uri = get_css_uri ();
+$cssupdatedate = ($cssupdatedate ? "?" . htmlspecialchars ( $cssupdatedate ) : "");
 if (isset ( $_GET ['del'] )) {
 	if (is_valid_id ( $_GET ['del'] )) {
 		if ((get_user_class () >= $sbmanage_class)) {
@@ -16,13 +19,11 @@ $refresh = ($CURUSER ['sbrefresh'] ? $CURUSER ['sbrefresh'] : 120)?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="Refresh"
 	content="<?php echo $refresh?>; url=shoutbox.php?type=<?php echo $where?>">
-<link rel="stylesheet" href="<?php echo get_font_css_uri()?>"
-	type="text/css">
-<link rel="stylesheet" href="<?php echo get_css_uri()."theme.css"?>"
-	type="text/css">
-<link rel="stylesheet" href="styles/sprites.css" type="text/css">
-<link rel="stylesheet" href="styles/curtain_imageresizer.css"
-	type="text/css">
+    <link rel="stylesheet" href="<?php echo get_font_css_uri() . $cssupdatedate ?>" type="text/css">
+    <link rel="stylesheet" href="<?php echo $css_uri . "theme.css" . $cssupdatedate ?>" type="text/css"/>
+    <link rel="stylesheet" href="/<?php echo $css_uri . "DomTT.css" . $cssupdatedate ?>" type="text/css"/>
+    <link rel="stylesheet" href="styles/sprites.css<?php echo $cssupdatedate ?>" type="text/css">
+    <link rel="stylesheet" href="styles/curtain_imageresizer.css"<?php echo $cssupdatedate ?> type="text/css">
 <script src="js/curtain_imageresizer.js" type="text/javascript"></script>
 <style type="text/css">
 body {
@@ -107,7 +108,7 @@ function copy_code(txt) {
 
 $(function(){
 	$(".shoutrow").hover(function(){
-		$(this).css("background-color","#e4e2dd");
+		// $(this).css("background-color","#e4e2dd");
 		$s="<p class=\"reply\" style=\"display:inline; color:#a7a7a7\"  >&nbsp;&nbsp;<不许双击啦~啦啦啦~></p>";
 		$(this).append($s);
 		},function(){
