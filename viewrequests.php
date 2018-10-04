@@ -1347,10 +1347,10 @@ function quick_reply_to(username)
 					
 					sql_query ( "DELETE FROM resreq WHERE reqid ='" . $_POST ["id"] . "' AND chosen = 'no'" ) or sqlerr ( __FILE__, __LINE__ );
 					
-					$res = sql_query ( "SELECT owner FROM torrents WHERE ( id = '" . join ( "' OR id = '", $torrentid ) . "' ) " ) or sqlerr ( __FILE__, __LINE__ );
+					$res = sql_query ( "SELECT submitted_by FROM resreq WHERE ( reqid = " . $_POST ["id"] . " AND ( torrentid = '" . join ( "' OR torrentid = '", $torrentid ) . "' )" ) or sqlerr ( __FILE__, __LINE__ );
 					
 					while ( $row = mysql_fetch_array ( $res ) )
-						$owner [] = $row [0];
+						$responser [] = $row [0];
 					
 					$resuser = get_user_row ( $arr ['userid'] );
 					
@@ -1360,7 +1360,7 @@ function quick_reply_to(username)
 					
 					$added = sqlesc ( date ( "Y-m-d H:i:s" ) );
 					
-					foreach ( $owner as $id ) 
+					foreach ( $responser as $id )
 
 					{
 						
