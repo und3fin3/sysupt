@@ -1347,7 +1347,7 @@ function quick_reply_to(username)
 					
 					sql_query ( "DELETE FROM resreq WHERE reqid ='" . $_POST ["id"] . "' AND chosen = 'no'" ) or sqlerr ( __FILE__, __LINE__ );
 					
-					$res = sql_query ( "SELECT submitted_by FROM resreq WHERE ( reqid = " . $_POST ["id"] . " AND ( torrentid = '" . join ( "' OR torrentid = '", $torrentid ) . "' )" ) or sqlerr ( __FILE__, __LINE__ );
+					$res = sql_query ( "SELECT submitted_by FROM resreq WHERE reqid = " . $_POST ["id"] . " AND ( torrentid = '" . join ( "' OR torrentid = '", $torrentid ) . "' )" ) or sqlerr ( __FILE__, __LINE__ );
 					
 					while ( $row = mysql_fetch_array ( $res ) )
 						$responser [] = $row [0];
