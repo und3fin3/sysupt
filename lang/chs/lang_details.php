@@ -290,6 +290,9 @@ $lang_details = array
 	'text_removeseeding_torrent' => "撤种",
 	'seeding_torrent' => "正在保种",
 	'removeseeding_torrent' => "正在撤种",
+	'row_download_direct_link' => "种子链接",
+    'text_press_to_copy' => "点我复制",
+    'text_direct_link_warning' => "<font color='red'>注意：链接中包含passkey，切勿泄露！</font>",
 );
 
 ?>

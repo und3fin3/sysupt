@@ -89,6 +89,12 @@ else {
 				$uploadtime = $lang_details ['text_blank'] . gettime ( $row ['added'], true, false );
 			print ("<a class=\"index\" href=\"download.php?id=$id\">" . htmlspecialchars ( $torrentnameprefix . "." . $row ["save_as"] ) . ".torrent</a>&nbsp;&nbsp;<a id=\"bookmark0\" href=\"javascript: bookmark(" . $row ['id'] . ",0);\">" . get_torrent_bookmark_state ( $CURUSER ['id'], $row ['id'], false ) . "</a>&nbsp;&nbsp;&nbsp;" . $lang_details ['row_upped_by'] . "&nbsp;" . $uprow . $uploadtime) ;
 			print ("</td></tr>") ;
+            
+            // download_direct_link
+            global $BASEURL;
+            $download_direct_link = get_protocol_prefix() . $BASEURL . "/download.php?id=$id&passkey=" . $CURUSER['passkey'];
+            tr($lang_details['download_direct_link'], "<a title=\"" . $lang_details['text_press_to_copy'] . "\" href=\"javascirpt:prompt( '按下 Ctrl+C 复制到剪贴板', $download_direct_link )\">" . $lang_details['text_press_to_copy'] . "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $lang_details['text_direct_link_warning'], 1);
+		
 		} else
 			tr ( $lang_details ['row_download'], $lang_details ['text_downloading_not_allowed'] );
 		if ($smalldescription_main == 'yes')
@@ -342,7 +348,6 @@ else {
 			$share_pic_tqq = get_all_image2 ( $share_descr );
 
 			$share_button_weibo = '<a href="#" onclick="tjuShare(\'weibo\', \'' . ($share_pic_all) . '\');"><img src="styles/btn_weibo_trans.gif" class="weibo" alt=""><font class="small"><b>新浪微博</b></font></a>';
-			$share_button_tqq = '<a href="#" onclick="tjuShare(\'tqq\', \'' . ($share_pic_tqq) . '\');"><img src="styles/btn_weibo_trans.gif" class="tqq" alt=""><font class="small"><b>腾讯微博</b></font></a>';
 			$share_button_renren = '<a href="#" onclick="tjuShare(\'renren\', \'' . ($share_pic_first) . '\');"><img src="styles/btn_weibo_trans.gif" class="renren" alt=""><font class="small"><b>人人网</b></font></a>';
 
 			if ($CURUSER['id'] == '29654')
@@ -350,7 +355,7 @@ else {
 				$download .= "<a href=\"nexuspt://pt.tju.edu.cn/download.php?id=" . $id . "&passkey=" . $CURUSER['passkey'] . "\">通过 ACEStream 点播</a>&nbsp;|&nbsp;";
 			}
 
-			tr ( $lang_details ['row_action'], $download . ($owned == 1 ? "<$editlink><img class=\"dt_edit\" src=\"pic/trans.gif\" alt=\"edit\" />&nbsp;<b><font class=\"small\">" . $lang_details ['text_edit_torrent'] . "</font></b></a>&nbsp;|&nbsp;" : "") . (get_user_class () >= $askreseed_class && $row [seeders] == 0 && strtotime ( $row ["last_seed"] ) <= time () - $max_dead_torrent_time ? "<a title=\"" . $lang_details ['title_ask_for_reseed'] . "\" href=\"takereseed.php?reseedid=$id\"><img class=\"dt_reseed\" src=\"pic/trans.gif\" alt=\"reseed\">&nbsp;<b><font class=\"small\">" . $lang_details ['text_ask_for_reseed'] . "</font></b></a>&nbsp;|&nbsp;" : "") . "<a title=\"" . $lang_details ['title_report_torrent'] . "\" href=\"report.php?torrent=$id\"><img class=\"dt_report\" src=\"pic/trans.gif\" alt=\"report\" />&nbsp;<b><font class=\"small\">" . $lang_details ['text_report_torrent'] . "</font></b></a>" . (user_can_upload () && $CURUSER ["uploadpos"] == 'yes' ? "&nbsp;|&nbsp;<a href=\"upsimilartorrent.php?id=$id\"><b>引用该种发布</b></a>" : "") . (get_user_class () < 1 ? "" : "&nbsp;|&nbsp;<b>分享到</b>&nbsp;" . $share_button_weibo . "&nbsp;" . $share_button_tqq . "&nbsp;" . $share_button_renren), 1 );
+			tr ( $lang_details ['row_action'], $download . ($owned == 1 ? "<$editlink><img class=\"dt_edit\" src=\"pic/trans.gif\" alt=\"edit\" />&nbsp;<b><font class=\"small\">" . $lang_details ['text_edit_torrent'] . "</font></b></a>&nbsp;|&nbsp;" : "") . (get_user_class () >= $askreseed_class && $row [seeders] == 0 && strtotime ( $row ["last_seed"] ) <= time () - $max_dead_torrent_time ? "<a title=\"" . $lang_details ['title_ask_for_reseed'] . "\" href=\"takereseed.php?reseedid=$id\"><img class=\"dt_reseed\" src=\"pic/trans.gif\" alt=\"reseed\">&nbsp;<b><font class=\"small\">" . $lang_details ['text_ask_for_reseed'] . "</font></b></a>&nbsp;|&nbsp;" : "") . "<a title=\"" . $lang_details ['title_report_torrent'] . "\" href=\"report.php?torrent=$id\"><img class=\"dt_report\" src=\"pic/trans.gif\" alt=\"report\" />&nbsp;<b><font class=\"small\">" . $lang_details ['text_report_torrent'] . "</font></b></a>" . (user_can_upload () && $CURUSER ["uploadpos"] == 'yes' ? "&nbsp;|&nbsp;<a href=\"upsimilartorrent.php?id=$id\"><b>引用该种发布</b></a>" : "") . (get_user_class () < 1 ? "" : "&nbsp;|&nbsp;<b>分享到</b>&nbsp;" . $share_button_weibo . "&nbsp;" . $share_button_renren), 1 );
 		}
 
 		// 保种功能
