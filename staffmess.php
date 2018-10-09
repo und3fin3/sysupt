@@ -23,7 +23,7 @@ if ($_GET["returnto"] || $_SERVER["HTTP_REFERER"])
 <?php
 if ($_GET["sent"] == 1) {
 ?>
-<tr><td colspan=2><font color=red><b>消息已发出.</font></b></tr></td>
+<tr><td colspan=2><font color=red><b>消息已发出.</b></font></td></tr>
 <?php
 }
 ?>
