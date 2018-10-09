@@ -93,7 +93,7 @@ else {
             // download_direct_link
             global $BASEURL;
             $download_direct_link = get_protocol_prefix() . $BASEURL . "/download.php?id=$id&passkey=" . $CURUSER['passkey'];
-            tr($lang_details['row_download_direct_link'], "<a title=\"" . $lang_details['text_press_to_copy'] . "\" href=\"javascript:prompt( '按下 Ctrl+C 复制到剪贴板', '$download_direct_link' )\">" . $lang_details['text_press_to_copy'] . "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $lang_details['text_direct_link_warning'], 1);
+            tr($lang_details['row_download_direct_link'], "<a title=\"" . $lang_details['text_press_to_copy'] . "\" href=\"javascript:;\" onclick=\"prompt( '按下 Ctrl+C 复制到剪贴板', '$download_direct_link' )\">" . $lang_details['text_press_to_copy'] . "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $lang_details['text_direct_link_warning'], 1);
 		
 		} else
 			tr ( $lang_details ['row_download'], $lang_details ['text_downloading_not_allowed'] );
