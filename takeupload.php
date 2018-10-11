@@ -456,9 +456,9 @@ if ($catid == 404)
 $pos_until = "";
 $pos_state = 'normal';
 if ($tjuptrip == 'yes'){
-	$sp_state = 4;
+	$sp_state = 2;
 	$pos_state = 'sticky';
-	$pos_until = date ( "Y-m-d H:i:s",strtotime("+2 days") );
+	$pos_until = date ( "Y-m-d H:i:s",strtotime("+1 days") );
 }
 
 if ($altname_main == 'yes') {
