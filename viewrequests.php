@@ -628,7 +628,7 @@ function quick_reply_to(username)
 			
 			{
 				
-				if (get_user_class () >= 2) 
+				if (get_user_class () >= 1) 
 
 				{
 					
