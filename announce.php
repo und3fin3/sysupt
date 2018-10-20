@@ -13,7 +13,8 @@ foreach ( array (
 		"passkey",
 		"info_hash",
 		"peer_id",
-		"event" 
+		"event",
+		"key"
 ) as $x ) {
 	if (isset ( $_GET ["$x"] ))
 		$GLOBALS [$x] = $_GET [$x];
@@ -212,6 +213,9 @@ $userid = 0 + $az ['id'];
 // 3. CHECK IF CLIENT IS ALLOWED
 
 $clicheck_res = check_client ( $peer_id, $agent, $client_familyid );
+
+if (!$clicheck_res)
+    $clicheck_res = check_aria2(getallheaders(), $peer_id, $key);
 
 if ($clicheck_res) {
 	if ($az ['showclienterror'] == 'no') {

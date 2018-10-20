@@ -340,4 +340,12 @@ function check_client($peer_id, $agent, $agent_familyid)
 		return "非法客户端，请到 $BASEURL/faq.php#id29 查看允许客户端列表！";
 	}
 }
-?>
+
+function check_aria2($headers, $peer_id, $key)
+{
+    global $BASEURL;
+    if (isset($headers["Want-Digest"]) || strpos($peer_id, $key) !== false)
+        return "非法客户端，请到 $BASEURL/faq.php#id29 查看允许客户端列表！";
+    else
+        return false;
+}
