@@ -713,7 +713,7 @@ function quick_reply_to(username)
 				if ($amount + 100 > $CURUSER [seedbonus])
 					stderr ( "出错了！", "你没有那么多魔力值！！！<a href=javascript:history.go(-1)>点击这里返回</a>", 0 );
 				
-				if (get_user_class () >= 2) 
+				if (get_user_class () >= 1) 
 
 				{
 					
