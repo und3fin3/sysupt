@@ -17,7 +17,7 @@ if ($passkey) {
         die("account disabed or parked");
     $oldip = $user['ip'];
     $user['ip'] = getip();
-    if (($user['enablepublic4'] != 'yes') && !check_tjuip(ip2long(getip())))
+    if (!validateIPv6($user['ip'] && $user['enablepublic4'] != 'yes' && !check_tjuip(ip2long($user['ip']))))
         die("account disable public IPv4");
     $CURUSER = $user;
 } else {
