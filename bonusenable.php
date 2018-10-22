@@ -25,13 +25,12 @@ stdfoot();}
 stdhead('魔力值解封');
 	global $Cache;
 if (! $invite_bonus = $Cache->get_value ( 'invite_bonus' )) {
-	// $totalalive = get_row_count ( "users", "WHERE status!='pending' AND class > 0 AND enabled='yes'" );
-	// $totalbonus = get_single_value ( "users WHERE enabled='yes'", "sum(seedbonus) " );
-	// $totalinvites = get_single_value ( "users WHERE enabled='yes'", "sum(invites)" );
+	$totalalive = get_row_count ( "users", "WHERE status!='pending' AND class > 0 AND enabled='yes'" );
+	$totalbonus = get_single_value ( "users WHERE enabled='yes'", "sum(seedbonus) " );
+	$totalinvites = get_single_value ( "users WHERE enabled='yes'", "sum(invites)" );
 	// $invite_bonus=$oneinvite_bonus*exp(($totalalive+$totalinvites/8-$maxusers)/800);
-	// $invite_bonus = 0.75 * $oneinvite_bonus / 100000000 * $totalbonus * exp ( $totalalive / 20000 ) * (log ( $totalinvites + 1 ) + log ( $maxusers / ($maxusers - $totalalive) )) / 25 - (rand ( 0, 1895 ) > time () % 1895 ? time () % 1895 : rand ( 0, 1895 ));
-	$invite_bonus = 30000;
-    $Cache->cache_value ( 'invite_bonus', $invite_bonus, 300 );
+	$invite_bonus = 0.75 * $oneinvite_bonus / 100000000 * $totalbonus * exp ( $totalalive / 20000 ) * (log ( $totalinvites + 1 ) + log ( $maxusers / ($maxusers - $totalalive) )) / 25 - (rand ( 0, 1895 ) > time () % 1895 ? time () % 1895 : rand ( 0, 1895 ));
+	$Cache->cache_value ( 'invite_bonus', $invite_bonus, 300 );
 }
 $enable_bonus =(int)(0.6*$invite_bonus);
 if ($username=$_POST[account])
