@@ -214,6 +214,18 @@ $userid = 0 + $az ['id'];
 
 $clicheck_res = check_client ( $peer_id, $agent, $client_familyid );
 
+if (!function_exists('getallheaders')) {
+    function getallheaders()
+    {
+        $headers = [];
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_') {
+                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+            }
+        }
+        return $headers;
+    }
+}
 if (!$clicheck_res)
     $clicheck_res = check_aria2(getallheaders(), $peer_id, $key);
 
