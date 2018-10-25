@@ -17,5 +17,5 @@ $lang_jc_confirm = array
 	'not_exist' => "该竞猜不存在!!",
 	'back1' => "返回竞猜首页",
     'below_the_zero' => "请输入大于0的值!",
-	'higher_than_toper' => "抱歉，您的投注不可以超过上限3000！",
+	'higher_than_toper' => "抱歉，您的投注不可以超过上限10000！",
 );
