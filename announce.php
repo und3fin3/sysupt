@@ -212,20 +212,15 @@ $userid = 0 + $az ['id'];
 
 // 3. CHECK IF CLIENT IS ALLOWED
 
-$clicheck_res = check_client ( $peer_id, $agent, $client_familyid );
+$clicheck_res = check_client ( $peer_id, $agent );
 
-if (!function_exists('getallheaders')) {
-    function getallheaders()
-    {
-        $headers = [];
-        foreach ($_SERVER as $name => $value) {
-            if (substr($name, 0, 5) == 'HTTP_') {
-                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
-            }
-        }
-        return $headers;
-    }
+// After modified, I use this clicheck_res to transmit client_familyid.
+// So there is a check whether the check response is numeric or just a error message.
+if (is_numeric($clicheck_res)){
+    $client_familyid = $clicheck_res;
+    $clicheck_res = 0;
 }
+
 if (!$clicheck_res)
     $clicheck_res = check_aria2(getallheaders(), $peer_id, $key);
 

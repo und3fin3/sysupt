@@ -169,7 +169,7 @@ function ipv4_to_compact($ip, $port)
 	return $compact;
 }
 
-function check_client($peer_id, $agent, $agent_familyid)
+function check_client($peer_id, $agent)
 {
 	global $BASEURL, $Cache;
 
@@ -325,12 +325,12 @@ function check_client($peer_id, $agent, $agent_familyid)
 		if($_SERVER["HTTPS"] == "on")
 		{
 			if($allow_https == 'yes')
-			return 0;
+			return $agent_familyid;
 			else
 			return "当前客户端不能很好的支持https，请到 $BASEURL/faq.php#id29 查看推荐客户端！";
 		}
 		else
-		return 0;	// no exception found, so allowed or just allowed
+		return $agent_familyid;	// no exception found, so allowed or just allowed
 	}
 	else
 	{
