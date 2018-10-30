@@ -79,7 +79,7 @@ else{
 	print("<td class=\"colhead\">".$lang_uploaders['col_last_upload']."</td>");
 	print("</tr>");
 }
-	$res = sql_query("SELECT users.id AS userid, users.username AS username, COUNT(torrents.id) AS torrent_count, SUM(torrents.size) AS torrent_size FROM torrents LEFT JOIN users ON torrents.owner=users.id WHERE users.class >= ".UC_UPLOADER." AND torrents.added > ".sqlesc($sqlstarttime)." AND torrents.added < ".sqlesc($sqlendtime)." GROUP BY userid ORDER BY ".$order);
+	$res = sql_query("SELECT users.class AS class, users.id AS userid, users.username AS username, COUNT(torrents.id) AS torrent_count, SUM(torrents.size) AS torrent_size FROM torrents LEFT JOIN users ON torrents.owner=users.id WHERE users.class >= ".UC_UPLOADER." AND torrents.added > ".sqlesc($sqlstarttime)." AND torrents.added < ".sqlesc($sqlendtime)." GROUP BY userid ORDER BY ".$order);
 	$hasupuserid=array();
 	while($row = mysql_fetch_array($res))
 	{
@@ -90,10 +90,13 @@ else{
 		print("<td class=\"colfollow\">".($row['torrent_size'] ? mksize($row['torrent_size']) : "0")."</td>");
 		print("<td class=\"colfollow\">".$row['torrent_count']."</td>");
 		$deleted=mysql_fetch_array (sql_query("select deleted_torrents from uploaders where uid = ".$row['userid']));
-		$salary = salary ( $row['torrent_count']+$deleted['deleted_torrents'], $row['torrent_size'] / (1024 * 1024 * 1024), 20, 30 );	
-		if($row['torrent_size'] / (1024 * 1024 * 1024)>=30&&$row['torrent_count']>=20)
-		$passed='是';
-		else $passed='否';
+		$salary = salary ( $row['torrent_count']+$deleted['deleted_torrents'], $row['torrent_size'] / (1024 * 1024 * 1024), 20, 30 );
+        if ($row['torrent_size'] / (1024 * 1024 * 1024) >= 30 && $row['torrent_count'] >= 20)
+            $passed = '<b><font color="green">是</font></b>';
+        elseif ($row['class'] > UC_UPLOADER)
+            $passed = '-';
+        else
+            $passed = '<b><font color="red">否</font></b>';
 		if($year==date('Y')&&$month==date('m')){
 	print("<td class=\"colfollow\">".$deleted['deleted_torrents']."</td>");
 	print("<td class=\"colfollow\">".$salary."</td>");
@@ -107,7 +110,7 @@ else{
 		$hasupuserid[]=$row['userid'];
 		unset($row2);
 	}
-	$res3=sql_query("SELECT users.id AS userid, users.username AS username, 0 AS torrent_count, 0 AS torrent_size FROM users WHERE class >= ".UC_UPLOADER.(count($hasupuserid) ? " AND users.id NOT IN (".implode(",",$hasupuserid).")" : "")." ORDER BY username ASC") or sqlerr(__FILE__, __LINE__);
+	$res3=sql_query("SELECT users.class AS class, users.id AS userid, users.username AS username, 0 AS torrent_count, 0 AS torrent_size FROM users WHERE class >= ".UC_UPLOADER.(count($hasupuserid) ? " AND users.id NOT IN (".implode(",",$hasupuserid).")" : "")." ORDER BY username ASC") or sqlerr(__FILE__, __LINE__);
 	while($row = mysql_fetch_array($res3))
 	{
 		$res2 = sql_query("SELECT torrents.id, torrents.name, torrents.added FROM torrents WHERE owner=".$row['userid']." ORDER BY id DESC LIMIT 1");
@@ -117,10 +120,13 @@ else{
 		print("<td class=\"colfollow\">".($row['torrent_size'] ? mksize($row['torrent_size']) : "0")."</td>");
 		print("<td class=\"colfollow\">".$row['torrent_count']."</td>");
 		$deleted=mysql_fetch_array (sql_query("select deleted_torrents from uploaders where uid = ".$row['userid']));
-		$salary = salary ( $row['torrent_count']+$deleted['deleted_torrents'], $row['torrent_size'] / (1024 * 1024 * 1024), 20, 30 );	
-		if($row['torrent_size'] / (1024 * 1024 * 1024)>=30&&$row['torrent_count']>=20)
-		$passed='是';
-		else $passed='否';
+		$salary = salary ( $row['torrent_count']+$deleted['deleted_torrents'], $row['torrent_size'] / (1024 * 1024 * 1024), 20, 30 );
+        if ($row['torrent_size'] / (1024 * 1024 * 1024) >= 30 && $row['torrent_count'] >= 20)
+            $passed = '<b><font color="green">是</font></b>';
+        elseif ($row['class'] > UC_UPLOADER)
+            $passed = '-';
+        else
+            $passed = '<b><font color="red">否</font></b>';
 		if($year==date('Y')&&$month==date('m')){
 	print("<td class=\"colfollow\">".$deleted['deleted_torrents']."</td>");
 	print("<td class=\"colfollow\">".$salary."</td>");
