@@ -882,8 +882,8 @@ else {
 			if (get_user_class () >= 12) {
 				print ("<h5 align=\"center\"> <a class=\"faqlink\"  href=\"uploaders.php\">查看当月考核完成情况</a></h5>") ;
 			}
-			print ("<tr><td class=colhead align=center>" . $lang_log ['username'] . "</td><td class=colhead align=center>" . $lang_log ['up_num'] . "</td><td class=colhead align=center>合集删种</td><td class=colhead align=center>" . $lang_log ['up_size'] . "</td>" . ($CURUSER ['class'] >= UC_MODERATOR ? "<td class=colhead align=center>" . "合格与否" . "</td>" : "") . "<td class=colhead align=center>" . "工资" . "</td><td class=colhead align=center>" . "请假状态" . "</td></tr>\n") ;
-			$res = sql_query ( "select id, username, stafffor from users where class ='12' ORDER BY username ASC ,id ASC" ) or sqlerr ( __FILE__, __LINE__ );
+			print ("<tr><td class=colhead align=center>" . $lang_log ['username'] . "</td><td class=colhead align=center>" . $lang_log ['up_num'] . "</td><td class=colhead align=center>合集删种</td><td class=colhead align=center>" . $lang_log ['up_size'] . "</td>" . ($CURUSER ['class'] >= UC_MODERATOR ? "<td class=colhead align=center>" . "评级" . "</td>" : "") . "<td class=colhead align=center>" . "工资" . "</td><td class=colhead align=center>" . "请假状态" . "</td></tr>\n") ;
+			$res = sql_query ( "select id, username, stafffor, class from users where class >= " . UC_UPLOADER . " ORDER BY username ASC ,id ASC" ) or sqlerr ( __FILE__, __LINE__ );
 			while ( $row = mysql_fetch_array ( $res ) )
 				$usernames [] = $row;
 			global $Cache;
@@ -892,14 +892,18 @@ else {
 					if (strpos ( $user ['stafffor'], "(请假中)" ) !== false)
 						$log_uploader [$user ['username']] ["thisnum"] = "请假";
 					else {
-						$wheres = "SELECT count(*) as num , sum(size) as size FROM torrents WHERE added >= '" . date ( "Y-m-d H:i:s", $from ) . "' AND added <'" . date ( "Y-m-d H:i:s", $to ) . "' AND owner = '" . $user ["id"] . "' ";
-						$res = mysql_fetch_assoc ( sql_query ( $wheres ) );
-						$log_uploader [$user ['username']] ["thisnum"] = $res ["num"];
-						$log_uploader [$user ['username']] ["thissize"] = $res ["size"];
-						$wheres = "SELECT count(*) as num , sum(size) as size FROM torrents WHERE added >= '" . date ( "Y-m-d H:i:s", $last ) . "' AND added <'" . date ( "Y-m-d H:i:s", $from ) . "' AND owner = '" . $user ["id"] . "' ";
-						$res = mysql_fetch_assoc ( sql_query ( $wheres ) );
-						$log_uploader [$user ['username']] ["lastnum"] = $res ["num"];
-						$log_uploader [$user ['username']] ["lastsize"] = $res ["size"];
+                        $wheres = "SELECT COUNT(*) AS num , SUM(size) AS size FROM torrents WHERE added >= '" . date ( "Y-m-d H:i:s", $from ) . "' AND added <'" . date ( "Y-m-d H:i:s", $to ) . "' AND owner = '" . $user ["id"] . "' ";
+                        $res = mysql_fetch_assoc ( sql_query ( $wheres ) );
+                        $log_uploader [$user ['username']] ["thisnum"] = $res ["num"];
+                        $log_uploader [$user ['username']] ["thissize"] = $res ["size"];
+                        $wheres = "SELECT COUNT(*) as num , SUM(size) AS size FROM torrents WHERE added >= '" . date ( "Y-m-d H:i:s", $last ) . "' AND added <'" . date ( "Y-m-d H:i:s", $from ) . "' AND owner = '" . $user ["id"] . "' ";
+                        $res = mysql_fetch_assoc ( sql_query ( $wheres ) );
+                        $log_uploader [$user ['username']] ["lastnum"] = $res ["num"];
+                        $log_uploader [$user ['username']] ["lastsize"] = $res ["size"];
+                        $wheres ="SELECT rate, deleted_last FROM uploaders WHERE uid = ".$user ['id'];
+                        $res = mysql_fetch_array ( sql_query ( $wheres ) );
+                        $log_uploader [$user ['username']] ["deleted"] = $res ["deleted_last"];
+                        $log_uploader [$user ['username']] ["rate"] = $res ["rate"];
 					}
 				}
 				$time = strtotime ( date ( "Y-m-1 0:0:0", strtotime ( "next month " ) ) ) - strtotime ( "now" );
@@ -908,25 +912,25 @@ else {
 				$Cache->cache_value ( 'log_uploader', $log_uploader, $time );
 			}
 			foreach ( $usernames as $user ) {
+			    // 关怀摸鱼管理
+                if ($user['class'] > UC_UPLOADER && $log_uploader [$user ['username']] ["thisnum"] == 0)
+                    continue;
+                
 				print ("<tr><td align=center>".get_username($user ['id'], false, true, true, false, false, false). "</a></b></td>") ;
-				if ($log_uploader [$user ['username']] ["thisnum"] == "请假") {
-					$num = $sumsize = $hege = "<font color=gray >(已请假)</font>";
+                $askforleave = ($log_uploader [$user ['username']] ["thisnum"] == "请假");
+				if ($askforleave) {
+					$num = $sumsize ="<font color=gray >(已请假)</font>";
 					$salary = 2000;
 				} else {
-					$num=/*$log_uploader[$user['username']]["lastnum"]<$standard['num']?
-		($log_uploader[$user['username']]["thisnum"]."<font color=gray >(".($log_uploader[$user['username']]["lastnum"]-$standard['num']).")</font>"):*/
-		(($log_uploader [$user ['username']] ["thisnum"] < $standard ['num'] ? "<font color=#990000>" : "") . $log_uploader [$user ['username']] ["thisnum"] . ($log_uploader [$user ['username']] ["thisnum"] < $standard ['num'] ? "</font>" : ""));
-					$sumsize = (($log_uploader [$user ['username']] ["thissize"] < $standard ['size'] ? "<font color=#990000>" : "") . mksize ( $log_uploader [$user ['username']] ["thissize"] ) . ($log_uploader [$user ['username']] ["thissize"] < $standard ['size'] ? "</font>" : ""));
-					$hege = (($log_uploader [$user ['username']] ["thisnum"] < $standard ['num'] || $log_uploader [$user ['username']] ["thissize"] < $standard ['size']) ? "<font color=#990000>-" : "<font color=#007000>pass") . "</font>";
-					$row = mysql_fetch_array ( sql_query ( "select deleted_last from uploaders where uid = ".$user ['id']) );
-					$deleted= $row['deleted_last'];
-					$log_uploader [$user ['username']] ["deleted"] = $res ["deleted_last"];
-					$salary = salary ( $log_uploader [$user ['username']] ["thisnum"]+$deleted, $log_uploader [$user ['username']] ["thissize"] / (1024 * 1024 * 1024), $standard ['num'], $standard ['size'] / (1024 * 1024 * 1024) );
+                    $num = ($log_uploader [$user ['username']] ["thisnum"] < $standard ['num'] ? "<font color=#990000>" : "<font color=#007000>") . $log_uploader [$user ['username']] ["thisnum"] . "</font>";
+                    $sumsize = ($log_uploader [$user ['username']] ["thissize"] < $standard ['size'] ? "<font color=#990000>" : "<font color=#007000>") . mksize($log_uploader [$user ['username']] ["thissize"]) . "</font>";
+					$salary = salary ( $log_uploader [$user ['username']] ["thisnum"]+$log_uploader [$user ['username']] ["deleted"], $log_uploader [$user ['username']] ["thissize"] / (1024 * 1024 * 1024), $standard ['num'], $standard ['size'] / (1024 * 1024 * 1024) );
 				}
-				print ("<td align=center ><b>" . $num . "</b></td>") ;
-				print ("<td align=center ><b>" . $deleted . "</b></td>") ;
+                $rate = $log_uploader [$user ['username']] ["rate"];
+                print ("<td align=center ><b>" . $num . "</b></td>") ;
+				print ("<td align=center ><b>" . $log_uploader [$user ['username']] ["deleted"] . "</b></td>") ;
 				print ("<td align=center ><b>" . $sumsize . "</b></td>") ;
-				print (($CURUSER ['class'] >= UC_MODERATOR ? "<td align=center ><b>" . $hege . "</b></td>" : "")) ;
+				print ("<td align=center ><b>" . rate_color($rate, "html") . "</b></td>") ;
 				print ("<td align=center ><b>" . $salary . "</b></td>") ;
 				if ($user ['id'] == $CURUSER ['id'])
 					$askfor = "<a href=log.php?action=uploader&amp;askforleave=" . $user ['id'] . ">" . ((strpos ( $user ['stafffor'], "(请假中)" ) !== false) ? "我要销假" : "我要请假") . "</a>";
@@ -947,4 +951,4 @@ else {
 	die ();
 }
 
-?>
+

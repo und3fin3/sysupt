@@ -224,7 +224,7 @@ td.colhead
 }
 td.rowhead_left
 {	
-	text-align: left
+	text-align: left;
 	border:1px solid #ac80d3;
 }
 td.rowhead_center
@@ -511,7 +511,7 @@ ul.menu li
 }
 ul.menu li a
 {
-	color:#00000;
+	color:#000000;
 	background:url(./tab_normal.png) no-repeat right top;
 	margin-right: 0px;
 	padding: 5px 7px;

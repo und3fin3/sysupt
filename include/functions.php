@@ -1625,8 +1625,8 @@ function begin_compose($title = "", $type = "new", $body = "", $hassubject = tru
 function end_compose() {
 	global $lang_functions;
 	print ("<tr><td colspan=\"2\" align=\"center\"><table><tr><td class=\"embedded\"><input id=\"qr\" type=\"submit\" class=\"btn\" value=\"" . $lang_functions ['submit_submit'] . "\" /></td><td class=\"embedded\">") ;
-	print ("<input type=\"button\" class=\"btn2\" name=\"previewbutton\" id=\"previewbutton\" value=\"" . $lang_functions ['submit_preview'] . "\" onclick=\"javascript:preview(this.parentNode);\" />") ;
-	print ("<input type=\"button\" class=\"btn2\" style=\"display: none;\" name=\"unpreviewbutton\" id=\"unpreviewbutton\" value=\"" . $lang_functions ['submit_edit'] . "\" onclick=\"javascript:unpreview(this.parentNode);\" />") ;
+	print ("<input type=\"button\" class=\"btn\" name=\"previewbutton\" id=\"previewbutton\" value=\"" . $lang_functions ['submit_preview'] . "\" onclick=\"javascript:preview(this.parentNode);\" />") ;
+	print ("<input type=\"button\" class=\"btn\" style=\"display: none;\" name=\"unpreviewbutton\" id=\"unpreviewbutton\" value=\"" . $lang_functions ['submit_edit'] . "\" onclick=\"javascript:unpreview(this.parentNode);\" />") ;
 	print ("</td></tr></table>") ;
 	print ("</td></tr>") ;
 	print ("</table>\n") ;
@@ -6566,4 +6566,55 @@ function update_torrent_connectable()
         
         sql_query("UPDATE torrents SET connectable = " . sqlesc($connectable) . " WHERE id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
     }
+}
+
+function uploader_rate($total_num, $total_size, $standard_num, $standard_size, $last_rate, $askforleave = false)
+{
+    if ($askforleave) {
+        $rate = "C";
+    } elseif (($total_num >= $standard_num * 1.5 && $total_size >= 500) || ($total_num >= $standard_num * 2 && $total_size >= 200) || ($total_num >= $standard_num * 3)) {
+        $rate = "S";
+    } elseif ($total_num >= $standard_num && $total_size >= $standard_size) {
+        $rate = "A";
+    } elseif (($total_num >= $standard_num / 2 && $total_size >= $standard_size / 2) || ($total_num >= $standard_num || $total_size >= $standard_size)) {
+        $rate = "B";
+    } else {
+        $rate = "D";
+    }
+    
+    if (($last_rate == "C-" && $rate == "C") || (($last_rate == "B-" || $last_rate == "D") && ($rate == "D" || $rate == "D"))) {
+        $rate = "E";
+    } elseif (strstr($last_rate, "S") && $rate == "S") {
+        $rate = "S+";
+    } elseif (strstr($last_rate, "A") && $rate == "A") {
+        $rate = "A+";
+    } elseif (strstr($last_rate, "B") && $rate == "B") {
+        $rate = "B-";
+    } elseif (strstr($last_rate, "C") && $rate == "C") {
+        $rate = "C-";
+    }
+    return $rate;
+}
+
+function rate_color($rate, $type = "bbcode")
+{
+    if (strstr($rate, "S"))
+        $color = "Orange";
+    elseif (strstr($rate, "A"))
+        $color = "Lime";
+    elseif (strstr($rate, "B"))
+        $color = "YellowGreen";
+    elseif (strstr($rate, "C"))
+        $color = "DeepSkyBlue";
+    elseif (strstr($rate, "D"))
+        $color = "Yellow";
+    elseif (strstr($rate, "E"))
+        $color = "Red";
+    
+    if ($type == "bbcode")
+        return "[color=$color]$rate/[/color]";
+    elseif ($type == "html")
+        return "<font color=\"$color\">$rate</font>";
+    else
+        return $color;
 }

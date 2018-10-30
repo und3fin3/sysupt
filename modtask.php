@@ -6,7 +6,8 @@ loggedinorreturn();
 
 function puke()
 {
-	$msg = "用户 ".$CURUSER["username"]." (id: ".$CURUSER["id"].") 试图使用modtask.php修改用户信息�?IP : ".getip();
+	global $CURUSER;
+	$msg = "用户 ".$CURUSER["username"]." (id: ".$CURUSER["id"].") 试图使用modtask.php修改用户信息 IP: ".getip();
 	write_log($msg,'mod');
 	stderr("Error", "Permission denied. For security reason, we logged this action");
 }
@@ -200,9 +201,9 @@ if ($action == "edituser")
 		$added = sqlesc(date("Y-m-d H:i:s"));
 		sql_query("INSERT INTO messages (sender, receiver, subject, msg, added) VALUES(0, $userid, $subject, $msg, $added)") or sqlerr(__FILE__, __LINE__);
 		$updateset[] = "class = $class";
-		if ($curclass==UC_UPLOADER)
-		sql_query("DELETE FROM uploaders WHERE uid = ".$userid."") or sqlerr(__FILE__, __LINE__);
-		if ($class== UC_UPLOADER)
+		if ($curclass >= UC_UPLOADER && $class < UC_UPLOADER)
+		sql_query("DELETE FROM uploaders WHERE uid = ".$userid) or sqlerr(__FILE__, __LINE__);
+		if ($class >= UC_UPLOADER)
 		sql_query("INSERT INTO uploaders (uid, deleted_torrents, deleted_last) VALUES($userid, 0, 0)") or sqlerr(__FILE__, __LINE__);
 		$what = ($class > $curclass ? "Promoted" : "Demoted");
 		$modcomment = date("Y-m-d") . " - $what to '" . get_user_class_name($class) . "' by $CURUSER[username].\n". $modcomment;
@@ -280,7 +281,7 @@ if ($action == "edituser")
 			}
 		} else {
 			$modcomment = date("Y-m-d") . " - Disabled by " . $CURUSER['username']. ".\n". $modcomment;
-			write_log("管理�?".$CURUSER["username"]." 禁用了帐�?$arr[id] ($arr[username]) (".$warnpm.")",'normal');		
+			write_log("管理员".$CURUSER["username"]." 禁用了账号 $arr[id] ($arr[username]) (".$warnpm.")",'normal');
 		}
 	}
 	if ($arr['noad'] != $noad){

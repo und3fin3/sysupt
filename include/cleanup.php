@@ -995,7 +995,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	 */
 	
 	// 17.update total seeding and leeching time of users
-	$res = sql_query ( "SELECT * FROM users" ) or sqlerr ( __FILE__, __LINE__ );
+	$res = sql_query ( "SELECT id FROM users" ) or sqlerr ( __FILE__, __LINE__ );
 	while ( $arr = mysql_fetch_assoc ( $res ) ) {
 		$res2 = sql_query ( "SELECT SUM(seedtime) as st, SUM(leechtime) as lt FROM snatched where userid = " . $arr ['id'] . " LIMIT 1" ) or sqlerr ( __FILE__, __LINE__ );
 		$arr2 = mysql_fetch_assoc ( $res2 ) or sqlerr ( __FILE__, __LINE__ );
@@ -1113,7 +1113,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	if (date ( 'j' ) == 1 && date ( "Y-m-d", strtotime ( $arr ['salarytime'] ) ) < date ( "Y-m-d" )) {
 		$staffmsg = " 上月的发布员工资发放情况：\n";
 		
-		$res = sql_query ( "SELECT id, username, class, bonuscomment, stafffor FROM users WHERE class=" . sqlesc ( $salary_class ) . " ORDER BY username" ) or sqlerr ( __FILE__, __LINE__ );
+		$res = sql_query ( "SELECT id, username, class, bonuscomment, stafffor FROM users WHERE class>=" . sqlesc ( $salary_class ) . " ORDER BY username" ) or sqlerr ( __FILE__, __LINE__ );
 		$last = strtotime ( date ( "Y-m-1 0:0:0", strtotime ( "-2 month " ) ) );
 		$from = strtotime ( date ( "Y-m-1 0:0:0", strtotime ( "last month " ) ) );
 		$to = strtotime ( date ( "Y-m-1 0:0:0" ) );
@@ -1123,48 +1123,54 @@ function docleanup($forceAll = 0, $printProgress = false) {
 			foreach ( $usernames as $user ) {
 				if (strpos ( $user ['stafffor'], "(请假中)" ) !== false)
 					$log_uploader [$user ['username']] ["thisnum"] = "请假";
-				else {
-						$wheres = "SELECT count(*) as num , sum(size) as size FROM torrents WHERE added >= '" . date ( "Y-m-d H:i:s", $from ) . "' AND added <'" . date ( "Y-m-d H:i:s", $to ) . "' AND owner = '" . $user ["id"] . "' ";
-						$res = mysql_fetch_assoc ( sql_query ( $wheres ) );
-						$log_uploader [$user ['username']] ["thisnum"] = $res ["num"];
-						$log_uploader [$user ['username']] ["thissize"] = $res ["size"];
-						$wheres = "SELECT count(*) as num , sum(size) as size FROM torrents WHERE added >= '" . date ( "Y-m-d H:i:s", $last ) . "' AND added <'" . date ( "Y-m-d H:i:s", $from ) . "' AND owner = '" . $user ["id"] . "' ";
-						$res = mysql_fetch_assoc ( sql_query ( $wheres ) );
-						$log_uploader [$user ['username']] ["lastnum"] = $res ["num"];
-						$log_uploader [$user ['username']] ["lastsize"] = $res ["size"];
-						$deleted="select deleted_last from uploaders where uid = ".$user ['id']."";
-						$res = mysql_fetch_array ( sql_query ( $deleted ) );
-						$log_uploader [$user ['username']] ["deleted"] = $res ["deleted_last"];
-					}
-				}
-				$time = strtotime ( date ( "Y-m-1 0:0:0", strtotime ( "next month " ) ) ) - strtotime ( "now" );
-				$log_uploader ['time'] ['at'] = strtotime ( "now" );
-				$log_uploader ['time'] ['until'] = strtotime ( date ( "Y-m-1 0:0:0", strtotime ( "next month " ) ) );
-				$Cache->cache_value ( 'log_uploader', $log_uploader, $time );
+                else {
+                    $wheres = "SELECT COUNT(*) AS num , SUM(size) AS size FROM torrents WHERE added >= '" . date("Y-m-d H:i:s", $from) . "' AND added <'" . date("Y-m-d H:i:s", $to) . "' AND owner = '" . $user ["id"] . "' ";
+                    $res = mysql_fetch_assoc(sql_query($wheres));
+                    $log_uploader [$user ['username']] ["thisnum"] = $res ["num"];
+                    $log_uploader [$user ['username']] ["thissize"] = $res ["size"];
+                    $wheres = "SELECT COUNT(*) AS num , SUM(size) AS size FROM torrents WHERE added >= '" . date("Y-m-d H:i:s", $last) . "' AND added <'" . date("Y-m-d H:i:s", $from) . "' AND owner = '" . $user ["id"] . "' ";
+                    $res = mysql_fetch_assoc(sql_query($wheres));
+                    $log_uploader [$user ['username']] ["lastnum"] = $res ["num"];
+                    $log_uploader [$user ['username']] ["lastsize"] = $res ["size"];
+                    $wheres = "SELECT rate, deleted_last FROM uploaders WHERE uid = " . $user ['id'];
+                    $res = mysql_fetch_array(sql_query($wheres));
+                    $log_uploader [$user ['username']] ["deleted"] = $res ["deleted_last"];
+                    $log_uploader [$user ['username']] ["rate"] = $res ["rate"];
+                }
 			}
-	foreach ( $usernames as $user ) {
-				if ($log_uploader [$user ['username']] ["thisnum"] == "请假")
-					$salary = 2000;
-				else {
-				$deleted=mysql_fetch_array (sql_query("select deleted_torrents from uploaders where uid = ".$user ['id'].""));
-				$salary = salary ( $log_uploader [$user ['username']] ["thisnum"]+$deleted['deleted_torrents'], $log_uploader [$user ['username']] ["thissize"] / (1024 * 1024 * 1024), 20, 30 );
-				}
-				$bonuscomment = $user ['bonuscomment'];
-				$bonuscomment = date ( "Y-m-d" ) . " 工资收入" . $salary . "个魔力值。\n" . htmlspecialchars ( $bonuscomment );
-				
-				sql_query ( "UPDATE users SET seedbonus = seedbonus + $salary, bonuscomment = " . sqlesc ( $bonuscomment ) . " WHERE id = $user[id]" ) or sqlerr ( __FILE__, __LINE__ );
-				sql_query ( "UPDATE uploaders SET deleted_last = ".$deleted['deleted_torrents'].", deleted_torrents = 0  WHERE id = $user[id]" ) or sqlerr ( __FILE__, __LINE__ );
-				$subject = "发工资啦~";
-				$msg = "亲爱的 " . $user ["username"] . " ，上月的工资 [b][color=Blue]" . $salary . "[/color][/b] 个魔力值已发放，请笑纳~";
-				$dt = sqlesc ( date ( "Y-m-d H:i:s" ) );
-				sql_query ( "INSERT INTO messages (sender, receiver, added, subject, msg) VALUES(0, $user[id], $dt, " . sqlesc ( $subject ) . ", " . sqlesc ( $msg ) . ")" ) or sqlerr ( __FILE__, __LINE__ );
-				sql_query ( "INSERT INTO uploader_autosalary (user_id, user_class, salary, salarytime) VALUES($user[id], $user[class], " . sqlesc ( $salary ) . ", " . $dt . ")" ) or sqlerr ( __FILE__, __LINE__ );
-				$Cache->delete_value ( 'user_' . $user ['id'] . '_unread_message_count' );
-				$Cache->delete_value ( 'user_' . $user ['id'] . '_inbox_count' );
-				
-				$staffmsg = $staffmsg . $user ["username"] . " : 魔力值[color=Blue]" . $salary . "[/color]个" . "\n";
-				sql_query ( "UPDATE uploaders SET deleted_last = ".$deleted['deleted_torrents'].", deleted_torrents = 0 WHERE uid = $user[id]" ) or sqlerr ( __FILE__, __LINE__ );
-			}
+            $time = strtotime(date("Y-m-1 0:0:0", strtotime("next month "))) - strtotime("now");
+            $log_uploader ['time'] ['at'] = strtotime("now");
+            $log_uploader ['time'] ['until'] = strtotime(date("Y-m-1 0:0:0", strtotime("next month ")));
+            $Cache->cache_value('log_uploader', $log_uploader, $time);
+        }
+        foreach ($usernames as $user) {
+            $deleted = mysql_fetch_array(sql_query("SELECT deleted_torrents FROM uploaders WHERE uid = " . $user ['id']));
+            $askforleave = ($log_uploader [$user ['username']] ["thisnum"] == "请假");
+            if ($askforleave)
+                $salary = 2000;
+            else
+                $salary = salary($log_uploader [$user ['username']] ["thisnum"] + $deleted['deleted_torrents'], $log_uploader [$user ['username']] ["thissize"] / (1024 * 1024 * 1024), 20, 30);
+            $rate = uploader_rate($log_uploader [$user ['username']] ["thisnum"] + $deleted['deleted_torrents'], $log_uploader [$user ['username']] ["thissize"] / (1024 * 1024 * 1024), 20, 30, $log_uploader [$user ['username']] ["rate"], $askforleave);
+            
+            $bonuscomment = $user ['bonuscomment'];
+            $bonuscomment = date("Y-m-d") . " 工资收入" . $salary . "个魔力值。\n" . htmlspecialchars($bonuscomment);
+            if (!($user['class'] > UC_UPLOADER && $salary == 0))
+            	sql_query("UPDATE users SET seedbonus = seedbonus + $salary, bonuscomment = " . sqlesc($bonuscomment) . " WHERE id = $user[id]") or sqlerr(__FILE__, __LINE__);
+            sql_query("UPDATE uploaders SET rate = " . sqlesc($rate) . ", "." deleted_last = " . $deleted['deleted_torrents'] . ", deleted_torrents = 0  WHERE id = $user[id]") or sqlerr(__FILE__, __LINE__);
+            
+            // 发PM
+            if (!($user['class'] > UC_UPLOADER && $salary == 0)) {
+                $subject = "发工资啦~";
+                $msg = "亲爱的 " . $user ["username"] . " ，上月你的评级为 [b]" . rate_color($rate, "bbcode") . "[/b]，工资 [b][color=Blue]" . $salary . "[/color][/b] 个魔力值已发放，请笑纳~";
+                $dt = sqlesc(date("Y-m-d H:i:s"));
+                sql_query("INSERT INTO messages (sender, receiver, added, subject, msg) VALUES(0, $user[id], $dt, " . sqlesc($subject) . ", " . sqlesc($msg) . ")") or sqlerr(__FILE__, __LINE__);
+                sql_query("INSERT INTO uploader_autosalary (user_id, user_class, salary, salarytime) VALUES($user[id], $user[class], " . sqlesc($salary) . ", " . $dt . ")") or sqlerr(__FILE__, __LINE__);
+                $Cache->delete_value('user_' . $user ['id'] . '_unread_message_count');
+                $Cache->delete_value('user_' . $user ['id'] . '_inbox_count');
+        
+                $staffmsg = $staffmsg . $user ["username"] . " : 魔力值[color=Blue]" . $salary . "[/color]个，评级： " . rate_color($rate, "bbcode") . "\n";
+            }
+		}
 		$subject = "发布员发工资啦~";
 		$dt = sqlesc ( date ( "Y-m-d H:i:s" ) );
 		sql_query ( "INSERT INTO staffmessages (sender, added, subject, msg) VALUES(9999, $dt, " . sqlesc ( $subject ) . ", " . sqlesc ( $staffmsg ) . ")" ) or sqlerr ( __FILE__, __LINE__ );
