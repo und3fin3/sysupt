@@ -564,3 +564,19 @@ function auto_removeseeding(id)
 	document.getElementById("seedingbase").innerHTML = document.getElementById("removeseeding").innerHTML;
 	ajax.gets('seeding.php?id=' + id );
 }
+
+function only_show_not_passed_uploaders(checkbox) {
+    $("#outer").find("table > tbody > tr > td > table:nth-child(2) > tbody > tr").each(function () {
+        var passed = $(this).children("td")[5];
+        if (passed.innerText.search("否") === -1)
+            $(this).css('display', 'none');
+    });
+    $(checkbox).attr("onclick", "show_all_uploaders(this);");
+}
+
+function show_all_uploaders(checkbox) {
+    $("#outer").find("table > tbody > tr > td > table:nth-child(2) > tbody > tr").each(function () {
+        $(this).css('display', 'table-row');
+    });
+    $(checkbox).attr("onclick", "only_show_not_passed_uploaders(this);");
+}

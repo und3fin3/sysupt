@@ -17,6 +17,7 @@ $lang_uploaders = array
 	'text_username' => "用户名",
 	'text_torrent_size' => "种子大小",
 	'text_torrent_num' => "种子数",
+	'text_only_show_not_passed' => "只显示未通过考核的发布员",
 );
 
 ?>

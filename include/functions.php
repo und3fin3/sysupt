@@ -992,12 +992,13 @@ function begin_frame($caption = "", $center = false, $padding = 10, $width = "10
 function end_frame() {
 	print ("</td></tr></table>\n") ;
 }
-function begin_table($fullwidth = false, $padding = 5) {
+function begin_table($fullwidth = false, $padding = 5, $center = false) {
 	$width = "";
-
 	if ($fullwidth)
 		$width .= " width=50%";
-	print ("<table class=\"main" . $width . "\" border=\"1\" cellspacing=\"0\" cellpadding=\"" . $padding . "\">") ;
+    
+    $align = $center ? " align='center' " : "";
+	print ("<table class=\"main" . $width . "\" border=\"1\" cellspacing=\"0\" cellpadding=\"" . $padding . "\" $align>") ;
 }
 function end_table() {
 	print ("</table>\n") ;
