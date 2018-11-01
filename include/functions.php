@@ -6613,7 +6613,7 @@ function rate_color($rate, $type = "bbcode")
         $color = "Red";
     
     if ($type == "bbcode")
-        return "[color=$color]$rate/[/color]";
+        return "[color=$color] $rate [/color]";
     elseif ($type == "html")
         return "<font color=\"$color\">$rate</font>";
     else

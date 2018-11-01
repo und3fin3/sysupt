@@ -1156,7 +1156,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
             $bonuscomment = date("Y-m-d") . " 工资收入" . $salary . "个魔力值。\n" . htmlspecialchars($bonuscomment);
             if (!($user['class'] > UC_UPLOADER && $salary == 0))
             	sql_query("UPDATE users SET seedbonus = seedbonus + $salary, bonuscomment = " . sqlesc($bonuscomment) . " WHERE id = $user[id]") or sqlerr(__FILE__, __LINE__);
-            sql_query("UPDATE uploaders SET rate = " . sqlesc($rate) . ", "." deleted_last = " . $deleted['deleted_torrents'] . ", deleted_torrents = 0  WHERE id = $user[id]") or sqlerr(__FILE__, __LINE__);
+            sql_query("UPDATE uploaders SET rate = " . sqlesc($rate) . ", deleted_last = " . $deleted['deleted_torrents'] . ", deleted_torrents = 0  WHERE uid = $user[id]") or sqlerr(__FILE__, __LINE__);
             
             // 发PM
             if (!($user['class'] > UC_UPLOADER && $salary == 0)) {
@@ -1176,6 +1176,8 @@ function docleanup($forceAll = 0, $printProgress = false) {
 		sql_query ( "INSERT INTO staffmessages (sender, added, subject, msg) VALUES(9999, $dt, " . sqlesc ( $subject ) . ", " . sqlesc ( $staffmsg ) . ")" ) or sqlerr ( __FILE__, __LINE__ );
 		$Cache->delete_value ( 'staff_message_count' );
 		$Cache->delete_value ( 'staff_new_message_count' );
+		// 清理缓存以获取新评级
+        $Cache->delete_value ( 'log_uploader' );
 		
 		if ($printProgress) {
 			printProgress ( "发放发布员工资" );
