@@ -6126,7 +6126,7 @@ function update_imdb() {
 	$index = 0;
 	while ( 250 != $index ) {
 		if (($ret = translate_title ( $imdb_id [$index] [1] )) !== false) {
-			$translate_title [$index] [2] = $ret;
+			$translate_title [$index] = $ret;
 		}
 		// the type of votes is string , so you cannot sort by the votes
 		settype ( $year [$index] [1], "integer" );
@@ -6143,7 +6143,7 @@ function update_imdb() {
 		} else {
 			$torrentid = 0;
 		}
-		$sql = "INSERT INTO `imdb`( `imdb_id`, `rank`, `translate_title`,`title`, `torrent_id`, `year`, `rating`, `votes`) VALUES ({$imdb_id[$index][1]},{$rank[$index][1]},'{$translate_title[$index][1]}','{$title[$index][1]}',$torrentid,{$year[$index][1]},{$rating[$index][1]},'{$votes[$index][1]}')";
+		$sql = "INSERT INTO `imdb`( `imdb_id`, `rank`, `translate_title`,`title`, `torrent_id`, `year`, `rating`, `votes`) VALUES ({$imdb_id[$index][1]},{$rank[$index][1]},'{$translate_title[$index]}','{$title[$index][1]}',$torrentid,{$year[$index][1]},{$rating[$index][1]},'{$votes[$index][1]}')";
 		$ret = sql_query ( $sql );
 		if (! $ret) {
 			return FALSE;
@@ -6155,15 +6155,9 @@ function update_imdb() {
     return TRUE;
 }
 function translate_title($imdb_id) {
-	$path = "imdb/cache/" . $imdb_id . ".json";
-	if (file_exists ( $path )) {
-		$douban_imdb_json = file_get_contents ( $path );
-	} else {
-		return false;
-	}
-	$douban_imdb=unserialize($douban_imdb_json);
-	return Sdouban_imdb.alt_title;
-
+    $imdb = new imdb($imdb_id);
+    $imdb->get_movie();
+    return $imdb->get_data("transname");
 }
 
 /*******************end of get imdb******************************/
