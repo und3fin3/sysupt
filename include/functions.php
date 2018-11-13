@@ -6,6 +6,7 @@ include_once ($rootpath . 'include/globalfunctions.php');
 include_once ($rootpath . 'include/config.php');
 include_once ($rootpath . 'classes/class_advertisement.php');
 require_once ($rootpath . get_langfile_path ( "functions.php" ));
+require_once ($rootpath . "imdb/imdb2.class.php");
 $smiles = 1120; // 表情数目
 function get_langfolder_cookie() {
 	global $deflang;
