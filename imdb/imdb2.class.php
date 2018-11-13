@@ -30,6 +30,14 @@ class imdb
 		else
 		{
 			$this->data = unserialize(file_get_contents($cache_file));
+            if (!$this->data){
+                $this->clear_cache();
+                $url = "http://api.douban.com/v2/movie/imdb/tt" . $this->imdb_id;
+                $this->data = json_decode(file_get_contents($url), TRUE);
+                $fp = fopen($cache_file, "w");
+                fwrite($fp, serialize($this->data));
+                fclose($fp);
+            }
 		}
 		return $this->data;
 	}
