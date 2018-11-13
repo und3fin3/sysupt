@@ -6099,7 +6099,7 @@ function open_luckydraw() {
 function update_imdb() {
 
 	// get the web page
-	$url = "http://www.imdb.com/chart/top/";
+	$url = "https://www.imdb.com/chart/top/";
 	$ch = curl_init ( $url );
 	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
 	// curl_setopt($ch, CURLOPT_CONNECTIONTIMEOUT,0);
@@ -6109,33 +6109,32 @@ function update_imdb() {
 	curl_close ( $ch );
 
 	// votes
-	preg_match_all ( "/(<div>)(.*)(<\/div)/", $information, $votes, PREG_SET_ORDER );
+	preg_match_all ( "/<span name=\"nv\" data-value=\"(.*?)\"><\/span>/", $information, $votes, PREG_SET_ORDER );
 	// title
-	preg_match_all ( "/(<a href=\"\/title\/tt[0-9]*\/\"\stitle=\")(.*)(\(\d{4}\)\"><img)/", $information, $title, PREG_SET_ORDER );
+	preg_match_all ( "/<a href=\"\/title.*?\"[\s\S]title=\".*?\" >(.*?)<\/a>/", $information, $title, PREG_SET_ORDER );
 	// year
-	preg_match_all ( "/(<span class=\"year_type\">\()(.*)/", $information, $year, PREG_SET_ORDER );
+	preg_match_all ( "/secondaryInfo\">\((.*?)\)<\/span>/", $information, $year, PREG_SET_ORDER );
 	// imdb_id
-	preg_match_all ( "/(<a href=\"\/title\/tt)(.*)(\/\")(.s*t)/", $information, $imdb_id, PREG_SET_ORDER );
+	preg_match_all ( "/<div class=\".*?tconst=\"tt(.*?)\"/", $information, $imdb_id, PREG_SET_ORDER );
 	// rating
-	preg_match_all ( "/(<td class=\"imdb_rating\">)(\s)(.*)(<br>)/", $information, $rating, PREG_SET_ORDER );
+	preg_match_all ( "/<span name=\"ir\" data-value=\"(.*?)\"><\/span>/", $information, $rating, PREG_SET_ORDER );
 	// rank
-	preg_match_all ( "/(<td class=\"number\">)(\d*)/", $information, $rank, PREG_SET_ORDER );
+	preg_match_all ( "/<span name=\"rk\" data-value=\"(.*?)\"><\/span>/", $information, $rank, PREG_SET_ORDER );
 
 	$clearsql = "TRUNCATE TABLE imdb";
 	sql_query ( $clearsql );
 	$index = 0;
-	echo "<br>";
-	echo "<br/><center><span style=\"font-size: 20px\"><strong>好棒哦，更新成功了呢！</strong></span></center><br/>";
 	while ( 250 != $index ) {
-		if (($ret = translate_title ( $imdb_id [$index] [2] )) !== false) {
-			$translate_title [$index] [2] = translate_title ( $imdb_id [$index] [2] );
+		if (($ret = translate_title ( $imdb_id [$index] [1] )) !== false) {
+			$translate_title [$index] [2] = $ret;
 		}
 		// the type of votes is string , so you cannot sort by the votes
-		settype ( $year [$index] [2], "integer" );
-		settype ( $rating [$index] [3], "double" );
-		settype ( $rank [$index] [2], "integer" );
-		settype ( $imdb_id [$index] [2], "integer" );
-		$sql0 = "SELECT * FROM torrents WHERE url={$imdb_id[$index][2]} order by seeders desc limit 0,1";
+		settype ( $year [$index] [1], "integer" );
+		settype ( $rating [$index] [1], "float" );
+        $rating [$index] [1] = round($rating [$index] [1], 2);
+		settype ( $rank [$index] [1], "integer" );
+		settype ( $imdb_id [$index] [1], "integer" );
+		$sql0 = "SELECT * FROM torrents WHERE url={$imdb_id[$index][1]} order by seeders desc limit 0,1";
 		$ret0 = sql_query ( $sql0 );
 		$row = mysql_num_rows ( $ret0 );
 		$rs = mysql_fetch_assoc ( $ret0 );
@@ -6144,14 +6143,16 @@ function update_imdb() {
 		} else {
 			$torrentid = 0;
 		}
-		$sql = "INSERT INTO `imdb`( `imdb_id`, `rank`, `translate_title`,`title`, `torrent_id`, `year`, `rating`, `votes`) VALUES ({$imdb_id[$index][2]},{$rank[$index][2]},'{$translate_title[$index][2]}','{$title[$index][2]}',$torrentid,{$year[$index][2]},{$rating[$index][3]},'{$votes[$index][2]}')";
+		$sql = "INSERT INTO `imdb`( `imdb_id`, `rank`, `translate_title`,`title`, `torrent_id`, `year`, `rating`, `votes`) VALUES ({$imdb_id[$index][1]},{$rank[$index][1]},'{$translate_title[$index][1]}','{$title[$index][1]}',$torrentid,{$year[$index][1]},{$rating[$index][1]},'{$votes[$index][1]}')";
 		$ret = sql_query ( $sql );
 		if (! $ret) {
 			return FALSE;
 		}
 		$index ++;
 	}
-	return TRUE;
+    echo "<br>";
+    echo "<br/><center><span style=\"font-size: 20px\"><strong>好棒哦，更新成功了呢！</strong></span></center><br/>";
+    return TRUE;
 }
 function translate_title($imdb_id) {
 	$path = "imdb/cache/" . $imdb_id . ".json";
