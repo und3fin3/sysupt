@@ -107,7 +107,7 @@ if ($getcode) {
     $title = $SITENAME . $lang_self_invite['title'];
     $message = <<<EOD
 {$lang_self_invite['mail_one']}
-<b><a href="http://$BASEURL/self_invite.php?code=$code" target="_blank">http://$BASEURL/self_invite.php?code=$code</a></b><br />
+<b><a href="https://$BASEURL/self_invite.php?code=$code" target="_blank">https://$BASEURL/self_invite.php?code=$code</a></b><br />
 {$lang_self_invite['mail_two']}{$ip}{$lang_self_invite['mail_three']}
 <br />
 EOD;

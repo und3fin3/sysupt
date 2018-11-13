@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             sql_query("INSERT INTO invites (inviter, invitee, hash, time_invited) VALUES ('" . mysql_real_escape_string($id) . "', '" . mysql_real_escape_string($a) . "', '" . mysql_real_escape_string($hash) . "', " . sqlesc(date("Y-m-d H:i:s")) . ")");
             $title = "北洋园PT网站邀请函";
             $message = "你好，<br /><br />恭喜你从【".$event."】活动获得一个".$SITENAME."邀请资格<br />如果你有意加入，请在阅读网站规则后确认该邀请。<br /><br />请点击以下链接确认邀请：".
-                "<b><a href=\"https://$BASEURL/signup.php?type=invite&invitenumber=$hash\" target=\"_blank\">点击这里</a></b><br />http://$BASEURL/signup.php?type=invite&invitenumber=$hash<br />".
+                "<b><a href=\"https://$BASEURL/signup.php?type=invite&invitenumber=$hash\" target=\"_blank\">点击这里</a></b><br />https://$BASEURL/signup.php?type=invite&invitenumber=$hash<br />".
                 "请在".$invite_timeout."天内确认该邀请，之后邀请将作废。<br />".$SITENAME."真诚欢迎你加入我们的社区！<br /><br />".
                 "如果你没有参加过此次活动，请将此邮件转发至".$REPORTMAIL."<br /><br />------<br />".$SITENAME."-https://tjupt.org";
             sent_mail($a,$SITENAME,$SITEEMAIL,change_email_encode(get_langfolder_cookie(), $title),change_email_encode(get_langfolder_cookie(),$message),"invitesignup",false,false,'',get_email_encode(get_langfolder_cookie()));

@@ -59,8 +59,8 @@ $title = $SITENAME.$lang_takeinvite['mail_tilte'];
 
 $message = <<<EOD
 {$lang_takeinvite['mail_one']}{$arr[username]}{$lang_takeinvite['mail_two']}
-<b><a href="http://$BASEURL/signup.php?type=invite&invitenumber=$hash" target="_blank">{$lang_takeinvite['mail_here']}</a></b><br />
-http://$BASEURL/signup.php?type=invite&invitenumber=$hash
+<b><a href="https://$BASEURL/signup.php?type=invite&invitenumber=$hash" target="_blank">{$lang_takeinvite['mail_here']}</a></b><br />
+https://$BASEURL/signup.php?type=invite&invitenumber=$hash
 <br />{$lang_takeinvite['mail_three']}$invite_timeout{$lang_takeinvite['mail_four']}{$arr[username]}{$lang_takeinvite['mail_five']}<br />
 $body
 <br /><br />{$lang_takeinvite['mail_six']}
@@ -107,7 +107,7 @@ elseif ($_POST['invite']){
 ?>
 <h1>邀请申请区</h1>
 <br/><h2>说明：</h2><table width="100%"><tbody><tr><td class="text" valign="top"><div style="margin-left: 16pt;">1.点击右面的复选框，勾选要处理的申请；<br/>2.“设为已处理”将忽略此申请；“邀请”将向该申请邮箱发送邀请码（不会占用你的邀请名额）；尽量不要一次勾选多个申请同时邀请，以免其中一个邮箱有问题而影响其他邮箱。<br/>3.请认真审核，仔细处理。优先考虑网络、硬盘条件较好以及经验丰富的用户加入。<br/></div></td></tr></tbody></table>
-<table class="main" border="1" cellspacing="0" cellpadding="5"><tbody><tr>
+<table class="main" border="1" cellspacing="0" cellpadding="5"><tr>
 <form method=post action=viewinvitebox.php>
 <td class="colhead">欲申请用户名</td>
 <td class="colhead">IP地址</td>
@@ -157,9 +157,8 @@ print("<tr>
 }
 ?>
 <tr><td class="colhead"><input class="btn" type="button" value="全选" onclick="this.value=check(form,'全选','全不选')"></td><td class="colhead" colspan="12" align="right"><input type="submit" name="setdealt" value="忽略" /><input type="submit" name="invite" value="邀请" /><input type="submit" name="delete" value="删除" /></td></tr> 
-</form>
+</form></table>
 <?php
-print "</table>";
 echo $pagerbottom;
 stdfoot();
 ?>

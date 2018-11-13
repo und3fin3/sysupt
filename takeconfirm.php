@@ -14,8 +14,8 @@ else
 $title = $SITENAME.$lang_takeconfirm['mail_title'];
 $body = <<<EOD
 {$lang_takeconfirm['mail_content_1']}
-<b><a href="javascript:void(null)" onclick="window.open('http://$BASEURL/login.php')">{$lang_takeconfirm['mail_here']}</a></b><br />
-http://$BASEURL/login.php
+<b><a href="javascript:void(null)" onclick="window.open('https://$BASEURL/login.php')">{$lang_takeconfirm['mail_here']}</a></b><br />
+https://$BASEURL/login.php
 {$lang_takeconfirm['mail_content_2']}
 EOD;
 

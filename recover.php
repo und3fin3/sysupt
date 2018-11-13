@@ -50,8 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	$title = $SITENAME.$lang_recover['mail_title'];
 	$body = <<<EOD
 {$lang_recover['mail_one']}($email){$lang_recover['mail_two']}$ip{$lang_recover['mail_three']}
-<b><a href="http://$BASEURL/recover.php?id={$arr["id"]}&secret=$hash" target="_blank"> {$lang_recover['mail_this_link']} </a></b><br />
-http://$BASEURL/recover.php?id={$arr["id"]}&secret=$hash
+<b><a href="https://$BASEURL/recover.php?id={$arr["id"]}&secret=$hash" target="_blank"> {$lang_recover['mail_this_link']} </a></b><br />
+https://$BASEURL/recover.php?id={$arr["id"]}&secret=$hash
 {$lang_recover['mail_four']}
 EOD;
 
@@ -97,7 +97,7 @@ elseif($_SERVER["REQUEST_METHOD"] == "GET" && $take_recover && isset($_GET["id"]
 {$lang_recover['mail_two_one']}{$arr["username"]}
 {$lang_recover['mail_two_two']}$newpassword
 {$lang_recover['mail_two_three']}
-<b><a href="http://$BASEURL/login.php" target="_blank">{$lang_recover['mail_here']}</a></b>
+<b><a href="https://$BASEURL/login.php" target="_blank">{$lang_recover['mail_here']}</a></b>
 {$lang_recover['mail_three_1']}
 <b><a href="http://www.google.com/support/bin/answer.py?answer=23852" target='_blank'>{$lang_confirm_resend['mail_google_answer']}</a></b>
 {$lang_recover['mail_three_2']}

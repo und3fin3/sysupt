@@ -799,8 +799,8 @@ if ($action) {
 
 {$lang_usercp['mail_change_email_four']}{$_SERVER["REMOTE_ADDR"]}{$lang_usercp['mail_change_email_five']}
 
-{$lang_usercp['mail_change_email_six']}<b><a href="javascript:void(null)" onclick="window.open('http://$BASEURL/confirmemail.php/{$CURUSER["id"]}/$hash/$obemail')">{$lang_usercp['mail_here']}</a></b>{$lang_usercp['mail_change_email_six_1']}<br />
-http://$BASEURL/confirmemail.php/{$CURUSER["id"]}/$hash/$obemail
+{$lang_usercp['mail_change_email_six']}<b><a href="javascript:void(null)" onclick="window.open('https://$BASEURL/confirmemail.php/{$CURUSER["id"]}/$hash/$obemail')">{$lang_usercp['mail_here']}</a></b>{$lang_usercp['mail_change_email_six_1']}<br />
+https://$BASEURL/confirmemail.php/{$CURUSER["id"]}/$hash/$obemail
 
 {$lang_usercp['mail_change_email_seven']}
 

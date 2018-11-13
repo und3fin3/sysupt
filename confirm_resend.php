@@ -72,12 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
 $body = <<<EOD
 {$lang_confirm_resend['mail_one']}$usern{$lang_confirm_resend['mail_two']}($email){$lang_confirm_resend['mail_three']}$ip{$lang_confirm_resend['mail_four']}
-<b><a href="http://$BASEURL/confirm.php?id=$id&secret=$psecret" target="_blank">
+<b><a href="https://$BASEURL/confirm.php?id=$id&secret=$psecret" target="_blank">
 {$lang_confirm_resend['mail_this_link']} </a></b><br />
-http://$BASEURL/confirm.php?id=$id&secret=$psecret
+https://$BASEURL/confirm.php?id=$id&secret=$psecret
 {$lang_confirm_resend['mail_four_1']}
-<b><a href="http://$BASEURL/confirm_resend.php" target="_blank">{$lang_confirm_resend['mail_here']}</a></b><br />
-http://$BASEURL/confirm_resend.php
+<b><a href="https://$BASEURL/confirm_resend.php" target="_blank">{$lang_confirm_resend['mail_here']}</a></b><br />
+https://$BASEURL/confirm_resend.php
 <br />
 {$lang_confirm_resend['mail_five']}
 EOD;

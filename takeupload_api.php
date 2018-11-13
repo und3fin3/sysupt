@@ -885,8 +885,8 @@ if ($emailnotify_smtp == 'yes' && $smtptype != 'none') {
 $description
 -------------------------------------------------------------------------------------------------------------------------
 
-{$lang_takeupload_target[$langfolder_array[$i]]['mail_torrent']}<b><a href=http://$BASEURL/details.php?id=$id&hit=1 >{$lang_takeupload_target[$langfolder_array[$i]]['mail_here']}</a></b><br />
-http://$BASEURL/details.php?id=$id&hit=1
+{$lang_takeupload_target[$langfolder_array[$i]]['mail_torrent']}<b><a href=https://$BASEURL/details.php?id=$id&hit=1 >{$lang_takeupload_target[$langfolder_array[$i]]['mail_here']}</a></b><br />
+https://$BASEURL/details.php?id=$id&hit=1
 
 ------{$lang_takeupload_target[$langfolder_array[$i]]['mail_yours']}
 {$lang_takeupload_target[$langfolder_array[$i]]['mail_team']}
