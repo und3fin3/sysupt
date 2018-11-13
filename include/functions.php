@@ -6132,7 +6132,7 @@ function update_imdb() {
 		// the type of votes is string , so you cannot sort by the votes
 		settype ( $year [$index] [1], "integer" );
 		settype ( $rating [$index] [1], "float" );
-        $rating [$index] [1] = round($rating [$index] [1], 2);
+        $rating [$index] [1] = round($rating [$index] [1], 1);
 		settype ( $rank [$index] [1], "integer" );
 		settype ( $imdb_id [$index] [1], "integer" );
 		$sql0 = "SELECT * FROM torrents WHERE url={$imdb_id[$index][1]} order by seeders desc limit 0,1";
@@ -6144,7 +6144,7 @@ function update_imdb() {
 		} else {
 			$torrentid = 0;
 		}
-		$sql = "INSERT INTO `imdb`( `imdb_id`, `rank`, `translate_title`,`title`, `torrent_id`, `year`, `rating`, `votes`) VALUES ({$imdb_id[$index][1]},{$rank[$index][1]},'{$translate_title[$index]}','{$title[$index][1]}',$torrentid,{$year[$index][1]},{$rating[$index][1]},'{$votes[$index][1]}')";
+		$sql = "INSERT INTO `imdb`( `imdb_id`, `rank`, `translate_title`,`title`, `torrent_id`, `year`, `rating`, `votes`) VALUES ({$imdb_id[$index][1]}, {$rank[$index][1]}, " . sqlesc($translate_title[$index]) . ", " . sqlesc($title[$index][1]) . ",$torrentid,{$year[$index][1]},{$rating[$index][1]},'{$votes[$index][1]}')";
 		$ret = sql_query ( $sql );
 		if (! $ret) {
 			return FALSE;
