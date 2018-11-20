@@ -23,7 +23,7 @@ if ($_GET["returnto"] || $_SERVER["HTTP_REFERER"])
 <?php
 if ($_GET["sent"] == 1) {
 ?>
-<tr><td colspan=2 class="text" align="center"><font color=red><b>Upload amount has been added and inform message has been sent.</font></b></tr></td>
+<tr><td colspan=2 class="text" align="center"><font color=red><b>Upload amount has been added and inform message has been sent.</font></b></td></tr>
 <?php
 }
 ?>

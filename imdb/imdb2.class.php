@@ -6,8 +6,8 @@ class imdb
 	private $api_url = "http://api.douban.com/v2/movie";
 	
 	private $cache_dir = "./imdb/cache";
-	
-	private $cache_ttl = 86400;
+
+	private $cache_ttl = 60 * 60 * 24 * 14; // 14 days
 	
 	private $data;
 
