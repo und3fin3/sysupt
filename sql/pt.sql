@@ -2920,6 +2920,7 @@ CREATE TABLE `uploaders` (
   `uid` int(10) unsigned NOT NULL DEFAULT '0',
   `deleted_last` smallint(5) unsigned NOT NULL DEFAULT '0',
   `deleted_torrents` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `rate` varchar(3) NOT NULL DEFAULT 'F',
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
