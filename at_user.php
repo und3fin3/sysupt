@@ -32,10 +32,10 @@ if (isset ( $_POST ['str'] ) && $_POST ['str'] != '') {
 		unset ( $result );
 		
 		while ( $suggest = mysql_fetch_array ( $suggest_query ) ) {
-			if ($suggest [title] != "") {
+			if ($suggest ['title'] != "") {
 				$result [] = array (
-						'username' => $suggest [username],
-						'usertitle' => $suggest [title] 
+						'username' => $suggest ['username'],
+						'usertitle' => $suggest ['title']
 				);
 			} else {
 				switch ($suggest ['class']) {
@@ -104,11 +104,13 @@ if (isset ( $_POST ['str'] ) && $_POST ['str'] != '') {
 							$class_name = '养老族';
 							break;
 						}
+						/*
 					case UC_FORUM_MODERATOR :
 						{
 							$class_name = '论坛版主';
 							break;
 						}
+						*/
 					case UC_MODERATOR :
 						{
 							$class_name = '类管理员';
@@ -131,7 +133,7 @@ if (isset ( $_POST ['str'] ) && $_POST ['str'] != '') {
 						}
 				}
 				$result [] = array (
-						'username' => $suggest [username],
+						'username' => $suggest ['username'],
 						'usertitle' => $class_name 
 				);
 			}
@@ -156,4 +158,3 @@ if (! $result) {
 	);
 }
 echo json_encode ( $result );
-?>

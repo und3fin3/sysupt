@@ -10,7 +10,7 @@ $type = unesc($_GET["type"]);
 if ($type == 'new'){registration_check('invitesystem',true,false);}
 //registration_check('invitesystem',true,false);
 
-if (($CURUSER[id] != $id && get_user_class() < $viewinvite_class) || !is_valid_id($id))
+if (($CURUSER['id'] != $id && get_user_class() < $viewinvite_class) || !is_valid_id($id))
 stderr($lang_invite['std_sorry'],$lang_invite['std_permission_denied']);
 if (get_user_class() < $sendinvite_class)
 stderr($lang_invite['std_sorry'],$lang_invite['std_only'].get_user_class_name($sendinvite_class,false,true,true).$lang_invite['std_or_above_can_invite'],false);
@@ -37,14 +37,14 @@ if ($inv["invites"] != 1){
 }
 
 if ($type == 'new'){
-	if ($CURUSER[invites] <= 0) {
+	if ($CURUSER['invites'] <= 0) {
 		stdmsg($lang_invite['std_sorry'],$lang_invite['std_no_invites_left'].
 		"<a class=altlink href=invite.php?id=$CURUSER[id]>".$lang_invite['here_to_go_back'],false);
 		print("</td></tr></table>");
 		stdfoot();
 		die;
 	}
-	$invitation_body =  $lang_invite['text_invitation_body'].$CURUSER[username];
+	$invitation_body =  $lang_invite['text_invitation_body'].$CURUSER['username'];
 	//$invitation_body_insite = str_replace("<br />","\n",$invitation_body);
 	print("<form method=post action=takeinvite.php?id=".htmlspecialchars($id).">".
 	"<table border=1 width=737 cellspacing=0 cellpadding=5>".
@@ -66,21 +66,21 @@ if ($type == 'new'){
 
 	print("<table border=1 width=737 cellspacing=0 cellpadding=5>".
 	"<h2 align=center>".$lang_invite['text_invite_status']." ($number)</h2>");
-    print("<tr><td colspan=7 align=center><form method=post action=invite.php?id=" . htmlspecialchars($id) . "&type=new><input type=submit " . ($CURUSER[invites] <= 0 ? "disabled " : "") . " value='" . $lang_invite['sumbit_invite_someone'] . "'></form></td></tr>");
+    print("<tr><td colspan=7 align=center><form method=post action=invite.php?id=" . htmlspecialchars($id) . "&type=new><input type=submit " . ($CURUSER['invites'] <= 0 ? "disabled " : "") . " value='" . $lang_invite['sumbit_invite_someone'] . "'></form></td></tr>");
     print("<form method=post action=takeconfirm.php?id=" . htmlspecialchars($id) . ">");
     if(!$num){
 		print("<tr><td colspan=7 align=center>".$lang_invite['text_no_invites']."</tr>");
 	} else {
 
 		print("<tr><td class=colhead><b>".$lang_invite['text_username']."</b></td><td class=colhead><b>".$lang_invite['text_email']."</b></td><td class=colhead><b>".$lang_invite['text_uploaded']."</b></td><td class=colhead><b>".$lang_invite['text_downloaded']."</b></td><td class=colhead><b>".$lang_invite['text_ratio']."</b></td><td class=colhead><b>".$lang_invite['text_status']."</b></td>");
-		if ($CURUSER[id] == $id || get_user_class() >= UC_SYSOP)
+		if ($CURUSER['id'] == $id || get_user_class() >= UC_SYSOP)
 		print("<td class=colhead><b>".$lang_invite['text_confirm']."</b></td>");
 
 		print("</tr>");
 		for ($i = 0; $i < $num; ++$i)
 		{
 			$arr = mysql_fetch_assoc($ret);
-			$user = "<td class=rowfollow>" . get_username($arr[id]) . "</td>";
+			$user = "<td class=rowfollow>" . get_username($arr['id']) . "</td>";
 
 			if ($arr["downloaded"] > 0) {
 				$ratio = number_format($arr["uploaded"] / $arr["downloaded"], 3);
@@ -98,11 +98,11 @@ if ($type == 'new'){
 			else
 			$status = "<a href=checkuser.php?id=$arr[id]><font color=#ca0226>".$lang_invite['text_pending']."</font></a>";
 
-			print("<tr class=rowfollow>$user<td>$arr[email]</td><td class=rowfollow>" . mksize($arr[uploaded]) . "</td><td class=rowfollow>" . mksize($arr[downloaded]) . "</td><td class=rowfollow>$ratio</td><td class=rowfollow>$status</td>");
-			if ($CURUSER[id] == $id || get_user_class() >= UC_SYSOP){
+			print("<tr class=rowfollow>$user<td>$arr[email]</td><td class=rowfollow>" . mksize($arr['uploaded']) . "</td><td class=rowfollow>" . mksize($arr['downloaded']) . "</td><td class=rowfollow>$ratio</td><td class=rowfollow>$status</td>");
+			if ($CURUSER['id'] == $id || get_user_class() >= UC_SYSOP){
 				print("<td>");
-				if ($arr[status] == 'pending')
-				print("<input type=\"checkbox\" name=\"conusr[]\" value=\"" . $arr[id] . "\" />");
+				if ($arr['status'] == 'pending')
+				print("<input type=\"checkbox\" name=\"conusr[]\" value=\"" . $arr['id'] . "\" />");
 				print("</td>");
 			}
 
@@ -110,7 +110,7 @@ if ($type == 'new'){
 		}
 	}
 
-	if ($CURUSER[id] == $id || get_user_class() >= UC_SYSOP)
+	if ($CURUSER['id'] == $id || get_user_class() >= UC_SYSOP)
 	{
 
 		$pendingcount = number_format(get_row_count("users", "WHERE  status='pending' AND invited_by=$CURUSER[id]"));
@@ -190,7 +190,7 @@ if ($type == 'new'){
 			
 			print("<tr><td class=rowfollow>$arr1[invitee]<td class=rowfollow>");
 				
-			print("<a title=\"https://tjupt.org/signup.php?type=invite&invitenumber=".$arr1[hash]."\" href=\"javascript:copy_code( 'https://tjupt.org/signup.php?type=invite&invitenumber=".$arr1[hash]."')\">".$arr1[hash]."</a></td><td class=rowfollow>$arr1[time_invited]</td></tr>");
+			print("<a title=\"https://tjupt.org/signup.php?type=invite&invitenumber=".$arr1['hash']."\" href=\"javascript:copy_code( 'https://tjupt.org/signup.php?type=invite&invitenumber=".$arr1['hash']."')\">".$arr1['hash']."</a></td><td class=rowfollow>$arr1[time_invited]</td></tr>");
 		}
 	}
 	print("</table>");

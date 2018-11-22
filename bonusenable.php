@@ -5,7 +5,7 @@ parked();
 function enable_the_account($name,$points){
 	$res=	sql_query("select * from users WHERE username = ".sqlesc($name)) or sqlerr(__FILE__, __LINE__);
 	$row= mysql_fetch_array($res);
-	if ($row[enabled]=='no'){
+	if ($row['enabled']=='no'){
 	sql_query("UPDATE users SET enabled = 'yes', seedbonus = seedbonus - $points WHERE username = ".sqlesc($name)) or sqlerr(__FILE__, __LINE__);
 	write_log("用户 $name 使用 $points 个魔力值复活");
 	if (get_single_value("users","class","WHERE username = ".sqlesc($name)) == UC_PEASANT){
@@ -34,9 +34,9 @@ if (! $invite_bonus = $Cache->get_value ( 'invite_bonus' )) {
     $Cache->cache_value ( 'invite_bonus', $invite_bonus, 300 );
 }
 $enable_bonus =(int)(0.6*$invite_bonus);
-if ($username=$_POST[account])
+if ($username=$_POST['account'])
 {
-	if(!$password=$_POST[passwd])
+	if(!$password=$_POST['passwd'])
 	{stdmsg("出错了！","没有输入密码 <input type=button value=\"返回上一页\" onclick=\"location.href='javascript:history.go(-1)'\" />",0);
 	stdfoot();}
 	else{
@@ -57,4 +57,3 @@ if ($username=$_POST[account])
 	else{
 	stdmsg("用魔力值复活自己的账号","<form action=\"?action=exchange\" method=\"post\"><br />请输入你的用户名<input type=text name=account /><br />请输入你的密码<input type=password name=passwd /><input type=submit value=\"确定\"> &nbsp;<input type=button value=\"返回\" onclick=\"location.href='javascript:history.go(-1)'\" /></form>",0);
 stdfoot();}
-	?>

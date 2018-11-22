@@ -316,9 +316,9 @@ if (! $action) {
 	$count = 0;
 	$torrentres = sql_query ( "select torrents.id, torrents.added, torrents.needkeepseed, torrents.size, torrents.seeders from torrents LEFT JOIN peers ON peers.torrent = torrents.id WHERE peers.userid = $CURUSER[id] AND peers.seeder ='yes' GROUP BY torrents.id" ) or sqlerr ( __FILE__, __LINE__ );
 	while ( $torrent = mysql_fetch_array ( $torrentres ) ) {
-		$weeks_alive = ($timenow - strtotime ( $torrent [added] )) / $sectoweek;
-		$gb_size = ($torrent [needkeepseed]=='yes'?($torrent [size] / 214748365):($torrent [size] / 1073741824));
-		$temp = (1 - exp ( $valueone * $weeks_alive )) * $gb_size * (1 + $sqrtof2 * exp ( $valuethree * ($torrent [seeders] - 1) ));
+		$weeks_alive = ($timenow - strtotime ( $torrent ['added'] )) / $sectoweek;
+		$gb_size = ($torrent ['needkeepseed']=='yes'?($torrent ['size'] / 214748365):($torrent ['size'] / 1073741824));
+		$temp = (1 - exp ( $valueone * $weeks_alive )) * $gb_size * (1 + $sqrtof2 * exp ( $valuethree * ($torrent ['seeders'] - 1) ));
 		$A += $temp;
 		$count ++;
 	}
@@ -335,7 +335,7 @@ if (! $action) {
 	else
 		$loadpic = "loadbargreen";
 	$width = $percent * 4;
-	print ("<img class=\"" . $loadpic . "\" src=\"pic/trans.gif\" style=\"width: " . $width . "px;\" alt=\"" . $percent . "%\" /></td></tr></table>") ;
+	print ("<img class=\"" . $loadpic . "\" src=\"pic/trans.gif\" style=\"width: {$width}px;\" alt=\"" . $percent . "%\" /></td></tr></table>") ;
 	
 	print ("<h1>" . $lang_mybonus ['text_other_things_get_bonus'] . "</h1>") ;
 	print ("<ul>") ;
@@ -533,7 +533,7 @@ if ($action == "exchange") {
 			$userenabled = $arr ['enabled'];
 			$modcomment = $arr ['modcomment'];
 			$downloadpos = $arr ['downloadpos'];
-			$modcomment = date ( "Y-m-d" ) . " 被 " . $CURUSER [username] . " 复活。\n" . htmlspecialchars ( $modcomment );
+			$modcomment = date ( "Y-m-d" ) . " 被 " . $CURUSER ['username'] . " 复活。\n" . htmlspecialchars ( $modcomment );
 			$bonuscomment = date ( "Y-m-d" ) . " 花费 " . $points . " 个魔力值复活用户 " . $usernameenable . " 。\n" . htmlspecialchars ( $bonuscomment );
 			if (! $useridenable) {
 				stdmsg ( $lang_mybonus ['text_error'], $lang_mybonus ['text_receiver_not_exists'], 0 );

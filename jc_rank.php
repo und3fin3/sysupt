@@ -18,8 +18,6 @@ function bark($msg)
 
 function rank_ls($rank_sort="yin_kui",$page=1,$pagesize=35)
 {
-    global $CURUSER;   
-    
     $all=mysql_num_rows(sql_query("SELECT * FROM jc_rank WHERE total_times>9"));
     if($all>0)
     {
@@ -49,30 +47,30 @@ function rank_ls($rank_sort="yin_kui",$page=1,$pagesize=35)
 
         print ("<tr><td align=center>");
     
-    print ("<table  id=\"tblSort\" width=940px style='table-layout:fixed;margin:0px,auto' border=1 cellspacing=0 cellpadding=5 ><thead><tr class=\"sub_colhead\" style=\"text-align:center\"><td class=\"heading\" width=\"52\" >英雄榜</td><td class=\"heading\" width=\"52\">用户名</td><td class=\"heading\" width=\"52\"><a href='?rank_sort=win_times'>凯旋/次</td></a><td class=\"heading\" width=\"52\"><a href='?rank_sort=lose_times'>铩羽/次</td></a><td class=\"heading\" width=\"52\"><a href='?rank_sort=total_times'  >征战/次</td></a><td class=\"heading\" width=\"52\"><a href='?rank_sort=win_percent' >胜率</td></a><td class=\"heading\" width=\"52\"><a href='?rank_sort=yin_kui'>总盈亏</td><td class=\"heading\" width=\"52\">江湖人称</td></tr></thead>");
+    print ("<table  id=\"tblSort\" width=940px style='table-layout:fixed;margin:0' border=1 cellspacing=0 cellpadding=5 ><thead><tr class=\"sub_colhead\" style=\"text-align:center\"><td class=\"heading\" width=\"52\" >英雄榜</td><td class=\"heading\" width=\"52\">用户名</td><td class=\"heading\" width=\"52\"><a href='?rank_sort=win_times'>凯旋/次</td></a><td class=\"heading\" width=\"52\"><a href='?rank_sort=lose_times'>铩羽/次</td></a><td class=\"heading\" width=\"52\"><a href='?rank_sort=total_times'  >征战/次</td></a><td class=\"heading\" width=\"52\"><a href='?rank_sort=win_percent' >胜率</td></a><td class=\"heading\" width=\"52\"><a href='?rank_sort=yin_kui'>总盈亏</td><td class=\"heading\" width=\"52\">江湖人称</td></tr></thead>");
     
     
     switch($rank_sort)
-    {case  win_times:
+    {case  'win_times':
     $res_2=sql_query("SELECT * FROM jc_rank WHERE total_times>9 ORDER BY  win_times DESC LIMIT"." ". ((sqlesc($page)-1)*sqlesc($pagesize)).",".sqlesc($pagesize));
 
         break;
-    case lose_times:
+    case 'lose_times':
         $res_2=sql_query("SELECT * FROM jc_rank WHERE total_times>9 ORDER BY lose_times ASC  LIMIT"." ". ((sqlesc($page)-1)*sqlesc($pagesize)).",".sqlesc($pagesize));
 
 
         break;
-    case total_times:
+    case 'total_times':
         $res_2=sql_query("SELECT * FROM jc_rank WHERE total_times>9 ORDER BY total_times DESC LIMIT"." ". ((sqlesc($page)-1)*sqlesc($pagesize)).",".sqlesc($pagesize));
 
 
         break;
-    case win_percent:
+    case 'win_percent':
         $res_2=sql_query("SELECT * FROM jc_rank WHERE total_times>9 ORDER BY win_percent DESC LIMIT"." ". ((sqlesc($page)-1)*sqlesc($pagesize)).",".sqlesc($pagesize));
 
         break;
      
-    case yin_kui:
+    case 'yin_kui':
        $res_2=sql_query("SELECT * FROM jc_rank WHERE total_times>9 ORDER BY yin_kui  DESC  LIMIT"." ". ((sqlesc($page)-1)*sqlesc($pagesize)).",".sqlesc($pagesize));
 
 
@@ -104,23 +102,23 @@ function rank_ls($rank_sort="yin_kui",$page=1,$pagesize=35)
    
         switch($rank_sort)
         {
-        case  yin_kui:
+        case  'yin_kui':
             $ho_n=$res_a['yin_kui'];
             $ho=find_honor($ho_n,'yin_kui');  
             break;
-    case win_percent:
+    case 'win_percent':
             $ho_n=$res_a['win_percent'];
             $ho=find_honor($ho_n,'win_percent');
             break;
-    case win_times:
+    case 'win_times':
             $ho_n=$res_a['win_times'];
             $ho=find_honor($ho_n,'win_times');
             break;
-    case total_times:
+    case 'total_times':
             $ho_n=$res_a['total_times'];
             $ho=find_honor($ho_n,'total_times');
             break;
-    case lose_times:
+    case 'lose_times':
             $ho_n=$res_a['lose_times'];
             $ho=find_honor($ho_n,'lose_times');
             break;
@@ -303,7 +301,7 @@ function find_my_rank($rank_sort)
       
        switch($rank_sort)
        {
-       case yin_kui:
+       case 'yin_kui':
 
          $yk=sql_query ("SELECT yin_kui FROM jc_rank  WHERE total_times>9 AND yin_kui>".sqlesc($curu['yin_kui']) );
          $yk_n=mysql_num_rows($yk);
@@ -312,7 +310,7 @@ function find_my_rank($rank_sort)
        
        break;
        
-       case win_percent:
+       case 'win_percent':
 
        $wp=sql_query("SELECT win_percent FROM jc_rank   WHERE total_times>9 AND win_percent>".sqlesc($curu['win_percent']));  
        $wp_n=mysql_num_rows($wp); 
@@ -322,7 +320,7 @@ function find_my_rank($rank_sort)
 
        break;
 
-       case win_times:
+       case 'win_times':
 
        $wt=sql_query("SELECT win_times FROM jc_rank  WHERE total_times>9 AND win_times>".sqlesc($curu['win_times']));  
        $wt_n=mysql_num_rows($wt); 
@@ -331,7 +329,7 @@ function find_my_rank($rank_sort)
 
        break;
    
-       case total_times:
+       case 'total_times':
 
        $tt=sql_query("SELECT total_times  FROM jc_rank   WHERE total_times>9 AND total_times>".sqlesc($curu['totoal_times']));  
        $tt_n=mysql_num_rows($tt); 
@@ -340,7 +338,7 @@ function find_my_rank($rank_sort)
 
        break;
 
-       case lose_times:
+       case 'lose_times':
 
        $lt=sql_query("SELECT lose_times  FROM jc_rank   WHERE total_times>9 AND lose_times<".sqlesc($curu['lose_times']));  
        $lt_n=mysql_num_rows($lt); 
@@ -370,15 +368,6 @@ function find_my_rank($rank_sort)
     
  
     stdhead("竞猜英雄榜");
-    jc_usercpmenu(rank); 
+    jc_usercpmenu('rank');
     rank_ls($rank_sort,$page);
     stdfoot();
-    
-?>
-
-
-
-
-
-
-

@@ -21,7 +21,7 @@ begin_frame($lang_linksmanage['text_apply_for_links'], true,10,"100%","center");
 	print("<p>".$lang_linksmanage['text_red_star_required']."</p>");
 ?>
 <form method=post action="<?php echo $_SERVER["PHP_SELF"];?>">
-<table table class=main border=1 cellspacing=0 cellpadding=5>
+<table class=main border=1 cellspacing=0 cellpadding=5>
 <tr><td class=rowhead><?php echo $lang_linksmanage['text_site_name']?><font color=red>*</font></td><td class=rowfollow align=left><input type=text name=linkname style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_sitename_note']?></font></td></tr>
 <tr><td class=rowhead><?php echo $lang_linksmanage['text_url']?><font color=red>*</font></td><td class=rowfollow align=left><input type=text name=url style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_url_note']?></font></td></tr>
 <tr><td class=rowhead><?php echo $lang_linksmanage['text_title']?></td><td class=rowfollow align=left><input type=text name=title style="width: 200px">&nbsp;&nbsp;<font class=small><?php echo $lang_linksmanage['text_title_note']?></font></td></tr>

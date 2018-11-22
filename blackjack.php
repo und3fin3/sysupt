@@ -45,7 +45,7 @@ if ($game)
                 if ($game == 'hit')
                 $points = $aces = 0;
                 $gameover = ($playerarr['gameover'] == 'yes' ? true : false);
-                $HTMLOUT .= cheater_check($gameover && ($game == 'hit' ^ $game == 'stop'));
+                cheater_check($gameover && ($game == 'hit' ^ $game == 'stop'));
                 $cards = $playerarr["cards"];
                 $usedcards = explode(" ", $cards);
 
@@ -86,7 +86,7 @@ if ($game)
                         elseif ($arr['status'] == 'playing')
                         stderr("抱歉", "您需要继续玩完上一盘.<form method='post' action='blackjack.php'><input type='hidden' name='game' value='hit' readonly='readonly' /><input type='hidden' name='continue' value='yes' readonly='readonly' /><input type='submit' value='Continue old game' /></form>",false);
         
-                        $HTMLOUT .= cheater_check($arr['gameover'] == 'yes');
+                        cheater_check($arr['gameover'] == 'yes');
                         $cardids = array();
                         for ($i = 0; $i <= 1; $i++)
                         $cardids[] = rand(1, $cardcount);
@@ -137,7 +137,7 @@ if ($game)
                 }
                 elseif (($start != 'yes' && isset($_POST['continue']) != 'yes') && !$gameover)
                 {
-                        $HTMLOUT .= cheater_check(empty($playerarr));
+                        cheater_check(empty($playerarr));
                         $cardid = rand(1, $cardcount);
                         while (in_array($cardid, $arr))
                         $cardid = rand(1, $cardcount);
@@ -177,7 +177,7 @@ if ($game)
                                 if ($a["points"] != 21)
                                 {
                                         
-                                        $winorlose = "赢局,你赢了 ".(${percent}*$mb)."个魔力值";
+                                        $winorlose = "赢局,你赢了 ".($percent*$mb)."个魔力值";
                                         sql_query("UPDATE users SET seedbonus = seedbonus + ${percent}*$mb, bjwins = bjwins + 1 WHERE id=".sqlesc($CURUSER['id']));
                                         sql_query("UPDATE users SET seedbonus = seedbonus - $mb, bjlosses = bjlosses + 1 WHERE id=".sqlesc($a['userid']));
                                         $msg = sqlesc("[url=blackjack.php]你可以请进这个页面查看你的胜率。[/url]");
@@ -256,7 +256,7 @@ if ($game)
                 }
                 else
                 {
-                        $HTMLOUT .= cheater_check(empty($playerarr));
+                        cheater_check(empty($playerarr));
                         $HTMLOUT .="<h1>Welcome, {$CURUSER['username']}!</h1>
                         <table cellspacing='0' cellpadding='3' width='600'>
                         <tr><td colspan='2'>
@@ -277,7 +277,7 @@ if ($game)
         }
         elseif ($_POST["game"] == 'stop')
         {
-                $HTMLOUT .= cheater_check(empty($playerarr));
+                cheater_check(empty($playerarr));
                 $waitres = sql_query("SELECT COUNT(userid) AS c FROM blackjack WHERE status='waiting' AND userid != ".sqlesc($CURUSER['id']));
                 $waitarr = mysql_fetch_assoc($waitres);
                 $HTMLOUT .="<h1>Game over</h1>
@@ -306,7 +306,7 @@ if ($game)
                                         
                                         $msg = sqlesc("[url=blackjack.php]你可以请进这个页面查看你的胜率。[/url]");
 										$subject = sqlesc("21点的结果 : 输局 (你有 ".$a['points']." 点, ".$CURUSER['username']." 有 ".$playerarr['points']." 点)");
-                                        $winorlose = "赢局,你获得了 ".(${percent}*$mb)."个魔力值";
+                                        $winorlose = "赢局,你获得了 ".($percent*$mb)."个魔力值";
                                         $st_query = "+ ".$mb.", bjwins = bjwins +";
                                         $nd_query = "- ".$mb.", bjlosses = bjlosses +";
                                 }
@@ -358,7 +358,7 @@ else
 		$tot_losses = $CURUSER['bjlosses'];
         $tot_games = $tot_wins + $tot_losses;
         $win_perc = ($tot_losses==0?($tot_wins==0?"---":"100%"):($tot_wins==0?"0":number_format(($tot_wins/$tot_games)*100,1)).'%');
-        $plus_minus = (${percent}*$tot_wins-$tot_losses<0?'-':'').((${percent}*$tot_wins-$tot_losses>=0?(${percent}*$tot_wins-$tot_losses):($tot_losses-${percent}*$tot_wins)))*$mb;
+        $plus_minus = ($percent*$tot_wins-$tot_losses<0?'-':'').(($percent*$tot_wins-$tot_losses>=0?($percent*$tot_wins-$tot_losses):($tot_losses-$percent*$tot_wins)))*$mb;
         $HTMLOUT .="<h1>21点</h1>
         <table cellspacing='0' cellpadding='3' width='400'>
         <tr><td colspan='2' align='center'>
@@ -366,7 +366,7 @@ else
         <tr><td align='center'><img src='cards/tp.bmp'  style=\"border: 1px\" alt='' />&nbsp;<img src='cards/vp.bmp'  style=\"border: 1px\" alt='' /></td></tr>
         <tr><td align='left'>传统的21点游戏,您要抓足够接近21点，和对手对抗。<br />A在总分不超过21时作11，总分超过21则作1。J,Q,K作为10。<br /><br />
         <b>当前在线人数: </b>". $waitarr['c']."<br/>
-		<b>提示:</b> 每局赌注为".$mb."个魔力值<br/>\n(每局服务器将抽取赌注的".(100*(1-${percent}))."%作为佣金)<br/>
+		<b>提示:</b> 每局赌注为".$mb."个魔力值<br/>\n(每局服务器将抽取赌注的".(100*(1-$percent))."%作为佣金)<br/>
 		</td></tr>
         <tr><td align='center'>
         <form method='post' action='blackjack.php'>
@@ -400,4 +400,3 @@ else
 	  print $HTMLOUT ;
 	  stdfoot();
 }
-?>

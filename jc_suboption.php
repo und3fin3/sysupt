@@ -14,7 +14,7 @@ function bark($msg){
 global $CURUSER;
 $action=isset($_POST['action']) ? $_POST['action'] : '';
 $allowedactions=array('perfect','edit','delete','fuck');
-if(get_user_class()<14&&$CURUSER[jc_manager]!='yes'){
+if(get_user_class()<14&&$CURUSER['jc_manager']!='yes'){
     bark("The system has already recorded this hackering action.Please get touch with the admin as soon as possible");
 }else {
 if(!in_array($action,$allowedactions)){
@@ -41,7 +41,7 @@ if(!in_array($action,$allowedactions)){
                 if($row=='')
                     bark("The subject you wanna manipulate doesn't exist now.Please contact with the top-admin!");
                 stdhead();
-               sql_query("UPDATE jc_subjects SET `state`= \"4\" WHERE `id` = ".sqlesc($subid));
+               sql_query("UPDATE jc_subjects SET `state`= 4 WHERE `id` = ".sqlesc($subid));
                 sql_query("UPDATE users SET seedbonus=seedbonus+10 WHERE `id` = ".sqlesc($row['creater_id']));
                 $mydate=getdate();
                 $current_time = "$mydate[year]-$mydate[mon]-$mydate[mday] $mydate[hours]:$mydate[minutes]:$mydate[seconds]";
@@ -123,6 +123,3 @@ if(!in_array($action,$allowedactions)){
             break;
     }
 }}
-?>
-
-

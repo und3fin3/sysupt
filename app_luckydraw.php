@@ -174,7 +174,7 @@ if ($action == "loglast") { // 上期信息
 	print ('<tr><td class="text" align="left">' . '<a class="faqlink" href="./app_luckydraw.php?action=buytickets">购买彩券</a>&nbsp;&nbsp;&nbsp;' . '<a class="faqlink" href="./app_luckydraw.php?action=viewcurrent">本期信息</a>&nbsp;&nbsp;&nbsp;' . '<a class="faqlink" href="./app_luckydraw.php?action=loghistory">抽奖历史</a>' . (get_user_class () < UC_STAFFLEADER ? '' : '&nbsp;&nbsp;&nbsp;<a class="faqlink" href="./app_luckydraw.php?action=manage">彩券管理</a>') . '</td></tr>') ;
 	print ('</table><br/>') ;
 } elseif ($action == "loghistory") { // 历史记录
-	$sql = 'SELECT COUNT(*) FROM app_luckydraw WHERE status = "2" AND time_until <= ' . sqlesc ( date ( "Y-m-d H:i:s" ) );
+	$sql = 'SELECT COUNT(*) FROM app_luckydraw WHERE status = 2 AND time_until <= ' . sqlesc ( date ( "Y-m-d H:i:s" ) );
 	$res = sql_query ( $sql ) or die ( mysql_error () );
 	$count = 0;
 	while ( $row = mysql_fetch_array ( $res ) )
@@ -449,4 +449,3 @@ $(function(){
 }
 
 stdfoot ();
-?>

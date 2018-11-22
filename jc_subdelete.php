@@ -6,7 +6,7 @@ require_once(get_langfile_path());
 loggedinorreturn();
 //if (get_user_class() < UC_SYSOP)
 global $CURUSER;
-if(get_user_class()<14&&$CURUSER[jc_manager]!='yes'){
+if(get_user_class()<14&&$CURUSER['jc_manager']!='yes'){
 		permissiondenied();
 }
 
@@ -23,7 +23,7 @@ function deletesubject($id)
 {
 	$res=sql_query("select * from jc_record WHERE subject_id =$id");
 	$row=mysql_fetch_array(sql_query("select * from jc_subjects where id =$id"));
-	if ($row[state]!=5){
+	if ($row['state']!=5){
 	while($arr=mysql_fetch_array($res))
 	{
 
@@ -61,9 +61,7 @@ if(!$sure)
 		stderr($lang_subdelete['std_delete_subject'], $lang_subdelete['std_delete_subject_note']
 						."<a class=altlink href=jc_subdelete.php?subid=$subid&sure=1>".$lang_subdelete['std_here_if_sure'],false);
 		//When deleted,there is a blank website,not fine!
-		else 
-{ 
-		deletesubject($subid);
-		header("location:jc_manage.php");
-}
-?>
+		else {
+            deletesubject($subid);
+            header("location:jc_manage.php");
+        }

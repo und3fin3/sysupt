@@ -28,7 +28,7 @@ $o=$_POST['touzhu'];
 $t="$mydate[year]-$mydate[mon]-$mydate[mday] $mydate[hours]:$mydate[minutes]:$mydate[seconds]";
 $res=sql_query("SELECT * FROM jc_subjects WHERE id=".sqlesc($sub_id));
 $arr=mysql_fetch_array($res);
-if($arr[state]!=2)
+if($arr['state']!=2)
 {
 		stderr($lang_jc_comfirm['wrong_head'],$lang_jc_confirm['finished'].$lang_jc_confirm['click']."<a class=altlink href=\"jc_currentbet_L.php\">".$lang_jc_confirm['here']."</a>".$lang_jc_confirm['back1'],false);
 }
@@ -140,5 +140,3 @@ function is_selected($sub_id)
 		if($row == 0) return false;
 		else return true;
 }
-?>
-

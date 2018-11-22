@@ -32,4 +32,3 @@ if (!mysql_affected_rows())
 	httperr();
 
 header("Refresh: 0; url=" . get_protocol_prefix() . "$BASEURL/usercp.php?action=security&type=saved");
-?>

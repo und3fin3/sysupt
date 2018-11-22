@@ -374,7 +374,7 @@ if (!$all)
 		$all = true;
 		foreach ($cats as $cat)
 		{
-			$all &= $cat[id];
+			$all &= $cat['id'];
 			$mystring = $CURUSER['notifs'];
 			$findme  = '[cat'.$cat['id'].']';
 			$search = strpos($mystring, $findme);
@@ -385,7 +385,7 @@ if (!$all)
 
 			if ($catcheck)
 			{
-				$wherecatina[] = $cat[id];
+				$wherecatina[] = $cat['id'];
 				$addparam .= "cat$cat[id]=1&";
 			}
 		}
@@ -393,7 +393,7 @@ if (!$all)
 		if ($showsource)
 		foreach ($sources as $source)
 		{
-			$all &= $source[id];
+			$all &= $source['id'];
 			$mystring = $CURUSER['notifs'];
 			$findme  = '[sou'.$source['id'].']';
 			$search = strpos($mystring, $findme);
@@ -404,14 +404,14 @@ if (!$all)
 
 			if ($sourcecheck)
 			{
-				$wheresourceina[] = $source[id];
+				$wheresourceina[] = $source['id'];
 				$addparam .= "source$source[id]=1&";
 			}
 		}
 		if ($showmedium)
 		foreach ($media as $medium)
 		{
-			$all &= $medium[id];
+			$all &= $medium['id'];
 			$mystring = $CURUSER['notifs'];
 			$findme  = '[med'.$medium['id'].']';
 			$search = strpos($mystring, $findme);
@@ -422,14 +422,14 @@ if (!$all)
 
 			if ($mediumcheck)
 			{
-				$wheremediumina[] = $medium[id];
+				$wheremediumina[] = $medium['id'];
 				$addparam .= "medium$medium[id]=1&";
 			}
 		}
 		if ($showcodec)
 		foreach ($codecs as $codec)
 		{
-			$all &= $codec[id];
+			$all &= $codec['id'];
 			$mystring = $CURUSER['notifs'];
 			$findme  = '[cod'.$codec['id'].']';
 			$search = strpos($mystring, $findme);
@@ -440,14 +440,14 @@ if (!$all)
 
 			if ($codeccheck)
 			{
-				$wherecodecina[] = $codec[id];
+				$wherecodecina[] = $codec['id'];
 				$addparam .= "codec$codec[id]=1&";
 			}
 		}
 		if ($showstandard)
 		foreach ($standards as $standard)
 		{
-			$all &= $standard[id];
+			$all &= $standard['id'];
 			$mystring = $CURUSER['notifs'];
 			$findme  = '[sta'.$standard['id'].']';
 			$search = strpos($mystring, $findme);
@@ -458,14 +458,14 @@ if (!$all)
 
 			if ($standardcheck)
 			{
-				$wherestandardina[] = $standard[id];
+				$wherestandardina[] = $standard['id'];
 				$addparam .= "standard$standard[id]=1&";
 			}
 		}
 		if ($showprocessing)
 		foreach ($processings as $processing)
 		{
-			$all &= $processing[id];
+			$all &= $processing['id'];
 			$mystring = $CURUSER['notifs'];
 			$findme  = '[pro'.$processing['id'].']';
 			$search = strpos($mystring, $findme);
@@ -476,14 +476,14 @@ if (!$all)
 
 			if ($processingcheck)
 			{
-				$whereprocessingina[] = $processing[id];
+				$whereprocessingina[] = $processing['id'];
 				$addparam .= "processing$processing[id]=1&";
 			}
 		}
 		if ($showteam)
 		foreach ($teams as $team)
 		{
-			$all &= $team[id];
+			$all &= $team['id'];
 			$mystring = $CURUSER['notifs'];
 			$findme  = '[tea'.$team['id'].']';
 			$search = strpos($mystring, $findme);
@@ -494,14 +494,14 @@ if (!$all)
 
 			if ($teamcheck)
 			{
-				$whereteamina[] = $team[id];
+				$whereteamina[] = $team['id'];
 				$addparam .= "team$team[id]=1&";
 			}
 		}
 		if ($showaudiocodec)
 		foreach ($audiocodecs as $audiocodec)
 		{
-			$all &= $audiocodec[id];
+			$all &= $audiocodec['id'];
 			$mystring = $CURUSER['notifs'];
 			$findme  = '[aud'.$audiocodec['id'].']';
 			$search = strpos($mystring, $findme);
@@ -512,7 +512,7 @@ if (!$all)
 
 			if ($audiocodeccheck)
 			{
-				$whereaudiocodecina[] = $audiocodec[id];
+				$whereaudiocodecina[] = $audiocodec['id'];
 				$addparam .= "audiocodec$audiocodec[id]=1&";
 			}
 		}
@@ -575,7 +575,7 @@ if (!$all)
 			$all &= $_GET["cat$cat[id]"];
 			if ($_GET["cat$cat[id]"])
 			{
-				$wherecatina[] = $cat[id];
+				$wherecatina[] = $cat['id'];
 				$addparam .= "cat$cat[id]=1&";
 			}
 		}
@@ -586,7 +586,7 @@ if (!$all)
 			$all &= $_GET["source$source[id]"];
 			if ($_GET["source$source[id]"])
 			{
-				$wheresourceina[] = $source[id];
+				$wheresourceina[] = $source['id'];
 				$addparam .= "source$source[id]=1&";
 			}
 		}
@@ -596,7 +596,7 @@ if (!$all)
 			$all &= $_GET["medium$medium[id]"];
 			if ($_GET["medium$medium[id]"])
 			{
-				$wheremediumina[] = $medium[id];
+				$wheremediumina[] = $medium['id'];
 				$addparam .= "medium$medium[id]=1&";
 			}
 		}
@@ -606,7 +606,7 @@ if (!$all)
 			$all &= $_GET["codec$codec[id]"];
 			if ($_GET["codec$codec[id]"])
 			{
-				$wherecodecina[] = $codec[id];
+				$wherecodecina[] = $codec['id'];
 				$addparam .= "codec$codec[id]=1&";
 			}
 		}
@@ -616,7 +616,7 @@ if (!$all)
 			$all &= $_GET["standard$standard[id]"];
 			if ($_GET["standard$standard[id]"])
 			{
-				$wherestandardina[] = $standard[id];
+				$wherestandardina[] = $standard['id'];
 				$addparam .= "standard$standard[id]=1&";
 			}
 		}
@@ -626,7 +626,7 @@ if (!$all)
 			$all &= $_GET["processing$processing[id]"];
 			if ($_GET["processing$processing[id]"])
 			{
-				$whereprocessingina[] = $processing[id];
+				$whereprocessingina[] = $processing['id'];
 				$addparam .= "processing$processing[id]=1&";
 			}
 		}
@@ -636,7 +636,7 @@ if (!$all)
 			$all &= $_GET["team$team[id]"];
 			if ($_GET["team$team[id]"])
 			{
-				$whereteamina[] = $team[id];
+				$whereteamina[] = $team['id'];
 				$addparam .= "team$team[id]=1&";
 			}
 		}
@@ -646,7 +646,7 @@ if (!$all)
 			$all &= $_GET["audiocodec$audiocodec[id]"];
 			if ($_GET["audiocodec$audiocodec[id]"])
 			{
-				$whereaudiocodecina[] = $audiocodec[id];
+				$whereaudiocodecina[] = $audiocodec['id'];
 				$addparam .= "audiocodec$audiocodec[id]=1&";
 			}
 		}
@@ -1051,7 +1051,7 @@ echo '<center><span style="font-size: 20px"><strong>回收站模式</strong></sp
 								if ($i && $i % $catsperrow == 0){
 									print("</tr><tr>");
 								}
-								print("<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: ".$catpadding."px;\"><input type=\"checkbox\" id=\"".$cbname.$list[id]."\" name=\"".$cbname.$list[id]."\"" . (in_array($list[id],$wherelistina) ? " checked=\"checked\"" : "") . " value=\"1\" />".($showimg ? return_category_image($list[id], "?") : "<a title=\"" .$list[name] . "\" href=\"?".$cbname."=".$list[id]."\">".$list[name]."</a>")."</td>\n");
+								print("<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: {$catpadding}px;\"><input type=\"checkbox\" id=\"".$cbname.$list['id']."\" name=\"".$cbname.$list['id']."\"" . (in_array($list['id'],$wherelistina) ? " checked=\"checked\"" : "") . " value=\"1\" />".($showimg ? return_category_image($list['id'], "?") : "<a title=\"" .$list['name'] . "\" href=\"?".$cbname."=".$list['id']."\">".$list['name']."</a>")."</td>\n");
 								$i++;
 							}
 							$checker = "<input name=\"".$btname."\" value='" .  $lang_torrents['input_check_all'] . "' class=\"btn medium\" type=\"button\" onclick=\"javascript:SetChecked('".$cbname."','".$btname."','". $lang_torrents['input_check_all'] ."','" . $lang_torrents['input_uncheck_all'] . "',-1,10)\" />";

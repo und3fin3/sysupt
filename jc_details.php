@@ -11,8 +11,8 @@ global $bettopper;
 $bettopper = 10000;
 function bark($msg)
 {
-     global $lang_jc_bet;
-    stdmsg($lang_details['sorry'],$msg);
+    global $lang_jc_bet;
+    stdmsg($lang_jc_bet['sorry'], $msg);
     exit();
 }
 
@@ -93,8 +93,8 @@ function show_main_page($sub_state, $correct_id, $sub_id)
 //show the page that the jc is not open,this state is not existed
 function page_not_open()
 {
-		global $lang_jc_details;
-		print "bet is not open now";
+    global $lang_jc_details;
+    print($lang_jc_details['page_not_open']);
 }
 
 //show the content
@@ -107,7 +107,7 @@ function jc_content($showspan, $button, $underline, $correct_id, $sub_id)
 		$starttime=$subject['start'];
 		$endtime=$subject['end'];
 		$limit=$subject['limit'];
-		$ret=sql_query("SELECT note FROM jc_subjects WHERE id=".sqlesc($sub_id)."") or sqlerr(__FILE__, __LINE__);
+		$ret=sql_query("SELECT note FROM jc_subjects WHERE id=".sqlesc($sub_id)) or sqlerr(__FILE__, __LINE__);
 		$note=mysql_fetch_array ($ret);
 
 		print "<div align =\"center\">\n";
@@ -123,7 +123,7 @@ function jc_content($showspan, $button, $underline, $correct_id, $sub_id)
 		show_sub_title($sub_id);
 		show_bottom_line($underline, $correct_id, $sub_id);
 		print "<br/><br/><table  cellpadding = \"0\" cellsapcing=\"0\">";
-		show_options($button, $sub_id,$correct_id,$selected_id);
+		show_options($button, $sub_id, $correct_id);
 		print "</table>";
 		print "<br/><br/><table  cellpadding = \"0\" cellsapcing=\"0\">";
 		if($note['note'])
@@ -358,7 +358,7 @@ function button($flag,$opt)
 function show_percent_panel($opt_id,$opt_total,$sub_id)
 {
 		$percent_length=percent($opt_total,$sub_id)*400;
-		print "<div id=\"box$opt_id\"   style=\"background:url('pic/panel.png');margin-left:10px;margin-right:10px;height:30px;width:0px;position:relative\"></div>";
+		print "<div id=\"box$opt_id\"   style=\"background:url('pic/panel.png');margin-left:10px;margin-right:10px;height:30px;width:0;position:relative\"></div>";
 
 		//-webkit-gradient(linear, left top, right top,from(#FFFFFF),to(#00BB25));background:-moz-linear-gradient(left top, #FFFFFF, #00BB25);filter:progid:DXImageTransForm.Microsoft.Gradient(GradientType=1,startColorstr='#FFFFFF',endColorstr='#00BB25');
 		print "<script type=\"text/javascript\">";
@@ -412,5 +412,3 @@ function sub_is_unexist($sub_id)
 				stderr($lang_jc_details['wrong_head'],$lang_jc_details['not_exist'].$lang_jc_details['click']."<a class=altlink href=\"jc_currentbet_L.php\">".$lang_jc_details['here']."</a>".$lang_jc_details['back1'],false);
 		}
 }
-?>
-

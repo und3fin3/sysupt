@@ -23,4 +23,3 @@ if(isset($CURUSER))
 	$s .= "</table>\n";
 	echo $s;
 }
-?>

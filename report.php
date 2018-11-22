@@ -32,12 +32,12 @@ function takereport($reportid, $type, $reason)
 		stderr($lang_report['std_error'],$lang_report['std_missing_reason']);
 		die();
 	}
-	$res = sql_query("SELECT id FROM reports WHERE addedby = ".sqlesc($CURUSER[id])." AND reportid= ".sqlesc($reportid)." AND type = ".sqlesc($type)) or sqlerr(__FILE__,__LINE__);
+	$res = sql_query("SELECT id FROM reports WHERE addedby = ".sqlesc($CURUSER['id'])." AND reportid= ".sqlesc($reportid)." AND type = ".sqlesc($type)) or sqlerr(__FILE__,__LINE__);
 	if (mysql_num_rows($res) == 0)
 	{
 		$date = sqlesc(date("Y-m-d H:i:s"));
 
-		sql_query("INSERT into reports (addedby,reportid,type,reason,added) VALUES (".sqlesc($CURUSER[id]).",".sqlesc($reportid).",".sqlesc($type).", ".sqlesc(trim($reason)).",".$date.")") or sqlerr(__FILE__,__LINE__);
+		sql_query("INSERT into reports (addedby,reportid,type,reason,added) VALUES (".sqlesc($CURUSER['id']).",".sqlesc($reportid).",".sqlesc($type).", ".sqlesc(trim($reason)).",".$date.")") or sqlerr(__FILE__,__LINE__);
 		$Cache->delete_value('staff_report_count');
 		$Cache->delete_value('staff_new_report_count');
 		stderr($lang_report['std_message'],$lang_report['std_successfully_reported']);
@@ -103,7 +103,7 @@ elseif ((isset($takesubtitleid)) && (isset($takereason)))
 elseif (isset($user))
 {
 	int_check($user);
-	if ($user == $CURUSER[id]) {
+	if ($user == $CURUSER['id']) {
 		stderr($lang_report['std_sorry'],$lang_report['std_cannot_report_oneself']);
 		die;
 	}
@@ -140,7 +140,7 @@ elseif (isset($torrent))
 		die();
 	}
 	$arr = mysql_fetch_array($res);
-	stderr($lang_report['std_are_you_sure'], $lang_report['text_are_you_sure_torrent']."<a href=details.php?id=".htmlspecialchars($torrent)."><b>".htmlspecialchars($arr[name])."</b></a>".$lang_report['text_to_staff']."<br />".$lang_report['text_reason_note']."<br /><form method=post action=report.php><input type=hidden name=taketorrent value=\"".htmlspecialchars($torrent)."\">".$lang_report['text_reason_is']."<input type=text style=\"width: 200px\" name=reason><input type=submit value=\"".$lang_report['submit_confirm']."\"></form>", false);
+	stderr($lang_report['std_are_you_sure'], $lang_report['text_are_you_sure_torrent']."<a href=details.php?id=".htmlspecialchars($torrent)."><b>".htmlspecialchars($arr['name'])."</b></a>".$lang_report['text_to_staff']."<br />".$lang_report['text_reason_note']."<br /><form method=post action=report.php><input type=hidden name=taketorrent value=\"".htmlspecialchars($torrent)."\">".$lang_report['text_reason_is']."<input type=text style=\"width: 200px\" name=reason><input type=submit value=\"".$lang_report['submit_confirm']."\"></form>", false);
 }
 //////////TORRENT #2 END//////////
 
@@ -201,7 +201,7 @@ elseif (isset($reportofferid))
 		stderr($lang_report['std_error'],$lang_report['std_invalid_offer_id']);
 	}
 	$arr = mysql_fetch_array($res);
-	stderr($lang_report['std_are_you_sure'], $lang_report['text_are_you_sure_offer']."<a href=\"offers.php?id=".$arr[id]."&off_details=1\"><b>".htmlspecialchars($arr['name'])."</b></a>".$lang_report['text_to_staff']."<br />".$lang_report['text_reason_note']."<br /><form method=post action=report.php><input type=hidden name=takereportofferid value=\"".htmlspecialchars($reportofferid)."\">".$lang_report['text_reason_is']."<input type=text style=\"width: 200px\" name=reason><input type=submit value=\"".$lang_report['submit_confirm']."\"></form>", false);
+	stderr($lang_report['std_are_you_sure'], $lang_report['text_are_you_sure_offer']."<a href=\"offers.php?id=".$arr['id']."&off_details=1\"><b>".htmlspecialchars($arr['name'])."</b></a>".$lang_report['text_to_staff']."<br />".$lang_report['text_reason_note']."<br /><form method=post action=report.php><input type=hidden name=takereportofferid value=\"".htmlspecialchars($reportofferid)."\">".$lang_report['text_reason_is']."<input type=text style=\"width: 200px\" name=reason><input type=submit value=\"".$lang_report['submit_confirm']."\"></form>", false);
 }
 //////////OFFERT #2 END//////////
 
@@ -215,7 +215,7 @@ elseif (isset($reportrequestid))
 		stderr($lang_report['std_error'],$lang_report['std_invalid_request_id']);
 	}
 	$arr = mysql_fetch_array($res);
-	stderr($lang_report['std_are_you_sure'], $lang_report['std_are_you_sure_request']."<a href=\"viewrequests.php?action=view&id=".$arr[id]."&req_details=1\"><b>".htmlspecialchars($arr['name'])."</b></a>".$lang_report['text_to_staff']."<br />".$lang_report['text_reason_note']."<br /><form method=post action=report.php><input type=hidden name=takerequestid value=\"".htmlspecialchars($reportrequestid)."\">".$lang_report['text_reason_is']."<input type=text style=\"width: 200px\" name=reason id=reason ><input type=submit value=\"".$lang_report['submit_confirm']."\"><br/><input type=radio id=\"expire\" value=\"".$lang_report['text_expire']."\"  onClick=getexpirevalue()>".$lang_report['text_expire']."</form>", false);
+	stderr($lang_report['std_are_you_sure'], $lang_report['std_are_you_sure_request']."<a href=\"viewrequests.php?action=view&id=".$arr['id']."&req_details=1\"><b>".htmlspecialchars($arr['name'])."</b></a>".$lang_report['text_to_staff']."<br />".$lang_report['text_reason_note']."<br /><form method=post action=report.php><input type=hidden name=takerequestid value=\"".htmlspecialchars($reportrequestid)."\">".$lang_report['text_reason_is']."<input type=text style=\"width: 200px\" name=reason id=reason ><input type=submit value=\"".$lang_report['submit_confirm']."\"><br/><input type=radio id=\"expire\" value=\"".$lang_report['text_expire']."\"  onClick=getexpirevalue()>".$lang_report['text_expire']."</form>", false);
 }
 //////////REQUEST #2 END//////////
 
@@ -235,4 +235,3 @@ elseif (isset($subtitle))
 
 else // unknown action
 	stderr($lang_report['std_error'],$lang_report['std_invalid_action']);
-?>

@@ -106,7 +106,7 @@ if (ob_get_level() == 0) ob_start();
 				$name2 = $forthname1;
 			elseif($thirdname1!="")
 				$name2 = $thirdname1;
-			elseif(secondname1!="")
+			elseif($secondname1!="")
 				$name2 = $secondname1;
 			else
 				$name2 = $name1;
@@ -126,7 +126,7 @@ if (ob_get_level() == 0) ob_start();
 				$sql = "issuedate = '".mysql_escape_string($issuedate)."'";
 			
 			print($i."   ");
-			print($arr[id]."  ");
+			print($arr['id']."  ");
 			//print("SQL：".$sql."  ");
 		
 			if($sql!="")
@@ -138,4 +138,3 @@ if (ob_get_level() == 0) ob_start();
 		ob_flush();
 		flush();
 	}
-?>

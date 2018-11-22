@@ -31,4 +31,3 @@ while($dat=mysql_fetch_assoc($query))
 }
 
 header("Refresh: 0; url=staffmess.php?sent=1");
-?>

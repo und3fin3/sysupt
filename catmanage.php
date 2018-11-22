@@ -54,7 +54,7 @@ function return_category_mode_selection($selname, $selectionid)
 	$res = sql_query("SELECT * FROM searchbox ORDER BY id ASC");
 	$selection = "<select name=\"".$selname."\">";
 	while ($row = mysql_fetch_array($res))
-		$selection .= "<option value=\"" . $row["id"] . "\"". ($row["id"]==$selectedid ? " selected=\"selected\"" : "").">" . htmlspecialchars($row["name"]) . "</option>\n";
+		$selection .= "<option value=\"" . $row["id"] . "\"". ($row["id"]==$selectionid ? " selected=\"selected\"" : "").">" . htmlspecialchars($row["name"]) . "</option>\n";
 	$selection .= "</select>";
 	return $selection;
 }
@@ -177,7 +177,7 @@ function print_sub_category_list($type)
 print($pagerbottom);
 	}
 }
-function print_category_editor($type, $row='')
+function print_category_editor($type, $row=array())
 {
 	global $lang_catmanage;
 	global $validsubcattype;
@@ -325,7 +325,7 @@ function print_category_editor($type, $row='')
 <?php
 	}
 }
-function print_sub_category_editor($type, $row='')
+function print_sub_category_editor($type, $row=array())
 {
 	global $lang_catmanage;
 	$typename=return_type_name($type);

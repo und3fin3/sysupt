@@ -5,16 +5,17 @@ require_once(get_langfile_path());
 loggedinorreturn();
 function bark($msg)
 {
-   stdhead();
-   stdmsg($lang_takeflush['std_failed'], $msg);
-   stdfoot();
-   exit;
+    global $lang_takeflush;
+    stdhead();
+    stdmsg($lang_takeflush['std_failed'], $msg);
+    stdfoot();
+    exit;
 }
 $id = 0 + $_GET['id'];
 int_check($id,true);
 
 
-if (get_user_class() >= UC_MODERATOR || $CURUSER[id] == "$id")
+if (get_user_class() >= UC_MODERATOR || $CURUSER['id'] == "$id")
 {  
 //   global $anninterthree;
 //   $deadtime =time() - floor($anninterthree * 1.3);

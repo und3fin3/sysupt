@@ -78,4 +78,3 @@ else
 	print("</table>\n");
 	stdfoot();
 }
-?>

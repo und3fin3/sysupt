@@ -18,7 +18,7 @@ if (ob_get_level() == 0) ob_start();
 			$sql = "district = '".mysql_escape_string($district)."'";
 			
 			print($i."   ");
-			print($arr[torid]."  ");
+			print($arr['torid']."  ");
 			print("SQL：".$sql);
 		
 			if($sql!="")
@@ -29,5 +29,3 @@ if (ob_get_level() == 0) ob_start();
 		}
 		ob_flush();
 		flush();
-	
-?>

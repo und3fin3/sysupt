@@ -25,11 +25,9 @@ $result = sql_query($maxarrayslotsql);
 if ($action == 'maxslot')
 {
 	stdhead("Maxslot Manage");
-	$updatemaxslotsql1 = "UPDATE maxslots SET maxslot = ";
-	$updatemaxslotsql2 = " WHERE id =";
 
 	for($i=0;$i<14;$i++){
-		sql_query($updatemaxslotsql1.sqlesc($_REQUEST[$i]).$updatemaxslotsql2.sqlesc($i));
+        sql_query("UPDATE maxslots SET maxslot = " . sqlesc($_REQUEST[$i]) . " WHERE id =" . sqlesc($i));
 	}
 	go_back();	
 }
@@ -55,4 +53,3 @@ tr("保持设定","<input type='submit' style=\"width: 300px\" value='Okay'> ", 
 print("</table></form>");
 }
 stdfoot();
-?>

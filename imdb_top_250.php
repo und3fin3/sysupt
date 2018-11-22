@@ -35,7 +35,7 @@ switch ($_GET ["action"]) {
 				while ( $row = mysql_fetch_array ( $result ) ) {
 					$row ['imdb_id'] = str_pad ( $row ['imdb_id'], 7, '0', STR_PAD_LEFT );
 					$imdb_url = build_imdb_url ( $row ['imdb_id'] );
-					print ("<tr><td>" . $row ['rank'] . "</td><td><input name=translate_title size=50 value=\"" . $row ['translate_title'] . "\"></td><td><input name=title size=50 value=\"" . $row ['title'] . "\"></td></a><td><a href=\"" . $imdb_url . "\" target=\"_blank\"><b>" . tt . $row ['imdb_id'] . "</b></td><td align=\"center\">" . $row ['year'] . "</td><td align=\"center\">" . $row ['rating'] . "</td><td align=\"center\">" . $row ['votes'] . "</td></tr>") ;
+					print ("<tr><td>" . $row ['rank'] . "</td><td><input name=translate_title size=50 value=\"" . $row ['translate_title'] . "\"></td><td><input name=title size=50 value=\"" . $row ['title'] . "\"></td></a><td><a href=\"" . $imdb_url . "\" target=\"_blank\"><b>" . "tt" . $row ['imdb_id'] . "</b></td><td align=\"center\">" . $row ['year'] . "</td><td align=\"center\">" . $row ['rating'] . "</td><td align=\"center\">" . $row ['votes'] . "</td></tr>") ;
 				}
 				print "</table>";
 				end_main_frame ();
@@ -63,7 +63,7 @@ switch ($_GET ["action"]) {
 			while ( $row = mysql_fetch_array ( $result ) ) {
 				$row ['imdb_id'] = str_pad ( $row ['imdb_id'], 7, '0', STR_PAD_LEFT );
 				$imdb_url = build_imdb_url ( $row ['imdb_id'] );
-				print ("<tr><td><input type=\"button\" value=\"编辑\" onclick=\"window.location='imdb_top_250.php?action=edit&rank=" . $row ['rank'] . "';\" style=\"color: blue; font-weight: bold\"/></td><td>" . $row ['rank'] . "</td><td><b>" . $row ['translate_title'] . "</b></td><td><b>" . $row ['title'] . "</b></td></a><td><a href=\"" . $imdb_url . "\" target=\"_blank\"><b>" . tt . $row ['imdb_id'] . "</b></td><td align=\"center\">" . $row ['year'] . "</td><td align=\"center\">" . $row ['rating'] . "</td><td align=\"center\">" . $row ['votes'] . "</td></tr>") ;
+				print ("<tr><td><input type=\"button\" value=\"编辑\" onclick=\"window.location='imdb_top_250.php?action=edit&rank=" . $row ['rank'] . "';\" style=\"color: blue; font-weight: bold\"/></td><td>" . $row ['rank'] . "</td><td><b>" . $row ['translate_title'] . "</b></td><td><b>" . $row ['title'] . "</b></td></a><td><a href=\"" . $imdb_url . "\" target=\"_blank\"><b>" . "tt" . $row ['imdb_id'] . "</b></td><td align=\"center\">" . $row ['year'] . "</td><td align=\"center\">" . $row ['rating'] . "</td><td align=\"center\">" . $row ['votes'] . "</td></tr>") ;
 			}
 			
 			print "</table>";
@@ -110,7 +110,7 @@ switch ($_GET ["action"]) {
 					"：",
 					"·" 
 			), " ", $row ['translate_title'] );
-			print ("<tr><td>" . $row ['rank'] . "</td><td><a href=\"torrents.php?search=" . $row ['search_translate_title'] . "&notnewword=1 \"target=\"_blank\"><b>" . $row ['translate_title'] . "</b></td><td><a href=\"torrents.php?search=" . $row ['search_title'] . "&notnewword=1 \"target=\"_blank\"><b>" . $row ['title'] . "</b></td></a><td><a href=\"" . $imdb_url . "\" target=\"_blank\"><b>" . tt . $row ['imdb_id'] . "</b></td><td align=\"center\">" . $row ['year'] . "</td><td align=\"center\">" . $row ['rating'] . "</td><td align=\"center\">" . $row ['votes'] . "</td></tr>") ;
+			print ("<tr><td>" . $row ['rank'] . "</td><td><a href=\"torrents.php?search=" . $row ['search_translate_title'] . "&notnewword=1 \" target=\"_blank\"><b>" . $row ['translate_title'] . "</b></td><td><a href=\"torrents.php?search=" . $row ['search_title'] . "&notnewword=1 \"target=\"_blank\"><b>" . $row ['title'] . "</b></td></a><td><a href=\"" . $imdb_url . "\" target=\"_blank\"><b>" . "tt" . $row ['imdb_id'] . "</b></td><td align=\"center\">" . $row ['year'] . "</td><td align=\"center\">" . $row ['rating'] . "</td><td align=\"center\">" . $row ['votes'] . "</td></tr>") ;
 		}
 		
 		print "</table>";
@@ -119,6 +119,3 @@ switch ($_GET ["action"]) {
 		
 		stdfoot ();
 }
-
-?>
-

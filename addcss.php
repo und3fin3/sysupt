@@ -36,15 +36,15 @@ elseif($_POST['ok']&&$_POST['body']){
 
 
 if($_GET['useridcss'])$res = mysql_fetch_array(sql_query('SELECT css FROM  usercss WHERE  userid  ='.sqlesc(0+$_GET['useridcss']).' LIMIT 1 '));
-else if($url)$res[css]=$url; 
+else if($url)$res['css']=$url;
 else $res = mysql_fetch_array(sql_query('SELECT css FROM  usercss WHERE  userid  ='.sqlesc($CURUSER["id"]).' LIMIT 1 '));
-$textarea=$res[css];
+$textarea=$res['css'];
 
 
 
 $res = sql_query("SELECT userid FROM  usercss ORDER BY time DESC ");
 while ($postsx = mysql_fetch_assoc($res))
-$useridcssall[] = "<a href='addcss.php?useridcss=".$postsx['userid']."'>".get_username($postsx['userid'],false,false,true,true,false,false, "", false , true,false)."</a>";
+$useridcssall[] = "<a href='addcss.php?useridcss=".$postsx['userid']."'>".get_username($postsx['userid'],false,false,true,true,false,false, "", false )."</a>";
 
 
 stdhead("自定义CSS样式");

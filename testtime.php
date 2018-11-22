@@ -33,4 +33,3 @@ echo('<br />');
 echo(mkprettytime($t)."===".mkprettytime2($t));
 echo('<br />');
 echo(floatval(2147483649));
-?>

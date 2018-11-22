@@ -55,7 +55,7 @@ if (ob_get_level() == 0) ob_start();
 			{
 			$updateinfoset[] = "specificcat = '".mysql_escape_string($language)."'";
 		$sql=join(",",$updateinfoset);
-		print($arr[id]."SQL：".$sql."  ");
+		print($arr['id']."SQL：".$sql."  ");
 		sql_query("UPDATE torrentsinfo SET " . $sql . " WHERE torid = $arr[id]") or sqlerr(__FILE__, __LINE__);
 		}
 		}

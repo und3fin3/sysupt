@@ -421,7 +421,7 @@ if (! isset ( $self )) {
 	$upthis = $trueupthis = max ( 0, $uploaded - $self ["uploaded"] );
 	$downthis = $truedownthis = max ( 0, $downloaded - $self ["downloaded"] );
 	
-	if ($self [announcetime] > 0 && $self [announcetime] < 43200)
+	if ($self ['announcetime'] > 0 && $self ['announcetime'] < 43200)
 		$announcetime = ($self ["seeder"] == "yes" ? "seedtime = seedtime + $self[announcetime]" : "leechtime = leechtime + $self[announcetime]");
 	else
 		$announcetime = "seedtime = seedtime";
@@ -638,4 +638,3 @@ function check_tjuip($nip)
 	}
 	return TRUE;
 }
-?>

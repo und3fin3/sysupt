@@ -24,4 +24,3 @@ if (isset($_GET['q']) && $_GET['q'] != '')
 	}
 	echo $result;
 }
-?>

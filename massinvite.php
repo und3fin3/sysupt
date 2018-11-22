@@ -8,9 +8,10 @@
 require "include/bittorrent.php";
 dbconn();
 loggedinorreturn();
-if (get_user_class() < UC_ADMINISTRATOR)
-    stderr("权限不足", "仅允许SysOP及以上用户组使用批量邀请");
-$id = $CURUSER[id];
+$permission_class = UC_ADMINISTRATOR;
+if (get_user_class() < $permission_class)
+    stderr("权限不足", "仅允许" . get_user_class_name($permission_class, false, true, true) . "及以上用户组使用批量邀请");
+$id = $CURUSER['id'];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $addr = explode(PHP_EOL, $_POST['addr']);
     $event = str_replace("<br />", "<br />", nl2br(trim(strip_tags($_POST["event"]))));

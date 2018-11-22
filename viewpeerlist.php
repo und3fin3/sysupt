@@ -71,6 +71,8 @@ function dltable($name, $arr, $torrent)
 
 	$now = time();
 
+	$num = 0;
+
 	foreach ($arr as $e) {
 
 		$privacy = get_single_value("users", "privacy","WHERE id=".sqlesc($e['userid']));
@@ -134,7 +136,7 @@ function dltable($name, $arr, $torrent)
 
 
 
-		$s .= "<td class=rowfollow align=center width=1%><nobr>" .$lang_viewpeerlist[$e[connectable]] . "</nobr></td>\n";
+		$s .= "<td class=rowfollow align=center width=1%><nobr>" .$lang_viewpeerlist[$e['connectable']] . "</nobr></td>\n";
 
 		$s .= "<td class=rowfollow align=center width=1%><nobr>" . mksize($e["uploaded"]) . "</nobr></td>\n";
 
@@ -152,7 +154,7 @@ function dltable($name, $arr, $torrent)
 
 		else
 
-		$s .= "<td class=rowfollow align=center width=1%><nobr>" . mksize(($e["downloaded"] - $e["downloadoffset"]) / max(1, $e["finishedat"] - $e[st])) .	"/s</nobr></td>\n";
+		$s .= "<td class=rowfollow align=center width=1%><nobr>" . mksize(($e["downloaded"] - $e["downloadoffset"]) / max(1, $e["finishedat"] - $e['st'])) .	"/s</nobr></td>\n";
 
 		if ($e["downloaded"])
 
@@ -263,6 +265,3 @@ function dltable($name, $arr, $torrent)
 	print(dltable($lang_viewpeerlist['text_leechers'], $downloaders, $row));
 
 }
-
-?>
-

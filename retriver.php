@@ -46,5 +46,3 @@ switch ($siteid)
 		break;
 	}
 }
-
-?>

@@ -16,7 +16,7 @@ if ($_SERVER ["REQUEST_METHOD"] == "POST" && get_user_class () >= UC_MODERATOR) 
 	$catid = (0 + $_POST ["type"]);
 	
 	$until = $_POST ["timeuntil"];
-	if (! until) {
+	if (! $until) {
 		$until = '0000-00-00 00:00:00';
 	}
 	$until = sqlesc ( $until );
@@ -30,7 +30,7 @@ if ($_SERVER ["REQUEST_METHOD"] == "POST" && get_user_class () >= UC_MODERATOR) 
 	$keywords = sqlesc ( $keywords );
 	$comment = sqlesc ( $comment );
 	$added = sqlesc ( date ( "Y-m-d H:i:s" ) );
-	sql_query ( "INSERT INTO bannedtitle (keywords, catid, added, until, comment, addedby) VALUES($keywords, $catid, $added, $until, $comment, " . mysql_real_escape_string ( $CURUSER [id] ) . ")" ) or sqlerr ( __FILE__, __LINE__ );
+	sql_query ( "INSERT INTO bannedtitle (keywords, catid, added, until, comment, addedby) VALUES($keywords, $catid, $added, $until, $comment, " . mysql_real_escape_string ( $CURUSER ['id'] ) . ")" ) or sqlerr ( __FILE__, __LINE__ );
 	header ( "Location: $_SERVER[REQUEST_URI]" );
 	die ();
 }
@@ -50,7 +50,7 @@ else {
 	print ("<tr><td class=colhead>关键词</td><td class=colhead>类型</td><td class=colhead align=left>添加时间</td><td class=colhead align=left>预计解封时间</td>" . "<td class=colhead align=left>操作人</td><td class=colhead align=left>备注</td><td class=colhead>移除</td></tr>\n") ;
 	
 	while ( $arr = mysql_fetch_assoc ( $res ) ) {
-		print ("<tr><td>" . $arr [keywords] . "</td><td>" . $arr [catname] . "</td><td>" . gettime ( $arr [added] ) . "</td><td>" . ($arr [until] == '0000-00-00 00:00:00' ? "手动解除封禁" : gettime ( $arr [until] )) . "</td><td align=left>" . get_username ( $arr ['addedby'] ) . "</td><td align=left>$arr[comment]</td><td><a href=banstitle.php?remove=$arr[id]>移除</a></td></tr>\n") ;
+		print ("<tr><td>" . $arr ['keywords'] . "</td><td>" . $arr ['catname'] . "</td><td>" . gettime ( $arr ['added'] ) . "</td><td>" . ($arr ['until'] == '0000-00-00 00:00:00' ? "手动解除封禁" : gettime ( $arr ['until'] )) . "</td><td align=left>" . get_username ( $arr ['addedby'] ) . "</td><td align=left>$arr[comment]</td><td><a href=banstitle.php?remove=$arr[id]>移除</a></td></tr>\n") ;
 	}
 	print ("</table>\n") ;
 }
@@ -89,5 +89,3 @@ $(function(){
 }
 
 stdfoot ();
-
-?>

@@ -14,7 +14,7 @@ function tr_select($x,$y,$z,$star=""){
 	$hint = "请选择";
 	$show = "<tr class=\"rowfollow\" ><td class=\"no_border\" ><strong>".$x."</strong><select name=".$z."><option value=\"0\">".$hint."</option>";
 	while($row = mysql_fetch_array($listarray)){
-		$show .= "<option value=".$row[id].">".$row[name]."</option>";
+		$show .= "<option value=".$row['id'].">".$row['name']."</option>";
 	}
 	$show .="</select>$star</td></tr><div class=\"clear1\"></div>";
 	
@@ -224,4 +224,3 @@ elseif($catid == "412"){
 	tr_textcheckbox("制作国家/地区","district","districtmovie",$star);	
 	
 }
-?>

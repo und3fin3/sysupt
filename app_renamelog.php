@@ -139,4 +139,3 @@ if ($action == "renamelog") {
 }
 
 stdfoot ();
-?>

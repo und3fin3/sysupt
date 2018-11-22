@@ -22,7 +22,7 @@ if (!$id)
 
 $res = sql_query("SELECT name,owner,seeders,added,anonymous FROM torrents WHERE id = ".sqlesc($id));
 $row = mysql_fetch_array($res);
-$uploader = mysql_fetch_array(sql_query("SELECT username,class FROM users WHERE id = ".$row[owner]));
+$uploader = mysql_fetch_array(sql_query("SELECT username,class FROM users WHERE id = ".$row['owner']));
 if (!$row)
 	die();
 
@@ -53,7 +53,7 @@ elseif ($rt == 5)
 	{$reasonstr = "合集已出，删除单集和小合集，感谢您对北洋园PT的贡献";
 		$time = $row['added'];
 		$timestamp = strtotime($time);
-		if (($uploader['class']==UC_UPLOADER)&&(date(n,$timestamp)==date(n)))
+		if (($uploader['class']==UC_UPLOADER)&&(date('n',$timestamp)==date('n')))
 	sql_query("UPDATE uploaders SET deleted_torrents = deleted_torrents + 1 WHERE uid = ".$row["owner"] );}
 else
 {

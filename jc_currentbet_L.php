@@ -126,7 +126,7 @@ function pagination($pagerlink,$orderby,$action,$my_bet="false",$start="false",$
         $res=sql_query("SELECT * FROM jc_subjects WHERE `creater_id` = ".$CURUSER['id']." ".$orderby." LIMIT ".($page-1)*$page_size.",".$page_size);
         while($row=mysql_fetch_assoc($res))
         {
-            print("<tr style=\"text-align:center\"><td><img src=\"logo/logo_".$row['type'].".png\" width=40 height=40 alt=\"".$lang_jc_bet["bet_type_".$row[type]]."\" title=\"".$lang_jc_bet["bet_type_".$row[type]]."\"/></td><td class=\"jc_heading\"><a href=\"".$SERVER['SCRIPT_NAME']."?action=display&subid=".$row['id']."\" title=\"".$row['description']."\">".$row['subject']."</a></td>");
+            print("<tr style=\"text-align:center\"><td><img src=\"logo/logo_".$row['type'].".png\" width=40 height=40 alt=\"".$lang_jc_bet["bet_type_".$row['type']]."\" title=\"".$lang_jc_bet["bet_type_".$row['type']]."\"/></td><td class=\"jc_heading\"><a href=\"".$_SERVER['SCRIPT_NAME']."?action=display&subid=".$row['id']."\" title=\"".$row['description']."\">".$row['subject']."</a></td>");
             print("<td>".date('Y-m-d H:i',strtotime($row['start']))."</td>");
             print("<td>".date('Y-m-d H:i',strtotime($row['end']))."</td><td>".$row['players']."</td><td>".$row['total']."</td>");
             $bonus=10+round((((-250000)/($row['players']+500))+500)/3,2);
@@ -146,7 +146,7 @@ function pagination($pagerlink,$orderby,$action,$my_bet="false",$start="false",$
             // while($row_record=mysql_fetch_assoc($res_record)){
             //    $res_temp=sql_query("SELECT * FROM jc_subjects WHERE id={$row_record['subject_id']}");
             //   $row_temp=mysql_fetch_assoc($res_temp);
-            print("<tr style=\"text-align:center\"><td><img src=\"logo/logo_".$row_n['type'].".png\" width=40 height=40 alt=\"".$langjc_bet["bet_type_".$row_n[type]]."\" title=\"".$lang_jc_bet["bet_type_".$row_n[type]]."\"/></td><td class=\"jc_heading\"><a href=\"jc_details.php?subid=".$row_n['id']."\" title=\"".$row_n['description']."\">".$row_n['subject']."</a></td>");
+            print("<tr style=\"text-align:center\"><td><img src=\"logo/logo_".$row_n['type'].".png\" width=40 height=40 alt=\"".$lang_jc_bet["bet_type_".$row_n['type']]."\" title=\"".$lang_jc_bet["bet_type_".$row_n['type']]."\"/></td><td class=\"jc_heading\"><a href=\"jc_details.php?subid=".$row_n['id']."\" title=\"".$row_n['description']."\">".$row_n['subject']."</a></td>");
             print("<td>".date('Y-m-d H:i',strtotime($row_n['start']))."</td>");
             print("<td>".date('Y-m-d H:i',strtotime($row_n['end']))."</td><td>".$row_n['limit']."</td><td>".$row_n['players']."</td><td>".$row_n['total']."</td>");
             print("<td>".$row_n['user_total']."</td><td>".$row_n['yin_kui']."</td><td>".$lang_jc_bet["bet_state_".$row_n['state']]."</td></tr>");
@@ -163,7 +163,7 @@ function pagination($pagerlink,$orderby,$action,$my_bet="false",$start="false",$
             print("<tbody>");
             $res=sql_query("SELECT * FROM jc_subjects WHERE state=$bet_state OR state=$bet_state_temp ".$orderby." LIMIT ".($page-1)*$page_size.",".$page_size);
             while($row=mysql_fetch_assoc($res)){
-                print("<tr style=\"text-align:center\"><td>"."<img src=\"logo/logo_".$row['type'].".png\" width=\"40\" height=\"40\" alt=\"".$lang_jc_bet["bet_type_".$row[type]]."\" title=\"".$lang_jc_bet["bet_type_".$row[type]]."\"/></td><td class=\"jc_heading\">".  "<a  class=\"\" href=\"jc_details.php?subid=".$row['id']."\" title=\"".$row['description']."\">". $row[subject]."</a></td>");
+                print("<tr style=\"text-align:center\"><td>"."<img src=\"logo/logo_".$row['type'].".png\" width=\"40\" height=\"40\" alt=\"".$lang_jc_bet["bet_type_".$row['type']]."\" title=\"".$lang_jc_bet["bet_type_".$row['type']]."\"/></td><td class=\"jc_heading\">".  "<a  class=\"\" href=\"jc_details.php?subid=".$row['id']."\" title=\"".$row['description']."\">". $row['subject']."</a></td>");
                 if($start){
                     print("<td width=\"135\">".date('Y-m-d H:i',strtotime($row['start']))."</td>");
                 }
@@ -185,7 +185,7 @@ function pagination($pagerlink,$orderby,$action,$my_bet="false",$start="false",$
             }
             switch($bet_type){
                 case "historical_bet":
-                    print ("<table  id=\"tblSort\" width=940px style='table-layout:fixed;margin:0px,auto' border=1 cellspacing=0 cellpadding=5 ><thead><tr class=\"sub_colhead\" style=\"text-align:center\"><td class=\"heading\" width=\"52\" ><a href='jc_currentbet_L.php?action=historical_bet".$add."&sort=1&".$pagerlink."'>".
+                    print ("<table  id=\"tblSort\" width=940px style='table-layout:fixed;margin:0' border=1 cellspacing=0 cellpadding=5 ><thead><tr class=\"sub_colhead\" style=\"text-align:center\"><td class=\"heading\" width=\"52\" ><a href='jc_currentbet_L.php?action=historical_bet".$add."&sort=1&".$pagerlink."'>".
                             $lang_jc_bet['bet_class']."</a></td><td class=\"jc_heading\" width='200px'><a href='jc_currentbet_L.php?action=historical_bet".$add."&sort=2&".$pagerlink."'>".
                             $lang_jc_bet['bet_subject']."</a></td><td class=\"heading\" width=\"135\" ><a href='jc_currentbet_L.php?action=historical_bet".$add."&sort=3&".$pagerlink."'>".
                             $lang_jc_bet['bet_start']."</a></td><td class=\"heading\" width=\"135\"><a href='jc_currentbet_L.php?action=historical_bet".$add."&sort=4&".$pagerlink."'>".
@@ -603,7 +603,7 @@ if(!isset($_POST['submit']))
     //    tr($lang_jc_bet['type_num'],"<form methed='post'><input type='text' name='option_num' value='".$options."'></form>",1);
     print "<input type='hidden' name='option_num' value='".$options.".'/>";
     tr($lang_jc_bet['jc_subject'],"<input type='text' style='width:500px' name='subject' value='".$subject."'/><br />".$lang_jc_bet['description_explain'],1);
-    tr($lang_jc_bet['jc_description'],"<input type='text'style='width:500px' name='description' value='".$description."'/><br />".$lang_jc_bet['jc_description_explain'],1);
+    tr($lang_jc_bet['jc_description'],"<input type='text' style='width:500px' name='description' value='".$description."'/><br />".$lang_jc_bet['jc_description_explain'],1);
 
     print "<tr>";
     print "<td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" .$lang_jc_bet['jc_option']. "</td>";
@@ -674,7 +674,7 @@ if(!is_numeric($subid))
     if(!$be_sure){
         if(!mysql_fetch_assoc($res))
             bark("The subject you wanna manipulate doesn't exist now.Please contact with the admin!");
-        stdmsg($lang_jc_bet['be_careful'],"<form method='POST' action='".$SERVER['SCRIPT_NAME']."'><input type='hidden' name='action' value='delete'/><input type='hidden' name='be_sure' value='1'/><input type='hidden' name='subid' value='".$subid."'/><input type='submit' name=submit' value='".$lang_jc_bet['sure_to_delete']."'/></form>");
+        stdmsg($lang_jc_bet['be_careful'],"<form method='POST' action='".$_SERVER['SCRIPT_NAME']."'><input type='hidden' name='action' value='delete'/><input type='hidden' name='be_sure' value='1'/><input type='hidden' name='subid' value='".$subid."'/><input type='submit' name=submit' value='".$lang_jc_bet['sure_to_delete']."'/></form>");
     }else{
         if(!mysql_fetch_assoc($res))
             bark("The subject you wanna manipulate doesn't exist now.Please contact with the admin!");

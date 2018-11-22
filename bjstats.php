@@ -112,22 +112,22 @@ $HTMLOUT .="<p>排名数据每30分钟更新一次，只有游戏局数至少为
 $HTMLOUT .="<br />";
 //==Most Games Played
 $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY games DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
-$HTMLOUT .= bjtable($res, "游戏次数排名","Users");
+$HTMLOUT .= bjtable($res, "游戏次数排名");
 $HTMLOUT .="<br /><br />";
 //==Most Games Played
 //==Highest Win %
 $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games, bjwins / (bjwins + bjlosses) AS winperc FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY winperc DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
-$HTMLOUT .= bjtable($res, "胜率排名","Users");
+$HTMLOUT .= bjtable($res, "胜率排名");
 $HTMLOUT .="<br /><br />";
 //==Highest Win %
 //==Most Credit Won
 $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games, 0.9*bjwins - bjlosses AS winnings FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY winnings DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
-$HTMLOUT .= bjtable($res, "赢家排名","Users");
+$HTMLOUT .= bjtable($res, "赢家排名");
 $HTMLOUT .="<br /><br />";
 //==Most Credit Won
 //==Most Credit Lost
 $res = sql_query("SELECT id, username, bjwins AS wins, bjlosses AS losses, bjwins + bjlosses AS games, bjlosses - 0.9*bjwins AS losings FROM users WHERE bjwins + bjlosses >= $mingames ORDER BY losings DESC LIMIT 20") or sqlerr(__FILE__, __LINE__);
-$HTMLOUT .= bjtable($res, "输家排名","Users");
+$HTMLOUT .= bjtable($res, "输家排名");
 //==Most Credit Lost
 $HTMLOUT .="<br /><b><div align=\"center\"><a href=\"blackjack.php\">返回游戏</a></div></b>";
 $HTMLOUT .="<br />";
@@ -142,4 +142,3 @@ print  $HTMLOUT ;
 	stdhead('21点游戏排行榜'); 
 	echo $Cache->next_row();
 	stdfoot();
-?>

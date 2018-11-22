@@ -328,7 +328,7 @@ else {
 						
 						$man = (get_user_class () >= 13) ? "<input type=\"checkbox\" name=\"id[]\" value=\"{$row['id']}\"/> " : '';
 						
-						print ("<tr><td class=\"rowfollow\" style=\"padding: 0px\">" . return_category_image ( $row ["catid"], "" ) . "</a></td>" . 
+						print ("<tr><td class=\"rowfollow\" style=\"padding: 0\">" . return_category_image ( $row ["catid"], "" ) . "</a></td>" .
 
 						"<td align=left>{$man}<a href=viewrequests.php?action=view&id=" . $row ["id"] . "><b>" . $row ["name"] . "</b></a></td>" . 
 
@@ -346,7 +346,7 @@ else {
 
 						"<td align=center>" . gettime ( $row ['resetdate'], true, false ) . "</td>" . 
 
-						"<td align=center>" . ($row ['finish'] == "yes" ? $lang_req ['finished'] : ($row ['finish'] == "cancel" ? "已撤消" : ($row ['userid'] == $CURUSER [id] ? $lang_req ['unfinished'] : "<a href=viewrequests.php?action=res&id=" . $row ["id"] . " >" . $lang_req ['unfinished'] . "</a>"))) . "</td>" . 
+						"<td align=center>" . ($row ['finish'] == "yes" ? $lang_req ['finished'] : ($row ['finish'] == "cancel" ? "已撤消" : ($row ['userid'] == $CURUSER ['id'] ? $lang_req ['unfinished'] : "<a href=viewrequests.php?action=res&id=" . $row ["id"] . " >" . $lang_req ['unfinished'] . "</a>"))) . "</td>" .
 
 						(get_user_class () >= 13 ? "<td align=center><font color=black><a href=viewrequests.php?action=fastdel&id=" . $row ["id"] . " >删</a> <a href=viewrequests.php?action=edit&id=" . $row ["id"] . " >改</a> <a href=viewrequests.php?action=cancel&id=" . $row ["id"] . " >撤</a></td>\n" : "") . 
 
@@ -399,7 +399,7 @@ else {
 					
 					stdhead ( "求种详情" );
 					
-					print ("<h1 align=center id=top>" . ($arr [finish] == "no" ? "求种中" : ($arr [finish] == "yes" ? "已解决" : "已撤销")) . "-" . htmlspecialchars ( $arr ["name"] ) . "</h1>\n") ;
+					print ("<h1 align=center id=top>" . ($arr ['finish'] == "no" ? "求种中" : ($arr ['finish'] == "yes" ? "已解决" : "已撤销")) . "-" . htmlspecialchars ( $arr ["name"] ) . "</h1>\n") ;
 					
 					print ("<table width=940 cellspacing=0 cellpadding=5>\n") ;
 					
@@ -409,20 +409,20 @@ else {
 					
 					tr ( $lang_req ['do'], 
 
-					(($arr ['userid'] == $CURUSER [id] || get_user_class () >= 13) && $arr ["finish"] == "no" ? "<a href=viewrequests.php?action=edit&id=" . $id . " >" . $lang_req ['tr_edit'] : "") . "\n" . 					// 编辑权限（带分隔线）
+					(($arr ['userid'] == $CURUSER ['id'] || get_user_class () >= 13) && $arr ["finish"] == "no" ? "<a href=viewrequests.php?action=edit&id=" . $id . " >" . $lang_req ['tr_edit'] : "") . "\n" . 					// 编辑权限（带分隔线）
 					
-					($arr ['userid'] == $CURUSER [id] || $arr ["finish"] != "no" ? "" : "<a href=viewrequests.php?action=res&id=" . $id . " >" . $lang_req ['tr_res'] . "\n") . 					// 应求权限
+					($arr ['userid'] == $CURUSER ['id'] || $arr ["finish"] != "no" ? "" : "<a href=viewrequests.php?action=res&id=" . $id . " >" . $lang_req ['tr_res'] . "\n") . 					// 应求权限
 					
-					(get_user_class () >= 13 && $arr ['userid'] != $CURUSER [id] && $arr ["finish"] == "no" ? " | " : "") . 					// 应求分隔线
+					(get_user_class () >= 13 && $arr ['userid'] != $CURUSER ['id'] && $arr ["finish"] == "no" ? " | " : "") . 					// 应求分隔线
 					
 					(get_user_class () >= 13 ? "<a href=viewrequests.php?action=delete&id=" . $id . " >" . $lang_req ['tr_delete'] . 					// 删除权限
 					
 					($arr ["finish"] == "no" ? " | " : "") : "") . "\n" . 					// 删除分隔线
 					
-					(($arr ['userid'] == $CURUSER [id] || get_user_class () >= 13) && $arr ["finish"] == "no" ? "<a href=viewrequests.php?action=cancel&id=" . $id . " >" . "<b>撤销求种</b></a>" : "") . "\n" . 					// 撤销权限
+					(($arr ['userid'] == $CURUSER ['id'] || get_user_class () >= 13) && $arr ["finish"] == "no" ? "<a href=viewrequests.php?action=cancel&id=" . $id . " >" . "<b>撤销求种</b></a>" : "") . "\n" . 					// 撤销权限
 					
-					($arr ['userid'] == $CURUSER [id] ? "" : (" | <a href=report.php?reportrequestid=" . $id . " >" . "<b>举报求种</b></a>") . "\n"), 					// 举报
-					
+					($arr ['userid'] == $CURUSER ['id'] ? "" : (" | <a href=report.php?reportrequestid=" . $id . " >" . "<b>举报求种</b></a>") . "\n"), 					// 举报
+
 					1 );
 					
 					{ // 检查是否有非求种人追加悬赏
@@ -459,7 +459,7 @@ else {
 						
 						$ress = "";
 						
-						if (($arr ['userid'] == $CURUSER [id] || get_user_class () >= 13) && $arr ['finish'] == "no")
+						if (($arr ['userid'] == $CURUSER ['id'] || get_user_class () >= 13) && $arr ['finish'] == "no")
 							
 							$ress .= "<form action=viewrequests.php method=post>\n<input type=hidden name=action value=confirm > <input type=hidden name=id value=" . $id . " >\n";
 						
@@ -469,13 +469,13 @@ else {
 							
 							$each = mysql_fetch_assoc ( sql_query ( "SELECT * FROM torrents WHERE id = '" . $row ["torrentid"] . "'" ) );
 							
-							$ress .= (($arr ['userid'] == $CURUSER [id] || get_user_class () >= 13) && $arr ['finish'] == "no" ? "<input type=checkbox name=torrentid[] value=" . $each ["id"] . ">" : "");
+							$ress .= (($arr ['userid'] == $CURUSER ['id'] || get_user_class () >= 13) && $arr ['finish'] == "no" ? "<input type=checkbox name=torrentid[] value=" . $each ["id"] . ">" : "");
 							
 							if (mysql_num_rows ( sql_query ( "SELECT * FROM torrents WHERE id = '" . $row ["torrentid"] . "'" ) ) == 1){
 								
 								$ress .= "<a href=details.php?id=" . $each ["id"] . "&hit=1 >" . $each ["name"] . "</a> by " . (
 
-								($each ["anonymous"] == "yes" && get_user_class () < 12 && $each ["owner"] != $CURUSER ["id"]) ? "<i>匿名</i>" : get_username ( $each [owner] ));
+								($each ["anonymous"] == "yes" && get_user_class () < 12 && $each ["owner"] != $CURUSER ["id"]) ? "<i>匿名</i>" : get_username ( $each ['owner'] ));
 							if ($row ["submitted_by"])
 							$ress .= "  提交者：".get_username ($row ["submitted_by"]);}
 							
@@ -487,7 +487,7 @@ else {
 							"<br/>\n";
 						}
 						
-						if (($arr ['userid'] == $CURUSER [id] || get_user_class () >= 13) && $arr ['finish'] == "no")
+						if (($arr ['userid'] == $CURUSER ['id'] || get_user_class () >= 13) && $arr ['finish'] == "no")
 							
 							$ress .= "<input type=submit value=提交></form>\n";
 					}
@@ -577,7 +577,7 @@ function quick_reply_to(username)
 				if ($arr ["finish"] == "yes")
 					stderr ( "出错了！", "该求种已完成！" );
 				
-				if ($arr ['userid'] == $CURUSER [id] || get_user_class () >= 13) 
+				if ($arr ['userid'] == $CURUSER ['id'] || get_user_class () >= 13)
 
 				{
 					
@@ -642,7 +642,7 @@ function quick_reply_to(username)
 					
 					foreach ( $cats as $cat )
 						
-						$select .= "<option value=\"" . $cat[id] . "\">" . $cat[name] . "</option>";
+						$select .= "<option value=\"" . $cat['id'] . "\">" . $cat['name'] . "</option>";
 					
 					$select .= "</select>";
 					
@@ -710,16 +710,16 @@ function quick_reply_to(username)
 				
 				$amount += 100;
 				
-				if ($amount + 100 > $CURUSER [seedbonus])
+				if ($amount + 100 > $CURUSER ['seedbonus'])
 					stderr ( "出错了！", "你没有那么多魔力值！！！<a href=javascript:history.go(-1)>点击这里返回</a>", 0 );
 				
 				if (get_user_class () >= 1) 
 
 				{
 					
-					sql_query ( "UPDATE users SET seedbonus = seedbonus - " . $amount . " WHERE id = " . $CURUSER [id] );
+					sql_query ( "UPDATE users SET seedbonus = seedbonus - " . $amount . " WHERE id = " . $CURUSER ['id'] );
 					
-					sql_query ( "INSERT req ( name , catid , introduce, ori_introduce ,amount , ori_amount , userid ,added, resetdate ) VALUES ( " . sqlesc ( $_POST ["name"] ) . " , " . sqlesc ( $_POST ["catid"] ) . " , " . sqlesc ( $_POST ["introduce"] ) . " , " . sqlesc ( $_POST ["introduce"] ) . " , " . sqlesc ( $_POST ["amount"] ) . " , " . sqlesc ( $_POST ["amount"] ) . " , " . sqlesc ( $CURUSER [id] ) . " , '" . date ( "Y-m-d H:i:s" ) . "', '" . date ( "Y-m-d H:i:s" ) . "' )" ) or sqlerr ( __FILE__, __LINE__ );
+					sql_query ( "INSERT req ( name , catid , introduce, ori_introduce ,amount , ori_amount , userid ,added, resetdate ) VALUES ( " . sqlesc ( $_POST ["name"] ) . " , " . sqlesc ( $_POST ["catid"] ) . " , " . sqlesc ( $_POST ["introduce"] ) . " , " . sqlesc ( $_POST ["introduce"] ) . " , " . sqlesc ( $_POST ["amount"] ) . " , " . sqlesc ( $_POST ["amount"] ) . " , " . sqlesc ( $CURUSER ['id'] ) . " , '" . date ( "Y-m-d H:i:s" ) . "', '" . date ( "Y-m-d H:i:s" ) . "' )" ) or sqlerr ( __FILE__, __LINE__ );
 					
 					write_log ( "用户 " . $CURUSER ["username"] . " 新增了求种 " . mysql_insert_id () );
 					
@@ -760,7 +760,7 @@ function quick_reply_to(username)
 				if ($arr ["finish"] == "yes")
 					stderr ( "出错了！", "该求种已完成！<a href=viewrequests.php?action=view&id=" . $_POST ["reqid"] . ">点击这里返回</a>", 0 );
 				
-				if ($arr ['userid'] == $CURUSER [id] || get_user_class () >= 13) 
+				if ($arr ['userid'] == $CURUSER ['id'] || get_user_class () >= 13)
 
 				{
 					
@@ -825,10 +825,10 @@ function quick_reply_to(username)
 				
 				$tor = mysql_fetch_assoc ( $res );
 				
-				if ($tor [last_seed] == "0000-00-00 00:00:00")
+				if ($tor ['last_seed'] == "0000-00-00 00:00:00")
 					stderr ( "出错了！！！", "该种子尚未正式发布！<a href=viewrequests.php?action=res&id=" . $_POST ["reqid"] . ">点击这里返回</a>", 0 );
 				
-				$res = sql_query ( "SELECT * FROM resreq WHERE reqid=" . sqlesc ( $_POST ["reqid"] ) . " AND torrentid=" . sqlesc ( $_POST ["torrentid"] ) . "" );
+				$res = sql_query ( "SELECT * FROM resreq WHERE reqid=" . sqlesc ( $_POST ["reqid"] ) . " AND torrentid=" . sqlesc ( $_POST ["torrentid"] )  );
 				
 				if (mysql_num_rows ( $res ) != 0)
 					stderr ( "出错了！", "请不要重复应求，<a href=viewrequests.php?action=view&id=" . $_POST ["reqid"] . ">点击这里返回</a>", 0 );
@@ -888,10 +888,10 @@ function quick_reply_to(username)
 				
 				$newamount = $arr ["amount"] + $amount;
 				
-				if ($amount > $CURUSER [seedbonus])
+				if ($amount > $CURUSER ['seedbonus'])
 					stderr ( "出错了！", "你没有那么多魔力值！" );
 				
-				sql_query ( "UPDATE users SET seedbonus = seedbonus - " . $newseedbonus . " WHERE id = " . $CURUSER [id] );
+				sql_query ( "UPDATE users SET seedbonus = seedbonus - " . $newseedbonus . " WHERE id = " . $CURUSER ['id'] );
 				
 				sql_query ( "UPDATE req SET amount = " . $newamount . ", resetdate = '" . date ( "Y-m-d H:i:s" ) . "' WHERE id = " . sqlesc ( $_POST ["reqid"] ) );
 				
@@ -1243,14 +1243,14 @@ function quick_reply_to(username)
 				if ($arr ['finish'] == "cancel")
 					stderr ( "出错了！", "该求种已经撤销！", true );
 				
-				if ($arr ['userid'] != $CURUSER [id] && get_user_class () < 13)
+				if ($arr ['userid'] != $CURUSER ['id'] && get_user_class () < 13)
 					stderr ( "出错了！", "你没有该权限！", true );
 				
 				$res = sql_query ( "SELECT * FROM resreq WHERE reqid ='" . $_GET ["id"] . "'" ) or sqlerr ( __FILE__, __LINE__ );
 				
 				if (mysql_num_rows ( $res ) > 0 && get_user_class () < 13)
 					stderr ( "出错了！", "	
-	<form id=contact_cancel method=post name=contact_cancel action=takecontact.php><input type=hidden name=returnto value=\"viewrequests.php?action=view&id=" . $_GET ["id"] . "\"><input type=hidden name=\"subject\" value=\"撤消求种请求\" /><input type=hidden name=\"body\" value=\"" . $CURUSER [username] . "请求撤销求种[url=viewrequests.php?action=view&id=" . $_GET ["id"] . "]" . $arr ["name"] . "[/url]，请审批。\" /></form>	
+	<form id=contact_cancel method=post name=contact_cancel action=takecontact.php><input type=hidden name=returnto value=\"viewrequests.php?action=view&id=" . $_GET ["id"] . "\"><input type=hidden name=\"subject\" value=\"撤消求种请求\" /><input type=hidden name=\"body\" value=\"" . $CURUSER ['username'] . "请求撤销求种[url=viewrequests.php?action=view&id=" . $_GET ["id"] . "]" . $arr ["name"] . "[/url]，请审批。\" /></form>	
 	有应求的种子不允许自行撤销求种，<a href=\"JAVAscript:document.contact_cancel.submit();\">点击这里联系管理组</a>（请勿重复点击！），<a href=viewrequests.php?action=view&id=" . $_GET ["id"] . ">点击这里返回</a>", false );
 				
 				if ($arr ['added'] > date ( "Y-m-d H:i:s", time () - 14 * 86400 ) && get_user_class () < 13)
@@ -1334,7 +1334,7 @@ function quick_reply_to(username)
 				else
 					$torrentid = $_POST ["torrentid"];
 				
-				if ($arr ['userid'] == $CURUSER [id] || get_user_class () >= 13) 
+				if ($arr ['userid'] == $CURUSER ['id'] || get_user_class () >= 13)
 
 				{
 					
@@ -1354,7 +1354,7 @@ function quick_reply_to(username)
 					
 					$resuser = get_user_row ( $arr ['userid'] );
 					
-					$subject = ($arr ['userid'] != $CURUSER [id] ? "管理员" . $CURUSER ['username'] . "代替" : "") . $resuser [username] . "通过了你的应求";
+					$subject = ($arr ['userid'] != $CURUSER ['id'] ? "管理员" . $CURUSER ['username'] . "代替" : "") . $resuser ['username'] . "通过了你的应求";
 					
 					$notifs = "你因此获得了悬赏的" . $amount . "个魔力值。详情请见[url=viewrequests.php?action=view&id=" . $_POST ["id"] . "]这里[/url]";
 					
@@ -1701,5 +1701,3 @@ function quick_reply_to(username)
 }
 
 die ();
-
-?>

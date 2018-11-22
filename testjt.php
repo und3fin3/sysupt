@@ -17,4 +17,3 @@ if ($school1 == $school2)
 else 
 		echo "<font color='red'><b>不一致</b></font>";
 stdfoot();
-?>

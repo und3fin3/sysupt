@@ -13,4 +13,3 @@ $mode = $_GET['type'];
 $cache_stamp = $_GET['cache'];
 $imdb_id = parse_imdb_id($imdblink);
 echo getimdb($imdb_id, $cache_stamp, $mode);
-?>

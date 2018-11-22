@@ -1,5 +1,15 @@
 {
   "require": {
-    "hanson/youzan-sdk": "^2.0"
+    "hanson/youzan-sdk": "^2.0",
+    "ext-iconv": "*",
+    "ext-json": "*",
+    "ext-gd": "*",
+    "ext-mbstring": "*",
+    "ext-curl": "*",
+    "ext-simplexml": "*",
+    "ext-mysqli": "*",
+    "ext-zlib": "*",
+    "ext-xml": "*",
+    "ext-memcache": "*"
   }
 }

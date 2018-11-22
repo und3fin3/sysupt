@@ -143,5 +143,3 @@ print("</form>");
 end_main_frame();
 stdfoot();
 die;
-
-?>

@@ -81,7 +81,7 @@ if ($_GET['action'] == "editforum") {
 	if ($row = mysql_fetch_array($result)) {
 		do {
 ?>
-<h1 align=center><a class=faqlink href=forummanage.php><?php echo $lang_forummanage['text_forum_management']?></a><b>--></b><?php echo $lang_forummanage['text_edit_forum']?></h2>
+<h1 align=center><a class=faqlink href=forummanage.php><?php echo $lang_forummanage['text_forum_management']?></a><b>--></b><?php echo $lang_forummanage['text_edit_forum']?></h1>
 <br />
 <form method=post action="<?php echo $_SERVER["PHP_SELF"];?>">
 <table width="100%"  border="0" cellspacing="0" cellpadding="3" align="center">

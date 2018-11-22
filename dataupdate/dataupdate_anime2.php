@@ -99,7 +99,7 @@ if (ob_get_level() == 0) ob_start();
 			if($animenum!="")		
 			$sql = "animenum = '".$animenum."'";//$sql=join(",",$updateinfoset);
 			print($i."   ");
-			print($arr[id]."  ");
+			print($arr['id']."  ");
 			print("集数：".$animenum."  ");
 		
 			if($sql!="")
@@ -111,4 +111,3 @@ if (ob_get_level() == 0) ob_start();
 		ob_flush();
 		flush();
 	}
-?>

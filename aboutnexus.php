@@ -27,7 +27,7 @@ unset($ppl);
 $res = sql_query("SELECT * FROM language ORDER BY trans_state") or sqlerr();
 while ($arr = mysql_fetch_assoc($res))
 {
-	$ppl .= "<tr><td class=\"rowfollow\"><img width=\"24\" height=\"15\" src=\"pic/flag/".$arr[flagpic]."\" alt=\"".$arr[lang_name]."\" title=\"".$arr[lang_name]."\" style=\"padding-bottom:1px;\" /></td>
+	$ppl .= "<tr><td class=\"rowfollow\"><img width=\"24\" height=\"15\" src=\"pic/flag/".$arr['flagpic']."\" alt=\"".$arr['lang_name']."\" title=\"".$arr['lang_name']."\" style=\"padding-bottom:1px;\" /></td>
  <td class=\"rowfollow\">".$arr['lang_name']."</td>".
  "<td class=\"rowfollow\">".$arr['trans_state']."</td></tr>\n";
 }
@@ -62,4 +62,3 @@ print ("<br /><br />");
 end_frame();
 end_main_frame();
 stdfoot();
-?>

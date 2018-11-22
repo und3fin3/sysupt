@@ -15,7 +15,7 @@ function ordmenu($selected = "list") {
 		
 		print ("<li" . ($selected == "note" ? " class=selected" : "") . "><a href=\"?action=note\">订购说明</a></li>") ;
 
-		if (get_user_class()<13&&$CURUSER[id]!=24298)
+		if (get_user_class()<13&&$CURUSER['id']!=24298)
 		print ("<li" . ($selected == "manage" ? " class=selected" : "") . "><a href=\"sendmessage.php?receiver=24298\">联系客服</a></li>") ;
 		
 		else
@@ -71,15 +71,15 @@ if (! in_array ( $action, $allowed_actions ))
 <?php
 	while ( $row = mysql_fetch_assoc ( $res ) ) 
 	{
-	$id=$row[id];
-	$uid=$row[uid];
-	$name=$row[name];
-	$contact=$row[contact];
-	$group=$row[groups];
-	$type=$row[type];
+	$id=$row['id'];
+	$uid=$row['uid'];
+	$name=$row['name'];
+	$contact=$row['contact'];
+	$group=$row['groups'];
+	$type=$row['type'];
 	$shangpin='款式'.$type.'';
-	$num=$row[num];
-	$status=$row[status];
+	$num=$row['num'];
+	$status=$row['status'];
 	if ($status=='sending'){
 	$option="<a class= faqlink href=order.php?action=delete&id=$id>删除</a>";
 	$state='待发货';}
@@ -107,17 +107,17 @@ break;
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-	if (!$_POST[type]||!$_POST[contact]||!$_POST[num])
+	if (!$_POST['type']||!$_POST['contact']||!$_POST['num'])
 		stderr("错误", "必须填写款式、数量和联系方式。");
-	$typeid=$_POST[type];
-	$contact=$_POST[contact];
+	$typeid=$_POST['type'];
+	$contact=$_POST['contact'];
 		if(!preg_match("/^1\d{10}/",$contact))
 		stderr("错误", "请填写正确的手机号码！");
-	$num=$_POST[num];
+	$num=$_POST['num'];
 	if(!preg_match("/^([1-9][0-9]*)/",$num))
 		stderr("错误", "数量有误！");
-	$name=$_POST[name];
-	$uid=$CURUSER[id];
+	$name=$_POST['name'];
+	$uid=$CURUSER['id'];
 	sql_query ( "INSERT INTO orders (uid, type, num, name, contact) VALUES($uid, $typeid ,$num,'".$name."', '".$contact."')" ) or sqlerr ( __FILE__, __LINE__ );
 	stdhead("下单成功");
 		print("<h1>成功</h1></br>"); 
@@ -155,15 +155,15 @@ stdhead("北洋媛徽章预定");
 	{
 	if ($_SERVER["REQUEST_METHOD"] == "GET")
 	{
-	if (!$_GET[id])
+	if (!$_GET['id'])
 	stderr("错误", "请返回！");
-	$id=$_GET[id];
+	$id=$_GET['id'];
 	$sql = "SELECT * FROM orders WHERE id =$id";
 	$res = sql_query ( $sql );
 	$row=mysql_fetch_array($res);
 	if (!$row)
 	stderr("错误", "请返回！");
-	if (($row[uid]!=$CURUSER[id])&&(get_user_class()<14)&&$CURUSER[id]!=24298)
+	if (($row['uid']!=$CURUSER['id'])&&(get_user_class()<14)&&$CURUSER['id']!=24298)
 	stderr("错误", "请返回！");
 	else
 	sql_query("delete from orders where id=$id");
@@ -181,15 +181,15 @@ stdhead("北洋媛徽章预定");
 	{
 	if ($_SERVER["REQUEST_METHOD"] == "GET")
 	{
-	if (!$_GET[id])
+	if (!$_GET['id'])
 	stderr("错误", "请返回！");
-	$id=$_GET[id];
+	$id=$_GET['id'];
 	$sql = "SELECT * FROM orders WHERE id =$id";
 	$res = sql_query ( $sql );
 	$row=mysql_fetch_array($res);
 	if (!$row)
 	stderr("错误", "请返回！");
-	if (($row[uid]!=$CURUSER[id])&&(get_user_class()<14)&&$CURUSER[id]!=24298)
+	if (($row['uid']!=$CURUSER['id'])&&(get_user_class()<14)&&$CURUSER['id']!=24298)
 	stderr("错误", "请返回！");
 	else
 	sql_query("update orders set status ='sent' where id=$id");
@@ -206,7 +206,7 @@ stdhead("北洋媛徽章预定");
 
 	case "manage" :
 	{
-	if (get_user_class()<13&&$CURUSER[id]!=24298)
+	if (get_user_class()<13&&$CURUSER['id']!=24298)
 	stderr ( "错误", "您没有该权限");
 	stdhead("订单管理");
 	ordmenu('manage');
@@ -289,14 +289,14 @@ stdhead("北洋媛徽章预定");
 <?php
 	while ( $row = mysql_fetch_array ( $res ) ) 
 	{
-	$id=$row[id];
-	$uid=$row[uid];
-	$name=$row[name];
-	$contact=$row[contact];
-	$type=$row[type];
+	$id=$row['id'];
+	$uid=$row['uid'];
+	$name=$row['name'];
+	$contact=$row['contact'];
+	$type=$row['type'];
 	$shangpin='款式'.$type.'';
-	$num=$row[num];
-	$status=$row[status];
+	$num=$row['num'];
+	$status=$row['status'];
 	if ($status=='sending'){
 	$option="<a class= faqlink href=order.php?action=delete&id=$id>删除</a>  <a class= faqlink href=order.php?action=sent&id=$id>发货</a>";
 	$state='待发货';}

@@ -150,5 +150,3 @@ stdhead ();
 stdmsg ( '操作成功', '成功操作 ' . count ( $checked_torrent ) . ' 个种子' );
 
 stdfoot ();
-
-?>

@@ -5,14 +5,14 @@ require_once(get_langfile_path());
 loggedinorreturn();
 //if (get_user_class() < UC_SYSOP)
 global $CURUSER;
-if(get_user_class()<14&&$CURUSER[jc_manager]!='yes')
+if(get_user_class()<14&&$CURUSER['jc_manager']!='yes')
 permissiondenied();
 
 function bark($msg)
 {
 		global $lang_subedit;
 		stdhead();
-		stdmsg($lang_subdelete['std_edit_failed'],$msg);
+		stdmsg($lang_subedit['std_edit_failed'],$msg);
 		stdfoot();
 		exit;
 }
@@ -51,14 +51,14 @@ if(!isset($_POST['edit_sub_id']))
 				<font color=\"white\">".$lang_subedit['warning_text']."</font></td></tr>";
 
 		stdhead("竞猜管理");
-    jc_usercpmenu(manage);
+    jc_usercpmenu('manage');
 		print "<form method='post' action='".$_SERVER["SCRIPT_NAME"]."'>";
 		print($notice);
 		print "<input type='hidden' name='edit_sub_id' value={$row['id']}>";
 		tr($lang_subedit['id_text'], "<label>".$row['id']."</label>", 1);
 		tr($lang_subedit['createrid_text'], $creater_id, 1);
 		tr($lang_subedit['creatername_text'], $creater_name, 1);
-		tr($lang_subedit['subject_text'], "<input type='text'style='width:500px;' name='subject' value='$subject'/><br />".$lang_subedit['subject_explain'], 1);
+		tr($lang_subedit['subject_text'], "<input type='text' style='width:500px;' name='subject' value='$subject'/><br />".$lang_subedit['subject_explain'], 1);
 		tr($lang_subedit['description_text'], "<input type='text' style='width:500px' name='description' value='$description'/><br />".$lang_subedit['description_explain'], 1);
 		tr($lang_subedit['type_text'], "<select name='type' id='default'><option value='1'>football</option><option value='2'>basketball</option><option value='3'>tennis</option><option value='4'>tabletennis</option><option value='5'>others</option></select>", 1);
 		//tr($lang_subedit['start_text'], "<input type='text' name='start' value='$start'/>".$lang_subedit['start_explain'], 1);
@@ -82,7 +82,7 @@ if(!isset($_POST['edit_sub_id']))
 		print "<p style=\"float:left;\">".$lang_subedit['options_explain']."</p>";
 		print "</td>";
 		print "</tr>";
-		if($row[state]==5)
+		if($row['state']==5)
 		tr("撤销答案","<input type='checkbox' name='cancel' value='cancel'/>", 1);
 		tr($lang_subedit['save_text'], "<input type='submit' name='save' value='{$lang_subedit['save_explain']}'/>", 1);
 		print "</table>";

@@ -459,7 +459,7 @@ if ($action == "post") {
 			$Cache->delete_value ( 'topic_' . $topicid . '_topic_name' );
 			$Cache->delete_value ( 'post_' . $id . '_post_name' );
 		}
-		sql_query ( "UPDATE posts SET body=" . sqlesc ( $body ) . ", editdate=" . sqlesc ( $date ) . ", editedby=" . sqlesc ( $CURUSER [id] ) . " WHERE id=" . sqlesc ( $id ) ) or sqlerr ( __FILE__, __LINE__ );
+		sql_query ( "UPDATE posts SET body=" . sqlesc ( $body ) . ", editdate=" . sqlesc ( $date ) . ", editedby=" . sqlesc ( $CURUSER ['id'] ) . " WHERE id=" . sqlesc ( $id ) ) or sqlerr ( __FILE__, __LINE__ );
 		$postid = $id;
 		$Cache->delete_value ( 'post_' . $postid . '_content' );
 	} else {
@@ -753,7 +753,7 @@ if ($action == "viewtopic") {
 			$body .= "<p style='vertical-align:bottom'><br />____________________<br />" . format_comment ( $signature, false, false, false, true, 500, true, false, 1, 200 ) . "</p>";
 		
 		$stats = "<br />" . "&nbsp;&nbsp;" . $lang_forums ['text_school'] . $schoollist [$arr2 ["school"]] . "<br />" . "&nbsp;&nbsp;" . $lang_forums ['text_posts'] . "$forumposts<br />" . "&nbsp;&nbsp;" . $lang_forums ['text_ul'] . "$uploaded <br />" . "&nbsp;&nbsp;" . $lang_forums ['text_dl'] . "$downloaded<br />" . "&nbsp;&nbsp;" . $lang_forums ['text_ratio'] . "$ratio";
-		print ("<tr><td class=\"rowfollow\" width=\"150\" valign=\"top\" align=\"left\" style='padding: 0px'>" . return_avatar_image ( $avatar ) . "<br /><br /><br />&nbsp;&nbsp;<img alt=\"" . get_user_class_name ( $arr2 ["class"], false, false, true ) . "\" title=\"" . get_user_class_name ( $arr2 ["class"], false, false, true ) . "\" src=\"" . $uclass . "\" />" . $stats . "</td><td class=\"rowfollow\" valign=\"top\"><br />" . $body . "</td></tr>\n") ;
+		print ("<tr><td class=\"rowfollow\" width=\"150\" valign=\"top\" align=\"left\" style='padding: 0'>" . return_avatar_image ( $avatar ) . "<br /><br /><br />&nbsp;&nbsp;<img alt=\"" . get_user_class_name ( $arr2 ["class"], false, false, true ) . "\" title=\"" . get_user_class_name ( $arr2 ["class"], false, false, true ) . "\" src=\"" . $uclass . "\" />" . $stats . "</td><td class=\"rowfollow\" valign=\"top\"><br />" . $body . "</td></tr>\n") ;
 		$secs = 900;
 		$dt = sqlesc ( date ( "Y-m-d H:i:s", (TIMENOW - $secs) ) ); // calculate
 		                                                      // date.
@@ -1135,7 +1135,7 @@ if ($action == 'hltopic') {
 if ($action == "setsticky") {
 	$topicid = 0 + $_POST ["topicid"];
 	$ismod = is_forum_moderator ( $topicid, 'topic' );
-	if (! topicid || (get_user_class () < $postmanage_class && ! $ismod))
+	if (! $topicid || (get_user_class () < $postmanage_class && ! $ismod))
 		permissiondenied ();
 	
 	$sticky = sqlesc ( $_POST ["sticky"] );
@@ -1473,7 +1473,7 @@ if ($action == "search") {
 	<div class="search_title"><?php echo $lang_forums['text_search_on_forum'] ?> <?php echo ($error && $keywords != "" ? "[<b><font color=striking> " . $lang_forums['text_nothing_found'] . "</font></b> ]" : $found) ?></div>
 	<div style="margin-left: 53px; margin-top: 13px;">
 		<form method="get" action="forums.php" id="search_form"
-			style="margin: 0pt; padding: 0pt; font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 11px;">
+			style="margin: 0; padding: 0; font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 11px;">
 			<input type="hidden" name="action" value="search" />
 			<table border="0" cellpadding="0" cellspacing="0" width="512"
 				class="search_table">
@@ -1487,7 +1487,7 @@ if ($action == "search") {
 							style="width: 400px;" /></td>
 						<td style="padding-bottom: 3px; border: 0;" valign="top"><input
 							name="image" type="image"
-							style="vertical-align: middle; padding-bottom: 0px; margin-left: 0px;"
+							style="vertical-align: middle; padding-bottom: 0; margin-left: 0;"
 							src="<?php echo get_forum_pic_folder() ?>/search_button.gif"
 							alt="Search" /></td>
 					</tr>
@@ -1507,7 +1507,7 @@ if ($action == "search") {
 		print ("<tr><td class=\"colhead\" align=\"center\">" . $lang_forums ['col_post'] . "</td><td class=\"colhead\" align=\"center\" width=\"70%\">" . $lang_forums ['col_topic'] . "</td><td class=\"colhead\" align=\"left\">" . $lang_forums ['col_forum'] . "</td><td class=\"colhead\" align=\"left\">" . $lang_forums ['col_posted_by'] . "</td></tr>\n") ;
 		
 		while ( $post = mysql_fetch_array ( $res ) ) {
-			print ("<tr><td class=\"rowfollow\" align=\"center\" width=\"1%\">" . $post [id] . "</td><td class=\"rowfollow\" align=\"left\"><a href=\"" . htmlspecialchars ( "forums.php?action=viewtopic&topicid=" . $post [topicid] . "&highlight=" . rawurlencode ( $keywords ) . "&page=p" . $post [id] . "#pid" . $post [id] ) . "\">" . highlight_topic ( highlight ( $keywords, htmlspecialchars ( $post ['subject'] ) ), $post ['hlcolor'] ) . "</a></td><td class=\"rowfollow nowrap\" align=\"left\"><a href=\"" . htmlspecialchars ( "forums.php?action=viewforum&forumid=" . $post ['forumid'] ) . "\"><b>" . htmlspecialchars ( $post ["forumname"] ) . "</b></a></td><td class=\"rowfollow nowrap\" align=\"left\">" . gettime ( $post ['added'], true, false ) . "&nbsp;|&nbsp;" . get_username ( $post ['userid'] ) . "</td></tr>\n") ;
+			print ("<tr><td class=\"rowfollow\" align=\"center\" width=\"1%\">" . $post ['id'] . "</td><td class=\"rowfollow\" align=\"left\"><a href=\"" . htmlspecialchars ( "forums.php?action=viewtopic&topicid=" . $post ['topicid'] . "&highlight=" . rawurlencode ( $keywords ) . "&page=p" . $post ['id'] . "#pid" . $post ['id'] ) . "\">" . highlight_topic ( highlight ( $keywords, htmlspecialchars ( $post ['subject'] ) ), $post ['hlcolor'] ) . "</a></td><td class=\"rowfollow nowrap\" align=\"left\"><a href=\"" . htmlspecialchars ( "forums.php?action=viewforum&forumid=" . $post ['forumid'] ) . "\"><b>" . htmlspecialchars ( $post ["forumname"] ) . "</b></a></td><td class=\"rowfollow nowrap\" align=\"left\">" . gettime ( $post ['added'], true, false ) . "&nbsp;|&nbsp;" . get_username ( $post ['userid'] ) . "</td></tr>\n") ;
 		}
 		
 		print ("</table>\n") ;

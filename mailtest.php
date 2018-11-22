@@ -35,4 +35,3 @@ else
 	print("</form></table>");
 	stdfoot();
 }
-?>

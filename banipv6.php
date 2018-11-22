@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && get_user_class() >= UC_ADMINISTRATOR
 	$iplong = IPv6ToLong($ip);
 	$comment = sqlesc($comment);
 	$added = sqlesc(date("Y-m-d H:i:s"));
-	sql_query("INSERT INTO banipv6 (added, addedby, ip0, ip1, ip2, ip3, ip4, ip5, ip6, ip7, comment, type, until) VALUES($added, ".mysql_real_escape_string($CURUSER[id]).", $iplong[0], $iplong[1], $iplong[2], $iplong[3], $iplong[4], $iplong[5], $iplong[6], $iplong[7], $comment, $type, $until )") or sqlerr(__FILE__, __LINE__);
+	sql_query("INSERT INTO banipv6 (added, addedby, ip0, ip1, ip2, ip3, ip4, ip5, ip6, ip7, comment, type, until) VALUES($added, ".mysql_real_escape_string($CURUSER['id']).", $iplong[0], $iplong[1], $iplong[2], $iplong[3], $iplong[4], $iplong[5], $iplong[6], $iplong[7], $comment, $type, $until )") or sqlerr(__FILE__, __LINE__);
 	header("Location: $_SERVER[REQUEST_URI]");
 	die;
 }
@@ -56,8 +56,8 @@ else
 
   while ($arr = mysql_fetch_assoc($res))
   {
-	  $ip=array($arr[ip0],$arr[ip1],$arr[ip2],$arr[ip3],$arr[ip4],$arr[ip5],$arr[ip6],$arr[ip7]);
- 	  print("<tr><td>".gettime($arr[added])."</td><td align=left>".LongToIPv6($ip)."</td><td align=left>".$type_[$arr[type]]."</td><td align=left>".($arr[until]=='0000-00-00 00:00:00'?"手动解除封禁":gettime($arr[until]))."</td><td align=left>". get_username($arr['addedby']) .
+	  $ip=array($arr['ip0'],$arr['ip1'],$arr['ip2'],$arr['ip3'],$arr['ip4'],$arr['ip5'],$arr['ip6'],$arr['ip7']);
+ 	  print("<tr><td>".gettime($arr['added'])."</td><td align=left>".LongToIPv6($ip)."</td><td align=left>".$type_[$arr['type']]."</td><td align=left>".($arr['until']=='0000-00-00 00:00:00'?"手动解除封禁":gettime($arr['until']))."</td><td align=left>". get_username($arr['addedby']) .
  	    "</td><td align=left>$arr[comment]</td><td><a href=banipv6.php?remove=$arr[id]>移除</a></td></tr>\n");
   }
   print("</table>\n");
@@ -77,5 +77,3 @@ if (get_user_class() >= UC_ADMINISTRATOR)
 }
 
 stdfoot();
-
-?>

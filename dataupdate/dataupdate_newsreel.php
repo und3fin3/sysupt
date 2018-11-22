@@ -43,7 +43,7 @@ if (ob_get_level() == 0) ob_start();
 				
 			if($sql!=""){
 				print($i."   ");
-				print($arr[id]."   ");//specificcat,issuedate,cname,ename,language,
+				print($arr['id']."   ");//specificcat,issuedate,cname,ename,language,
 				print("SQL：".$sql."  ");
 				sql_query("UPDATE torrentsinfo SET " . $sql . " WHERE torid = $arr[id]") or sqlerr(__FILE__, __LINE__);
 		
@@ -54,4 +54,3 @@ if (ob_get_level() == 0) ob_start();
 		ob_flush();
 		flush();
 	}
-?>

@@ -72,4 +72,3 @@ end_frame ();
 end_table ();
 
 stdfoot ();
-?>

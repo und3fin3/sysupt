@@ -2,12 +2,6 @@
 require "include/bittorrent.php";
 dbconn ();
 require_once (get_langfile_path ());
-// Send some headers to keep the user's browser from caching the response.
-header ( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
-header ( "Last-Modified: " . gmdate ( "D, d M Y H:i:s" ) . "GMT" );
-header ( "Cache-Control: no-cache, must-revalidate" );
-header ( "Pragma: no-cache" );
-header ( "Content-Type: text/xml; charset=utf-8" );
 function maketable($res, $mode = 'seeding') {
 	global $lang_getusertorrentlistajax, $CURUSER, $smalldescription_main;
 	switch ($mode) {
@@ -89,7 +83,7 @@ function maketable($res, $mode = 'seeding') {
 		default :
 			break;
 	}
-	$ret = "<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\" width=\"800\"><tr><td class=\"colhead\" style=\"padding: 0px\">" . $lang_getusertorrentlistajax ['col_type'] . "</td><td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_name'] . "</td>" . ($showsize ? "<td class=\"colhead\" align=\"center\"><img class=\"size\" src=\"pic/trans.gif\" alt=\"size\" title=\"" . $lang_getusertorrentlistajax ['title_size'] . "\" /></td>" : "") . ($showsenum ? "<td class=\"colhead\" align=\"center\"><img class=\"seeders\" src=\"pic/trans.gif\" alt=\"seeders\" title=\"" . $lang_getusertorrentlistajax ['title_seeders'] . "\" /></td>" : "") . ($showlenum ? "<td class=\"colhead\" align=\"center\"><img class=\"leechers\" src=\"pic/trans.gif\" alt=\"leechers\" title=\"" . $lang_getusertorrentlistajax ['title_leechers'] . "\" /></td>" : "") . ($showuploaded ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_uploaded'] . "</td>" : "") . ($showdownloaded ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_downloaded'] . "</td>" : "") . ($showratio ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_ratio'] . "</td>" : "") . ($showsetime ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_se_time'] . "</td>" : "") . ($showletime ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_le_time'] . "</td>" : "") . ($showcotime ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_time_completed'] . "</td>" : "") . ($showanonymous ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_anonymous'] . "</td>" : "") . "</tr>\n";
+	$ret = "<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\" width=\"800\"><tr><td class=\"colhead\" style=\"padding: 0\">" . $lang_getusertorrentlistajax ['col_type'] . "</td><td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_name'] . "</td>" . ($showsize ? "<td class=\"colhead\" align=\"center\"><img class=\"size\" src=\"pic/trans.gif\" alt=\"size\" title=\"" . $lang_getusertorrentlistajax ['title_size'] . "\" /></td>" : "") . ($showsenum ? "<td class=\"colhead\" align=\"center\"><img class=\"seeders\" src=\"pic/trans.gif\" alt=\"seeders\" title=\"" . $lang_getusertorrentlistajax ['title_seeders'] . "\" /></td>" : "") . ($showlenum ? "<td class=\"colhead\" align=\"center\"><img class=\"leechers\" src=\"pic/trans.gif\" alt=\"leechers\" title=\"" . $lang_getusertorrentlistajax ['title_leechers'] . "\" /></td>" : "") . ($showuploaded ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_uploaded'] . "</td>" : "") . ($showdownloaded ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_downloaded'] . "</td>" : "") . ($showratio ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_ratio'] . "</td>" : "") . ($showsetime ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_se_time'] . "</td>" : "") . ($showletime ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_le_time'] . "</td>" : "") . ($showcotime ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_time_completed'] . "</td>" : "") . ($showanonymous ? "<td class=\"colhead\" align=\"center\">" . $lang_getusertorrentlistajax ['col_anonymous'] . "</td>" : "") . "</tr>\n";
 	while ( $arr = mysql_fetch_assoc ( $res ) ) {
 		$catimage = htmlspecialchars ( $arr ["image"] );
 		$catname = htmlspecialchars ( $arr ["catname"] );
@@ -115,8 +109,8 @@ function maketable($res, $mode = 'seeding') {
 				$dissmall_descr = mb_substr ( $dissmall_descr, 0, $max_lenght_of_small_descr, "UTF-8" ) . "..";
 			}
 		} else
-			$dissmall_descr == "";
-		$ret .= "<tr" . $sphighlight . "><td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>" . return_category_image ( $arr ['category'], "torrents.php?allsec=1&amp;" ) . "</td>\n" . "<td class=\"rowfollow\" width=\"100%\" align=\"left\"><a href=\"" . htmlspecialchars ( "details.php?id=" . $arr [torrent] . "&hit=1" ) . "\" title=\"" . $nametitle . "\"><b>" . $dispname . "</b></a>" . $sp_torrent . ($dissmall_descr == "" ? "" : "<br />" . $dissmall_descr) . "</td>";
+			$dissmall_descr = "";
+		$ret .= "<tr" . $sphighlight . "><td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0'>" . return_category_image ( $arr ['category'], "torrents.php?allsec=1&amp;" ) . "</td>\n" . "<td class=\"rowfollow\" width=\"100%\" align=\"left\"><a href=\"" . htmlspecialchars ( "details.php?id=" . $arr ['torrent'] . "&hit=1" ) . "\" title=\"" . $nametitle . "\"><b>" . $dispname . "</b></a>" . $sp_torrent . ($dissmall_descr == "" ? "" : "<br />" . $dissmall_descr) . "</td>";
 		// size
 		if ($showsize)
 			$ret .= "<td class=\"rowfollow\" align=\"center\">" . mksize_compact ( $arr ['size'] ) . "</td>";
@@ -179,7 +173,7 @@ if (get_user_class () < $torrenthistory_class && $id != $CURUSER ["id"]) {
 }
 
 $user = mysql_fetch_assoc ( sql_query ( "SELECT * FROM users WHERE id = '" . $id . "'" ) ) or sqlerr ( __FILE__, __LINE__ );
-if (($user ["privacy"] == "strong") && (get_user_class () < $prfmanage_class) && $CURUSER [id] != $user [id]) // 隐私等级高
+if (($user ["privacy"] == "strong") && (get_user_class () < $prfmanage_class) && $CURUSER ['id'] != $user ['id']) // 隐私等级高
 {
 	print ("系统忙，请稍候再尝试...") ;
 	die ();
@@ -255,4 +249,3 @@ if ($count)
 	echo "<b>" . $count . "</b>" . $lang_getusertorrentlistajax ['text_record'] . add_s ( $count ) . "<br />" . $torrentlist;
 else
 	echo $lang_getusertorrentlistajax ['text_no_record'];
-?>

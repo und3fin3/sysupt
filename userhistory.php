@@ -13,7 +13,7 @@ permissiondenied();
 $users=sql_query("SELECT * FROM users WHERE id = '".$userid."'") or sqlerr(__FILE__, __LINE__);
 if(mysql_num_rows($users) == 1)
 $user = mysql_fetch_assoc($users);
-if (($user["privacy"] == "strong") && (get_user_class() < $prfmanage_class) && $CURUSER[id] != $user[id])//隐私等级高
+if (($user["privacy"] == "strong") && (get_user_class() < $prfmanage_class) && $CURUSER['id'] != $user['id'])//隐私等级高
 permissiondenied();
 
 $action = htmlspecialchars($_GET["action"]);

@@ -8,7 +8,7 @@ function bark($msg)
 {
     global $lang_examin;
     stdhead();
-    stdmsg($lang_subdelete['std_edit_failed'],$msg);
+    stdmsg($lang_examin['std_edit_failed'],$msg);
     stdfoot();
     exit;
 }
@@ -49,7 +49,7 @@ if(!in_array($action,$allowedaction)){
 
             $notice = "<table cellspacing=\"0\" cellpadding=\"15\" width=\"940\"><tr><td colspan=\"2\" style='padding: 10px; background: black' align=\"center\"><font color=\"white\">".$lang_examin['warning_text']."</font></td></tr>";
             stdhead("竞猜管理");
-        		jc_usercpmenu(manage);
+        		jc_usercpmenu('manage');
             print($notice);
             tr($lang_examin['id_text'], "<label>".$row['id']."</label>", 1);
             tr($lang_examin['createrid_text'], $creater_id, 1);
@@ -114,7 +114,7 @@ if(!in_array($action,$allowedaction)){
             tr($lang_examin['id_text'], "<label>".$row['id']."</label>", 1);
             tr($lang_examin['createrid_text'], $creater_id, 1);
             tr($lang_examin['creatername_text'], $creater_name, 1);
-            tr($lang_examin['subject_text'], "<input type='text'style='width:500px;' name='subject' value='$subject'/><br />".$lang_examin['subject_explain'], 1);
+            tr($lang_examin['subject_text'], "<input type='text' style='width:500px;' name='subject' value='$subject'/><br />".$lang_examin['subject_explain'], 1);
             tr($lang_examin['description_text'], "<input type='text' style='width:500px' name='description' value='$description'/><br />".$lang_examin['description_explain'], 1);
             tr($lang_examin['type_text'], "<select name='type' id='default'><option value='1'>football</option><option value='2'>basketball</option><option value='3'>car</option><option value='4'>esport</option><option value='5'>tennis</option><option value='6'>tabletennis</option><option value='7'>Olimpics</option><option value='8'>others</option></select>", 1);
             tr($lang_examin['start_text'],"<input type='text' id='time1' name='start' value='$start'>".$lang_examin['start_explain'],1);

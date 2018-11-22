@@ -84,9 +84,9 @@ function get_where($tablename = "sources", $itemname = "source", $getname = "sou
 	$whereitemina = array();
 	foreach ($items as $item)
 	{
-		if ($_GET[$getname.$item[id]])
+		if ($_GET[$getname.$item['id']])
 		{
-			$whereitemina[] = $item[id];
+			$whereitemina[] = $item['id'];
 		}
 	}
 	if (count($whereitemina) >= 1){
@@ -178,4 +178,3 @@ print('
 }
 print('	</channel>
 </rss>');
-?>

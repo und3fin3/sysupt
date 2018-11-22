@@ -37,7 +37,7 @@ class imdb_config {
    *  configuration data here.
    * @constructor imdb_config
    */
-  function imdb_config(){
+  function __construct(){
   	// protocol prefix
     $this->protocol_prefix = "http://";
     // the imdb server to use.
@@ -80,7 +80,7 @@ require_once ("HTTP/Request2.php");
 
 class IMDB_Request extends HTTP_Request2
 {
-  function IMDB_Request($url){
+  function __construct($url){
     parent::__construct($url);
     if ( PROXY != ""){
       $this->setConfig(array('proxy_host' => PROXY, 'proxy_port' => PROXY_PORT));
@@ -89,4 +89,3 @@ class IMDB_Request extends HTTP_Request2
     $this->setHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
   }
 }
-?>

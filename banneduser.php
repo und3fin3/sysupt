@@ -13,4 +13,3 @@ print("<table width=700 class=main border=0 cellspacing=0 cellpadding=0>\n<tr><t
 print("</td></tr></table></td></tr></table>");
 
 stdfoot();
-?>

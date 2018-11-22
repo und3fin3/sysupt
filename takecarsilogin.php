@@ -66,4 +66,3 @@ if (!empty($_POST["returnto"]))
 	header("Location: $_POST[returnto]");
 else
 	header("Location: index.php");
-?>

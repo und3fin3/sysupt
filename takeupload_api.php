@@ -567,7 +567,7 @@ if ($catid == 402) {
 	if ($subsinfo != 0) {
 		$result = sql_query ( "SELECT * FROM subsinfo WHERE id = " . $subsinfo );
 		$result_ = mysql_fetch_array ( $result );
-		$nameset .= "[" . $result_ [name] . "]";
+		$nameset .= "[" . $result_ ['name'] . "]";
 	}
 }
 if ($catid == 403) {
@@ -700,7 +700,7 @@ if ($catid == 411) {
 	if ($subsinfo != 0) {
 		$result = sql_query ( "SELECT * FROM subsinfo WHERE id = " . $subsinfo );
 		$result_ = mysql_fetch_array ( $result );
-		$nameset .= "[" . $result_ [name] . "]";
+		$nameset .= "[" . $result_ ['name'] . "]";
 	}
 }
 if ($catid == 412) {
@@ -905,4 +905,3 @@ EOD;
 }
 
 //header ( "Location: details.php?id=" . htmlspecialchars ( $id ) . "&uploaded=1" );
-?>

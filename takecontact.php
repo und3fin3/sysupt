@@ -45,4 +45,3 @@ stdhead();
 stdmsg($lang_takecontact['std_succeeded'], $lang_takecontact['std_message_succesfully_sent']);
 stdfoot();
 exit;
-?>

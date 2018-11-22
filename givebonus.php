@@ -108,19 +108,12 @@ $ownername = $arr['username'];    //种子所有者名称
 				sql_query("INSERT INTO messages (sender, subject, receiver, msg, added) VALUES(0, $subject, $useridgift, $msg, $added)") or sqlerr(__FILE__, __LINE__);
 				$usernamegift = unesc($_POST["username"]);
 				redirect("" . get_protocol_prefix() . "$BASEURL/mybonus.php?do=transfer");
-				
-				
-				
-				$temp= $lang_givebonus_target[get_user_lang($useridgift)]['msg_successful'].$points.$lang_givebonus_target[get_user_lang($useridgift)]['msg_successful0']; 
-				
-				
-
-$CURUSER['giveseedbonus']=$points;
-
-	
-      } 
-  
 
 
-	
-?>
+                $temp = $lang_givebonus_target[get_user_lang($useridgift)]['msg_successful'] . $points . $lang_givebonus_target[get_user_lang($useridgift)]['msg_successful0'];
+
+
+                $CURUSER['giveseedbonus'] = $points;
+
+
+            }

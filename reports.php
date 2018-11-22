@@ -66,7 +66,7 @@ while ($row = mysql_fetch_array($reportres))
 			else
 			{
 				$arr = mysql_fetch_array($res);
-				$reporting = "<a href=\"offers.php?id=".$arr[id]."&off_details=1\">".htmlspecialchars($arr['name'])."</a>";
+				$reporting = "<a href=\"offers.php?id=".$arr['id']."&off_details=1\">".htmlspecialchars($arr['name'])."</a>";
 			}
 			break;
 		}
@@ -80,7 +80,7 @@ while ($row = mysql_fetch_array($reportres))
 			else
 			{
 				$arr = mysql_fetch_array($res);
-				$reporting = "<a href=\"viewrequests.php?action=view&id=".$arr[id]."&req_details=1\">".htmlspecialchars($arr['name'])."</a>";
+				$reporting = "<a href=\"viewrequests.php?action=view&id=".$arr['id']."&req_details=1\">".htmlspecialchars($arr['name'])."</a>";
 			}
 			break;
 		}
@@ -151,7 +151,7 @@ while ($row = mysql_fetch_array($reportres))
 		}
 	}
 
-	print("<tr><td class=rowfollow><nobr>".gettime($row['added'])."</nobr></td><td class=rowfollow>" . get_username($row['addedby']) . "</td><td class=rowfollow>".$reporting."</td><td class=rowfollow><nobr>".$type."</nobr></td><td class=rowfollow>".htmlspecialchars($row['reason'])."</td><td class=rowfollow><nobr>".$dealtwith."</nobr></td><td class=rowfollow><input type=\"checkbox\" name=\"delreport[]\" value=\"" . $row[id] . "\" /></td></tr>\n");
+	print("<tr><td class=rowfollow><nobr>".gettime($row['added'])."</nobr></td><td class=rowfollow>" . get_username($row['addedby']) . "</td><td class=rowfollow>".$reporting."</td><td class=rowfollow><nobr>".$type."</nobr></td><td class=rowfollow>".htmlspecialchars($row['reason'])."</td><td class=rowfollow><nobr>".$dealtwith."</nobr></td><td class=rowfollow><input type=\"checkbox\" name=\"delreport[]\" value=\"" . $row['id'] . "\" /></td></tr>\n");
 }
 ?>
 <tr><td class="colhead" colspan="7" align="right">设为已处理并改变举报者的魔力值<input type="text" name="bonus" value="0" /><input type="submit" name="setdealt" value="<?php echo $lang_reports['submit_set_dealt']?>" /><input type="submit" name="delete" value="<?php echo $lang_reports['submit_delete']?>" /></td></tr> 

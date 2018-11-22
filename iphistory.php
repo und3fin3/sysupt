@@ -109,4 +109,3 @@ echo $pagerbottom;
 end_main_frame();
 stdfoot();
 die;
-?>

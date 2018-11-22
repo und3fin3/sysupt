@@ -90,7 +90,7 @@ if (ob_get_level() == 0) ob_start();
 		//$sql=join(",",$updateinfoset);
 		//$sql = "language = '".mysql_escape_string($language)."'";
 		$sql=join(",",$updateinfoset);
-		print($arr[id]."  ");
+		print($arr['id']."  ");
 		print("类型：".$specificcat."  ");
 		print("中文名：".$cname."  ");
 		print("剧集季度信息：".$tvseasoninfo."  ");
@@ -102,4 +102,3 @@ if (ob_get_level() == 0) ob_start();
 		ob_flush();
 		flush();
 	}
-?>

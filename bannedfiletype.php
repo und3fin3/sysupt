@@ -46,7 +46,7 @@ else {
 	print ("<tr><td class=colhead>文件类型</td><td class=colhead>版块</td><td class=colhead>属性</td><td class=colhead>操作</td></tr>\n") ;
 	
 	while ( $arr = mysql_fetch_assoc ( $res ) ) {
-		print ("<tr><td>" . $arr [type] . "</td><td>" . $arr [catname] . "</td><td>" . $arr ['class'] . "</td><td><a class=faqlink href=bannedfiletype.php?remove=$arr[id]>移除</a> </td></tr>\n") ;
+		print ("<tr><td>" . $arr ['type'] . "</td><td>" . $arr ['catname'] . "</td><td>" . $arr ['class'] . "</td><td><a class=faqlink href=bannedfiletype.php?remove=$arr[id]>移除</a> </td></tr>\n") ;
 	}
 	print ("</table>\n") ;
 }
