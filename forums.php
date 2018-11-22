@@ -851,11 +851,11 @@ if ($action == "viewtopic") {
 		print ("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"left\">\n") ;
 		print ("<tr><td class=\"embedded\"><form method=\"post\" action=\"?action=setsticky\">\n") ;
 		print ("<input type=\"hidden\" name=\"topicid\" value=\"" . $topicid . "\" />\n") ;
-		print ("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars ( $_SERVER [REQUEST_URI] ) . "\" />\n") ;
+		print ("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars ( $_SERVER ['REQUEST_URI'] ) . "\" />\n") ;
 		print ("<input type=\"hidden\" name=\"sticky\" value=\"" . ($sticky ? 'no' : 'yes') . "\" /><input type=\"submit\" class=\"medium\" value=\"" . ($sticky ? $lang_forums ['submit_unsticky'] : $lang_forums ['submit_sticky']) . "\" /></form></td>\n") ;
 		print ("<td class=\"embedded\"><form method=\"post\" action=\"?action=setlocked\">\n") ;
 		print ("<input type=\"hidden\" name=\"topicid\" value=\"" . $topicid . "\" />\n") ;
-		print ("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars ( $_SERVER [REQUEST_URI] ) . "\" />\n") ;
+		print ("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars ( $_SERVER ['REQUEST_URI'] ) . "\" />\n") ;
 		print ("<input type=\"hidden\" name=\"locked\" value=\"" . ($locked ? 'no' : 'yes') . "\" /><input type=\"submit\" class=\"medium\" value=\"" . ($locked ? $lang_forums ['submit_unlock'] : $lang_forums ['submit_lock']) . "\" /></form></td>\n") ;
 		print ("<td class=\"embedded\"><form method=\"get\" action=\"?\">\n") ;
 		print ("<input type=\"hidden\" name=\"action\" value=\"deletetopic\" />\n") ;
@@ -912,7 +912,7 @@ if ($action == "viewtopic") {
 <option style='background-color: plum' value=\"39\">Plum</option>
 <option style='background-color: white' value=\"40\">White</option>") ;
 		print ("</select>") ;
-		print ("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars ( $_SERVER [REQUEST_URI] ) . "\" />\n") ;
+		print ("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars ( $_SERVER ['REQUEST_URI'] ) . "\" />\n") ;
 		print ("<input type=\"submit\" class=\"medium\" value=\"" . $lang_forums ['submit_change'] . "\" /></form></td>") ;
 		print ("</tr>\n") ;
 		print ("</table>\n") ;
