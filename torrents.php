@@ -845,9 +845,7 @@ return $char;
 		{
 			foreach ($like_expression_array as &$like_expression_array_element)
 			$like_expression_array_element = "(torrents.name" . gbk2big($like_expression_array_element).(gbk2big($like_expression_array_element)==big2gbk($like_expression_array_element)?"":" ".( strstr($like_expression_array_element,"NOT LIKE")?"AND":"OR")." torrents.name" . big2gbk($like_expression_array_element) )." )";
-			
-			//我们没有副标题
-//			$like_expression_array_element = "(torrents.name" . gbk2big($like_expression_array_element)." OR torrents.small_descr". gbk2big($like_expression_array_element)." OR torrents.name" . big2gbk($like_expression_array_element)." OR torrents.small_descr". big2gbk($like_expression_array_element)." )";
+			$like_expression_array_element = "(torrents.name" . gbk2big($like_expression_array_element)." OR torrents.small_descr". gbk2big($like_expression_array_element)." OR torrents.name" . big2gbk($like_expression_array_element)." OR torrents.small_descr". big2gbk($like_expression_array_element)." )";
 			$wherea[] = implode($ANDOR, $like_expression_array);
 			break;
 		}
@@ -858,13 +856,13 @@ return $char;
 			$wherea[] = implode($ANDOR,  $like_expression_array);
 			break;
 		}
-		/*case 2	:	// torrent small description
+		case 2	:	// torrent small description
 		{
 			foreach ($like_expression_array as &$like_expression_array_element)
 			$like_expression_array_element =  "torrents.small_descr". $like_expression_array_element;
 			$wherea[] =  implode($ANDOR, $like_expression_array);
 			break;
-		}*/
+		}
 		case 3	:	// torrent uploader
 		{
 			foreach ($like_expression_array as &$like_expression_array_element)
@@ -1188,11 +1186,11 @@ echo '<center><span style="font-size: 20px"><strong>回收站模式</strong></sp
 								<option value="0"><?php echo $lang_torrents['select_title'] ?></option>
 								<option value="1"<?php print($_GET["search_area"] == 1 ? " selected=\"selected\"" : ""); ?>><?php echo $lang_torrents['select_description'] ?></option>
 								<?php
-								/*if ($smalldescription_main == 'yes'){
+								if ($smalldescription_main == 'yes'){
 								?>
 								<option value="2"<?php print($_GET["search_area"] == 2 ? " selected=\"selected\"" : ""); ?>><?php echo $lang_torrents['select_small_description'] ?></option>
 								<?php
-								}*/
+								}
 								?>
 								<option value="3"<?php print($_GET["search_area"] == 3 ? " selected=\"selected\"" : ""); ?>><?php echo $lang_torrents['select_uploader'] ?></option>
 								<option value="4"<?php print($_GET["search_area"] == 4 ? " selected=\"selected\"" : ""); ?>><?php echo $lang_torrents['select_imdb_url'] ?></option>
