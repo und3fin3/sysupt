@@ -844,7 +844,7 @@ return $char;
 		case 0   :	// torrent name
 		{
 			foreach ($like_expression_array as &$like_expression_array_element)
-			$like_expression_array_element = "(torrents.name" . gbk2big($like_expression_array_element).(gbk2big($like_expression_array_element)==big2gbk($like_expression_array_element)?"":" ".( strstr($like_expression_array_element,"NOT LIKE")?"AND":"OR")." torrents.name" . big2gbk($like_expression_array_element) )." )";
+//			$like_expression_array_element = "(torrents.name" . gbk2big($like_expression_array_element).(gbk2big($like_expression_array_element)==big2gbk($like_expression_array_element)?"":" ".( strstr($like_expression_array_element,"NOT LIKE")?"AND":"OR")." torrents.name" . big2gbk($like_expression_array_element) )." )";
 			$like_expression_array_element = "(torrents.name" . gbk2big($like_expression_array_element)." OR torrents.small_descr". gbk2big($like_expression_array_element)." OR torrents.name" . big2gbk($like_expression_array_element)." OR torrents.small_descr". big2gbk($like_expression_array_element)." )";
 			$wherea[] = implode($ANDOR, $like_expression_array);
 			break;
@@ -1049,7 +1049,7 @@ echo '<center><span style="font-size: 20px"><strong>回收站模式</strong></sp
 								if ($i && $i % $catsperrow == 0){
 									print("</tr><tr>");
 								}
-								print("<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: ".$catpadding."px;\"><input type=\"checkbox\" id=\"".$cbname.$list[id]."\" name=\"".$cbname.$list[id]."\"" . (in_array($list[id],$wherelistina) ? " checked=\"checked\"" : "") . " value=\"1\" />".($showimg ? return_category_image($list[id], "?") : "<a title=\"" .$list[name] . "\" href=\"?".$cbname."=".$list[id]."\">".$list[name]."</a>")."</td>\n");
+								print("<td align=\"left\" class=\"bottom\" style=\"padding-bottom: 4px; padding-left: {$catpadding}px;\"><input type=\"checkbox\" id=\"".$cbname.$list[id]."\" name=\"".$cbname.$list[id]."\"" . (in_array($list[id],$wherelistina) ? " checked=\"checked\"" : "") . " value=\"1\" />".($showimg ? return_category_image($list[id], "?") : "<a title=\"" .$list[name] . "\" href=\"?".$cbname."=".$list[id]."\">".$list[name]."</a>")."</td>\n");
 								$i++;
 							}
 							$checker = "<input name=\"".$btname."\" value='" .  $lang_torrents['input_check_all'] . "' class=\"btn medium\" type=\"button\" onclick=\"javascript:SetChecked('".$cbname."','".$btname."','". $lang_torrents['input_check_all'] ."','" . $lang_torrents['input_uncheck_all'] . "',-1,10)\" />";
