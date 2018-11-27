@@ -16,7 +16,7 @@ Then run *sql/data.sql* to import basic data
 Copy *config/example.allconfig.php* to *config/allconfig.php*,<br/>
 Edit BASIC array, which contains mysql configure
 ### 5.Something you need know
->Please edit the argument *domain*(.tjupt.org) to your domain name or just delete it in function logincookie(), set_langfolder_cookie() and logoutcookie() (You can found it in t in include/functions.php), otherwise you will not be able to log in.
+>Please edit the argument *domain*(.tjupt.org) to your domain name or just delete it in function logincookie(), set_langfolder_cookie() and logoutcookie() (You can find them in include/functions.php), otherwise you will not be able to log in.
 ### 6.Login
 Username: NexusPHP<br/>
 Password: nexusphp
