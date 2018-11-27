@@ -2,7 +2,7 @@
 require_once("include/bittorrent.php");
 require_once("include/tjuip_helper.php");
 dbconn();
-assert_tjuip_or_mod();
+assert_tjuip();
 
 $langid = 0 + $_GET['sitelanguage'];
 if ($langid)

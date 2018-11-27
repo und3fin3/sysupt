@@ -109,7 +109,7 @@ class smtp
 	*
 	* @access public
 	*/
-	function smtp($charset = 'UTF-8', $specialcase = "")
+	function __construct($charset = 'UTF-8', $specialcase = "")
 	{
 		$this->_specialcase  = $specialcase;
 		$this->_charset = $charset;
@@ -300,22 +300,22 @@ class smtp
 	* @param string $password password
 	* @param int authentication mecanism
 	*/
-	function auth($username, $password, $type = LOGIN)
+	function auth($username, $password, $type = 'LOGIN')
 	{
 		
 		include_once ('sasl.lib.php');
-		$sasl =& new sasl($sasl, $username, $password);
+		$sasl = new sasl();
 		switch ($type) {
-			case PLAIN:
+			case 'PLAIN':
 				$this->_cmd('AUTH PLAIN');
 				$this->_cmd($sasl->plain($username, $password));
 				break;
-			case LOGIN:
+			case 'LOGIN':
 				$this->_cmd('AUTH LOGIN');
 				$this->_cmd($sasl->login($username));
 				$this->_cmd($sasl->login($password));
 				break;
-			case CRAM_MD5:
+			case 'CRAM_MD5':
 				$resp = explode(' ', $this->_cmd('AUTH CRAM-MD5'));
 				$this->_cmd($sasl->cram_md5($username, $password, trim($resp[1])));
 				break;
