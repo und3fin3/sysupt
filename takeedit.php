@@ -151,7 +151,7 @@ if (get_user_class () >= $torrentsticky_class) {
 			$spstate = "永久50%";
 	} elseif ((0 + $_POST ["sel_spstate"]) == 12) {
 		$updateset [] = "sp_state = 12";
-		
+
 		if ($row ["sp_state"] != 12)
 			$spstate = "永久2X 50% ";
 	} elseif ((0 + $_POST ["sel_spstate"]) == 13) {
@@ -161,7 +161,7 @@ if (get_user_class () >= $torrentsticky_class) {
 	}
 	if ($spstate)
 		$updateset [] = "sp_time = " . sqlesc ( date ( "Y-m-d H:i:s" ) );
-		
+
 		// promotion expiration type
 /*	if ((0 + $_POST ["sel_spstate"]) > 7) {
 		$updateset [] = "promotion_time_type = 1";
@@ -181,8 +181,8 @@ if (get_user_class () >= $torrentsticky_class) {
 			$updateset [] = "promotion_until = '0000-00-00 00:00:00'";
 		}
 	}
-*/	
-	
+*/
+
 	if ((0 + $_POST ["sel_spstate"]) > 7 && (0 + $_POST ["sel_spstate"]) < 14) {
 		$updateset [] = "promotion_time_type = 1";
 		$updateset [] = "promotion_until = '0000-00-00 00:00:00'";
@@ -193,9 +193,9 @@ if (get_user_class () >= $torrentsticky_class) {
 		} else {
 			$updateset [] = "promotion_time_type = 0";
 			$updateset [] = "promotion_until = '0000-00-00 00:00:00'";
-		}	
+		}
 	}
-	
+
 	$posstate = "";
 	if ((0 + $_POST ["sel_posstate"]) == 0) {
 		$updateset [] = "pos_state = 'normal'";
@@ -257,27 +257,27 @@ sql_query ( "UPDATE torrents SET " . join ( ",", $updateset ) . " WHERE id = $id
  */
 $updateinfoset [] = "category = " . sqlesc ( $catid );
 $cname = unesc ( trimcomma ( $_POST ["cname"] ) );
-$updateinfoset [] = "cname = '" . sqlesc ( $cname ) . "'";
+$updateinfoset [] = "cname = " . sqlesc ( $cname );
 $ename = unesc ( trimcomma ( $_POST ["ename"] ) );
-$updateinfoset [] = "ename = '" . sqlesc ( $ename ) . "'";
+$updateinfoset [] = "ename = " . sqlesc ( $ename );
 $specificcat = unesc ( trimcomma ( $_POST ["specificcat"] ) );
-$updateinfoset [] = "specificcat = '" . sqlesc ( $specificcat ) . "'";
+$updateinfoset [] = "specificcat = " . sqlesc ( $specificcat );
 $issuedate = unesc ( trimcomma ( $_POST ["issuedate"] ) );
-$updateinfoset [] = "issuedate = '" . sqlesc ( $issuedate ) . "'";
+$updateinfoset [] = "issuedate = " . sqlesc ( $issuedate );
 $subsinfo = unesc ( trimcomma ( $_POST ["subsinfo"] ) );
-$updateinfoset [] = "subsinfo = '" . sqlesc ( $subsinfo ) . "'";
+$updateinfoset [] = "subsinfo = " . sqlesc ( $subsinfo );
 $district = unesc ( trimcomma ( $_POST ["district"] ) );
-$updateinfoset [] = "district = '" . sqlesc ( $district ) . "'";
+$updateinfoset [] = "district = " . sqlesc ( $district );
 $format = unesc ( trimcomma ( $_POST ["format"] ) );
-$updateinfoset [] = "format = '" . sqlesc ( $format ) . "'";
+$updateinfoset [] = "format = " . sqlesc ( $format );
 $language = unesc ( trimcomma ( $_POST ["language"] ) );
-$updateinfoset [] = "language = '" . sqlesc ( $language ) . "'";
+$updateinfoset [] = "language = " . sqlesc ( $language );
 
 $nameset = "";
 
 if ($catid == 401) {
 	$imdbnum = unesc ( trimcomma ( $_POST ["imdbnum"] ) );
-	$updateinfoset [] = "imdbnum = '" . sqlesc ( $imdbnum ) . "'";
+	$updateinfoset [] = "imdbnum = " . sqlesc ( $imdbnum );
 	if ($district != "")
 		$nameset .= "[" . $district . "]";
 	if ($cname != "")
@@ -287,9 +287,9 @@ if ($catid == 401) {
 }
 if ($catid == 402) {
 	$tvalias = unesc ( trimcomma ( $_POST ["tvalias"] ) );
-	$updateinfoset [] = "tvalias = '" . sqlesc ( $tvalias ) . "'";
+	$updateinfoset [] = "tvalias = " . sqlesc ( $tvalias );
 	$tvseasoninfo = unesc ( trimcomma ( $_POST ["tvseasoninfo"] ) );
-	$updateinfoset [] = "tvseasoninfo = '" . sqlesc ( $tvseasoninfo ) . "'";
+	$updateinfoset [] = "tvseasoninfo = " . sqlesc ( $tvseasoninfo );
 	if ($specificcat != "")
 		$nameset .= "[" . $specificcat . "]";
 	if ($cname != "")
@@ -310,11 +310,11 @@ if ($catid == 402) {
 }
 if ($catid == 403) {
 	$tvshowscontent = unesc ( trimcomma ( $_POST ["tvshowscontent"] ) );
-	$updateinfoset [] = "tvshowscontent = '" . sqlesc ( $tvshowscontent ) . "'";
+	$updateinfoset [] = "tvshowscontent = " . sqlesc ( $tvshowscontent );
 	$tvshowsguest = unesc ( trimcomma ( $_POST ["tvshowsguest"] ) );
-	$updateinfoset [] = "tvshowsguest = '" . sqlesc ( $tvshowsguest ) . "'";
+	$updateinfoset [] = "tvshowsguest = " . sqlesc ( $tvshowsguest );
 	$tvshowsremarks = unesc ( trimcomma ( $_POST ["tvshowsremarks"] ) );
-	$updateinfoset [] = "tvshowsremarks = '" . sqlesc ( $tvshowsremarks ) . "'";
+	$updateinfoset [] = "tvshowsremarks = " . sqlesc ( $tvshowsremarks );
 	if ($district != "")
 		$nameset .= "[" . $district . "]";
 	if ($issuedate != "")
@@ -330,7 +330,7 @@ if ($catid == 403) {
 }
 if ($catid == 404) {
 	$version = unesc ( trimcomma ( $_POST ["version"] ) );
-	$updateinfoset [] = "version = '" . sqlesc ( $version ) . "'";
+	$updateinfoset [] = "version = " . sqlesc ( $version );
 	if ($cname != "")
 		$nameset .= "[" . $cname . "]";
 	if ($ename != "")
@@ -342,11 +342,11 @@ if ($catid == 404) {
 }
 if ($catid == 405) {
 	$animenum = unesc ( trimcomma ( $_POST ["animenum"] ) );
-	$updateinfoset [] = "animenum = '" . sqlesc ( $animenum ) . "'";
+	$updateinfoset [] = "animenum = " . sqlesc ( $animenum );
 	$substeam = unesc ( trimcomma ( $_POST ["substeam"] ) );
-	$updateinfoset [] = "substeam = '" . sqlesc ( $substeam ) . "'";
+	$updateinfoset [] = "substeam = " . sqlesc ( $substeam );
 	$resolution = unesc ( trimcomma ( $_POST ["resolution"] ) );
-	$updateinfoset [] = "resolution = '" . sqlesc ( $resolution ) . "'";
+	$updateinfoset [] = "resolution = " . sqlesc ( $resolution );
 	if ($specificcat != "")
 		$nameset .= "[" . $specificcat . "]";
 	if ($substeam != "")
@@ -366,11 +366,11 @@ if ($catid == 405) {
 }
 if ($catid == 406) {
 	$hqname = unesc ( trimcomma ( $_POST ["hqname"] ) );
-	$updateinfoset [] = "hqname = '" . sqlesc ( $hqname ) . "'";
+	$updateinfoset [] = "hqname = " . sqlesc ( $hqname );
 	$artist = unesc ( trimcomma ( $_POST ["artist"] ) );
-	$updateinfoset [] = "artist = '" . sqlesc ( $artist ) . "'";
+	$updateinfoset [] = "artist = " . sqlesc ( $artist );
 	$hqtone = unesc ( trimcomma ( $_POST ["hqtone"] ) );
-	$updateinfoset [] = "hqtone = '" . sqlesc ( $hqtone ) . "'";
+	$updateinfoset [] = "hqtone = " . sqlesc ( $hqtone );
 	if ($hqname != "")
 		$nameset .= "[" . $hqname . "]";
 	if ($artist != "")
@@ -384,7 +384,7 @@ if ($catid == 406) {
 }
 if ($catid == 407) {
 	$resolution = unesc ( trimcomma ( $_POST ["resolution"] ) );
-	$updateinfoset [] = "resolution = '" . sqlesc ( $resolution ) . "'";
+	$updateinfoset [] = "resolution = " . sqlesc ( $resolution );
 	if ($specificcat != "")
 		$nameset .= "[" . $specificcat . "]";
 	if ($issuedate != "")
@@ -400,7 +400,7 @@ if ($catid == 407) {
 }
 if ($catid == 408) {
 	$version = unesc ( trimcomma ( $_POST ["version"] ) );
-	$updateinfoset [] = "version = '" . sqlesc ( $version ) . "'";
+	$updateinfoset [] = "version = " . sqlesc ( $version );
 	if ($specificcat != "")
 		$nameset .= "[" . $specificcat . "]";
 	if ($cname != "")
@@ -414,11 +414,11 @@ if ($catid == 408) {
 }
 if ($catid == 409) {
 	$company = unesc ( trimcomma ( $_POST ["company"] ) );
-	$updateinfoset [] = "company = '" . sqlesc ( $company ) . "'";
+	$updateinfoset [] = "company = " . sqlesc ( $company );
 	$platform = unesc ( trimcomma ( $_POST ["platform"] ) );
-	$updateinfoset [] = "platform = '" . sqlesc ( $platform ) . "'";
+	$updateinfoset [] = "platform = " . sqlesc ( $platform );
 	$tvshowsremarks = unesc ( trimcomma ( $_POST ["tvshowsremarks"] ) );
-	$updateinfoset [] = "tvshowsremarks = '" . sqlesc ( $tvshowsremarks ) . "'";
+	$updateinfoset [] = "tvshowsremarks = " . sqlesc ( $tvshowsremarks );
 	if ($platform != "")
 		$nameset .= "[" . $platform . "]";
 	if ($specificcat != "")
@@ -436,7 +436,7 @@ if ($catid == 409) {
 }
 if ($catid == 410) {
 	$tvshowsremarks = unesc ( trimcomma ( $_POST ["tvshowsremarks"] ) );
-	$updateinfoset [] = "tvshowsremarks = '" . sqlesc ( $tvshowsremarks ) . "'";
+	$updateinfoset [] = "tvshowsremarks = " . sqlesc ( $tvshowsremarks );
 	if ($specificcat != "")
 		$nameset .= "[" . $specificcat . "]";
 	if ($cname != "")

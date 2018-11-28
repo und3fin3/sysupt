@@ -59,7 +59,7 @@ while($arr = mysql_fetch_assoc($res)){
 		
 		$sql = "";
 		if($format!="")
-			$sql = "format = '".sqlesc($format)."'";
+			$sql = "format = ".sqlesc($format);
 		print($i."   ");
 		//print($arr[id]."  ");
 		//print("SQL：".$sql);

@@ -123,7 +123,7 @@ if (ob_get_level() == 0) ob_start();
 				$issuedate = substr($seconddname2 ,1,strpos($seconddname2,"]")-1);
 			
 			if($issuedate!="" && strstr($arr1["issuedate"], '?'))
-				$sql = "issuedate = '".sqlesc($issuedate)."'";
+				$sql = "issuedate = ".sqlesc($issuedate);
 			
 			print($i."   ");
 			print($arr['id']."  ");

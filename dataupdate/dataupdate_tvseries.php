@@ -82,13 +82,13 @@ if (ob_get_level() == 0) ob_start();
 				
 		}
 		
-		$updateinfoset[] = "specificcat = '".sqlesc($specificcat)."'";
-		$updateinfoset[] = "cname = '".sqlesc($cname)."'";
-		$updateinfoset[] = "tvseasoninfo = '".sqlesc($tvseasoninfo)."'";
-		$updateinfoset[] = "language = '".sqlesc($language)."'";
+		$updateinfoset[] = "specificcat = ".sqlesc($specificcat);
+		$updateinfoset[] = "cname = ".sqlesc($cname);
+		$updateinfoset[] = "tvseasoninfo = ".sqlesc($tvseasoninfo);
+		$updateinfoset[] = "language = ".sqlesc($language);
 		
 		//$sql=join(",",$updateinfoset);
-		//$sql = "language = '".sqlesc($language)."'";
+		//$sql = "language = ".sqlesc($language);
 		$sql=join(",",$updateinfoset);
 		print($arr['id']."  ");
 		print("类型：".$specificcat."  ");

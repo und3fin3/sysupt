@@ -52,11 +52,11 @@ if (ob_get_level() == 0) ob_start();
 		}
 		
 		if($specificcat!="" && strstr($arr1["specificcat"], '?'))
-				$updateinfoset[] = "specificcat = '".sqlesc($specificcat)."'";
+				$updateinfoset[] = "specificcat = ".sqlesc($specificcat);
 			if($substeam!="" && strstr($arr1["substeam"], '?'))
-				$updateinfoset[] = "substeam = '".sqlesc($substeam)."'";
+				$updateinfoset[] = "substeam = ".sqlesc($substeam);
 			if($cname!="" && strstr($arr1["cname"], '?'))
-				$updateinfoset[] = "cname = '".sqlesc($cname)."'";
+				$updateinfoset[] = "cname = ".sqlesc($cname);
 		
 		$sql=join(",",$updateinfoset);
 		//print($arr[id]."  ");

@@ -111,14 +111,14 @@ if (ob_get_level() == 0) ob_start();
 			$language = "英语";
 		
 		
-		$updateinfoset[] = "district = '".sqlesc($district)."'";
-		$updateinfoset[] = "cname = '".sqlesc($cname)."'";
-		$updateinfoset[] = "issuedate = '".sqlesc($issuedate)."'";
-		$updateinfoset[] = "tvshowscontent = '".sqlesc($tvshowcontent)."'";
-		$updateinfoset[] = "language = '".sqlesc($language)."'";
+		$updateinfoset[] = "district = ".sqlesc($district);
+		$updateinfoset[] = "cname = ".sqlesc($cname);
+		$updateinfoset[] = "issuedate = ".sqlesc($issuedate);
+		$updateinfoset[] = "tvshowscontent = ".sqlesc($tvshowcontent);
+		$updateinfoset[] = "language = ".sqlesc($language);
 		
 		$sql=join(",",$updateinfoset);
-		//$sql = "language = '".sqlesc($language)."'";
+		//$sql = "language = ".sqlesc($language);
 		$sql=join(",",$updateinfoset);
 		//print($arr[id]."SQL：".$sql."<br/>");
 		//print("地区：".$district."  ");
