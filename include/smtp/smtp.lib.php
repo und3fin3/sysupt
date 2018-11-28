@@ -519,7 +519,10 @@ class smtp
 	*/
 	function encode_hdrs($input)
 	{
-		$replacement = preg_replace('/([\x80-\xFF])/e', '"=" . strtoupper(dechex(ord("\1")))', $input);
+        $replacement = preg_replace_callback('/([\x80-\xFF])/',
+            function ($matches) {
+                return "=" . strtoupper(dechex(ord($matches[0])));
+            }, $input);
 		
 		$input = str_replace($input, sprintf('=?%s?Q?%s?=', $this->_charset, $replacement), $input);
 		return $input;
