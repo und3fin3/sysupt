@@ -129,12 +129,14 @@ if ($nip) { // $nip would be false for IPv6 address
 		err ( "403-该IP被封禁，请与PTadmin@TJUPT.org联系！" );
 		// die;
 	}
-	
+
+	/* This is no longer necessary, because public IPv4 users will be forbidden by front code
 	if (!check_tjuip($nip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org') {
 		// header("HTTP/1.0 403 Forbidden");
 		err ( "004-您正在使用校外IP下载(" . $ip . ")，为了避免给校内用户带来流量负担，我们阻止了您本次的下载请求！" );
 		// die;
 	}
+	*/
 
 	if ($nip == 3396406700) // 202.113.13.172
 	{
