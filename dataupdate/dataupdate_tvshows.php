@@ -111,14 +111,14 @@ if (ob_get_level() == 0) ob_start();
 			$language = "英语";
 		
 		
-		$updateinfoset[] = "district = '".mysql_escape_string($district)."'";
-		$updateinfoset[] = "cname = '".mysql_escape_string($cname)."'";
-		$updateinfoset[] = "issuedate = '".mysql_escape_string($issuedate)."'";
-		$updateinfoset[] = "tvshowscontent = '".mysql_escape_string($tvshowcontent)."'";
-		$updateinfoset[] = "language = '".mysql_escape_string($language)."'";
+		$updateinfoset[] = "district = '".sqlesc($district)."'";
+		$updateinfoset[] = "cname = '".sqlesc($cname)."'";
+		$updateinfoset[] = "issuedate = '".sqlesc($issuedate)."'";
+		$updateinfoset[] = "tvshowscontent = '".sqlesc($tvshowcontent)."'";
+		$updateinfoset[] = "language = '".sqlesc($language)."'";
 		
 		$sql=join(",",$updateinfoset);
-		//$sql = "language = '".mysql_escape_string($language)."'";
+		//$sql = "language = '".sqlesc($language)."'";
 		$sql=join(",",$updateinfoset);
 		//print($arr[id]."SQL：".$sql."<br/>");
 		//print("地区：".$district."  ");

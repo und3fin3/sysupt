@@ -15,7 +15,7 @@ if (ob_get_level() == 0) ob_start();
 		$res = sql_query($query) or sqlerr(__FILE__, __LINE__);
 		while($arr = mysql_fetch_assoc($res)){
 			$district = "日漫";
-			$sql = "district = '".mysql_escape_string($district)."'";
+			$sql = "district = '".sqlesc($district)."'";
 			
 			print($i."   ");
 			print($arr['torid']."  ");

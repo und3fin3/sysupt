@@ -53,14 +53,14 @@ if (ob_get_level() == 0) ob_start();
 			$language = str_replace("[/color]","",$language);
 			if(strlen($language)<20)
 			{
-			$updateinfoset[] = "specificcat = '".mysql_escape_string($language)."'";
+			$updateinfoset[] = "specificcat = '".sqlesc($language)."'";
 		$sql=join(",",$updateinfoset);
 		print($arr['id']."SQL：".$sql."  ");
 		sql_query("UPDATE torrentsinfo SET " . $sql . " WHERE torid = $arr[id]") or sqlerr(__FILE__, __LINE__);
 		}
 		}
-//		$updateinfoset[] = "cname = '".mysql_escape_string($cname)."'";
-//		$updateinfoset[] = "district = '".mysql_escape_string($location)."'";
+//		$updateinfoset[] = "cname = '".sqlesc($cname)."'";
+//		$updateinfoset[] = "district = '".sqlesc($location)."'";
 		
 		
 		

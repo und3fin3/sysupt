@@ -11,7 +11,7 @@ dbconn();
 //require(get_langfile_path("",true));
 
 //$_POST=$_GET;
-$passkey = mysql_escape_string($_POST['passkey']);
+$passkey = sqlesc($_POST['passkey']);
 $sql = "select * from users where passkey = '$passkey' limit 1";
 $res = mysql_query($sql);
 if (!$res) 
