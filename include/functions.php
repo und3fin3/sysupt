@@ -6579,8 +6579,8 @@ function uploader_rate($total_num, $total_size, $standard_num, $standard_size, $
     } else {
         $rate = "D";
     }
-    
-    if (($last_rate == "C-" && $rate == "C") || (($last_rate == "B-" || $last_rate == "D") && ($rate == "D" || $rate == "D"))) {
+
+    if (($last_rate == "C-" && $rate == "C") || (($last_rate == "B-" || $last_rate == "D" || $last_rate == "E") && ($rate == "B" || $rate == "D"))) {
         $rate = "E";
     } elseif (strstr($last_rate, "S") && $rate == "S") {
         $rate = "S+";
