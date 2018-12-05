@@ -41,7 +41,7 @@ stdhead($lang_getrss['head_rss_feeds']);
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	$allowed_showrows=array('10','20','30','40','50');
-	$link = get_protocol_prefix(). $BASEURL ."/torrentrss.php";
+	$rss_link = get_protocol_prefix(). $BASEURL ."/torrentrss.php";
 	if (isset($_POST['showrows']) && in_array($_POST['showrows'], $allowed_showrows, 1))
 		$query[] = "rows=".(int)$_POST['showrows'];
 	else {
@@ -171,8 +171,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	$query[] = "passkey=".$CURUSER['passkey'];
 	$queries = implode("&", $query);
 	if ($queries)
-		$link .= "?".$queries;
-	$msg = $lang_getrss['std_use_following_url'] ."\n".$link."\n\n".$lang_getrss['std_utorrent_feed_url']."\n".$link."&linktype=dl".$addinclbm;
+		$rss_link .= "?".$queries;
+	$msg = $lang_getrss['std_use_following_url'] ."\n".$rss_link."\n\n".$lang_getrss['std_utorrent_feed_url']."\n".$rss_link."&linktype=dl".$addinclbm;
 	stdmsg($lang_getrss['std_done'],format_comment($msg));
 	stdfoot();
 	die();

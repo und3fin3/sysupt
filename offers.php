@@ -24,7 +24,7 @@ if ($_GET ["category"]) {
 }
 
 if ($_GET ["id"]) {
-	$id = 0 + htmlspecialchars ( $_GET ["id"] );
+    $id = (int)htmlspecialchars($_GET ["id"]);
 	if (preg_match ( '/^[0-9]+$/', ! $id ))
 		stderr ( $lang_offers ['std_error'], $lang_offers ['std_smell_rat'] );
 }
@@ -1186,8 +1186,8 @@ if ($_GET ["offer_vote"]) {
 	$offer_vote = 0 + $_GET ["offer_vote"];
 	if ($offer_vote != '1')
 		stderr ( $lang_offers ['std_error'], $lang_offers ['std_smell_rat'] );
-	
-	$offerid = 0 + htmlspecialchars ( $_GET [id] );
+
+    $offerid = (int)htmlspecialchars($_GET ["id"]);
 	
 	$res2 = sql_query ( "SELECT COUNT(*) FROM offervotes WHERE offerid = " . sqlesc ( $offerid ) ) or sqlerr ( __FILE__, __LINE__ );
 	$row = mysql_fetch_array ( $res2 );
@@ -1229,7 +1229,7 @@ if ($_GET ["offer_vote"]) {
 
 // === offer votes
 if ($_GET ["vote"]) {
-	$offerid = 0 + htmlspecialchars ( $_GET ["id"] );
+    $offerid = (int)htmlspecialchars($_GET ["id"]);
 	$vote = htmlspecialchars ( $_GET ["vote"] );
 	if ($vote == 'against' && get_user_class () < $againstoffer_class)
 		stderr ( $lang_offers ['std_error'], $lang_offers ['std_smell_rat'] );
@@ -1359,7 +1359,7 @@ if ($_GET ["sort"]) {
 $categ = 0 + $_GET ["category"];
 
 if ($_GET ["offerorid"]) {
-	$offerorid = 0 + htmlspecialchars ( $_GET ["offerorid"] );
+    $offerorid = (int)htmlspecialchars($_GET ["offerorid"]);
 	if (preg_match ( "/^[0-9]+$/", ! $offerorid ))
 		stderr ( $lang_offers ['std_error'], $lang_offers ['std_smell_rat'] );
 }
