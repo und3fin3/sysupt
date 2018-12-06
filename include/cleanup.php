@@ -995,9 +995,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	 */
 	
 	// 17.update total seeding and leeching time of users
-	// Consider MySQL pressure, this SQL query just works for users who access site near 15 days.
-	// Of course it should be revert after hardware upgrade.
-	$res = sql_query ( "SELECT id FROM users WHERE DATE_SUB(CURDATE(), INTERVAL 15 DAY) <= DATE(last_access)" ) or sqlerr ( __FILE__, __LINE__ );
+	$res = sql_query ( "SELECT id FROM users" ) or sqlerr ( __FILE__, __LINE__ );
 	while ( $arr = mysql_fetch_assoc ( $res ) ) {
 		$res2 = sql_query ( "SELECT SUM(seedtime) as st, SUM(leechtime) as lt FROM snatched where userid = " . $arr ['id'] . " LIMIT 1" ) or sqlerr ( __FILE__, __LINE__ );
 		$arr2 = mysql_fetch_assoc ( $res2 ) or sqlerr ( __FILE__, __LINE__ );
