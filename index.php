@@ -340,6 +340,8 @@ if ($CURUSER && $showpolls_main == "yes") {
 				print ("<table class=\"main\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n") ;
 				$Cache->end_whole_row ();
                 for ($i = 0; $i < count($os); $i++) {
+                    if ($os[$i] === "")
+                        continue;
 					if ($tvotes == 0)
 						$p = 0;
 					else
@@ -377,6 +379,8 @@ if ($CURUSER && $showpolls_main == "yes") {
 		{
 			print ("<form method=\"post\" action=\"index.php\">\n") ;
             for ($i = 0; $i < count($o); $i++) {
+                if ($o[$i] === "")
+                    continue;
                 print ("<input type=\"radio\" name=\"choice\" value=\"" . $i . "\">" . $o[$i] . "<br />\n");
             }
 			print ("<br />") ;
