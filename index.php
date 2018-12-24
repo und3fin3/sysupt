@@ -306,7 +306,7 @@ if ($CURUSER && $showpolls_main == "yes") {
 			$Cache->new_page ( 'current_poll_result', 3652, true );
 			if (! $Cache->get_page ()) {
 				// we reserve 255 for blank vote.
-				$res = sql_query ( "SELECT selection FROM pollanswers WHERE pollid=" . sqlesc ( $pollid ) . " AND selection < 20" ) or sqlerr ();
+				$res = sql_query ( "SELECT selection FROM pollanswers WHERE pollid=" . sqlesc ( $pollid ) . " AND selection < 50" ) or sqlerr ();
 
 				$tvotes = mysql_num_rows ( $res );
 
@@ -339,21 +339,19 @@ if ($CURUSER && $showpolls_main == "yes") {
 				$Cache->add_whole_row ();
 				print ("<table class=\"main\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n") ;
 				$Cache->end_whole_row ();
-				$i = 0;
-				while ( $a = $os [$i] ) {
+                for ($i = 0; $i < count($os); $i++) {
 					if ($tvotes == 0)
 						$p = 0;
 					else
-						$p = round ( $a [0] / $tvotes * 100 );
+						$p = round ( $os [$i] [0] / $tvotes * 100 );
 					$Cache->add_row ();
 					$Cache->add_part ();
-					print ("<tr><td width=\"1%\" class=\"embedded nowrap\">" . $a [1] . "&nbsp;&nbsp;</td><td width=\"99%\" class=\"embedded nowrap\"><img class=\"bar_end\" src=\"pic/trans.gif\" alt=\"\" /><img ") ;
+					print ("<tr><td width=\"1%\" class=\"embedded nowrap\">" . $os [$i] [1] . "&nbsp;&nbsp;</td><td width=\"99%\" class=\"embedded nowrap\"><img class=\"bar_end\" src=\"pic/trans.gif\" alt=\"\" /><img ") ;
 					$Cache->end_part ();
 					$Cache->add_part ();
 					print (" src=\"pic/trans.gif\" style=\"width: " . ($p * 3) . "px;\" alt=\"\" /><img class=\"bar_end\" src=\"pic/trans.gif\" alt=\"\" /> $p%</td></tr>\n") ;
 					$Cache->end_part ();
 					$Cache->end_row ();
-					++ $i;
 				}
 				$Cache->break_loop ();
 				$Cache->add_whole_row ();
@@ -378,11 +376,9 @@ if ($CURUSER && $showpolls_main == "yes") {
 		} else 		// user has not voted yet
 		{
 			print ("<form method=\"post\" action=\"index.php\">\n") ;
-			$i = 0;
-			while ( $a = $o [$i] ) {
-				print ("<input type=\"radio\" name=\"choice\" value=\"" . $i . "\">" . $a . "<br />\n") ;
-				++ $i;
-			}
+            for ($i = 0; $i < count($o); $i++) {
+                print ("<input type=\"radio\" name=\"choice\" value=\"" . $i . "\">" . $o[$i] . "<br />\n");
+            }
 			print ("<br />") ;
 			print ("<input type=\"radio\" name=\"choice\" value=\"255\">" . $lang_index ['radio_blank_vote'] . "<br />\n") ;
 			print ("<p align=\"center\"><input type=\"submit\" class=\"btn\" value=\"" . $lang_index ['submit_vote'] . "\" /></p>") ;

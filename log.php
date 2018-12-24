@@ -655,7 +655,7 @@ else {
 				
 				print ("<p align=center><b>" . $poll ["question"] . "</b></p>") ;
 				
-				$pollanswers = sql_query ( "SELECT selection FROM pollanswers WHERE pollid=" . $poll ["id"] . " AND  selection < 20" ) or sqlerr ();
+				$pollanswers = sql_query ( "SELECT selection FROM pollanswers WHERE pollid=" . $poll ["id"] . " AND  selection < 50" ) or sqlerr ();
 				
 				$tvotes = mysql_num_rows ( $pollanswers );
 				
