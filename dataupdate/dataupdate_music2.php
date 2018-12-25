@@ -46,13 +46,13 @@ while($arr = mysql_fetch_assoc($res)){
 		
 		$sql = "";
 		if($language!="")
-			$sql = "language = '".mysql_escape_string($language)."'";
+			$sql = "language = ".sqlesc($language);
 		//print($i."   ");
 		//print($arr[id]."  ");
 		//print("SQL：".$sql);
 		
 		/*$hqtone = "无损";
-		$sql = "hqtone = '".mysql_escape_string($hqtone)."'";*/
+		$sql = "hqtone = ".sqlesc($hqtone);*/
 		if($sql!="")
 			sql_query("UPDATE torrentsinfo SET " . $sql . " WHERE torid = $arr[id]") or sqlerr(__FILE__, __LINE__);
 		

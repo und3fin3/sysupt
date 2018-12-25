@@ -12,6 +12,7 @@ loggedinorreturn ();
 parked ();
 function check_comment_type($type) {
 	if ($type != "torrent" && $type != "request" && $type != "offer")
+        global $lang_comment;
 		stderr ( $lang_comment ['std_error'], $lang_comment ['std_error'] );
 }
 
@@ -297,4 +298,3 @@ if ($action == "add") {
 	stderr ( $lang_comment ['std_error'], $lang_comment ['std_unknown_action'] );
 
 die ();
-?>

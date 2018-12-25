@@ -65,7 +65,7 @@ if (ob_get_level() == 0) ob_start();
 				$name1 = $secondname;
 				
 			//if($specificcat!="" && strstr($arr1["specificcat"], '?'))
-				//$sql = "specificcat = '".mysql_escape_string($specificcat)."'";
+				//$sql = "specificcat = ".sqlesc($specificcat);
 						
 			if($arr1['cname']!=""){				
 				$cname = substr($name1 ,1,strpos($name1,"]")-1);
@@ -100,13 +100,13 @@ if (ob_get_level() == 0) ob_start();
 			}
 			
 			if($cname!="" && strstr($arr1["cname"], '?'))
-				$updateinfoset[] = "cname = '".mysql_escape_string($cname)."'";	
+				$updateinfoset[] = "cname = ".sqlesc($cname);
 			if($language!="" && strstr($arr1["language"], '?'))
-				$updateinfoset[] = "language = '".mysql_escape_string($language)."'";
+				$updateinfoset[] = "language = ".sqlesc($language);
 			if($format!="" && strstr($arr1["format"], '?'))
-				$updateinfoset[] = "format = '".mysql_escape_string($format)."'";	
+				$updateinfoset[] = "format = ".sqlesc($format);
 			if($tvshowsremarks!="" && strstr($arr1["tvshowsremarks"], '?'))
-				$updateinfoset[] = "tvshowsremarks = '".mysql_escape_string($tvshowsremarks)."'";
+				$updateinfoset[] = "tvshowsremarks = ".sqlesc($tvshowsremarks);
 			$sql=join(",",$updateinfoset);
 				
 			if($sql!=""){

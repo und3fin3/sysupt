@@ -16,7 +16,7 @@ function invite($email)
 	global $BASEURL;
 	global $SITEEMAIL;
 	global $lang_takeinvite;
-$id = $CURUSER[id];
+$id = $CURUSER['id'];
 $email = unesc(htmlspecialchars(trim($email)));
 $email = safe_email($email);
 if (!$email)
@@ -57,11 +57,13 @@ $hash  = md5(mt_rand(1,10000).$CURUSER['username'].TIMENOW.$CURUSER['passhash'])
 
 $title = $SITENAME.$lang_takeinvite['mail_tilte'];
 
+global $invite_timeout;
+
 $message = <<<EOD
-{$lang_takeinvite['mail_one']}{$arr[username]}{$lang_takeinvite['mail_two']}
+{$lang_takeinvite['mail_one']}{$arr['username']}{$lang_takeinvite['mail_two']}
 <b><a href="https://$BASEURL/signup.php?type=invite&invitenumber=$hash" target="_blank">{$lang_takeinvite['mail_here']}</a></b><br />
 https://$BASEURL/signup.php?type=invite&invitenumber=$hash
-<br />{$lang_takeinvite['mail_three']}$invite_timeout{$lang_takeinvite['mail_four']}{$arr[username]}{$lang_takeinvite['mail_five']}<br />
+<br />{$lang_takeinvite['mail_three']}$invite_timeout{$lang_takeinvite['mail_four']}{$arr['username']}{$lang_takeinvite['mail_five']}<br />
 $body
 <br /><br />{$lang_takeinvite['mail_six']}
 EOD;
@@ -77,21 +79,21 @@ stdhead();
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
 	if ($_POST['setdealt']){
-$res = sql_query ("SELECT Id FROM invitebox WHERE dealt_by='no' AND Id IN (" . implode(", ", $_POST[invitebox]) . ")");
+$res = sql_query ("SELECT Id FROM invitebox WHERE dealt_by='no' AND Id IN (" . implode(", ", $_POST['invitebox']) . ")");
 while ($arr = mysql_fetch_assoc($res))
-	sql_query ("UPDATE invitebox SET dealt_by = '忽略-".$CURUSER[username]."' WHERE Id = $arr[Id]") or sqlerr();
+	sql_query ("UPDATE invitebox SET dealt_by = '忽略-".$CURUSER['username']."' WHERE Id = $arr[Id]") or sqlerr();
 }
 elseif ($_POST['delete']){
-$res = sql_query ("SELECT * FROM invitebox WHERE Id IN (" . implode(", ", $_POST[invitebox]) . ")");
+$res = sql_query ("SELECT * FROM invitebox WHERE Id IN (" . implode(", ", $_POST['invitebox']) . ")");
 while ($arr = mysql_fetch_assoc($res)){
 	$file=str_replace("%20", " ","$arr[pic]");
 	unlink("$file");
 sql_query ("DELETE from invitebox WHERE Id = $arr[Id]") or sqlerr();}}
 elseif ($_POST['invite']){
-	$res = sql_query ("SELECT * FROM invitebox WHERE dealt_by='no' AND Id IN (" . implode(", ", $_POST[invitebox]) . ")");
+	$res = sql_query ("SELECT * FROM invitebox WHERE dealt_by='no' AND Id IN (" . implode(", ", $_POST['invitebox']) . ")");
 	while ($arr = mysql_fetch_assoc($res)){
 	if ($arr ['dealt_by']=='no'){
-	sql_query ("UPDATE invitebox SET dealt_by = '邀请-".$CURUSER[username]."' WHERE Id = $arr[Id]") or sqlerr();
+	sql_query ("UPDATE invitebox SET dealt_by = '邀请-".$CURUSER['username']."' WHERE Id = $arr[Id]") or sqlerr();
 	$email=$arr['email'];
 	$email0 = unesc(htmlspecialchars(trim($email)));
 	invite($email0);
@@ -126,18 +128,18 @@ elseif ($_POST['invite']){
 $res=sql_query("SELECT * FROM invitebox ORDER BY id desc $limit");
 while($row=mysql_fetch_assoc($res))
 {
-	$Id=$row[Id];
-	$ip=$row[ip].school_ip_location($row[ip]);
-	$username=$row[username];
-	$email=$row[email];
-	$school=$row[school];
-	$grade=$row[grade];
-	$web=$row[web];
-	$disk=$row[disk];
-	$self_introduction=$row[self_introduction];
-	$added=$row[added];
-	$pic=$row[pic];
-	$dealt_by=$row[dealt_by];
+	$Id=$row['Id'];
+	$ip=$row['ip'].school_ip_location($row['ip']);
+	$username=$row['username'];
+	$email=$row['email'];
+	$school=$row['school'];
+	$grade=$row['grade'];
+	$web=$row['web'];
+	$disk=$row['disk'];
+	$self_introduction=$row['self_introduction'];
+	$added=$row['added'];
+	$pic=$row['pic'];
+	$dealt_by=$row['dealt_by'];
 print("<tr>
 	<td class=\"rowfollow\" align=\"center\">$username</td>
 	<td class=\"rowfollow\">$ip</td>

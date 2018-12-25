@@ -283,8 +283,8 @@ class imdb extends imdb_config {
    * @constructor imdb
    * @param string id
    */
-  function imdb ($id) {
-   $this->imdb_config();
+  function __construct($id) {
+   imdb_config::__construct();
    $this->setid($id);
    //if ($this->storecache && ($this->cache_expire > 0)) $this->purge();
   }
@@ -393,7 +393,7 @@ class imdb extends imdb_config {
      $this->openpage ("Title");
     }
 
-    $this->main_year = $this->dbinfo[year][0];
+    $this->main_year = $this->dbinfo['year'][0];
    }
    return $this->main_year;
   }
@@ -407,7 +407,7 @@ class imdb extends imdb_config {
     if ($this->page["Title"] == "") {
      $this->openpage ("Title");
     }
-    $this->main_transname = $this->dbinfo[transname];
+    $this->main_transname = $this->dbinfo['transname'];
    }
    return $this->main_transname;
   }
@@ -422,7 +422,7 @@ class imdb extends imdb_config {
     if ($this->page["Title"] == "") {
 	$this->openpage ("Title");
     }
-    $this->main_runtime =  str_replace("分钟"," min",$this->dbinfo[movie_duration][0]);
+    $this->main_runtime =  str_replace("分钟"," min",$this->dbinfo['movie_duration'][0]);
 	}
     return $this->main_runtime;
   }
@@ -496,7 +496,7 @@ class imdb extends imdb_config {
 //    if (strpos ($this->page["Title"], "awaiting 5 votes")) return false;
 //    $rate_s = strpos ($this->page["Title"], "<b>", $rate_s);
 //    $rate_e = strpos ($this->page["Title"], "/", $rate_s);
-    $this->main_rating = "<a href=\"".$this->dbinfo[link][alternate]."collections\" target=\"_blank\">".$this->dbinfo[rating]."</a>";
+    $this->main_rating = "<a href=\"".$this->dbinfo['link']['alternate']."collections\" target=\"_blank\">".$this->dbinfo['rating']."</a>";
 //    if ($rate_e - $rate_s > 7) $this->main_rating = "";
     return $this->main_rating;
    }
@@ -540,7 +540,7 @@ class imdb extends imdb_config {
     preg_match('/href=\"ratings\".*>([0-9,][0-9,]*)/', $this->page["Title"], $matches);
     $this->main_votes = $matches[1];*/
 //    $this->main_votes = /*"<a href=\"http://".$this->imdbsite."/title/tt".$this->imdbID."/ratings\">" . */$this->dbinfo[votes] /*. "</a>"*/;
-	$this->main_votes ="<a href=\"".$this->dbinfo[link][alternate]."collections\" target=\"_blank\">".$this->dbinfo[votes]."</a>";
+	$this->main_votes ="<a href=\"".$this->dbinfo['link']['alternate']."collections\" target=\"_blank\">".$this->dbinfo['votes']."</a>";
    }
    return $this->main_votes;
   }
@@ -867,7 +867,7 @@ class imdb extends imdb_config {
 	
 	}
 	*/
-	$this->credits_director[] = array("name" => $this->dbinfo[director][0] );
+	$this->credits_director[] = array("name" => $this->dbinfo['director'][0] );
 	return $this->credits_director;
   }
 
@@ -1021,7 +1021,7 @@ class imdb extends imdb_config {
     $this->main_photo = substr ($this->page["Title"], $tag_s, $tag_e - $tag_s);
     if ($tag_s == 0) return FALSE;
 	*/
-	$this->main_photo=$this->dbinfo[link][image];
+	$this->main_photo=$this->dbinfo['link']['image'];
    }
    return $this->main_photo;
   }
@@ -1077,7 +1077,7 @@ class imdb extends imdb_config {
    {
     if ($this->page["Title"] == "") $this->openpage ("Title");
     $this->main_country = array();
-	$this->main_country=$this->dbinfo[country];
+	$this->main_country=$this->dbinfo['country'];
 	/*
     $country_s = strpos($this->page["Title"],"/Sections/Countries/") -5;
     if ($country_s === FALSE) return array(); // no country found
@@ -1236,8 +1236,8 @@ class imdb extends imdb_config {
   /** Read the config
    * @constructor imdbsearch
    */
-  function imdbsearch() {
-    $this->imdb_config();
+  function __construct() {
+    imdb_config::__construct();
   }
 
   /** Set the name (title) to search for
@@ -1330,5 +1330,3 @@ class imdb extends imdb_config {
    return $this->resu;
   }
 } // end class imdbsearch
-
-?>

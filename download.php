@@ -77,7 +77,7 @@ require_once "include/benc.php";
 
 if (strlen($CURUSER['passkey']) != 32) {
     $CURUSER['passkey'] = md5($CURUSER['username'] . date("Y-m-d H:i:s") . $CURUSER['passhash']);
-    sql_query("UPDATE users SET passkey=" . sqlesc($CURUSER[passkey]) . " WHERE id=" . sqlesc($CURUSER[id]));
+    sql_query("UPDATE users SET passkey=" . sqlesc($CURUSER['passkey']) . " WHERE id=" . sqlesc($CURUSER['id']));
 }
 
 $dict = bdec_file($fn, $max_torrent_size);
@@ -132,4 +132,3 @@ if (str_replace("Gecko", "", $_SERVER['HTTP_USER_AGENT']) != $_SERVER['HTTP_USER
 //ob_implicit_flush(true);
 //$dict = preg_replace('/^%EF%BB%BF/', '', $dict);
 print(benc($dict));
-?>

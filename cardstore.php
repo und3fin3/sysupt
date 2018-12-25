@@ -13,7 +13,7 @@ function sendmessage($subject,$msg,$receiver,$sender)
 {
 	global $CURUSER;
 	if (!isset($sender))
-	$sender=$CURUSER[id];
+	$sender=$CURUSER['id'];
 	$subject=sqlesc($subject);
 	$msg = sqlesc($msg);
 	$added = sqlesc(date("Y-m-d H:i:s"));
@@ -32,12 +32,12 @@ function buycards($type,$value,$price,$torrentid=0)
 	$bonuscomment = date("Y-m-d") . " - 花费 $price 魔力值购买了一张道具卡。\n " .$bonuscomment;
 	$sellprice=0.6*$price;
 	$type=sqlesc($type);
-	if ($CURUSER[seedbonus]<$price)
+	if ($CURUSER['seedbonus']<$price)
 	stderr('抱歉', '您的魔力值不足。', true, false, true, true);
 	sql_query("update users set seedbonus = seedbonus - $price, bonuscomment = ".sqlesc($bonuscomment)." where id = $CURUSER[id]") or sqlerr(__FILE__,__LINE__);
 	sql_query("INSERT INTO bonuscards (userid, type, value, price, torrentid) VALUES( $CURUSER[id] , $type , $value , $sellprice , $torrentid )") or sqlerr(__FILE__, __LINE__);
 	$price=(int)$price;
-	card_log("用户".$CURUSER[username]."(".$CURUSER[id].")购买了一张原价为".$price."的道具卡。");
+	card_log("用户".$CURUSER['username']."(".$CURUSER['id'].")购买了一张原价为".$price."的道具卡。");
 	stderr('成功', '成功购买了价值'.$price.'的道具卡，赶快去<a href=bonusapps.php class=faqlink>使用</a>吧！', false, false, true, false);
 	}
 $action = htmlspecialchars($_GET['action']);
@@ -91,11 +91,11 @@ if (!$action) {
 <?php
 }
 if ($action == "exchange") {
-if ($_POST[buy])
+if ($_POST['buy'])
 {
-	$type=$_POST[type];
-	$value=$_POST[value];
-	$torrentid=$_POST[torrentid];
+	$type=$_POST['type'];
+	$value=$_POST['value'];
+	$torrentid=$_POST['torrentid'];
 	$allowedtypes=array('free','upload','download','invite','tool');
 	if (!in_array($type, $allowedtypes))
 	stderr('错误', '没有这类道具卡。', true, false, true, true);
@@ -110,7 +110,7 @@ if ($_POST[buy])
 	$row=mysql_fetch_array($res);
 	if (!$row)
 	stderr('错误', '找不到id为'.$torrentid.'的种子。', true, false, true, true);
-	$size=$row[size];
+	$size=$row['size'];
 	$sizegb=$size/(1024*1024*1024);
 	if ($value==2||$value==3)
 	$pricepergb=1000;
@@ -154,7 +154,7 @@ if ($_POST[buy])
 	$price=10000*$value;
 	break;
 	
-	case tool:
+	case 'tool':
 	stderr('错误', '没有这类道具卡。', true, false, true, true);
 	break;
 	}

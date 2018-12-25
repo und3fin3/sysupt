@@ -185,4 +185,3 @@ switch ($format) {
 		break;
 }
 imagedestroy ( $my_img );
-?>

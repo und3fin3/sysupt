@@ -85,5 +85,3 @@ if($_GET['queryclass'])
 	}
 
 }
-
-?>

@@ -17,16 +17,16 @@ function tr_select($x,$y,$z,$star=""){
 	if($z==0){
 		$show .= "<select name=$y ><option value=\"0\">".$hint."</option>";
 		while($row = mysql_fetch_array($listarray)){
-			$show .= "<option value=\"$row[id]\">".$row[name]."</option>";
+			$show .= "<option value=\"$row[id]\">".$row['name']."</option>";
 		}
 	}
 	else{
 		$show .="<select name=$y >";
 		while($row = mysql_fetch_array($listarray)){
-			if($row[id]==$z)
-				$show .= "<option value=".$row[id]." selected=\"selected\">".$row[name]."</option>";
+			if($row['id']==$z)
+				$show .= "<option value=".$row['id']." selected=\"selected\">".$row['name']."</option>";
 			else
-				$show .= "<option value=".$row[id].">".$row[name]."</option>";
+				$show .= "<option value=".$row['id'].">".$row['name']."</option>";
 		}
 	}
 
@@ -248,6 +248,3 @@ elseif($catid == "412"){
 	tr_textcheckbox("制作国家/地区","district","districtmovie",$district,$star);	
 	
 }
-
-
-?>

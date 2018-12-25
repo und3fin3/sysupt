@@ -5,34 +5,27 @@ loggedinorreturn();
 
 if (!$_POST['action'])
 {
-	stdhead();
-	stdmsg("信息不完整","重要数据丢失，请稍后重试。".(isset($_POST['torrentid'])?"<a href=\"details.php?id=".$_POST['torrentid']."&hit=1\">点击这里返回种子介绍页</a>":""));
-	stdfoot();
-	die;
+	stderr("信息不完整","重要数据丢失，请稍后重试。".(isset($_POST['torrentid'])?"<a href=\"details.php?id=".$_POST['torrentid']."&hit=1\">点击这里返回种子介绍页</a>":""));
 }
 
 if (!in_array($_POST['action'],array("needseed","unneedseed","idontwantkeepseed","iwantkeepseed")))
 {
-	stdhead();
-	stdmsg("出错了！！！","不要试图构造不存在的选项");
-	stdfoot();
-	die;
+	stderr("出错了！！！","不要试图构造不存在的选项");
 }
-stdhead();
 
 if(!$_POST['torrentid'])
 {
-	stdmsg("出错了！！！","丢失种子id。");
-	break;
+	stderr("出错了！！！","丢失种子id。");
 }
 
 $res=sql_query("SELECT * FROM torrents WHERE id =".$_POST['torrentid']);
 if(!mysql_affected_rows())
-{	
-	stdmsg("出错了！","种子不存在。");
-	break;
+{
+	stderr("出错了！","种子不存在。");
 }
 else $arr=mysql_fetch_assoc($res);
+
+stdhead();
 
 switch ($_POST['action'])
 	{
@@ -109,7 +102,7 @@ switch ($_POST['action'])
 				}
 				else 
 				{
-					sql_query("INSERT INTO keepseed	(userid , torrentid) VALUES ( '".$CURUSER[id]."' , '".$_POST['torrentid']."')") or sqlerr(__FILE__, __LINE__);
+					sql_query("INSERT INTO keepseed	(userid , torrentid) VALUES ( '".$CURUSER['id']."' , '".$_POST['torrentid']."')") or sqlerr(__FILE__, __LINE__);
 					sql_query("UPDATE torrents SET seedkeeper = seedkeeper + 1 WHERE id = '".$_POST['torrentid']."'") or sqlerr(__FILE__, __LINE__);
 					stdmsg("成功！","你已成功对该资源设置了保种。<a href=\"details.php?id=".$_POST['torrentid']."&hit=1\">点击这里返回种子介绍页</a>");
 					break;					
@@ -120,7 +113,7 @@ switch ($_POST['action'])
 			{	
 				stdmsg("出错了！","你已经对该资源设置过保种了。<a href=\"details.php?id=".$_POST['torrentid']."&hit=1\">点击这里返回种子介绍页</a>");
 				break;
-			};
+			}
 			break;
 		}
 	}

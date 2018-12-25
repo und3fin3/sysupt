@@ -6,7 +6,7 @@ loggedinorreturn();
 parked();
 global $CURUSER;
 //if (get_user_class() < UC_SYSOP)//class:15
-if(get_user_class()<14&&$CURUSER[jc_manager]!='yes')
+if(get_user_class()<14&&$CURUSER['jc_manager']!='yes')
 permissiondenied();
 
 //$handle = mysql_connect("localhost","byr","byr123");
@@ -82,7 +82,7 @@ function paging($pagesize,$action)
     if($action =='answer_manage')
         $sql = "SELECT * FROM jc_subjects WHERE state=3";
     if($action == 'check_manage')
-        $sql="SELECT * FROM jc_subjects WHERE `state` = \"1\"";
+        $sql="SELECT * FROM jc_subjects WHERE `state` = 1";
 
     $res = sql_query($sql);
     $amount = mysql_num_rows($res);
@@ -102,7 +102,7 @@ function paging($pagesize,$action)
         exit();
     }
     if($page==1 && $page_count!=1)
-        $page_string= "<table style='border:0px'>"
+        $page_string= "<table style='border:0'>"
             ."<tr>".$lang_manage['current_page'].$page.$lang_manage['total_page'].$page_count."</tr>"
             ."<tr><td><form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='submit' name='pageup' value='{$lang_manage['pageup']}' disabled/></form></td>"    
             ."<td><form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='submit' name='firstpage' value='{$lang_manage['first']}' disabled/></form></td>" 
@@ -113,7 +113,7 @@ function paging($pagesize,$action)
             ."</table>";       
 
     else if($page==$page_count && $page_count!=1)
-        $page_string= "<table style='border:0px'>"
+        $page_string= "<table style='border:0'>"
             ."<tr>".$lang_manage['current_page'].$page.$lang_manage['total_page'].$page_count."</tr>"
             ."<tr><td><form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='hidden' name='page' value='".($page-1)."'/>
             <input type='hidden' name='action' value='$action'/><input type='submit' name='pageup' value='{$lang_manage['pageup']}'></form></td>"    
@@ -124,7 +124,7 @@ function paging($pagesize,$action)
             ."</table>";        
 
     else if($page==$page_count && $page_count==1)
-        $page_string= "<table style='border:0px'>"
+        $page_string= "<table style='border:0'>"
             ."<tr>".$lang_manage['current_page'].$page.$lang_manage['total_page'].$page_count."</tr>"
             ."<tr><td><form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='submit' name='pageup' value='{$lang_manage['pageup']}' disabled/></form></td>"    
             ."<td><form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='submit' name='firstpage' value='{$lang_manage['first']}' disabled/></form></td>" 
@@ -134,7 +134,7 @@ function paging($pagesize,$action)
 
 
     else
-        $page_string= "<table style='border:0px'>"
+        $page_string= "<table style='border:0'>"
             ."<tr>".$lang_manage['current_page'].$page.$lang_manage['total_page'].$page_count."</tr>"
             ."<tr><td><form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='hidden' name='page' value='".($page-1)."'/>
             <input type='hidden' name='action' value='$action'/><input type='submit' name='pageup' value='{$lang_manage['pageup']}'></form></td>"    
@@ -158,14 +158,14 @@ function subjecttable($pagesize)
     //The head of subject table
     print "<table class=\"torrents\" cellspacing=\"0\" cellpadding=\"5\" width=\"100%\">";
     print "<tr height=\"40px\">";
-    print "<td class=\"colhead\" style=\"padding: 0px\" >".$lang_manage['jc_type']."</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\" >".$lang_manage['creater_name']."</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['jc_subject']."</td>";
-    //print "<td class=\"colhead\" style=\"padding: 0px\">Start Time</td>";
-    //print "<td class=\"colhead\" style=\"padding: 0px\">End Time</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['state_sub']."</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['delete_sub']."</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['edit_sub']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\" >".$lang_manage['jc_type']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\" >".$lang_manage['creater_name']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['jc_subject']."</td>";
+    //print "<td class=\"colhead\" style=\"padding: 0\">Start Time</td>";
+    //print "<td class=\"colhead\" style=\"padding: 0\">End Time</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['state_sub']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['delete_sub']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['edit_sub']."</td>";
     print "</tr>";
 
     $res="SELECT * FROM jc_subjects ORDER BY state LIMIT ".($currentpage-1)*$pagesize.",$pagesize";
@@ -190,11 +190,11 @@ function subjecttable($pagesize)
         print($row["subject"]);
         print("</td>\n");
 
-        // print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>");
+        // print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0'>");
         // print($row["start"]);
         // print("</td>\n");
 
-        // print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>");
+        // print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0'>");
         //print($row["end"]);
         // print("</td>\n");
 
@@ -222,10 +222,10 @@ function answertable($pagesize)
     //The head of subject table
     print "<table class=\"torrents\" cellspacing=\"0\" cellpadding=\"5\" width=\"100%\">";
     print "<tr height=\"40px\">";
-    print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['jc_type']."</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['creater_name']."</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['jc_subject']."</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['answer_setting']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['jc_type']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['creater_name']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['jc_subject']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['answer_setting']."</td>";
     print "</tr>";
 
     $res="SELECT * FROM jc_subjects WHERE state=3 ORDER BY id  LIMIT ".($currentpage-1)*$pagesize.",$pagesize";
@@ -235,19 +235,19 @@ function answertable($pagesize)
 
         print("<tr height=\"40px\">");
 
-        print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>");
+        print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0'>");
         print(return_type_image($row["type"]));
         print("</td>\n");
 
-        print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>");
+        print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0'>");
         print($row["creater_name"]);
         print("</td>\n");
 
-        print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>");
+        print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0'>");
         print($row["subject"]);
         print("</td>\n");
 
-        print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>");
+        print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0'>");
         print("<form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='hidden' name='action' value='answer_save'><input type='hidden' name='answer_sub_id' value='$row[id]'><input type='submit' value='{$lang_manage['answer_setting']}'></form>");
         print("</td>\n");
 
@@ -277,14 +277,14 @@ function distributebonus($subject_total,$option_total,$subject_id,$option_id)
             sql_query("UPDATE jc_record SET yin_kui=".sqlesc($profit).", state=2 WHERE subject_id=".sqlesc($subject_id)." AND user_id=".sqlesc($row['user_id']));
             sql_query("UPDATE users SET seedbonus=seedbonus+".sqlesc($add)."  WHERE id='".sqlesc($row['user_id'])."'");
             sql_query("UPDATE users SET seedbonus=seedbonus+".sqlesc($discount)." WHERE `id` = 24314");
-            $msg = $lang_manage['congratulation'].$lang_manage['you']."[url=jc_details.php?subid=".$subrow[id]."]".$subrow['subject']."[/url]".$lang_manage['get'].$profit;
+            $msg = $lang_manage['congratulation'].$lang_manage['you']."[url=jc_details.php?subid=".$subrow['id']."]".$subrow['subject']."[/url]".$lang_manage['get'].$profit;
             // print $msg;
             sql_query("INSERT INTO messages(sender,receiver,added,subject,msg) VALUES ('0',".sqlesc($row['user_id']).",".sqlesc($current_time).",".sqlesc($lang_manage['pm_subject']).",".sqlesc($msg).")");
         }
         else
         { 
             sql_query("UPDATE jc_record SET state=1 WHERE subject_id=".sqlesc($subject_id)." AND user_id=".sqlesc($row['user_id']));
-            $msg = $lang_manage['pity'].$lang_manage['you']."[url=jc_details.php?subid=".$subrow[id]."]".$subrow['subject']."[/url]".$lang_manage['lose'].abs($row['yin_kui']);
+            $msg = $lang_manage['pity'].$lang_manage['you']."[url=jc_details.php?subid=".$subrow['id']."]".$subrow['subject']."[/url]".$lang_manage['lose'].abs($row['yin_kui']);
             // print $msg;
             sql_query("INSERT INTO messages(sender,receiver,added,subject,msg) VALUES ('0',".sqlesc($row['user_id']).",".sqlesc($current_time).",".sqlesc($lang_manage['pm_subject']).",".sqlesc($msg).")"); 
         }
@@ -297,7 +297,7 @@ function bark($msg)
 {
     global $lang_manage;
     stdhead ();
-    jc_usercpmenu(manage);
+    jc_usercpmenu('manage');
     stdmsg ($lang_manage['new_sub_failed'], $msg );
     stdfoot ();
     exit ();
@@ -350,7 +350,7 @@ if (!in_array($action, $allowed_actions))
         <font color=\"white\">".$lang_manage['mainmenu_explain']."</font></td></tr>";
 
     stdhead("竞猜管理");
-    jc_usercpmenu(manage);
+    jc_usercpmenu('manage');
     print ($notice);
     tr($lang_manage['jc_manage'], "<form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='hidden' name='action' value='subject_manage'><input type='submit' value=\"".$lang_manage['jc_manage_begin']."\"> ".$lang_manage['jc_manage_explain']."</form>", 1);
     tr($lang_manage['set_answer'], "<form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='hidden' name='action' value='answer_manage'><input type='submit' value=\"".$lang_manage['set_answer']."\"> ".$lang_manage['set_answer_explain']."</form>", 1);
@@ -361,7 +361,7 @@ if (!in_array($action, $allowed_actions))
 if ($action == 'subject_manage')
 {
     stdhead("竞猜管理");
-    jc_usercpmenu(manage);
+    jc_usercpmenu('manage');
 
     subjecttable(20);
 }
@@ -369,7 +369,7 @@ if ($action == 'subject_manage')
 if($action == 'answer_manage')
 {
     stdhead("竞猜管理");
-    jc_usercpmenu(manage);
+    jc_usercpmenu('manage');
     answertable(10);
     
 }
@@ -395,7 +395,7 @@ if($action == 'answer_save')
         $current_time = "$mydate[year]-$mydate[mon]-$mydate[mday] $mydate[hours]:$mydate[minutes]:$mydate[seconds]";
         sql_query("INSERT INTO messages(sender,receiver,added,subject,msg) VALUES ('0','{$row_n['creater_id']}',".sqlesc($current_time).",".sqlesc($lang_manage['thanks']).",".sqlesc($msg).")");
         stdhead("竞猜管理");
-        jc_usercpmenu(manage);
+        jc_usercpmenu('manage');
         stdmsg($lang_manage['answersave_finish'],$lang_manage['click']."<a class=\"altlink\" href=\"jc_manage.php\">".$lang_manage['here']."</a>".$lang_manage['backto_menu']);
     }
 
@@ -406,7 +406,7 @@ if($action == 'answer_save')
         $row = mysql_fetch_array(sql_query("SELECT * FROM jc_subjects WHERE id='$answer_sub_id'"));
         $notice = "<table cellspacing=\"0\" cellpadding=\"15\" width=\"800\"><tr><td colspan=\"2\" style='padding: 10px; background: black' align=\"center\"><font color=\"white\">".$lang_manage['besureof_answer']."</font></td></tr>";
         stdhead("竞猜管理");
-        jc_usercpmenu(manage);
+        jc_usercpmenu('manage');
 
         print "<br><h2>设置答案需谨慎哦！</h2><table cellspacing=\"0\" cellpadding=\"15\" width=\"940\"><form method='post' action='" . $_SERVER ["SCRIPT_NAME"] . "'>";
         print "<input type='hidden' name='action' value='answer_save'>";
@@ -442,7 +442,7 @@ if($action == 'check_manage')
 
     global $lang_manage;
 
-    $res="SELECT * FROM jc_subjects WHERE `state` = \"1\" ORDER BY `type` ,`start` DESC ";//LIMIT ".($currentpage-1)*$pagesize.",$pagesize";
+    $res="SELECT * FROM jc_subjects WHERE `state` = 1 ORDER BY `type` ,`start` DESC ";//LIMIT ".($currentpage-1)*$pagesize.",$pagesize";
     //print "SELECT * FROM jc_subjects ORDER BY state LIMIT ".($currentpage-1)*$pagesize.",$pagesize";
 
     $sql= sql_query($res); 
@@ -450,21 +450,21 @@ if($action == 'check_manage')
        bark($lang_manage['no_data']);
     }else{
     stdhead("竞猜管理");
-    jc_usercpmenu(manage);
+    jc_usercpmenu('manage');
     //$currentpage=paging(10,"check_manage");
     //$pagesize=10;
     //The head of subject table
     print "<table class=\"torrents\" cellspacing=\"0\" cellpadding=\"5\" width=\"100%\">";
     print "<tr height=\"40px\">";
-    print "<td class=\"colhead\" style=\"padding: 0px\" >".$lang_manage['jc_type']."</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\" >".$lang_manage['creater_name']."</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['jc_subject']."</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['start_time']."</td>";
-    //print "<td class=\"colhead\" style=\"padding: 0px\">End Time</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['state_sub']."</td>";
-    //print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['delete_sub']."</td>";
-    //print "<td class=\"colhead\" style=\"padding: 0px\">".$lang_manage['edit_sub']."</td>";
-    print "<td class=\"colhead\" style=\"padding: 0px\">"."操作"."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\" >".$lang_manage['jc_type']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\" >".$lang_manage['creater_name']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['jc_subject']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['start_time']."</td>";
+    //print "<td class=\"colhead\" style=\"padding: 0\">End Time</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['state_sub']."</td>";
+    //print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['delete_sub']."</td>";
+    //print "<td class=\"colhead\" style=\"padding: 0\">".$lang_manage['edit_sub']."</td>";
+    print "<td class=\"colhead\" style=\"padding: 0\">"."操作"."</td>";
     print "</tr>";
     while ($row = mysql_fetch_array($sql))
     {   
@@ -483,11 +483,11 @@ if($action == 'check_manage')
         print("<a href=jc_examin.php?subid=".$row['id'].">".$row["subject"]."</a>");
         print("</td>\n");
 
-        print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>");
+        print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0'>");
         print($row["start"]);
         print("</td>\n");
 
-        // print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>");
+        // print("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0'>");
         //print($row["end"]);
         // print("</td>\n");
 
@@ -525,7 +525,7 @@ if($action == 'add_manage')
         $current_time = "$mydate[year]-$mydate[mon]-$mydate[mday] $mydate[hours]:$mydate[minutes]:$mydate[seconds]";
 
         stdhead("竞猜管理");
-        jc_usercpmenu(manage);
+        jc_usercpmenu('manage');
         print "<form method='post' action='" . $_SERVER ["SCRIPT_NAME"] . "'>";
         print ($notice);
         //tr($lang_manage['creater_id'],"<input type='text' name='creater_id' value='{$CURUSER['id']}'/>".$lang_manage['creater_id_explain'], 1 );
@@ -533,7 +533,7 @@ if($action == 'add_manage')
         //tr($lang_manage['creater_name'],"<input type='text' name='creater_name' value='{$row['username']}'>".$lang_manage['creater_name_explain'],1);
         tr($lang_manage['creater_name'],$CURUSER['username'],1);
         tr($lang_manage['jc_subject'],"<input type='text' style='width:500px' name='subject'/><br />".$lang_manage['jc_subject_explain'],1);
-        tr($lang_manage['jc_description'],"<input type='text'style='width:500px' name='description'/><br />".$lang_manage['jc_description_explain'],1);
+        tr($lang_manage['jc_description'],"<input type='text' style='width:500px' name='description'/><br />".$lang_manage['jc_description_explain'],1);
 
         print "<tr>";
         print "<td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" .$lang_manage['jc_option']. "</td>";
@@ -580,7 +580,7 @@ if($action == 'add_manage')
                 bark('The Option is too long,please try again.');
         }     
         stdhead("竞猜管理");
-        jc_usercpmenu(manage);
+        jc_usercpmenu('manage');
         sql_query("INSERT INTO jc_subjects (state,creater_id,creater_name,subject,description,`type`,`limit`,`start`,`end`,options)  VALUES (4,".sqlesc($CURUSER['id']).",".sqlesc($CURUSER['username']).",".sqlesc($_POST['subject']).",".sqlesc($_POST['description']).",".sqlesc($_POST['type']).",".sqlesc($_POST['limit']).",".sqlesc($_POST['start']).",".sqlesc($_POST['end']).",".sqlesc($_POST['local_option_num']).")");
         $parent_id = mysql_insert_id();
         for($option_id =1; $option_id <= $_POST['local_option_num']; $option_id++)	    	

@@ -48,7 +48,7 @@ else {
 			if (isset ( $_GET ["returnto"] ))
 				print ("<p><b>" . $lang_details ['text_go_back'] . "<a href=\"" . htmlspecialchars ( $_GET ["returnto"] ) . "\">" . $lang_details ['text_whence_you_came'] . "</a></b></p>") ;
 		}
-		$sp_torrent = get_torrent_promotion_append ( $row [sp_state], 'word' );
+		$sp_torrent = get_torrent_promotion_append ( $row ['sp_state'], 'word' );
 
 		$s = htmlspecialchars ( $row ["name"] ) . ($sp_torrent ? "&nbsp;&nbsp;&nbsp;" . $sp_torrent : "");
 		if ($row ["pulling_out"] == 1) {
@@ -103,19 +103,19 @@ else {
 		$size_info = "<b>" . $lang_details ['text_size'] . "</b>" . mksize ( $row ["size"] );
 		$type_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['row_type'] . ":</b>&nbsp;" . $row ["cat_name"];
 		if (isset ( $row ["source_name"] ))
-			$source_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_source'] . "&nbsp;</b>" . $row [source_name];
+			$source_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_source'] . "&nbsp;</b>" . $row ['source_name'];
 		if (isset ( $row ["medium_name"] ))
-			$medium_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_medium'] . "&nbsp;</b>" . $row [medium_name];
+			$medium_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_medium'] . "&nbsp;</b>" . $row ['medium_name'];
 		if (isset ( $row ["codec_name"] ))
-			$codec_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_codec'] . "&nbsp;</b>" . $row [codec_name];
+			$codec_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_codec'] . "&nbsp;</b>" . $row ['codec_name'];
 		if (isset ( $row ["standard_name"] ))
-			$standard_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_stardard'] . "&nbsp;</b>" . $row [standard_name];
+			$standard_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_stardard'] . "&nbsp;</b>" . $row ['standard_name'];
 		if (isset ( $row ["processing_name"] ))
-			$processing_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_processing'] . "&nbsp;</b>" . $row [processing_name];
+			$processing_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_processing'] . "&nbsp;</b>" . $row ['processing_name'];
 		if (isset ( $row ["team_name"] ))
-			$team_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_team'] . "&nbsp;</b>" . $row [team_name];
+			$team_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_team'] . "&nbsp;</b>" . $row ['team_name'];
 		if (isset ( $row ["audiocodec_name"] ))
-			$audiocodec_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_audio_codec'] . "&nbsp;</b>" . $row [audiocodec_name];
+			$audiocodec_info = "&nbsp;&nbsp;&nbsp;<b>" . $lang_details ['text_audio_codec'] . "&nbsp;</b>" . $row ['audiocodec_name'];
 
 		tr ( $lang_details ['row_basic_info'], $size_info . $type_info . $source_info . $medium_info . $codec_info . $audiocodec_info . $standard_info . $processing_info . $team_info, 1 );
 
@@ -124,19 +124,19 @@ else {
 		 */
 		$ret = sql_query ( "SELECT * FROM torrentsinfo WHERE torid = " . $id . " LIMIT 1" ) or sqlerr ();
 		$row_ = mysql_fetch_array ( $ret );
-		$catid = $row_ [category];
+		$catid = $row_ ['category'];
 
 		if ($catid != "407" && $catid != "410") {
 			if ($row_ ["cname"] != "")
-				$cname = $lang_details ['cname'] . $row_ [cname] . "<br /><br />";
+				$cname = $lang_details ['cname'] . $row_ ['cname'] . "<br /><br />";
 			if ($row_ ["ename"] != "")
-				$ename = $lang_details ['ename'] . $row_ [ename] . "<br /><br />";
+				$ename = $lang_details ['ename'] . $row_ ['ename'] . "<br /><br />";
 			if ($row_ ["issuedate"] != "")
-				$issuedate = $lang_details ['issuedate'] . $row_ [issuedate] . "<br /><br />";
+				$issuedate = $lang_details ['issuedate'] . $row_ ['issuedate'] . "<br /><br />";
 			if ($row_ ["subsinfo"] != 0) {
 				$result = sql_query ( "SELECT * FROM subsinfo WHERE id = " . $row_ ["subsinfo"] );
 				$result_ = mysql_fetch_array ( $result );
-				$subsinfo = $lang_details ['subsinfo'] . $result_ [name] . "<br /><br />";
+				$subsinfo = $lang_details ['subsinfo'] . $result_ ['name'] . "<br /><br />";
 				// if (strpos ( $row ['name'], "[暂无字幕]" ) !== false && $result_
 				// [name] !== "暂无字幕") {
 				// $new_name = preg_replace ( '/\]\[[^\[]+字幕\]$/', ']['.$result_
@@ -152,124 +152,124 @@ else {
 			// $specificcat = $lang_details['catmovie'].$row_[specificcat]."<br
 			// /><br />";
 			if ($row_ ["district"] != "")
-				$district = $lang_details ['districtmovie'] . $row_ [district] . "<br /><br />";
+				$district = $lang_details ['districtmovie'] . $row_ ['district'] . "<br /><br />";
 			if ($row_ ["format"] != "")
-				$format = $lang_details ['formatmovie'] . $row_ [format] . "<br /><br />";
+				$format = $lang_details ['formatmovie'] . $row_ ['format'] . "<br /><br />";
 			if ($row_ ["language"] != "")
-				$language = $lang_details ['langmovie'] . $row_ [language] . "<br /><br />";
+				$language = $lang_details ['langmovie'] . $row_ ['language'] . "<br /><br />";
 				// if($row_["imdbnum"]!="").$imdbnum
-				// $imdbnum = $lang_details['imdbnum'].$row_[imdbnum]."<br /><br
+				// $imdbnum = $lang_details['imdbnum'].$row_['imdbnum']."<br /><br
 				// />";
 			tr ( $lang_details ['detailsinfo'], $cname . $ename . $issuedate . $subsinfo . $district . $format . $language, 1 );
 		}
 		if ($catid == 402) {
 			if ($row_ ["tvalias"] != "")
-				$tvalias = $lang_details ['tvalias'] . $row_ [tvalias] . "<br /><br />";
+				$tvalias = $lang_details ['tvalias'] . $row_ ['tvalias'] . "<br /><br />";
 			if ($row_ ["format"] != "")
-				$format = $lang_details ['formattvseries'] . $row_ [format] . "<br /><br />";
+				$format = $lang_details ['formattvseries'] . $row_ ['format'] . "<br /><br />";
 			if ($row_ ["specificcat"] != "")
-				$specificcat = $lang_details ['cattvseries'] . $row_ [specificcat] . "<br /><br />";
+				$specificcat = $lang_details ['cattvseries'] . $row_ ['specificcat'] . "<br /><br />";
 			if ($row_ ["language"] != "")
-				$language = $lang_details ['langtvseries'] . $row_ [language] . "<br /><br />";
+				$language = $lang_details ['langtvseries'] . $row_ ['language'] . "<br /><br />";
 			if ($row_ ["tvseasoninfo"] != "")
-				$tvseasoninfo = $lang_details ['tvseasoninfo'] . $row_ [tvseasoninfo] . "<br /><br />";
+				$tvseasoninfo = $lang_details ['tvseasoninfo'] . $row_ ['tvseasoninfo'] . "<br /><br />";
 			tr ( $lang_details ['detailsinfo'], $cname . $ename . $issuedate . $specificcat . $format . $language . $subsinfo . $tvalias . $tvseasoninfo, 1 );
 		}
 		if ($catid == 403) {
 			if ($row_ ["district"] != "")
-				$district = $lang_details ['districttvshows'] . $row_ [district] . "<br /><br />";
+				$district = $lang_details ['districttvshows'] . $row_ ['district'] . "<br /><br />";
 			if ($row_ ["tvshowscontent"] != "")
-				$tvshowscontent = $lang_details ['tvshowscontent'] . $row_ [tvshowscontent] . "<br /><br />";
+				$tvshowscontent = $lang_details ['tvshowscontent'] . $row_ ['tvshowscontent'] . "<br /><br />";
 			if ($row_ ["tvshowsguest"] != "")
-				$tvshowsguest = $lang_details ['tvshowsguest'] . $row_ [tvshowsguest] . "<br /><br />";
+				$tvshowsguest = $lang_details ['tvshowsguest'] . $row_ ['tvshowsguest'] . "<br /><br />";
 			if ($row_ ["language"] != "")
-				$language = $lang_details ['langtvshows'] . $row_ [language] . "<br /><br />";
+				$language = $lang_details ['langtvshows'] . $row_ ['language'] . "<br /><br />";
 			if ($row_ ["tvshowsremarks"] != "")
-				$tvshowsremarks = $lang_details ['tvshowsremarks'] . $row_ [tvshowsremarks] . "<br /><br />";
+				$tvshowsremarks = $lang_details ['tvshowsremarks'] . $row_ ['tvshowsremarks'] . "<br /><br />";
 			if ($row_ ["format"] != "")
-				$format = $lang_details ['formattvshows'] . $row_ [format] . "<br /><br />";
+				$format = $lang_details ['formattvshows'] . $row_ ['format'] . "<br /><br />";
 			tr ( $lang_details ['detailsinfo'], $cname . $ename . $issuedate . $subsinfo . $district . $tvshowscontent . $tvshowsguest . $language . $format . $tvshowsremarks, 1 );
 		}
 		if ($catid == 404) {
 			if ($row_ ["specificcat"] != "")
-				$specificcat = $lang_details ['catdocum'] . $row_ [specificcat] . "<br /><br />";
+				$specificcat = $lang_details ['catdocum'] . $row_ ['specificcat'] . "<br /><br />";
 			if ($row_ ["format"] != "")
-				$format = $lang_details ['formatdocum'] . $row_ [format] . "<br /><br />";
+				$format = $lang_details ['formatdocum'] . $row_ ['format'] . "<br /><br />";
 			if ($row_ ["version"] != "")
-				$version = $lang_details ['version'] . $row_ [version] . "<br /><br />";
+				$version = $lang_details ['version'] . $row_ ['version'] . "<br /><br />";
 			tr ( $lang_details ['detailsinfo'], $cname . $ename . $issuedate . $specificcat . $format . $version, 1 );
 		}
 		if ($catid == 405) {
 			if ($row_ ["animenum"] != "")
-				$animenum = $lang_details ['animenum'] . $row_ [animenum] . "<br /><br />";
+				$animenum = $lang_details ['animenum'] . $row_ ['animenum'] . "<br /><br />";
 			if ($row_ ["substeam"] != "")
-				$substeam = $lang_details ['substeam'] . $row_ [substeam] . "<br /><br />";
+				$substeam = $lang_details ['substeam'] . $row_ ['substeam'] . "<br /><br />";
 			if ($row_ ["resolution"] != "")
-				$resolution = $lang_details ['resolutionanime'] . $row_ [resolution] . "<br /><br />";
+				$resolution = $lang_details ['resolutionanime'] . $row_ ['resolution'] . "<br /><br />";
 			if ($row_ ["specificcat"] != "")
-				$specificcat = $lang_details ['catanime'] . $row_ [specificcat] . "<br /><br />";
+				$specificcat = $lang_details ['catanime'] . $row_ ['specificcat'] . "<br /><br />";
 			if ($row_ ["district"] != "")
-				$district = $lang_details ['districtanime'] . $row_ [district] . "<br /><br />";
+				$district = $lang_details ['districtanime'] . $row_ ['district'] . "<br /><br />";
 			if ($row_ ["format"] != "")
-				$format = $lang_details ['formatanime'] . $row_ [format] . "<br /><br />";
+				$format = $lang_details ['formatanime'] . $row_ ['format'] . "<br /><br />";
 			tr ( $lang_details ['detailsinfo'], $cname . $ename . $issuedate . $specificcat . $format . $animenum . $substeam . $resolution . $district, 1 );
 		}
 		if ($catid == 406) {
 			if ($row_ ["specificcat"] != "")
-				$specificcat = $lang_details ['cathq'] . $row_ [specificcat] . "<br /><br />";
+				$specificcat = $lang_details ['cathq'] . $row_ ['specificcat'] . "<br /><br />";
 			if ($row_ ["hqname"] != "")
-				$hqname = $lang_details ['hqname'] . $row_ [hqname] . "<br /><br />";
+				$hqname = $lang_details ['hqname'] . $row_ ['hqname'] . "<br /><br />";
 			if ($row_ ["artist"] != "")
-				$artist = $lang_details ['artist'] . $row_ [artist] . "<br /><br />";
+				$artist = $lang_details ['artist'] . $row_ ['artist'] . "<br /><br />";
 			if ($row_ ["hqtone"] != "")
-				$hqtone = $lang_details ['hqtone'] . $row_ [hqtone] . "<br /><br />";
+				$hqtone = $lang_details ['hqtone'] . $row_ ['hqtone'] . "<br /><br />";
 			if ($row_ ["format"] != "")
-				$format = $lang_details ['formathq'] . $row_ [format] . "<br /><br />";
+				$format = $lang_details ['formathq'] . $row_ ['format'] . "<br /><br />";
 			if ($row_ ["language"] != "")
-				$language = $lang_details ['langhq'] . $row_ [language] . "<br /><br />";
+				$language = $lang_details ['langhq'] . $row_ ['language'] . "<br /><br />";
 			tr ( $lang_details ['detailsinfo'], $hqname . $issuedate . $artist . $specificcat . $format . $language . $hqtone, 1 );
 		}
 		if ($catid == 407) {
 			if ($row_ ["cname"] != "")
-				$cname = $lang_details ['matchcat'] . $row_ [cname] . "<br /><br />";
+				$cname = $lang_details ['matchcat'] . $row_ ['cname'] . "<br /><br />";
 			if ($row_ ["ename"] != "")
-				$ename = $lang_details ['versus'] . $row_ [ename] . "<br /><br />";
+				$ename = $lang_details ['versus'] . $row_ ['ename'] . "<br /><br />";
 			if ($row_ ["issuedate"] != "")
-				$issuedate = $lang_details ['matchdate'] . $row_ [issuedate] . "<br /><br />";
+				$issuedate = $lang_details ['matchdate'] . $row_ ['issuedate'] . "<br /><br />";
 			if ($row_ ["specificcat"] != "")
-				$specificcat = $lang_details ['catsports'] . $row_ [specificcat] . "<br /><br />";
+				$specificcat = $lang_details ['catsports'] . $row_ ['specificcat'] . "<br /><br />";
 			if ($row_ ["language"] != "")
-				$language = $lang_details ['langsports'] . $row_ [language] . "<br /><br />";
+				$language = $lang_details ['langsports'] . $row_ ['language'] . "<br /><br />";
 			if ($row_ ["format"] != "")
-				$format = $lang_details ['formatsports'] . $row_ [format] . "<br /><br />";
+				$format = $lang_details ['formatsports'] . $row_ ['format'] . "<br /><br />";
 			if ($row_ ["resolution"] != "")
-				$resolution = $lang_details ['resolutionsports'] . $row_ [resolution] . "<br /><br />";
+				$resolution = $lang_details ['resolutionsports'] . $row_ ['resolution'] . "<br /><br />";
 			tr ( $lang_details ['detailsinfo'], $cname . $issuedate . $specificcat . $format . $resolution . $language, 1 );
 		}
 		if ($catid == 408) {
 			if ($row_ ["specificcat"] != "")
-				$specificcat = $lang_details ['catsoftware'] . $row_ [specificcat] . "<br /><br />";
+				$specificcat = $lang_details ['catsoftware'] . $row_ ['specificcat'] . "<br /><br />";
 			if ($row_ ["language"] != "")
-				$language = $lang_details ['langsoftware'] . $row_ [language] . "<br /><br />";
+				$language = $lang_details ['langsoftware'] . $row_ ['language'] . "<br /><br />";
 			if ($row_ ["format"] != "")
-				$format = $lang_details ['formatsoftware'] . $row_ [format] . "<br /><br />";
+				$format = $lang_details ['formatsoftware'] . $row_ ['format'] . "<br /><br />";
 			if ($row_ ["version"] != "")
-				$version = $lang_details ['version'] . $row_ [version] . "<br /><br />";
+				$version = $lang_details ['version'] . $row_ ['version'] . "<br /><br />";
 			tr ( $lang_details ['detailsinfo'], $cname . $ename . $issuedate . $specificcat . $format . $language . $version, 1 );
 		}
 		if ($catid == 409) {
 			if ($row_ ["specificcat"] != "")
-				$specificcat = $lang_details ['catgame'] . $row_ [specificcat] . "<br /><br />";
+				$specificcat = $lang_details ['catgame'] . $row_ ['specificcat'] . "<br /><br />";
 			if ($row_ ["language"] != "")
-				$language = $lang_details ['langgame'] . $row_ [language] . "<br /><br />";
+				$language = $lang_details ['langgame'] . $row_ ['language'] . "<br /><br />";
 			if ($row_ ["format"] != "")
-				$format = $lang_details ['formatgame'] . $row_ [format] . "<br /><br />";
+				$format = $lang_details ['formatgame'] . $row_ ['format'] . "<br /><br />";
 			if ($row_ ["platform"] != "")
-				$platform = $lang_details ['platform'] . $row_ [platform] . "<br /><br />";
+				$platform = $lang_details ['platform'] . $row_ ['platform'] . "<br /><br />";
 			if ($row_ ["company"] != "")
-				$company = $lang_details ['company'] . $row_ [company] . "<br /><br />";
+				$company = $lang_details ['company'] . $row_ ['company'] . "<br /><br />";
 			if ($row_ ["tvshowsremarks"] != "")
-				$tvshowsremarks = $lang_details ['tvshowsremarks'] . $row_ [tvshowsremarks] . "<br /><br />";
+				$tvshowsremarks = $lang_details ['tvshowsremarks'] . $row_ ['tvshowsremarks'] . "<br /><br />";
 			tr ( $lang_details ['detailsinfo'], $cname . $ename . $specificcat . $format . $platform . $language . $company . $tvshowsremarks, 1 );
 		}
 		if ($catid == 410) {
@@ -285,11 +285,11 @@ else {
 		}
 		if ($catid == 411) {
 			if ($row_ ["format"] != "")
-				$format = $lang_details ['formatnewsreel'] . $row_ [format] . "<br /><br />";
+				$format = $lang_details ['formatnewsreel'] . $row_ ['format'] . "<br /><br />";
 			if ($row_ ["specificcat"] != "")
-				$specificcat = $lang_details ['catnewsreel'] . $row_ [specificcat] . "<br /><br />";
+				$specificcat = $lang_details ['catnewsreel'] . $row_ ['specificcat'] . "<br /><br />";
 			if ($row_ ["language"] != "")
-				$language = $lang_details ['langnewsreel'] . $row_ [language] . "<br /><br />";
+				$language = $lang_details ['langnewsreel'] . $row_ ['language'] . "<br /><br />";
 			tr ( $lang_details ['detailsinfo'], $cname . $ename . $issuedate . $specificcat . $format . $language . $subsinfo, 1 );
 		}
 		if ($catid == 4013) {
@@ -300,9 +300,9 @@ else {
 		}
 		if ($catid == 412) {
 			if ($row_ ["district"] != "")
-				$district = $lang_details ['districtmovie'] . $row_ [district] . "<br /><br />";
+				$district = $lang_details ['districtmovie'] . $row_ ['district'] . "<br /><br />";
 			if ($row_ ["language"] != "")
-				$language = "<b>语言:</b>" . $row_ [language] . "<br /><br />";
+				$language = "<b>语言:</b>" . $row_ ['language'] . "<br /><br />";
 			tr ( $lang_details ['detailsinfo'], $cname . $ename . $language . $subsinfo . $district, 1 );
 		}
 		/**
@@ -355,7 +355,7 @@ else {
 				$download .= "<a href=\"nexuspt://pt.tju.edu.cn/download.php?id=" . $id . "&passkey=" . $CURUSER['passkey'] . "\">通过 ACEStream 点播</a>&nbsp;|&nbsp;";
 			}
 
-			tr ( $lang_details ['row_action'], $download . ($owned == 1 ? "<$editlink><img class=\"dt_edit\" src=\"pic/trans.gif\" alt=\"edit\" />&nbsp;<b><font class=\"small\">" . $lang_details ['text_edit_torrent'] . "</font></b></a>&nbsp;|&nbsp;" : "") . (get_user_class () >= $askreseed_class && $row [seeders] == 0 && strtotime ( $row ["last_seed"] ) <= time () - $max_dead_torrent_time ? "<a title=\"" . $lang_details ['title_ask_for_reseed'] . "\" href=\"takereseed.php?reseedid=$id\"><img class=\"dt_reseed\" src=\"pic/trans.gif\" alt=\"reseed\">&nbsp;<b><font class=\"small\">" . $lang_details ['text_ask_for_reseed'] . "</font></b></a>&nbsp;|&nbsp;" : "") . "<a title=\"" . $lang_details ['title_report_torrent'] . "\" href=\"report.php?torrent=$id\"><img class=\"dt_report\" src=\"pic/trans.gif\" alt=\"report\" />&nbsp;<b><font class=\"small\">" . $lang_details ['text_report_torrent'] . "</font></b></a>" . (user_can_upload () && $CURUSER ["uploadpos"] == 'yes' ? "&nbsp;|&nbsp;<a href=\"upsimilartorrent.php?id=$id\"><b>引用该种发布</b></a>" : "") . (get_user_class () < 1 ? "" : "&nbsp;|&nbsp;<b>分享到</b>&nbsp;" . $share_button_weibo . "&nbsp;" . $share_button_renren), 1 );
+			tr ( $lang_details ['row_action'], $download . ($owned == 1 ? "<$editlink><img class=\"dt_edit\" src=\"pic/trans.gif\" alt=\"edit\" />&nbsp;<b><font class=\"small\">" . $lang_details ['text_edit_torrent'] . "</font></b></a>&nbsp;|&nbsp;" : "") . (get_user_class () >= $askreseed_class && $row ['seeders'] == 0 && strtotime ( $row ["last_seed"] ) <= time () - $max_dead_torrent_time ? "<a title=\"" . $lang_details ['title_ask_for_reseed'] . "\" href=\"takereseed.php?reseedid=$id\"><img class=\"dt_reseed\" src=\"pic/trans.gif\" alt=\"reseed\">&nbsp;<b><font class=\"small\">" . $lang_details ['text_ask_for_reseed'] . "</font></b></a>&nbsp;|&nbsp;" : "") . "<a title=\"" . $lang_details ['title_report_torrent'] . "\" href=\"report.php?torrent=$id\"><img class=\"dt_report\" src=\"pic/trans.gif\" alt=\"report\" />&nbsp;<b><font class=\"small\">" . $lang_details ['text_report_torrent'] . "</font></b></a>" . (user_can_upload () && $CURUSER ["uploadpos"] == 'yes' ? "&nbsp;|&nbsp;<a href=\"upsimilartorrent.php?id=$id\"><b>引用该种发布</b></a>" : "") . (get_user_class () < 1 ? "" : "&nbsp;|&nbsp;<b>分享到</b>&nbsp;" . $share_button_weibo . "&nbsp;" . $share_button_renren), 1 );
 		}
 
 		// 保种功能
@@ -411,7 +411,7 @@ else {
 		if (mysql_num_rows ( $r ) > 0) {
 			while ( $a = mysql_fetch_assoc ( $r ) ) {
 				$lang = "<tr><td class=\"embedded\"><img border=\"0\" src=\"pic/flag/" . $a ["flagpic"] . "\" alt=\"" . $a ["lang_name"] . "\" title=\"" . $a ["lang_name"] . "\" style=\"padding-bottom: 4px\" /></td>";
-				$lang .= "<td class=\"embedded\">&nbsp;&nbsp;<a href=\"downloadsubs.php?torrentid=" . $a [torrent_id] . "&subid=" . $a [id] . "\"><u>" . $a ["title"] . "</u></a>" . (get_user_class () >= $submanage_class || (get_user_class () >= $delownsub_class && $a ["uppedby"] == $CURUSER ["id"]) ? " <font class=\"small\"><a href=\"subtitles.php?delete=" . $a [id] . "\">[" . $lang_details ['text_delete'] . "]</a>&nbsp;&nbsp;<a href=\"subtitles.php?rename=".$a[id] . "\">[" .$lang_details ['text_rename']. "]</a></font>" : "") . "</td><td class=\"embedded\">&nbsp;&nbsp;" . ($a ["anonymous"] == 'yes' ? $lang_details ['text_anonymous'] . (get_user_class () >= $viewanonymous_class ? get_username ( $a ['uppedby'], false, true, true, false, true ) : "") : get_username ( $a ['uppedby'] )) . "  <a href=\"report.php?subtitle=".$a [id]."\"><img class=\"f_report\" src=\"pic/trans.gif\" alt=\"Report\" title=\"举报该字幕\"></a></td></tr>";
+				$lang .= "<td class=\"embedded\">&nbsp;&nbsp;<a href=\"downloadsubs.php?torrentid=" . $a ['torrent_id'] . "&subid=" . $a ['id'] . "\"><u>" . $a ["title"] . "</u></a>" . (get_user_class () >= $submanage_class || (get_user_class () >= $delownsub_class && $a ["uppedby"] == $CURUSER ["id"]) ? " <font class=\"small\"><a href=\"subtitles.php?delete=" . $a ['id'] . "\">[" . $lang_details ['text_delete'] . "]</a>&nbsp;&nbsp;<a href=\"subtitles.php?rename=".$a['id'] . "\">[" .$lang_details ['text_rename']. "]</a></font>" : "") . "</td><td class=\"embedded\">&nbsp;&nbsp;" . ($a ["anonymous"] == 'yes' ? $lang_details ['text_anonymous'] . (get_user_class () >= $viewanonymous_class ? get_username ( $a ['uppedby'], false, true, true, false, true ) : "") : get_username ( $a ['uppedby'] )) . "  <a href=\"report.php?subtitle=".$a ['id']."\"><img class=\"f_report\" src=\"pic/trans.gif\" alt=\"Report\" title=\"举报该字幕\"></a></td></tr>";
 				print ($lang) ;
 			}
 		} else {
@@ -463,7 +463,7 @@ else {
 				$nfo = code ( $row ["nfo"], $view == "magic" );
 				$Cache->cache_value ( 'nfo_block_torrent_id_' . $id, $nfo, 604800 );
 			}
-			tr ( "<a href=\"javascript: klappe_news('nfo')\"><img class=\"plus\" src=\"pic/trans.gif\" alt=\"Show/Hide\" id=\"picnfo\" title=\"" . $lang_detail ['title_show_or_hide'] . "\" /> " . $lang_details ['text_nfo'] . "</a><br /><a href=\"viewnfo.php?id=" . $row [id] . "\" class=\"sublink\">" . $lang_details ['text_view_nfo'] . "</a>", "<div id='knfo' style=\"display: none;\"><pre style=\"font-size:10pt; font-family: 'Courier New', monospace;\">" . $nfo . "</pre></div>\n", 1 );
+			tr ( "<a href=\"javascript: klappe_news('nfo')\"><img class=\"plus\" src=\"pic/trans.gif\" alt=\"Show/Hide\" id=\"picnfo\" title=\"" . $lang_detail ['title_show_or_hide'] . "\" /> " . $lang_details ['text_nfo'] . "</a><br /><a href=\"viewnfo.php?id=" . $row ['id'] . "\" class=\"sublink\">" . $lang_details ['text_view_nfo'] . "</a>", "<div id='knfo' style=\"display: none;\"><pre style=\"font-size:10pt; font-family: 'Courier New', monospace;\">" . $nfo . "</pre></div>\n", 1 );
 		}
 
 		if ($imdb_id && $showextinfo ['imdb'] == 'yes' && $CURUSER ['showimdb'] != 'no') {
@@ -675,7 +675,7 @@ else {
 			$copies_count = mysql_num_rows ( $copies_res );
 			if ($copies_count > 0) {
 				$s = "<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\">\n";
-				$s .= "<tr><td class=\"colhead\" style=\"padding: 0px; text-align:center;\">" . $lang_details ['col_type'] . "</td><td class=\"colhead\" align=\"left\">" . $lang_details ['col_name'] . "</td><td class=\"colhead\" align=\"center\">" . $lang_details ['col_quality'] . "</td><td class=\"colhead\" align=\"center\"><img class=\"size\" src=\"pic/trans.gif\" alt=\"size\" title=\"" . $lang_details ['title_size'] . "\" /></td><td class=\"colhead\" align=\"center\"><img class=\"time\" src=\"pic/trans.gif\" alt=\"time added\" title=\"" . $lang_details ['title_time_added'] . "\" /></td><td class=\"colhead\" align=\"center\"><img class=\"seeders\" src=\"pic/trans.gif\" alt=\"seeders\" title=\"" . $lang_details ['title_seeders'] . "\" /></td><td class=\"colhead\" align=\"center\"><img class=\"leechers\" src=\"pic/trans.gif\" alt=\"leechers\" title=\"" . $lang_details ['title_leechers'] . "\" /></td></tr>\n";
+				$s .= "<tr><td class=\"colhead\" style=\"padding: 0; text-align:center;\">" . $lang_details ['col_type'] . "</td><td class=\"colhead\" align=\"left\">" . $lang_details ['col_name'] . "</td><td class=\"colhead\" align=\"center\">" . $lang_details ['col_quality'] . "</td><td class=\"colhead\" align=\"center\"><img class=\"size\" src=\"pic/trans.gif\" alt=\"size\" title=\"" . $lang_details ['title_size'] . "\" /></td><td class=\"colhead\" align=\"center\"><img class=\"time\" src=\"pic/trans.gif\" alt=\"time added\" title=\"" . $lang_details ['title_time_added'] . "\" /></td><td class=\"colhead\" align=\"center\"><img class=\"seeders\" src=\"pic/trans.gif\" alt=\"seeders\" title=\"" . $lang_details ['title_seeders'] . "\" /></td><td class=\"colhead\" align=\"center\"><img class=\"leechers\" src=\"pic/trans.gif\" alt=\"leechers\" title=\"" . $lang_details ['title_leechers'] . "\" /></td></tr>\n";
 				while ( $copy_row = mysql_fetch_assoc ( $copies_res ) ) {
 					$dispname = htmlspecialchars ( trim ( $copy_row ["name"] ) );
 					$count_dispname = strlen ( $dispname );
@@ -687,20 +687,20 @@ else {
 					}
 
 					if (isset ( $copy_row ["source_name"] ))
-						$other_source_info = $copy_row [source_name] . ", ";
+						$other_source_info = $copy_row ['source_name'] . ", ";
 					if (isset ( $copy_row ["medium_name"] ))
-						$other_medium_info = $copy_row [medium_name] . ", ";
+						$other_medium_info = $copy_row ['medium_name'] . ", ";
 					if (isset ( $copy_row ["codec_name"] ))
-						$other_codec_info = $copy_row [codec_name] . ", ";
+						$other_codec_info = $copy_row ['codec_name'] . ", ";
 					if (isset ( $copy_row ["standard_name"] ))
-						$other_standard_info = $copy_row [standard_name] . ", ";
+						$other_standard_info = $copy_row ['standard_name'] . ", ";
 					if (isset ( $copy_row ["processing_name"] ))
-						$other_processing_info = $copy_row [processing_name] . ", ";
+						$other_processing_info = $copy_row ['processing_name'] . ", ";
 
 					$sphighlight = get_torrent_bg_color ( $copy_row ['sp_state'] );
 					$sp_info = get_torrent_promotion_append ( $copy_row ['sp_state'] );
 
-					$s .= "<tr" . $sphighlight . "><td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>" . return_category_image ( $copy_row ["catid"], "torrents.php?allsec=1&amp;" ) . "</td><td class=\"rowfollow\" align=\"left\"><a href=\"" . htmlspecialchars ( "details.php?id=" . $copy_row ["id"] . "&hit=1" ) . "\">" . $dispname . "</a>" . $sp_info . "</td>" . "<td class=\"rowfollow\" align=\"left\">" . rtrim ( trim ( $other_source_info . $other_medium_info . $other_codec_info . $other_standard_info . $other_processing_info ), "," ) . "</td>" . "<td class=\"rowfollow\" align=\"center\">" . mksize ( $copy_row ["size"] ) . "</td>" . "<td class=\"rowfollow nowrap\" align=\"center\">" . str_replace ( "&nbsp;", "<br />", gettime ( $copy_row ["added"], false ) ) . "</td>" . "<td class=\"rowfollow\" align=\"center\">" . $copy_row ["seeders"] . "</td>" . "<td class=\"rowfollow\" align=\"center\">" . $copy_row ["leechers"] . "</td>" . "</tr>\n";
+					$s .= "<tr" . $sphighlight . "><td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0'>" . return_category_image ( $copy_row ["catid"], "torrents.php?allsec=1&amp;" ) . "</td><td class=\"rowfollow\" align=\"left\"><a href=\"" . htmlspecialchars ( "details.php?id=" . $copy_row ["id"] . "&hit=1" ) . "\">" . $dispname . "</a>" . $sp_info . "</td>" . "<td class=\"rowfollow\" align=\"left\">" . rtrim ( trim ( $other_source_info . $other_medium_info . $other_codec_info . $other_standard_info . $other_processing_info ), "," ) . "</td>" . "<td class=\"rowfollow\" align=\"center\">" . mksize ( $copy_row ["size"] ) . "</td>" . "<td class=\"rowfollow nowrap\" align=\"center\">" . str_replace ( "&nbsp;", "<br />", gettime ( $copy_row ["added"], false ) ) . "</td>" . "<td class=\"rowfollow\" align=\"center\">" . $copy_row ["seeders"] . "</td>" . "<td class=\"rowfollow\" align=\"center\">" . $copy_row ["leechers"] . "</td>" . "</tr>\n";
 				}
 				$s .= "</table>\n";
 				tr ( "<a href=\"javascript: klappe_news('othercopy')\"><span class=\"nowrap\"><img class=\"" . ($copies_count > 5 ? "plus" : "minus") . "\" src=\"pic/trans.gif\" alt=\"Show/Hide\" id=\"picothercopy\" title=\"" . $lang_detail ['title_show_or_hide'] . "\" /> " . $lang_details ['row_other_copies'] . "</span></a>", "<b>" . $copies_count . $lang_details ['text_other_copies'] . " </b><br /><div id='kothercopy' style=\"" . ($copies_count > 5 ? "display: none;" : "display: block;") . "\">" . $s . "</div>", 1 );
@@ -953,7 +953,7 @@ style=\"display: none;\">" . get_username ( $CURUSER ['id'] ) . " </span><span i
 			print ("<br /><br />") ;
 			print ("<h1 align=\"center\" id=\"startcomments\">" . $lang_details ['h1_user_comments'] . "</h1>\n") ;
 			list ( $pagertop, $pagerbottom, $limit ) = pager ( 10, $count, "details.php?id=$id&cmtpage=1&", array (
-					lastpagedefault => 1
+					'lastpagedefault' => 1
 			), "page" );
 
 			$subres = sql_query ( "SELECT id, text, user, added, editedby, editdate FROM comments WHERE torrent = $id ORDER BY id $limit" ) or sqlerr ( __FILE__, __LINE__ );

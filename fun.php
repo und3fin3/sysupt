@@ -10,7 +10,7 @@ if ($_POST['fun_text']) {
     $funid = 0 + $_POST['funid'];
     $result = sql_query("SELECT fun.*, IF(ADDTIME(added, '1 0:0:0') < NOW(),true,false) AS neednew FROM fun WHERE id= '" . sqlesc($funid) . "' ") or sqlerr(__FILE__, __LINE__);
     $row = mysql_fetch_array($result);
-    if (!row) {
+    if (!$row) {
         header("Location: index.php");
         die;
     }
@@ -212,8 +212,8 @@ if ($action == 'ban') {
         $Cache->delete_value('current_fun_vote_count');
         $Cache->delete_value('current_fun_vote_funny_count');
 
-        $subject = $lang_fun_target[get_user_lang($arr[userid])]['msg_fun_item_banned'];
-        $msg = $lang_fun_target[get_user_lang($arr[userid])]['msg_your_fun_item'] . $title . $lang_fun_target[get_user_lang($arr[userid])]['msg_is_ban_by'] . $CURUSER['username'] . $lang_fun_target[get_user_lang($arr[userid])]['msg_reason'] . $banreason;
+        $subject = $lang_fun_target[get_user_lang($arr['userid'])]['msg_fun_item_banned'];
+        $msg = $lang_fun_target[get_user_lang($arr['userid'])]['msg_your_fun_item'] . $title . $lang_fun_target[get_user_lang($arr['userid'])]['msg_is_ban_by'] . $CURUSER['username'] . $lang_fun_target[get_user_lang($arr['userid'])]['msg_reason'] . $banreason;
         sql_query("INSERT INTO messages (sender, subject, receiver, added, msg) VALUES(0, " . sqlesc($subject) . ", " . $arr['userid'] . ", '" . date("Y-m-d H:i:s") . "', " . sqlesc($msg) . ")") or sqlerr(__FILE__, __LINE__);
         $Cache->delete_value('user_' . $arr['userid'] . '_unread_message_count');
         $Cache->delete_value('user_' . $arr['userid'] . '_inbox_count');
@@ -225,7 +225,7 @@ if ($action == 'ban') {
 }
 function funreward($funvote, $totalvote, $title, $posterid, $bonus)
 {
-    global $lang_fun_target, $lang_fun;
+    global $lang_fun_target, $Cache;
     KPS("+", $bonus, $posterid);
     $subject = $lang_fun_target[get_user_lang($posterid)]['msg_fun_item_reward'];
     $msg = $funvote . $lang_fun_target[get_user_lang($posterid)]['msg_out_of'] . $totalvote . $lang_fun_target[get_user_lang($posterid)]['msg_people_think'] . $title . $lang_fun_target[get_user_lang($posterid)]['msg_is_fun'] . $bonus . $lang_fun_target[get_user_lang($posterid)]['msg_bonus_as_reward'];

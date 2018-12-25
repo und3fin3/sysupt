@@ -61,16 +61,16 @@ class douban {
 		}
 		$page .="<br />";
 		$page .="产　　地：";
-		$page .=$this->dbinfo[country][0];
+		$page .=$this->dbinfo['country'][0];
 		$page .="<br />";
 		$page .="导　　演：";
-		$page .=$this->dbinfo[director][0];
+		$page .=$this->dbinfo['director'][0];
 		$page .="<br />";
 		$page .="发布时间：";
-		$page .=$this->dbinfo[pubdate][0];
+		$page .=$this->dbinfo['pubdate'][0];
 		$page .="<br />";
 		$page .="电影时长：";
-		$page .=$this->dbinfo[movie_duration][0];
+		$page .=$this->dbinfo['movie_duration'][0];
 		$page .="<br />";
 		$page .="豆瓣标签：";
 		foreach($this->dbinfo['tag'] as $key => $value){
@@ -81,13 +81,13 @@ class douban {
 		}
 		$page .="<br />";
 		$page .="豆瓣评分：";
-		$page .=$this->dbinfo[rating];
+		$page .=$this->dbinfo['rating'];
 		$page .="<br />";
 		$page .= "豆瓣链接：";
-		$page .= "<a href=\"".$this->dbinfo[link][alternate]."\" target=\"_blank\">".$this->dbinfo[link][alternate]."</a>";
+		$page .= "<a href=\"".$this->dbinfo['link']['alternate']."\" target=\"_blank\">".$this->dbinfo['link']['alternate']."</a>";
 		$page .="<br />";
 		$page .="简介：";
-		$page .=$this->dbinfo[summary];
+		$page .=$this->dbinfo['summary'];
 		return $page;
 	}
 	function init(){
@@ -135,7 +135,6 @@ class douban {
 		xml_parse_into_struct($xmlparser,$this->doubanxml,$this->dbarray);
 		$this->init();
 		file_put_contents($this->cachepath.$imdb_id.".page",$this->prinfo());
-		@ copy($this->dbinfo[link][image],$this->imagepath.$imdb_id.".jpg");
+		@ copy($this->dbinfo['link']['image'],$this->imagepath.$imdb_id.".jpg");
 	}
 }
-?>

@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && get_user_class() >= UC_ADMINISTRATOR
 		stderr("Error", "Bad IP address.");
 	$comment = sqlesc($comment);
 	$added = sqlesc(date("Y-m-d H:i:s"));
-	sql_query("INSERT INTO bans (added, addedby, first, last, comment) VALUES($added, ".mysql_real_escape_string($CURUSER[id]).", $firstlong, $lastlong, $comment)") or sqlerr(__FILE__, __LINE__);
+	sql_query("INSERT INTO bans (added, addedby, first, last, comment) VALUES($added, ".mysql_real_escape_string($CURUSER['id']).", $firstlong, $lastlong, $comment)") or sqlerr(__FILE__, __LINE__);
 	header("Location: $_SERVER[REQUEST_URI]");
 	die;
 }
@@ -48,7 +48,7 @@ else
 
   while ($arr = mysql_fetch_assoc($res))
   {
- 	  print("<tr><td>".gettime($arr[added])."</td><td align=left>".long2ip($arr[first])."</td><td align=left>".long2ip($arr[last])."</td><td align=left>". get_username($arr['addedby']) .
+ 	  print("<tr><td>".gettime($arr['added'])."</td><td align=left>".long2ip($arr['first'])."</td><td align=left>".long2ip($arr['last'])."</td><td align=left>". get_username($arr['addedby']) .
  	    "</td><td align=left>$arr[comment]</td><td><a href=bans.php?remove=$arr[id]>Remove</a></td></tr>\n");
   }
   print("</table>\n");
@@ -67,5 +67,3 @@ if (get_user_class() >= UC_ADMINISTRATOR)
 }
 
 stdfoot();
-
-?>

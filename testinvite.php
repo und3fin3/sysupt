@@ -39,4 +39,3 @@ echo "invite_bonus5=$invite_bonus5";
 echo "</p>";
 echo "invite_bonus6=$invite_bonus6";
 echo "</p>";
-?>

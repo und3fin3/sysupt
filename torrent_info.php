@@ -29,7 +29,8 @@ function print_array($array, $offset_symbol = "|--", $offset = "", $parent = "")
 			break;
 		case "dictionary":
 			printf("<li><div align=left class=dictionary> + <span class=icon>[DICT]</span> <span class=title>[%s]</span> <span class=length>(%d)</span></div>",$parent,$array['strlen']);
-			while (list($key, $val) = each($array))
+			// while (list($key, $val) = each($array))
+            foreach ($array as $key => $val)
 			{
 				if (is_array($val))
 				{
@@ -42,7 +43,8 @@ function print_array($array, $offset_symbol = "|--", $offset = "", $parent = "")
 
 			break;
 		default:
-			  while (list($key, $val) = each($array))
+			  // while (list($key, $val) = each($array))
+              foreach ($array as $key => $val)
 			  {
 			    if (is_array($val))
 			    {
@@ -88,7 +90,7 @@ stdhead("Torrent Info");
 
 /* list styles */
 ul ul { margin-left: 15px; }
-ul, li { padding: 0px; margin: 0px; list-style-type: none; color: #000; font-weight: normal;}
+ul, li { padding: 0; margin: 0; list-style-type: none; color: #000; font-weight: normal;}
 ul a, li a { color: #009; text-decoration: none; font-weight: normal; }
 li { display: inline; } /* fix for IE blank line bug */
 ul > li { display: list-item; }

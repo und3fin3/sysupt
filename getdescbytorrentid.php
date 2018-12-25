@@ -13,5 +13,3 @@ if(mysql_num_rows($torrent) > 0) {
 } else {
 	die(0);
 }
-
-?>

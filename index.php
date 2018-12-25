@@ -98,7 +98,7 @@ if ($showshoutbox_main == "yes") {
 	print ("<iframe src='shoutbox.php?type=shoutbox' width='95%' height='360' frameborder='0' name='sbox' marginwidth='0' marginheight='0'></iframe><br /><br />\n") ;
 	print ("<form action='shoutbox.php' method='post' target='sbox' name='shbox'>\n") ;
 	print ("<label for='shbox_text'>" . $lang_index ['text_message'] . "</label>");
-	smile_table(shbox_text);
+	smile_table('shbox_text');
 	print ("<input type='text' autocomplete='off' name='shbox_text' id='shbox_text' size='100' width=\"70%\" style='border: 1px solid gray;' /><input type='submit' id='hbsubmit' class='btn' name='shout' value=\"" . $lang_index ['sumbit_shout'] . "\" onclick=\"return clear(shbox);\" />") ;
 // 	if ($CURUSER ['hidehb'] != 'yes' && $showhelpbox_main == 'yes')
 // 		print ("<input type='submit' class='btn' name='toguest' value=\"" . $lang_index ['sumbit_to_guest'] . "\" />") ;
@@ -145,7 +145,7 @@ if ($showextinfo ['imdb'] == 'yes' && ($showmovies ['hot'] == "yes" || $showmovi
 					$count = 0;
 					$allImdb = array ();
 					while ( $array = mysql_fetch_array ( $res ) ) {
-						$pro_torrent = get_torrent_promotion_append ( $array [sp_state], 'word' );
+						$pro_torrent = get_torrent_promotion_append ( $array ['sp_state'], 'word' );
 						if ($imdb_id = parse_imdb_id ( $array ["url"] )) {
 							if (array_search ( $imdb_id, $allImdb ) !== false) { // a
 							                                                  // torrent with the
@@ -229,9 +229,9 @@ if ($CURUSER && $showpolls_main == "yes") {
 	if (get_user_class () >= $pollmanage_class) {
 		print ("<font class=\"small\"> - [<a class=\"altlink\" href=\"makepoll.php?returnto=main\"><b>" . $lang_index ['text_new'] . "</b></a>]\n") ;
 		if ($pollexists) {
-			print (" - [<a class=\"altlink\" href=\"makepoll.php?action=edit&amp;pollid=" . $arr [id] . "&amp;returnto=main\"><b>" . $lang_index ['text_edit'] . "</b></a>]\n") ;
-			print (" - [<a class=\"altlink\" href=\"log.php?action=poll&amp;do=delete&amp;pollid=" . $arr [id] . "&amp;returnto=main\"><b>" . $lang_index ['text_delete'] . "</b></a>]") ;
-			print (" - [<a class=\"altlink\" href=\"polloverview.php?id=" . $arr [id] . "\"><b>" . $lang_index ['text_detail'] . "</b></a>]") ;
+			print (" - [<a class=\"altlink\" href=\"makepoll.php?action=edit&amp;pollid=" . $arr ['id'] . "&amp;returnto=main\"><b>" . $lang_index ['text_edit'] . "</b></a>]\n") ;
+			print (" - [<a class=\"altlink\" href=\"log.php?action=poll&amp;do=delete&amp;pollid=" . $arr ['id'] . "&amp;returnto=main\"><b>" . $lang_index ['text_delete'] . "</b></a>]") ;
+			print (" - [<a class=\"altlink\" href=\"polloverview.php?id=" . $arr ['id'] . "\"><b>" . $lang_index ['text_detail'] . "</b></a>]") ;
 		}
 		print ("</font>") ;
 	}
@@ -418,7 +418,7 @@ if ($showfunbox_main == "yes" && (! isset ( $CURUSER ) || $CURUSER ['showfb'] ==
 			$Cache->cache_value ( 'current_fun_vote_funny_count', $funvote, 756 );
 		}
 		// check whether current user has voted
-		$funvoted = get_row_count ( "funvotes", "WHERE funid = " . sqlesc ( $row ['id'] ) . " AND userid=" . sqlesc ( $CURUSER [id] ) );
+		$funvoted = get_row_count ( "funvotes", "WHERE funid = " . sqlesc ( $row ['id'] ) . " AND userid=" . sqlesc ( $CURUSER ['id'] ) );
 
 		print ("<h2>" . $lang_index ['text_funbox']) ;
 		if ($CURUSER) {

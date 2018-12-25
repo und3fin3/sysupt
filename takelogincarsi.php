@@ -10,7 +10,7 @@ cur_user_check () ;
 
 function bark($text = "")
 {
-  global $lang_takelogin;
+  global $lang_takelogincarsi;
   $text =  ($text == "" ? $lang_takelogincarsi['std_login_fail_note'] : $text);
   stderr($lang_takelogincarsi['std_login_fail'], $text,false);
 }
@@ -76,4 +76,3 @@ if (!empty($_POST["returnto"]))
 	header("Location: $_POST[returnto]");
 else
 	header("Location: index.php");
-?>

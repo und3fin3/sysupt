@@ -85,9 +85,3 @@ if ($CURUSER ['seedbonus'] >= $points) {
 	
 	$temp = $lang_givebon_target [get_user_lang ( $useridgift )] ['msg_successful'] . $points . $lang_givebon_target [get_user_lang ( $useridgift )] ['msg_successful0'];
 }
-?>
-
-
-
-
-

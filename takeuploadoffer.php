@@ -657,25 +657,3 @@ EOD;
 }
 
 header ( "Location: details.php?id=" . htmlspecialchars ( $id ) . "&uploaded=1" );
-
-?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

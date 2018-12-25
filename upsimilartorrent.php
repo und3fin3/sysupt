@@ -192,4 +192,3 @@ else {
 	print("</form>\n");
 }
 stdfoot();
-?>

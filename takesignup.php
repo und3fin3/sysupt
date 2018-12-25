@@ -56,7 +56,7 @@ $ip = getip();
 
 $res = sql_query("SELECT username FROM users WHERE id = $inviter") or sqlerr(__FILE__, __LINE__);
 $arr = mysql_fetch_assoc($res);
-$invusername = $arr[username];
+$invusername = $arr['username'];
 }
 
 if (!mkglobal("wantusername:wantpassword:passagain:email"))
@@ -211,4 +211,3 @@ sql_query("INSERT INTO messages (sender, receiver, subject, added, msg) VALUES(0
 $Cache->delete_value('user_'.$inviter.'_unread_message_count');
 $Cache->delete_value('user_'.$inviter.'_inbox_count');
 }
-?>

@@ -51,21 +51,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	$classname="美工";
 	$query3 = sql_query("SELECT * FROM users WHERE designer='yes'");
 		while($dat=mysql_fetch_assoc($query3))
-		{	sql_query("UPDATE users SET seedbonus = seedbonus + $point WHERE id=".$dat[id]);
-			if(mysql_num_rows(sql_query("SELECT * FROM users WHERE id=".$dat[id]))>0)sql_query("INSERT INTO messages (sender, receiver, added,  subject, msg) VALUES (0, $dat[id], $dt, '福利来啦！', '管理组为所有"."$classname"."发放了$point"."个魔力值，请笑纳！')") or sqlerr(__FILE__,__LINE__);}}
+		{	sql_query("UPDATE users SET seedbonus = seedbonus + $point WHERE id=".$dat['id']);
+			if(mysql_num_rows(sql_query("SELECT * FROM users WHERE id=".$dat['id']))>0)sql_query("INSERT INTO messages (sender, receiver, added,  subject, msg) VALUES (0, $dat[id], $dt, '福利来啦！', '管理组为所有"."$classname"."发放了$point"."个魔力值，请笑纳！')") or sqlerr(__FILE__,__LINE__);}}
 	elseif($class=="support")//客服
 	{
 	$classname="客服";
 	$query3 = sql_query("SELECT * FROM users WHERE support='yes'");
 		while($dat=mysql_fetch_assoc($query3))
-		{	sql_query("UPDATE users SET seedbonus = seedbonus + $point WHERE id=".$dat[id]);
-			if(mysql_num_rows(sql_query("SELECT * FROM users WHERE id=".$dat[id]))>0)sql_query("INSERT INTO messages (sender, receiver, added,  subject, msg) VALUES (0, $dat[id], $dt, '福利来啦！', '管理组为所有"."$classname"."发放了$point"."个魔力值，请笑纳！')") or sqlerr(__FILE__,__LINE__);}}
+		{	sql_query("UPDATE users SET seedbonus = seedbonus + $point WHERE id=".$dat['id']);
+			if(mysql_num_rows(sql_query("SELECT * FROM users WHERE id=".$dat['id']))>0)sql_query("INSERT INTO messages (sender, receiver, added,  subject, msg) VALUES (0, $dat[id], $dt, '福利来啦！', '管理组为所有"."$classname"."发放了$point"."个魔力值，请笑纳！')") or sqlerr(__FILE__,__LINE__);}}
 	elseif($class=="all")
 {	$classname="用户";
 	$query2 = sql_query("SELECT * FROM users");
 		while($dat=mysql_fetch_assoc($query2))
-		{	sql_query("UPDATE users SET seedbonus = seedbonus + $point WHERE id=".$dat[id]);
-			if(mysql_num_rows(sql_query("SELECT * FROM users WHERE id=".$dat[id]))>0)sql_query("INSERT INTO messages (sender, receiver, added,  subject, msg) VALUES (0, $dat[id], $dt, '福利来啦！', '管理组为所有"."$classname"."发放了$point"."个魔力值，请笑纳！')") or sqlerr(__FILE__,__LINE__);}}
+		{	sql_query("UPDATE users SET seedbonus = seedbonus + $point WHERE id=".$dat['id']);
+			if(mysql_num_rows(sql_query("SELECT * FROM users WHERE id=".$dat['id']))>0)sql_query("INSERT INTO messages (sender, receiver, added,  subject, msg) VALUES (0, $dat[id], $dt, '福利来啦！', '管理组为所有"."$classname"."发放了$point"."个魔力值，请笑纳！')") or sqlerr(__FILE__,__LINE__);}}
 	
 	else{
 	$classname=($class==10?"贵宾":($class==11?"养老族":($class==12?"上传员":($class==13?"类管理员":($class==14?"管理员":($class==15?"维护开发员":"主管"))))));
@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 		die;
 	}
 */	$arr= mysql_fetch_assoc(sql_query("SELECT id, bonuscomment FROM users WHERE username=$username"));
-	$bonuscomment=$arr[bonuscomment];
+	$bonuscomment=$arr['bonuscomment'];
 	$bonuscomment = date("Y-m-d") . " " .($seedbonus>=0?$seedbonus:-$seedbonus). " Points ".($seedbonus>=0?"added":"subtracted")." by ".$CURUSER["username"].".\n" .htmlspecialchars($bonuscomment);
 	sql_query("UPDATE users SET seedbonus=seedbonus + $seedbonus, bonuscomment = ".sqlesc($bonuscomment)." WHERE username=$username") or sqlerr(__FILE__, __LINE__);
 	$dt = sqlesc(date("Y-m-d H:i:s"));

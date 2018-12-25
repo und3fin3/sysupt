@@ -2,11 +2,11 @@
 require_once("include/bittorrent.php");
 require_once(get_langfile_path("", false));
 print("<title>TJUPT ".$lang_carsiinvite['title']." - Powered by NexusPHP</title>");
-//stderr($lang_carsiinvite['std_error'], $lang_carsiinvite['testing'],false);//²âÊÔÆÚ
+//stderr($lang_carsiinvite['std_error'], $lang_carsiinvite['testing'],false);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 if($_SERVER['REMOTE_ADDR'] !="121.193.130.230"&&$_SERVER['REMOTE_ADDR'] !="2001:da8:a000:650::230"||$_SERVER['HTTP_INSTITUTION']==""||$_SERVER['HTTP_USERNAME']=="")
 stderr($lang_carsiinvite['uncarsi'],$lang_carsiinvite['not_from_carsi'],false);
 dbconn();
-$second=5;//µ¹¼ÆÊ±µÄÃëÊý
+$second=5;//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 $langid = 0 + $_GET['sitelanguage'];
 if ($langid)
 {
@@ -21,7 +21,7 @@ failedloginscheck ();
 cur_user_check () ;
 $username = "'".$_SERVER['HTTP_USERNAME']."'";
 $institution = "'".$_SERVER['HTTP_INSTITUTION']."'";
-if($institution=="'tju'")//ÆÁ±Î±¾Ð£ÓÃ»§
+if($institution=="'tju'")
 stderr($lang_carsiinvite['noway'],$lang_carsiinvite['tjuuser'],false);
 $try=sql_query("SELECT * FROM carsi_schools WHERE idp = $institution ");
 $schools = mysql_fetch_assoc($try);
@@ -65,7 +65,7 @@ stdmsg($lang_carsiinvite['notice'], $lang_carsiinvite['msg']."
 num=<?php echo $second;?> ;
 function change(){
 getinvite.value="<?php echo $lang_carsiinvite['submit'];?>("+num+")";
-if(num==0)
+if(num===0)
 { 
 getinvite.disabled=false;
 getinvite.value="<?php echo $lang_carsiinvite['submit'];?>";

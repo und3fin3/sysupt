@@ -76,5 +76,3 @@ if ($CURUSER ["id"] != $row ["owner"]) {
 }
 
 header ( "Refresh: 0; url=torrents.php" );
-
-?>

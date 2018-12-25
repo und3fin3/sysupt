@@ -120,7 +120,7 @@ if ($showclientnotice)
 <table width="100%">
 <tr>
 <td class="embedded" style="text-align: center; padding: 5px;" width="50%">
-<a href="http://www.utorrent.com/download.php" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>uTorrent"><img src="pic/utorrentbig.png" alt="uTorrent" /></a>
+<a href="forums.php?action=viewtopic&forumid=15&topicid=15039" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>uTorrent"><img src="pic/utorrentbig.png" alt="uTorrent" /></a>
 </td>
 
 <?php /*?><td class="embedded" style="text-align: center; padding: 5px;" width="50%">
@@ -130,7 +130,7 @@ if ($showclientnotice)
 </tr>
 <tr>
 <td class="embedded" style="text-align: center; padding: 5px;">
-<div class="big"><a href="http://www.utorrent.com/download.php" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>uTorrent"><b>uTorrent</b></a></div>
+<div class="big"><a href="forums.php?action=viewtopic&forumid=15&topicid=15039" target="_blank" title="<?php echo $lang_downloadnotice['title_download']?>uTorrent"><b>uTorrent</b></a></div>
 <div><?php echo $lang_downloadnotice['text_for']?>Windows</div>
 </td>
 <?php /*?><td class="embedded" style="text-align: center; padding: 5px;">

@@ -14,7 +14,7 @@ function bark($msg) {
   exit;
 }
 
-$id = $CURUSER[id];
+$id = $CURUSER['id'];
 $email = unesc(htmlspecialchars(trim($_POST["email"])));
 $email = safe_email($email);
 if (!$email)
@@ -52,10 +52,10 @@ sql_query("UPDATE users SET invites = invites - 1 WHERE id = ".mysql_real_escape
 $title = $SITENAME.$lang_takeinvite['mail_tilte'];
 
 $message = <<<EOD
-{$lang_takeinvite['mail_one']}{$arr[username]}{$lang_takeinvite['mail_two']}
+{$lang_takeinvite['mail_one']}{$arr['username']}{$lang_takeinvite['mail_two']}
 <b><a href="https://$BASEURL/signup.php?type=invite&invitenumber=$hash" target="_blank">{$lang_takeinvite['mail_here']}</a></b><br />
 https://$BASEURL/signup.php?type=invite&invitenumber=$hash
-<br />{$lang_takeinvite['mail_three']}$invite_timeout{$lang_takeinvite['mail_four']}{$arr[username]}{$lang_takeinvite['mail_five']}<br />
+<br />{$lang_takeinvite['mail_three']}$invite_timeout{$lang_takeinvite['mail_four']}{$arr['username']}{$lang_takeinvite['mail_five']}<br />
 $body
 <br /><br />{$lang_takeinvite['mail_six']}
 EOD;

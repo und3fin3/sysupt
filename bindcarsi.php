@@ -16,4 +16,3 @@ if(mysql_num_rows($res) == 0)
 echo(mysql_num_rows($res));	
 //echo("sb");
 redirect("" . get_protocol_prefix() . "$BASEURL/userdetails.php?id=".$tjuptid);
-?>

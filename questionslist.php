@@ -26,7 +26,7 @@ $res=sql_query("SELECT * FROM questions");
 while($arr=mysql_fetch_assoc($res))
 {
 print("<tr>
-<td class=\"rowfollow\">".$arr[id]."</td>
+<td class=\"rowfollow\">".$arr['id']."</td>
 <td class=\"rowfollow\" align=\"left\">". $arr["question"] ."</td>
 <td class=\"rowfollow\" align=\"left\">". $arr["answer1"] ."</td>
 <td class=\"rowfollow\" align=\"left\">". $arr["answer2"] ."</td>

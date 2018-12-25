@@ -1,7 +1,7 @@
 <?php
 require "include/bittorrent.php";
 dbconn();
-failedloginscheck ("Re-send",true);
+failedloginscheck ("Re-send");
 
 $langid = 0 + $_GET['sitelanguage'];
 if ($langid)

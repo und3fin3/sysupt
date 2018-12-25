@@ -62,15 +62,15 @@ if (ob_get_level() == 0) ob_start();
 			}
 			
 			//if($specificcat!="" && strstr($arr1["specificcat"], '?'))
-				//$updateinfoset[] = "specificcat = '".mysql_escape_string($specificcat)."'";
+				//$updateinfoset[] = "specificcat = ".sqlesc($specificcat);
 			//if($issuedate!="" && strstr($arr1["issuedate"], '?'))
-				//$updateinfoset[] = "issuedate = '".mysql_escape_string($issuedate)."'";		
+				//$updateinfoset[] = "issuedate = ".sqlesc($issuedate);
 			if($cname!="" && strstr($arr1["cname"], '?'))
-				$updateinfoset[] = "cname = '".mysql_escape_string($cname)."'";	
+				$updateinfoset[] = "cname = " . sqlesc($cname);
 			if($ename!="" && strstr($arr1["ename"], '?'))
-				$updateinfoset[] = "ename = '".mysql_escape_string($ename)."'";	
+				$updateinfoset[] = "ename = ".sqlesc($ename);
 			if($language!="" && strstr($arr1["language"], '?'))
-				$updateinfoset[] = "language = '".mysql_escape_string($language)."'";	
+				$updateinfoset[] = "language = ".sqlesc($language);
 		
 			$sql=join(",",$updateinfoset);
 			if($sql!=""){

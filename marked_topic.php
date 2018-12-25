@@ -4,27 +4,26 @@ dbconn();
 loggedinorreturn();
 parked();
 function paging($page,$page_amount )
-{   
-    global $lang_jc_rank;
+{
     if($page!=1&&$page!=$page_amount)
     {  
         //print("<div style=\"float:left\"");
-        print("<a href=\"?page=1\">|首页</a><a href=\"?rank_sort=".$rank_sort."&page=".($page+1)."\">|下页|</a><a>......</a><a href=\"?rank_sort=".$rank_sort."&page=".($page-1)."\">|上页</a><a href=\"?rank_sort=".$rank_sort."&page=".$page_amount."\">|尾页|</a>");
+        print("<a href=\"?page=1\">|首页</a><a href=\"?page=".($page+1)."\">|下页|</a><a>......</a><a href=\"?page=".($page-1)."\">|上页</a><a href=\"?page=".$page_amount."\">|尾页|</a>");
         //print("</div>");
     } 
     else if ($page==1 && $page_amount == 1)
     {
         //print("<div style=\"float:left\"");
-        print("<a href=\"?page=1\">|首页</a><a href=\"#\">|下页|</a><a>......</a><a href=\"#\">|上页|</a><a href=\"?rank_sort=".$rank_sort."&page=".$page_amount."\">|尾页|</a>");
+        print("<a href=\"?page=1\">|首页</a><a href=\"#\">|下页|</a><a>......</a><a href=\"#\">|上页|</a><a href=\"?page=".$page_amount."\">|尾页|</a>");
         //print("</div>");
     }
     else if($page==1){
-        print("<a href=\"?page=1\">|首页</a><a href=\"?rank_sort=".$rank_sort."&page=".($page+1)."\">|下页|</a><a>......</a><a>|上页|</a><a href=\"?rank_sort=".$rank_sort."&page=".$page_amount."\">|尾页|</a>");
+        print("<a href=\"?page=1\">|首页</a><a href=\"?page=".($page+1)."\">|下页|</a><a>......</a><a>|上页|</a><a href=\"?page=".$page_amount."\">|尾页|</a>");
     }
     else 
     { 
         //print("<div style=\"float:left\"");
-        print("<a href=\"?page=1\">|首页</a><a>|下页|</a><a>......</a><a href=\"?rank_sort=".$rank_sort."&page=".($page-1). "\">|上页|</a><a href=\"?rank_sort=".$rank_sort."&page=".$page_amount."\">|尾页|</a>");
+        print("<a href=\"?page=1\">|首页</a><a>|下页|</a><a>......</a><a href=\"?page=".($page-1). "\">|上页|</a><a href=\"?page=".$page_amount."\">|尾页|</a>");
 
         // print("</div>");
     }
@@ -74,7 +73,7 @@ print("<table border=0 cellspacing=0 cellpadding=3 width=940><tr>".
 "<td class=colhead align=center width=20%>最近回复</td>".
 "<td class=colhead align=center>操作</td>".
 "</tr>");
-$res_topics = sql_query("SELECT * FROM marked_topic INNER JOIN topics ON topics.id = marked_topic.tid WHERE marked_topic.uid = ".$CURUSER[id]." ORDER BY marked_topic.id DESC LIMIT"." ". ((sqlesc($page)-1)*sqlesc($pagesize)).",".sqlesc($pagesize)) or sqlerr();
+$res_topics = sql_query("SELECT * FROM marked_topic INNER JOIN topics ON topics.id = marked_topic.tid WHERE marked_topic.uid = ".$CURUSER['id']." ORDER BY marked_topic.id DESC LIMIT"." ". ((sqlesc($page)-1)*sqlesc($pagesize)).",".sqlesc($pagesize)) or sqlerr();
 while ($topicarr = mysql_fetch_assoc($res_topics))
 {
 	$topicid = $topicarr["id"];
@@ -128,15 +127,15 @@ while ($topicarr = mysql_fetch_assoc($res_topics))
 				{
 					$res=sql_query("SELECT * from topics where id = $tid");
 					if ($row=mysql_fetch_array($res))
-					{ $uid=$CURUSER[id];
-				sql_query("insert INTO marked_topic (tid, uid) VALUES ($tid,$uid)") or sqlerr ( __FILE__, __LINE__ );}}}
+					{ $uid=$CURUSER['id'];
+				sql_query("insert INTO marked_topic (tid, uid) VALUES ( $tid , $uid)") or sqlerr ( __FILE__, __LINE__ );}}}
 		if ($_GET["action"]=="delete")
 			{
 				if ($tid=$_GET["topicid"])
-				{ $uid=$CURUSER[id];
-					$res=sql_query("SELECT * from marked_topic where tid = $tid and uid =$uid");
+				{ $uid=$CURUSER['id'];
+					$res=sql_query("SELECT * from marked_topic where tid = $tid and uid = $uid");
 					if ($row=mysql_fetch_array($res))
-					{ sql_query("DELETE FROM marked_topic WHERE tid = $tid and uid =$uid") or sqlerr(__FILE__,__LINE__);}}}
+					{ sql_query("DELETE FROM marked_topic WHERE tid = $tid and uid = $uid") or sqlerr(__FILE__,__LINE__);}}}
      if (isset($_GET['page']))
         {  $page = 0+$_GET['page'];}
      else

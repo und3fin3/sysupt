@@ -41,18 +41,18 @@ echo '<tr><th>Class:</th>';
 echo '<td><select name="c"><option value="1">(any)</option>';
 for ($i = 2; ;++$i)
 {
-  if ($c = get_user_class_name($i-2)) echo '<option value="'.$i.'"'.($class == $i? ' selected' : '').">&lt;= $c</option>\n";
+  if ($c = get_user_class_name($i-2)) echo "<option value=\"$i\" " . ($class == $i ? ' selected' : '') . " >&lt;= $c</option>\n";
   else break;
 }
 echo '</select></td>';
 
 echo '<th>Ratio:</th>';
-echo '<td><select name="r"><option value="1"'.($ratio == 1?' selected' : '').'>(any)</option>';
-echo '<option value="2"'.($ratio == 2?' selected' : '').'>&gt;= 1.000</option>';
-echo '<option value="3"'.($ratio == 3?' selected' : '').'>&gt;= 2.000</option>';
-echo '<option value="4"'.($ratio == 4?' selected' : '').'>&gt;= 3.000</option>';
-echo '<option value="5"'.($ratio == 5?' selected' : '').'>&gt;= 4.000</option>';
-echo '<option value="6"'.($ratio == 6?' selected' : '').'>&gt;= 5.000</option>';
+echo '<td><select name="r"><option value="1" '.($ratio == 1?' selected' : '').' >(any)</option>';
+echo '<option value="2" '.($ratio == 2?' selected' : '').' >&gt;= 1.000</option>';
+echo '<option value="3" '.($ratio == 3?' selected' : '').' >&gt;= 2.000</option>';
+echo '<option value="4" '.($ratio == 4?' selected' : '').' >&gt;= 3.000</option>';
+echo '<option value="5" '.($ratio == 5?' selected' : '').' >&gt;= 4.000</option>';
+echo '<option value="6" '.($ratio == 6?' selected' : '').' >&gt;= 5.000</option>';
 echo '</select></td>';
 
 echo '</tr><tr><td colspan="4"><input name="submit" type="submit"></td></tr>';
@@ -108,4 +108,3 @@ echo $pagerbottom;
 end_frame();
 
 stdfoot();
-?>

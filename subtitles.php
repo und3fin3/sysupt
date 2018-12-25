@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"] == "upload" && ($in
 		exit;
 	}
 
-	$accept_ext = array('sub' => sub, 'srt' => srt, 'zip' => zip, 'rar' => rar, 'ace' => ace, 'txt' => txt, 'SUB' => SUB, 'SRT' => SRT, 'ZIP' => ZIP, 'RAR' => RAR, 'ACE' => ACE, 'TXT' => TXT, 'ssa' => ssa, 'ass' => ass, 'cue' => cue);
+	$accept_ext = array('sub' => 'sub', 'srt' => 'srt', 'zip' => 'zip', 'rar' => 'rar', 'ace' => 'ace', 'txt' => 'txt', 'SUB' => 'SUB', 'SRT' => 'SRT', 'ZIP' => 'ZIP', 'RAR' => 'RAR', 'ACE' => 'ACE', 'TXT' => 'TXT', 'ssa' => 'ssa', 'ass' => 'ass', 'cue' => 'cue');
 	$ext_l = strrpos($file['name'], ".");
 	$ext = strtolower(substr($file['name'], $ext_l+1, strlen($file['name'])-($ext_l+1)));
 
@@ -299,7 +299,7 @@ if (get_user_class() >= $delownsub_class)
 							$res = sql_query("SELECT lang_name from language WHERE sub_lang=1 AND id = " . sqlesc($a["lang_id"])) or sqlerr(__FILE__, __LINE__);
 							$arr = mysql_fetch_assoc($res);
 							write_log(($a["uppedby"] != $CURUSER["id"] ? "管理员 ".$CURUSER['username']:(($a["anonymous"] == 'yes' && $a["uppedby"] == $CURUSER["id"]) ? "匿名发布者" :"发布者 ".$CURUSER['username']))." 重命名了字幕 "."$arr[lang_name]字幕 $rename ($a[title]) ".($rename1 != "" ? " (".$rename1.")" : "")); 
-							if ($result=ture) {
+							if ($result) {
 								echo "<script>alert('字幕重命名成功');window.location.href='details.php?id={$a['torrent_id']}';</script>";
 							}else{
 								echo "<script>alert('字幕重命名失败');window.location.href='subtitles.php?rename={$rename}';</script>";

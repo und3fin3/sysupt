@@ -37,7 +37,7 @@ function searchtable($title, $action, $opts = array()) {
 	if ($opts) {
 		print ($lang_log ['text_in'] . "<select name=search>") ;
 		foreach ( $opts as $value => $text )
-			print ("<option value='" . $value . "'" . ($value == $_GET ['search'] ? " selected" : "") . ">" . $text . "</option>") ;
+			print ("<option value='$value' " . ($value == $_GET ['search'] ? " selected" : "") . " >" . $text . "</option>") ;
 		print ("</select>") ;
 	}
 	print ("<input type=\"hidden\" name=\"action\" value='" . $action . "'>&nbsp;&nbsp;") ;
@@ -49,7 +49,7 @@ function additem($title, $action) {
 	print ("<table border=1 cellspacing=0 width=940 cellpadding=5>\n") ;
 	print ("<tr><td class=colhead align=left>" . $title . "</td></tr>\n") ;
 	print ("<tr><td class=toolbox align=left><form method=\"post\" action='" . $_SERVER ['PHP_SELF'] . "'>\n") ;
-	print ("<textarea name=\"txt\" style=\"width:500px\" rows=\"3\" >" . $row ["txt"] . "</textarea>\n") ;
+	print ("<textarea name=\"txt\" style=\"width:500px\" rows=\"3\" ></textarea>\n") ;
 	print ("<input type=\"hidden\" name=\"action\" value=" . $action . ">") ;
 	print ("<input type=\"hidden\" name=\"do\" value=\"add\">") ;
 	print ("<input type=submit value=" . $lang_log ['submit_add'] . "></form>\n") ;
@@ -86,12 +86,12 @@ function searchadmin($title, $opts = array()) {
 			16 => "主管" 
 	);
 	foreach ( $modclass as $value => $name )
-		print ("<option value=\"" . $value . "\"" . ($_GET ['queryclass'] == $value || ($value == 13 && ! isset ( $_GET ['queryclass'] )) ? " selected " : "") . ">" . $name . " </option>\n") ;
+		print ("<option value='$value' " . ($_GET ['queryclass'] == $value || ($value == 13 && ! isset ( $_GET ['queryclass'] )) ? " selected " : "") . " >" . $name . " </option>\n") ;
 	print ("<select>") ;
 	if ($opts) {
 		print ($lang_log ['searchtype'] . "<select name=searchclass>") ;
 		foreach ( $opts as $value => $text )
-			print ("<option value='" . $value . "'" . ($value == $_GET ['searchclass'] ? " selected" : "") . ">" . $text . "</option>") ;
+			print ("<option value='$value' " . ($value == $_GET ['searchclass'] ? " selected" : "") . " >" . $text . "</option>") ;
 		print ("</select>") ;
 	}
 	
@@ -167,18 +167,18 @@ else {
 			
 			logmenu ( 'dailylog' );
 			$opt = array (
-					all => $lang_log ['text_all'],
-					normal => $lang_log ['text_normal'],
-					mod => $lang_log ['text_mod'] 
+					'all' => $lang_log ['text_all'],
+					'normal' => $lang_log ['text_normal'],
+					'mod' => $lang_log ['text_mod']
 			);
 			searchtable ( $lang_log ['text_search_log'], 'dailylog', $opt );
 			
 			// my codes
 			if (get_user_class () > 12) {
 				$optclass = array (
-						above => $lang_log ['moreequal'],
-						exact => $lang_log ['equal'],
-						below => $lang_log ['less'] 
+						'above' => $lang_log ['moreequal'],
+						'exact' => $lang_log ['equal'],
+						'below' => $lang_log ['less']
 				);
 				searchadmin ( $lang_log ['hint'], $optclass );
 			}
@@ -450,9 +450,9 @@ else {
 			}
 			logmenu ( "funbox" );
 			$opt = array (
-					title => $lang_log ['text_title'],
-					body => $lang_log ['text_body'],
-					both => $lang_log ['text_both'] 
+					'title' => $lang_log ['text_title'],
+					'body' => $lang_log ['text_body'],
+					'both' => $lang_log ['text_both']
 			);
 			searchtable ( $lang_log ['text_search_funbox'], 'funbox', $opt );
 			$res = sql_query ( "SELECT COUNT(*) FROM fun " . $wherea );
@@ -503,9 +503,9 @@ else {
 			}
 			logmenu ( "news" );
 			$opt = array (
-					title => $lang_log ['text_title'],
-					body => $lang_log ['text_body'],
-					both => $lang_log ['text_both'] 
+					'title' => $lang_log ['text_title'],
+					'body' => $lang_log ['text_body'],
+					'both' => $lang_log ['text_both']
 			);
 			searchtable ( $lang_log ['text_search_news'], 'news', $opt );
 			

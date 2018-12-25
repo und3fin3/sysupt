@@ -28,7 +28,7 @@ if ($getcode) {
     if ($arr['used_type'] == 'none') {
         stdhead($lang_self_invite['title']);
         $emailaddress = $arr['email'];
-        print("<table width=700 class=main border=0 cellspacing=0 cellpadding=0>\n<tr><td class=embedded><h2>" . $lang_self_invite['welcome'] . "</h2>\n<table width=\"100%\"><tr><td class=\"text\">\n<form method=\"post\" action=\"self_invite.php\" />\n<input type=\"hidden\" name=\"code\" value=\"" . $code . "\" />\n" . $lang_self_invite[you_can_use_email] . $emailaddress . "\n<select name=\"type\"> <option value=\"invite\">" . $lang_self_invite['invite'] . "</option><option value=\"revive\" selected=\"selected\">" . $lang_self_invite['revive'] . "</option><option value=\"addbonus\">" . $lang_self_invite['addbonus'] . "</option></select><br/>\n" . $lang_self_invite[username] . "<input name=\"username\" value=\"\" /><input type=\"submit\" name=\"submit\" value=\"" . $lang_self_invite[enter] . "\" /></form>");
+        print("<table width=700 class=main border=0 cellspacing=0 cellpadding=0>\n<tr><td class=embedded><h2>" . $lang_self_invite['welcome'] . "</h2>\n<table width=\"100%\"><tr><td class=\"text\">\n<form method=\"post\" action=\"self_invite.php\" />\n<input type=\"hidden\" name=\"code\" value=\"" . $code . "\" />\n" . $lang_self_invite['you_can_use_email'] . $emailaddress . "\n<select name=\"type\"> <option value=\"invite\">" . $lang_self_invite['invite'] . "</option><option value=\"revive\" selected=\"selected\">" . $lang_self_invite['revive'] . "</option><option value=\"addbonus\">" . $lang_self_invite['addbonus'] . "</option></select><br/>\n" . $lang_self_invite['username'] . "<input name=\"username\" value=\"\" /><input type=\"submit\" name=\"submit\" value=\"" . $lang_self_invite['enter'] . "\" /></form>");
         stdfoot();
         die();
     } elseif ($arr['used_type'] == 'invite') {
@@ -126,4 +126,3 @@ EOD;
     print("<tr><td><h2>" . $lang_self_invite['notice'] . "</h2></td></tr></table>");
 }
 stdfoot();
-?>

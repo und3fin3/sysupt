@@ -6,8 +6,7 @@ loggedinorreturn();
 if (get_user_class() < UC_SYSOP) {
 	die("access denied.");
 }
-mysql_connect($mysql_host,$mysql_user,$mysql_pass);
-mysql_select_db($mysql_db);
+dbconn();
 stdhead("Manage Locations");
 begin_main_frame("",false,100);
 begin_frame("Manage Locations",true,10,"100%","center");
@@ -93,7 +92,7 @@ if($editid > 0) {
 	echo("<tr><td class=rowhead>Name:</td><td class=rowfollow align=left><input type='text' size=10 name='name' value='$name'></td></tr>");
 	echo("<tr><td class=rowhead><nobr>Main Location:</nobr></td><td class=rowfollow align=left><input type='text' size=50 name='location_main' value='$location_main'></td></tr>");
 	echo("<tr><td class=rowhead><nobr>Sub Location:</nobr></td><td class=rowfollow align=left><input type='text' size=50 name='location_sub' value='$location_sub'></td></tr>");
-	echo("<tr><td class=rowhead><nobr>Privilege:</nobr></td><td class=rowfollow align=left><input type='text' size=1 name='privilege' value='$privilege'>&nbsp;should be set <u>&gt;=0</u>, default: <span style=\"font-weight: bold; color: \\#f00;\">0</span></td></tr>");
+	echo("<tr><td class=rowhead><nobr>Privilege:</nobr></td><td class=rowfollow align=left><input type='text' size=1 name='privilege' value='$privilege'>&nbsp;should be set <u>&gt;=0</u>, default: <span style=\"font-weight: bold; color: #f00;\">0</span></td></tr>");
 	echo("<tr><td class=rowhead><nobr>Start IP:</nobr></td><td class=rowfollow align=left><input type='text' size=30 name='start_ip' value='" . $start_ip . "'></td></tr>");
 	echo("<tr><td class=rowhead><nobr>End IP:</nobr></td><td class=rowfollow align=left><input type='text' size=30 name='end_ip' value='" . $end_ip. "'></td></tr>");
 	echo("<tr><td class=rowhead><nobr>Theory Up:</nobr></td><td class=rowfollow align=left><input type='text' size=10 name='theory_upspeed' value='$theory_upspeed'></td></tr>");
@@ -151,7 +150,7 @@ echo("<tr><td class=colhead align=center colspan=2>Add New Locations</td></tr>")
 echo("<tr><td class=rowhead>Name:</td><td class=rowfollow align=left><input type='text' size=10 name='name'></td></tr>");
 echo("<tr><td class=rowhead><nobr>Main Location:</nobr></td><td class=rowfollow align=left><input type='text' size=50 name='location_main'></td></tr>");
 echo("<tr><td class=rowhead><nobr>Sub Location:</nobr></td><td class=rowfollow align=left><input type='text' size=50 name='location_sub'></td></tr>");
-echo("<tr><td class=rowhead><nobr>Privilege:</nobr></td><td class=rowfollow align=left><input type='text' size=1 name='privilege'>&nbsp;should be set <u>&gt;=0</u>, default: <span style=\"font-weight: bold; color: \\#f00;\">0</span></td></tr>");
+echo("<tr><td class=rowhead><nobr>Privilege:</nobr></td><td class=rowfollow align=left><input type='text' size=1 name='privilege'>&nbsp;should be set <u>&gt;=0</u>, default: <span style=\"font-weight: bold; color: #f00;\">0</span></td></tr>");
 echo("<tr><td class=rowhead><nobr>Start IP:</nobr></td><td class=rowfollow align=left><input type='text' size=30 name='start_ip'></td></tr>");
 echo("<tr><td class=rowhead><nobr>End IP:</nobr></td><td class=rowfollow align=left><input type='text' size=30 name='end_ip'></td></tr>");
 echo("<tr><td class=rowhead><nobr>Theory Up:</nobr></td><td class=rowfollow align=left><input type='text' size=10 name='theory_upspeed'></td></tr>");
@@ -254,5 +253,3 @@ echo $pagerbottom;
 end_frame();
 end_frame();
 stdfoot();
-
-?>

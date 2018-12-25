@@ -59,7 +59,7 @@ while($arr = mysql_fetch_assoc($res)){
 		
 		$sql = "";
 		if($format!="")
-			$sql = "format = '".mysql_escape_string($format)."'";
+			$sql = "format = ".sqlesc($format);
 		print($i."   ");
 		//print($arr[id]."  ");
 		//print("SQL：".$sql);

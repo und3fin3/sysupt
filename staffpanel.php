@@ -79,4 +79,3 @@ if (get_user_class() >= UC_MODERATOR) {
 }
 end_main_frame();
 stdfoot();
-?>

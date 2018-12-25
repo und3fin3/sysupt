@@ -35,15 +35,15 @@ if (ob_get_level() == 0) ob_start();
 		while($arr1 = mysql_fetch_assoc($res1)){
 			
 			if($specificcat!="" && strstr($arr1["specificcat"], '?'))
-				$updateinfoset[] = "specificcat = '".mysql_escape_string($specificcat)."'";				
+				$updateinfoset[] = "specificcat = ".sqlesc($specificcat);
 			if($cname!="" && strstr($arr1["cname"], '?'))
-				$updateinfoset[] = "cname = '".mysql_escape_string($cname)."'";	
+				$updateinfoset[] = "cname = ".sqlesc($cname);
 				
 			$sql=join(",",$updateinfoset);
 				
 			if($sql!=""){
 				print($i."   ");
-				print($arr[id]."   ");//specificcat,issuedate,cname,ename,language,
+				print($arr['id']."   ");//specificcat,issuedate,cname,ename,language,
 				print("SQL：".$sql."  ");
 				sql_query("UPDATE torrentsinfo SET " . $sql . " WHERE torid = $arr[id]") or sqlerr(__FILE__, __LINE__);
 		
@@ -54,4 +54,3 @@ if (ob_get_level() == 0) ob_start();
 		ob_flush();
 		flush();
 	}
-?>

@@ -35,9 +35,9 @@ if (ob_get_level() == 0) ob_start();
 			while($arr1 = mysql_fetch_assoc($res1)){
 			
 				if(strpos($arr1["specificcat"],'?')===0 && $movie->get_data('genre') != NULL)
-					$updateinfoset[] = "specificcat = '".mysql_escape_string(str_replace(", ","/",$movie->get_data('genre')))."'";
+					$updateinfoset[] = "specificcat = ".sqlesc(str_replace(", ","/",$movie->get_data('genre')));
 				if(strpos($arr1["language"],'?')===0 && $movie->get_data('language') != NULL)
-					$updateinfoset[] = "language = '".mysql_escape_string(str_replace(", ","/",$movie->get_data('language')))."'";
+					$updateinfoset[] = "language = ".sqlesc(str_replace(", ","/",$movie->get_data('language')));
 						
 				$sql=join(",",$updateinfoset);
 				if($sql!="")

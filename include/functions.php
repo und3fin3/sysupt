@@ -474,7 +474,7 @@ function format_comment($text, $strip_html = true, $xssclean = false, $newtab = 
 	$replaceXhtmlTagArray = array (
 			get_protocol_prefix () . $BASEURL,
 			$SITENAME,
-			get_username($CURUSER[id]),
+			get_username($CURUSER['id']),
 			'<img class="listicon listitem" src="pic/trans.gif" alt="list" />',
 			'<b>',
 			'</b>',
@@ -795,11 +795,13 @@ function get_user_class_name($class, $compact = false, $b_colored = false, $I18N
 				$class_name = $this_lang_functions ['text_retiree'];
 				break;
 			}
+			/*
 		case UC_FORUM_MODERATOR :
 			{
 				$class_name = $this_lang_functions ['text_forum_moderator'];
 				break;
 			}
+			*/
 		case UC_MODERATOR :
 			{
 				$class_name = $this_lang_functions ['text_moderators'];
@@ -820,11 +822,13 @@ function get_user_class_name($class, $compact = false, $b_colored = false, $I18N
 				$class_name = $this_lang_functions ['text_staff_leader'];
 				break;
 			}
+			/*
 		case UC_KAKA :
 			{
 				$class_name = $this_lang_functions ['text_kaka'];
 				break;
 			}
+			*/
 	}
 
 	switch ($class) {
@@ -893,11 +897,13 @@ function get_user_class_name($class, $compact = false, $b_colored = false, $I18N
 				$class_name_color = $en_lang_functions ['text_retiree'];
 				break;
 			}
+			/*
 		case UC_FORUM_MODERATOR :
 			{
 				$class_name_color = $en_lang_functions ['text_forum_moderator'];
 				break;
 			}
+			*/
 		case UC_MODERATOR :
 			{
 				$class_name_color = $en_lang_functions ['text_moderators'];
@@ -918,11 +924,13 @@ function get_user_class_name($class, $compact = false, $b_colored = false, $I18N
 				$class_name_color = $en_lang_functions ['text_staff_leader'];
 				break;
 			}
+			/*
 		case UC_STAFFLEADER :
 			{
 				$class_name_color = $en_lang_functions ['text_kaka'];
 				break;
 			}
+			*/
 	}
 
 	$class_name = ($compact == true ? str_replace ( " ", "", $class_name ) : $class_name);
@@ -971,9 +979,9 @@ function begin_main_frame($caption = "", $center = false, $width = 100) {
 
 	if ($center)
 		$tdextra .= " align=\"center\"";
-	if ($CURUSER[width]=='wide')
+	if ($CURUSER['width']=='wide')
 	$width = 1140 * $width / 100;
-	elseif ($CURUSER[width]=='narrow')
+	elseif ($CURUSER['width']=='narrow')
 	$width = 940 * $width / 100;
 	else 	$width = 1140 * $width / 100;
 	print ("<table class=\"main\" width=\"" . $width . "\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">" . "<tr><td class=\"embedded\" $tdextra>") ;
@@ -1508,7 +1516,7 @@ function tagspreview(obj){
 			<tr>
 				<td colspan="4" class="embedded">
 <?php
-	smile_table(body);
+	smile_table('body');
 	?>
 				</td><tr></tr><td colspan="4" class="embedded"><script type="text/javascript">
 //<![CDATA[
@@ -1937,10 +1945,10 @@ function sent_mail($to, $fromname, $fromemail, $subject, $body, $type = "confirm
 		// @mail($to,"=?".$hdr_encoding."?B?".base64_encode($subject)."?=",$body,$headers)
 		// or return false;
 
-		ini_restore ( SMTP );
-		ini_restore ( smtp_port );
+		ini_restore ( 'SMTP' );
+		ini_restore ( 'smtp_port' );
 		if ($windows)
-			ini_restore ( sendmail_from );
+			ini_restore ( 'sendmail_from' );
 	} elseif ($smtptype == 'external') {
 		require_once ($rootpath . 'include/smtp/smtp.lib.php');
 		$mail = new smtp ( $hdr_encoding, 'eYou' );
@@ -2096,7 +2104,7 @@ function random_str($length = "6") {
 			"8",
 			"9"
 	);
-	$str;
+	$str = "";
 	for($i = 1; $i <= $length; $i ++) {
 		$ch = rand ( 0, count ( $set ) - 1 );
 		$str .= $set [$ch];
@@ -2649,7 +2657,7 @@ function tr_small($x, $y, $noesc = 0, $relation = '') {
 	print ("<tr" . ($relation ? " relation = \"$relation\"" : "") . "><td width=\"1%\" class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" . $x . "</td><td width=\"99%\" class=\"rowfollow\" valign=\"top\" align=\"left\">" . $a . "</td></tr>\n") ;
 }
 function twotd($x, $y, $nosec = 0) {
-	if ($noesc)
+	if ($nosec)
 		$a = $y;
 	else {
 		$a = htmlspecialchars ( $y );
@@ -2872,9 +2880,9 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
 			$offlinemsg = true;
 		}
 	}
-	if ($CURUSER[width]=='wide')
+	if ($CURUSER['width']=='wide')
 	$width = 1180;
-	elseif ($CURUSER[width]=='narrow')
+	elseif ($CURUSER['width']=='narrow')
 	$width = 980 ;
 	else 	$width = 1180;
 
@@ -3189,7 +3197,7 @@ if (false) {
 											src="pic/trans.gif" /><?php echo $activeleech?>&nbsp;&nbsp;<font
 											class='color_connectable'><?php echo $lang_functions['text_connectable'] ?></font><?php echo $connectable?> <?php echo maxslots();?></span></td>
 
-									<td class="bottom" align="right"><span class="medium"><?php echo $lang_functions['text_the_time_is_now'] ?><?php echo $datum[hours].":".$datum[minutes]?><br />
+									<td class="bottom" align="right"><span class="medium"><?php echo $lang_functions['text_the_time_is_now'] ?><?php echo $datum['hours'].":".$datum['minutes']?><br />
 
 <?php
 		if (get_user_class () >= $staffmem_class) {
@@ -3541,7 +3549,7 @@ function deletetorrent($id,$reasonstr='') {
 	}
   $res2=sql_query("select userid from peers where torrent = $id");
 	while($arr=mysql_fetch_array($res2)){
-	$receiver=$arr[userid];
+	$receiver=$arr['userid'];
 	$dt = sqlesc(date("Y-m-d H:i:s"));
 	$subject="您正在下载或做种的种子被删除";
 	$msg="您正在下载或做种的种子[b]".$name."[/b]被".($CURUSER["id"] == $row["owner"]?"发布者 ":"管理员 ").$CURUSER['username']." 删除".($reasonstr ? "，原因是:".$reasonstr :"")."。";
@@ -3681,7 +3689,7 @@ function commenttable($rows, $type, $parent_id, $review = false) {
 		}
 		print ("<div style=\"margin-top: 8pt; margin-bottom: 8pt;\"><table id=\"cid" . $row ["id"] . "\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td class=\"embedded\" width=\"99%\">#" . $row ["id"] . "&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_by'] . "</font>") ;
 		print (get_username ( $row ["user"], false, true, true, false, false, true )) ;
-		print ("&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_at'] . "</font>" . gettime ( $row ["added"] ) . ($row ["editedby"] && get_user_class () >= $commanage_class ? " - [<a href=\"comment.php?action=vieworiginal&amp;cid=" . $row [id] . "&amp;type=" . $type . "\">" . $lang_functions ['text_view_original'] . "</a>]" : "") . "</td><td class=\"embedded nowrap\" width=\"1%\"><a href=\"#top\"><img class=\"top\" src=\"pic/trans.gif\" alt=\"Top\" title=\"Top\" /></a>&nbsp;&nbsp;</td></tr></table></div>") ;
+		print ("&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_at'] . "</font>" . gettime ( $row ["added"] ) . ($row ["editedby"] && get_user_class () >= $commanage_class ? " - [<a href=\"comment.php?action=vieworiginal&amp;cid=" . $row ['id'] . "&amp;type=" . $type . "\">" . $lang_functions ['text_view_original'] . "</a>]" : "") . "</td><td class=\"embedded nowrap\" width=\"1%\"><a href=\"#top\"><img class=\"top\" src=\"pic/trans.gif\" alt=\"Top\" title=\"Top\" /></a>&nbsp;&nbsp;</td></tr></table></div>") ;
 		$avatar = ($CURUSER ["avatars"] == "yes" ? htmlspecialchars ( trim ( $userRow ["avatar"] ) ) : "");
 		if (! $avatar)
 			$avatar = "pic/default_avatar.png";
@@ -3717,7 +3725,7 @@ function commenttable($rows, $type, $parent_id, $review = false) {
 		// . $row [id] . "&amp;type=" . $type . "\"><img class=\"f_edit\"
 		// src=\"pic/trans.gif\" alt=\"Edit\" title=\"" . $lang_functions
 		// ['title_edit'] . "\" />" . "</a>" : "");
-		$actionbar = "<a href=\"comment.php?action=add&amp;sub=quote&amp;cid=" . $row [id] . "&amp;pid=" . $parent_id . "&amp;type=" . $type . "\"><img class=\"f_quote\" src=\"pic/trans.gif\" alt=\"Quote\" title=\"" . $lang_functions ['title_reply_with_quote'] . "\" /></a>" . "<a onclick='javascript:quick_reply_to(\"" . $userRow ["username"] . "\");' href='#quickreply'><img class=\"f_reply\" src=\"pic/trans.gif\" alt=\"Add Reply\" title=\"" . $lang_functions ['title_add_reply'] . "\" /></a>" . (get_user_class () >= $commanage_class ? "<a href=\"comment.php?action=delete&amp;cid=" . $row [id] . "&amp;type=" . $type . "\"><img class=\"f_delete\" src=\"pic/trans.gif\" alt=\"Delete\" title=\"" . $lang_functions ['title_delete'] . "\" /></a>" : "") . ($row ["user"] == $CURUSER ["id"] || get_user_class () >= $commanage_class ? "<a href=\"comment.php?action=edit&amp;cid=" . $row [id] . "&amp;type=" . $type . "\"><img class=\"f_edit\" src=\"pic/trans.gif\" alt=\"Edit\" title=\"" . $lang_functions ['title_edit'] . "\" />" . "</a>" : "");
+		$actionbar = "<a href=\"comment.php?action=add&amp;sub=quote&amp;cid=" . $row ['id'] . "&amp;pid=" . $parent_id . "&amp;type=" . $type . "\"><img class=\"f_quote\" src=\"pic/trans.gif\" alt=\"Quote\" title=\"" . $lang_functions ['title_reply_with_quote'] . "\" /></a>" . "<a onclick='javascript:quick_reply_to(\"" . $userRow ["username"] . "\");' href='#quickreply'><img class=\"f_reply\" src=\"pic/trans.gif\" alt=\"Add Reply\" title=\"" . $lang_functions ['title_add_reply'] . "\" /></a>" . (get_user_class () >= $commanage_class ? "<a href=\"comment.php?action=delete&amp;cid=" . $row ['id'] . "&amp;type=" . $type . "\"><img class=\"f_delete\" src=\"pic/trans.gif\" alt=\"Delete\" title=\"" . $lang_functions ['title_delete'] . "\" /></a>" : "") . ($row ["user"] == $CURUSER ["id"] || get_user_class () >= $commanage_class ? "<a href=\"comment.php?action=edit&amp;cid=" . $row ['id'] . "&amp;type=" . $type . "\"><img class=\"f_edit\" src=\"pic/trans.gif\" alt=\"Edit\" title=\"" . $lang_functions ['title_edit'] . "\" />" . "</a>" : "");
 		print ("<tr><td class=\"toolbox\"> " . ("'" . $userRow ['last_access'] . "'" > $dt ? "<img class=\"f_online\" src=\"pic/trans.gif\" alt=\"Online\" title=\"" . $lang_functions ['title_online'] . "\" />" : "<img class=\"f_offline\" src=\"pic/trans.gif\" alt=\"Offline\" title=\"" . $lang_functions ['title_offline'] . "\" />") . "<a href=\"sendmessage.php?receiver=" . htmlspecialchars ( trim ( $row ["user"] ) ) . "\"><img class=\"f_pm\" src=\"pic/trans.gif\" alt=\"PM\" title=\"" . $lang_functions ['title_send_message_to'] . htmlspecialchars ( $userRow ["username"] ) . "\" /></a><a href=\"report.php?commentid=" . htmlspecialchars ( trim ( $row ["id"] ) ) . "\"><img class=\"f_report\" src=\"pic/trans.gif\" alt=\"Report\" title=\"" . $lang_functions ['title_report_this_comment'] . "\" /></a></td><td class=\"toolbox\" align=\"right\">" . $actionbar . "</td>") ;
 
 		print ("</tr></table>\n") ;
@@ -3783,7 +3791,7 @@ function writecomment($userid, $comment) {
 	$res = sql_query ( "SELECT modcomment FROM users WHERE id = '$userid'" ) or sqlerr ( __FILE__, __LINE__ );
 	$arr = mysql_fetch_assoc ( $res );
 
-	$modcomment = date ( "Y-m-d" ) . " - " . $comment . "" . ($arr [modcomment] != "" ? "\n" : "") . "$arr[modcomment]";
+	$modcomment = date ( "Y-m-d" ) . " - " . $comment . "" . ($arr ['modcomment'] != "" ? "\n" : "") . "$arr[modcomment]";
 	$modcom = sqlesc ( $modcomment );
 
 	return sql_query ( "UPDATE users SET modcomment = $modcom WHERE id = '$userid'" ) or sqlerr ( __FILE__, __LINE__ );
@@ -4020,10 +4028,11 @@ function torrenttable($res, $variant = "torrent") {
 		$sphighlight = get_torrent_bg_color ( $row ['sp_state'] );
 		print ("<tr" . $sphighlight . ">\n") ;
 
-		print ("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0px'>") ;
+		print ("<td class=\"rowfollow nowrap\" valign=\"middle\" style='padding: 0'>") ;
 		if (isset ( $row ["category"] )) {
 			print (return_category_image ( $row ["category"], "?$oldlink" )) ;
 			if ($has_secondicon) {
+			    global $catimgurl;
 				print (get_second_icon ( $row, "pic/" . $catimgurl . "additional/" )) ;
 			}
 		} else
@@ -4130,7 +4139,7 @@ function torrenttable($res, $variant = "torrent") {
             print ($dissmall_descr == ""&& $dissmall_descr_pre == ""? "" : "<br />" . $dissmall_descr_pre . htmlspecialchars ( $dissmall_descr )) ;
 		}
 		print ("</td>") ;
-		if ($row[needkeepseed]=='yes')
+		if ($row['needkeepseed']=='yes')
 
 		print "<td width=\"20\"><font color=red><b>保种</b></font></td>";
 
@@ -4263,7 +4272,7 @@ function torrenttable($res, $variant = "torrent") {
 			print ("<td class=\"rowfollow\">0</td>\n") ;
 
 		if ($row ["times_completed"] >= 1)
-			print ("<td class=\"rowfollow\"><a href=\"viewsnatches.php?id=" . $row [id] . "\"><b>" . number_format ( $row ["times_completed"] ) . "</b></a></td>\n") ;
+			print ("<td class=\"rowfollow\"><a href=\"viewsnatches.php?id=" . $row ['id'] . "\"><b>" . number_format ( $row ["times_completed"] ) . "</b></a></td>\n") ;
 		else
 			print ("<td class=\"rowfollow\">" . number_format ( $row ["times_completed"] ) . "</td>\n") ;
 
@@ -4283,7 +4292,7 @@ function torrenttable($res, $variant = "torrent") {
 		}
 
 		if (get_user_class () >= $torrentmanage_class) {
-			print ("<td class=\"rowfollow\"><a href=\"" . htmlspecialchars ( "fastdelete.php?id=" . $row [id] ) . "\"><img class=\"staff_delete\" src=\"pic/trans.gif\" alt=\"D\" title=\"" . $lang_functions ['text_delete'] . "\" /></a>") ;
+			print ("<td class=\"rowfollow\"><a href=\"" . htmlspecialchars ( "fastdelete.php?id=" . $row ['id'] ) . "\"><img class=\"staff_delete\" src=\"pic/trans.gif\" alt=\"D\" title=\"" . $lang_functions ['text_delete'] . "\" /></a>") ;
 			print ("<br /><a href=\"edit.php?returnto=" . rawurlencode ( $_SERVER ["REQUEST_URI"] ) . "&amp;id=" . $row ["id"] . "\"><img class=\"staff_edit\" src=\"pic/trans.gif\" alt=\"E\" title=\"" . $lang_functions ['text_edit'] . "\" /></a></td>\n") ;
 		}
 		print ("</tr>\n") ;
@@ -4989,7 +4998,7 @@ function quickreply($formname, $taname, $submit) {
 	print ("<textarea name='" . $taname . "' id=\"quickreplytext\" cols=\"100\" rows=\"8\" style=\"width: 450px\" onkeydown=\"ctrlenter(event,'compose','qr')\"></textarea>") ;
 	print (smile_row ( $formname, $taname )) ;
 	print ("<br />") ;
-	smile_table(quickreplytext);
+	smile_table('quickreplytext');
 	print ("<input type=\"submit\" id=\"qr\" class=\"btn\" value=\"" . $submit . "\" />") ;
 	print ('<link rel="stylesheet" href="styles/userAutoTips.css" type="text/css" media="screen" />') ;
 	print ('<script type="text/javascript" src="js/userAutoTips.js"></script>') ;
@@ -6075,7 +6084,7 @@ function open_luckydraw() {
 	}
 
 	$res = sql_query ( "SELECT id, time_start, time_until, ticket_price, ticket_win, winners_max, ticket_total, status FROM app_luckydraw WHERE status = '1' AND time_until < " . sqlesc ( date ( "Y-m-d H:i:s" ) ) . "ORDER BY id DESC" ) or sqlerr ( __FILE__, __LINE__ );
-	if (! res) {
+	if (! $res) {
 	} else {
 		$time_start = sqlesc ( date ( "Y-m-d H:i:s" ) );
 		$time_until = sqlesc ( date ( "Y-m-d H:i:s", $TIMESTAMP_UNTIL ) );
@@ -6098,6 +6107,7 @@ function open_luckydraw() {
  */
 function update_imdb() {
     if (class_exists('imdb') != true)
+        global $rootpath;
         require_once($rootpath . "imdb/imdb2.class.php");
 
 	// get the web page
@@ -6289,7 +6299,7 @@ print $sc;
     print("<li ". ($selected == "my_delivered_bet" ? "class=selected" : "") . "><a href=\"jc_currentbet_L.php?action=my_delivered_bet\">我发起的竞猜</a></li>");
     print("<li ". ($selected == "deliver_bet" ? "class=selected" : "")."><a href=\"jc_currentbet_L.php?action=deliver_bet\">我来发起竞猜</a></li>");
     print("<li ". ($selected == "rank" ? "class=selected" : "")."><a href=\"jc_rank.php\">英雄榜</a></li>");
-    if(get_user_class()<14&&$CURUSER[jc_manager]!='yes'){
+    if(get_user_class()<14&&$CURUSER['jc_manager']!='yes'){
         print("<li ". ($selected == "visual_manage" ? "class=selected" : "")."><a href=\"contactstaff.php\">联系管理员</a></li>");
     }
     else{
@@ -6301,26 +6311,28 @@ print $sc;
 //***********************************竞猜排行榜更新************
 function update_jc_rank()
 {
+    $user_id = 0;
 	$clearsql = "TRUNCATE TABLE jc_rank";
 	sql_query ( $clearsql )or sqlerr ( __FILE__, __LINE__ );
 	$res=sql_query("select * from jc_record where state=1 OR state=2 ORDER BY user_id");
 	while($row=mysql_fetch_array($res))
 	{
 		$win=$lose=0;
-		if ($row[state]==1)
+		if ($row['state']==1)
 		$lose=1;
-		elseif ($row[state]==2)
+		elseif ($row['state']==2)
 		$win=1;
-		if ($user_id!=$row[user_id]){
-		if($user_id){
-		$arr=mysql_fetch_array(sql_query("select * from jc_rank where user_id=$user_id"));
-		$total_times=$arr[win_times]+$arr[lose_times];
-		$win_percent=floor(($arr[win_times]/$total_times)*10000)/100;
-	sql_query("update jc_rank set win_percent=$win_percent,total_times=$total_times where user_id=$user_id") or sqlerr ( __FILE__, __LINE__ );}
-	sql_query("INSERT INTO `jc_rank`( `user_id`, `win_times`,`lose_times`, `yin_kui`) VALUES ($row[user_id],$win,$lose,$row[yin_kui])") or sqlerr ( __FILE__, __LINE__ );}
-		else
-		sql_query("update jc_rank set win_times=win_times+$win,lose_times=lose_times+$lose,yin_kui=yin_kui+$row[yin_kui] where user_id=$row[user_id]") or sqlerr ( __FILE__, __LINE__ );
-		$user_id=$row[user_id];
+        if ($user_id != $row['user_id']) {
+            if ($user_id) {
+                $arr = mysql_fetch_array(sql_query("select * from jc_rank where user_id=$user_id"));
+                $total_times = $arr['win_times'] + $arr['lose_times'];
+                $win_percent = floor(($arr['win_times'] / $total_times) * 10000) / 100;
+                sql_query("update jc_rank set win_percent=$win_percent,total_times=$total_times where user_id=$user_id") or sqlerr(__FILE__, __LINE__);
+            }
+            sql_query("INSERT INTO `jc_rank`( `user_id`, `win_times`,`lose_times`, `yin_kui`) VALUES ({$row['user_id']}, {$win}, {$lose}, {$row['yin_kui']})") or sqlerr(__FILE__, __LINE__);
+        } else
+            sql_query("UPDATE jc_rank SET win_times=win_times+{$win}, lose_times=lose_times+{$lose}, yin_kui=yin_kui+{$row['yin_kui']} WHERE user_id={$row['user_id']}") or sqlerr(__FILE__, __LINE__);
+        $user_id = $row['user_id'];
 }
 
 }
@@ -6442,8 +6454,8 @@ function check_password($password, $user_id = null)
 }
 
 function youzan_request($method, $params = [], $files = [], $version = '3.0.0'){
-    require(dirname(FILE).'/vendor/autoload.php');
-    global $youzan_client_id, $youzan_client_secret, $youzan_kdt_id;
+    global $rootpath, $youzan_client_id, $youzan_client_secret, $youzan_kdt_id;
+    require($rootpath . '/vendor/autoload.php');
     $youzan = new \Hanson\Youzan\Youzan([
         'client_id' => $youzan_client_id,
         'client_secret' => $youzan_client_secret,

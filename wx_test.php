@@ -20,4 +20,3 @@ else
 
 header('Content-Type: text/xml');
 echo $content;
-?>

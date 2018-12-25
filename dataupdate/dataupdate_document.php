@@ -56,9 +56,9 @@ if (ob_get_level() == 0) ob_start();
 						$specificcat = substr($fullname ,1,strpos($fullname,"]")-1);
 			}	
 			if($specificcat!="" && strpos($arr1["specificcat"], '?')===0)
-				$updateinfoset[] = "specificcat = '".mysql_escape_string($specificcat)."'";
+				$updateinfoset[] = "specificcat = ".sqlesc($specificcat);
 			if($cname!="" && strpos($arr1["cname"], '?')===0)
-				$updateinfoset[] = "cname = '".mysql_escape_string($cname)."'";		
+				$updateinfoset[] = "cname = ".sqlesc($cname);
 		}
 		
 		
