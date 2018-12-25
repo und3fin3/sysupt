@@ -22,8 +22,58 @@ if ($pollid)
   
 	while ($poll = mysql_fetch_assoc($res))
 	{
-		$o = array($poll["option0"], $poll["option1"], $poll["option2"], $poll["option3"], $poll["option4"], $poll["option5"], $poll["option6"], $poll["option7"], $poll["option8"], $poll["option9"], $poll["option10"], $poll["option11"], $poll["option12"], $poll["option13"], $poll["option14"], $poll["option15"], $poll["option16"], $poll["option17"], $poll["option18"], $poll["option19"]);
-   
+        $o = array(
+            $poll ["option0"],
+            $poll ["option1"],
+            $poll ["option2"],
+            $poll ["option3"],
+            $poll ["option4"],
+            $poll ["option5"],
+            $poll ["option6"],
+            $poll ["option7"],
+            $poll ["option8"],
+            $poll ["option9"],
+            $poll ["option10"],
+            $poll ["option11"],
+            $poll ["option12"],
+            $poll ["option13"],
+            $poll ["option14"],
+            $poll ["option15"],
+            $poll ["option16"],
+            $poll ["option17"],
+            $poll ["option18"],
+            $poll ["option19"],
+            $poll ["option20"],
+            $poll ["option21"],
+            $poll ["option22"],
+            $poll ["option23"],
+            $poll ["option24"],
+            $poll ["option25"],
+            $poll ["option26"],
+            $poll ["option27"],
+            $poll ["option28"],
+            $poll ["option29"],
+            $poll ["option30"],
+            $poll ["option31"],
+            $poll ["option32"],
+            $poll ["option33"],
+            $poll ["option34"],
+            $poll ["option35"],
+            $poll ["option36"],
+            $poll ["option37"],
+            $poll ["option38"],
+            $poll ["option39"],
+            $poll ["option40"],
+            $poll ["option41"],
+            $poll ["option42"],
+            $poll ["option43"],
+            $poll ["option44"],
+            $poll ["option45"],
+            $poll ["option46"],
+            $poll ["option47"],
+            $poll ["option48"],
+            $poll ["option49"],
+        );
 		$added = gettime($poll['added']);
 		print("<tr><td align=center><a href=\"polloverview.php?id=".$poll['id']."\">".$poll['id']."</a></td><td>".$added."</td><td><a href=\"polloverview.php?id=".$poll['id']."\">".$poll['question']."</a></td></tr>\n");
 	}
@@ -36,7 +86,7 @@ if ($pollid)
 			print("<tr><td>".$key."</td><td>".$value."</td></tr>\n");
 	}
  	print("</table>\n");
-	$count = get_row_count("pollanswers", "WHERE pollid = ".sqlesc($pollid)." AND selection < 20");
+	$count = get_row_count("pollanswers", "WHERE pollid = ".sqlesc($pollid)." AND selection < 50");
 
 	print("<h1 align=\"center\">".$lang_polloverview['text_polls_user_overview']."</h1>\n");
 
@@ -46,7 +96,7 @@ if ($pollid)
 	else{
 		$perpage = 100;
 		list($pagertop, $pagerbottom, $limit) = pager($perpage, $count, "?id=".$pollid."&");
-		$res2 = sql_query("SELECT pollanswers.*, users.username FROM pollanswers LEFT JOIN users ON pollanswers.userid = users.id WHERE pollid = ".sqlesc($pollid)." AND selection < 20 ORDER BY username ASC ".$limit) or sqlerr();
+		$res2 = sql_query("SELECT pollanswers.*, users.username FROM pollanswers LEFT JOIN users ON pollanswers.userid = users.id WHERE pollid = ".sqlesc($pollid)." AND selection < 50 ORDER BY username ASC ".$limit) or sqlerr();
 		print($pagertop);
  		print("<table width=737 border=1 cellspacing=0 cellpadding=5>");
 		print("<tr><td class=colhead align=center><nobr>".$lang_polloverview['col_username']."</nobr></td><td class=colhead align=center><nobr>".$lang_polloverview['col_selection']."<nobr></td></tr>\n");

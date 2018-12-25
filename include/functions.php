@@ -228,7 +228,7 @@ function formatUrl($url, $newWindow = false, $text = '', $linkClass = '') {
 }
 function formatCode($text) {
 	global $lang_functions;
-	return addTempCode ( "<br /><div class=\"codetop\">" . $lang_functions ['text_code'] . "</div><div class=\"codemain\">$text</div><br />" );
+	return addTempCode ( "<font face=\"Courier New\"><br /><div class=\"codetop\">" . $lang_functions ['text_code'] . "</div><div class=\"codemain\">$text</div><br /></font>" );
 }
 function formatImg($src, $enableImageResizer, $image_max_width, $image_max_height) {
 	return addTempCode ( "<img alt=\"image\" src=\"$src\"" . ($enableImageResizer ? " onload=\"Scale(this,$image_max_width,$image_max_height);\" onclick=\"Preview(this);\"" : "") . " />" );
@@ -6591,8 +6591,8 @@ function uploader_rate($total_num, $total_size, $standard_num, $standard_size, $
     } else {
         $rate = "D";
     }
-    
-    if (($last_rate == "C-" && $rate == "C") || (($last_rate == "B-" || $last_rate == "D") && ($rate == "D" || $rate == "D"))) {
+
+    if (($last_rate == "C-" && $rate == "C") || (($last_rate == "B-" || $last_rate == "D" || $last_rate == "E") && ($rate == "B" || $rate == "D"))) {
         $rate = "E";
     } elseif (strstr($last_rate, "S") && $rate == "S") {
         $rate = "S+";

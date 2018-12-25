@@ -95,7 +95,8 @@ if (isset($returnto))
 ?>
 </form>
 <p><a href="recover.php"><b>找回密码</b></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="confirm_resend.php"><b>重新发送验证邮件</b></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="punishment.php"><b>查看被封禁原因</b></a></p>
-<p>关注我们的<a href="http://weibo.com/tjupt"><b>微博</b></a>和<a href="http://page.renren.com/601396265"><b>人人网</b></a></p>
+<p>关注我们的<a href="https://weibo.com/tjupt"><b>微博</b></a>和<a href="pic/wx.jpg"><b>微信</b></a></p>
+<p>注册或登录时遇到问题？请<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=c584748ff16ae67f8f381f0d4e5f87132551ad01704b90075d90da4f4e659ee4"><img border="0" src="pic/qqgroup.png" alt="北洋园PT临时群" title="北洋园PT临时群"></a>（请勿加群索要邀请码）</p>
 <?php
 $ip = getip();
 $nip = ip2long($ip);
