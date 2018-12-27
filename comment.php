@@ -10,10 +10,12 @@ $type = htmlspecialchars ( $_GET ["type"] );
 
 loggedinorreturn ();
 parked ();
-function check_comment_type($type) {
-	if ($type != "torrent" && $type != "request" && $type != "offer")
+function check_comment_type($type)
+{
+    if ($type != "torrent" && $type != "request" && $type != "offer") {
         global $lang_comment;
-		stderr ( $lang_comment ['std_error'], $lang_comment ['std_error'] );
+        stderr($lang_comment ['std_error'], $lang_comment ['std_error']);
+    }
 }
 
 check_comment_type ( $type );
