@@ -9,7 +9,7 @@ require "include/bittorrent.php";
 dbconn();
 
 global $youzan_client_id, $youzan_client_secret;
-$request = $GLOBALS['HTTP_RAW_POST_DATA'];
+$request = file_get_contents('php://input');
 echo json_encode(['code' => 0, 'msg' => 'success']);
 file_put_contents('/var/log/tjupt/pay.log', $request . PHP_EOL, FILE_APPEND);
 $request = json_decode($request, true);
