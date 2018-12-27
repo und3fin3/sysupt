@@ -20,8 +20,7 @@ $email = $_POST['email'];
 $send_again = $_POST['sendagain'];
 if ($getcode) {
     $code = $getcode;
-    $sq = sprintf("SELECT * FROM self_invite WHERE code ='%s'", mysql_real_escape_string($getcode));
-    $res = sql_query($sq) or sqlerr(__FILE__, __LINE__);
+    $res = sql_query("SELECT * FROM self_invite WHERE code = " . sqlesc($getcode)) or sqlerr(__FILE__, __LINE__);
     $arr = mysql_fetch_assoc($res);
     if (!$arr['email'])
         stderr($lang_self_invite['std_error'], $lang_self_invite['std_wrong_code'], 0);
@@ -32,13 +31,15 @@ if ($getcode) {
         stdfoot();
         die();
     } elseif ($arr['used_type'] == 'invite') {
-        $a = (@mysql_fetch_row(@sql_query("SELECT count(*) FROM invites WHERE hash ='" . $arr['invite_code'] . "'"))) or die(mysql_error());
-        if ($a[0] != 0) header("Location: signup.php?type=invite&invitenumber=" . $arr['invite_code']);
+        $res = sql_query("SELECT COUNT(*) FROM invites WHERE hash = " . sqlesc($arr['invite_code'])) or sqlerr(__FILE__, __LINE__);
+        $a = mysql_fetch_assoc($res);
+        if ($a[0] != 0)
+            header("Location: signup.php?type=invite&invitenumber=" . $arr['invite_code']);
+    } else {
+        stderr($lang_self_invite['std_error'], $lang_self_invite['code_be_used'], 0);
     }
-    stderr($lang_self_invite['std_error'], $lang_self_invite['code_be_used'], 0);
 } elseif ($postcode) {
-    $sq = sprintf("SELECT * FROM self_invite WHERE code ='%s'", mysql_real_escape_string($postcode)) or sqlerr(__FILE__, __LINE__);
-    $res = sql_query($sq) or sqlerr(__FILE__, __LINE__);
+    $res = sql_query("SELECT * FROM self_invite WHERE code = " . sqlesc($postcode)) or sqlerr(__FILE__, __LINE__);
     $arr = mysql_fetch_assoc($res);
     $emailaddress = $arr['email'];
     $used_type = $arr['used_type'];
@@ -48,8 +49,8 @@ if ($getcode) {
     $type = $_POST["type"];
     if ($type == 'invite') {
         $invitecode = md5(mt_rand(1, 10000) . $_SERVER['REMOTE_ADDR'] . TIMENOW . $emailaddress);
-        sql_query("INSERT INTO invites (inviter, invitee, hash, time_invited) VALUES ('0', '" . mysql_real_escape_string($emailaddress) . "', '" . mysql_real_escape_string($invitecode) . "', " . sqlesc(date("Y-m-d H:i:s")) . ")") or sqlerr(__FILE__, __LINE__);
-        sql_query("UPDATE self_invite SET used_type ='invite', invite_code ='" . mysql_real_escape_string($invitecode) . "' WHERE email ='" . mysql_real_escape_string($emailaddress) . "'") or sqlerr(__FILE__, __LINE__);
+        sql_query("INSERT INTO invites (inviter, invitee, hash, time_invited) VALUES ('0', " . sqlesc($emailaddress) . " , " . sqlesc($invitecode) . " , " . sqlesc(date("Y-m-d H:i:s")) . ")") or sqlerr(__FILE__, __LINE__);
+        sql_query("UPDATE self_invite SET used_type = 'invite', invite_code = " . sqlesc($invitecode) . " WHERE email = " . sqlesc($emailaddress)) or sqlerr(__FILE__, __LINE__);
         header("Location: signup.php?type=invite&invitenumber=" . $invitecode);
     } else {
         $username = sqlesc(trim($_POST["username"]));
@@ -72,8 +73,8 @@ if ($getcode) {
             if ($downloadpos == 'no') {
                 stderr($lang_self_invite['text_no_permission'], $lang_self_invite['text_banned_by_admin'], 0);
             }
-            sql_query("UPDATE users SET enabled = 'yes', class =1, leechwarn='no', seedbonus = seedbonus +$revive_bonus, modcomment = " . sqlesc($modcomment) . " , bonuscomment = " . sqlesc($bonuscomment) . " WHERE id = " . sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-            sql_query("UPDATE self_invite SET used_type = 'revive' WHERE email ='" . mysql_real_escape_string($emailaddress) . "'") or sqlerr(__FILE__, __LINE__);
+            sql_query("UPDATE users SET enabled = 'yes', class = 1, leechwarn='no', seedbonus = seedbonus + $revive_bonus, modcomment = " . sqlesc($modcomment) . " , bonuscomment = " . sqlesc($bonuscomment) . " WHERE id = " . sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+            sql_query("UPDATE self_invite SET used_type = 'revive' WHERE email = " . sqlesc($emailaddress)) or sqlerr(__FILE__, __LINE__);
             stderr($lang_self_invite['successful'], $lang_self_invite['text_account'] . $username . $lang_self_invite['text_success_enable_account']);
         } elseif ($type == 'addbonus') {
             if ($enabled == 'no')
@@ -81,10 +82,8 @@ if ($getcode) {
             $bonuscomment = $arr['bonuscomment'];
             $bonuscomment = date("Y-m-d") . " + $add_bonus Points added by " . $emailaddress . ".\n" . htmlspecialchars($bonuscomment);
             sql_query("UPDATE users SET seedbonus = seedbonus +$add_bonus, bonuscomment = " . sqlesc($bonuscomment) . " WHERE id = " . sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-            sql_query("UPDATE self_invite SET used_type = 'addbonus' WHERE email ='" . mysql_real_escape_string($emailaddress) . "'") or sqlerr(__FILE__, __LINE__);
+            sql_query("UPDATE self_invite SET used_type = 'addbonus' WHERE email = " . sqlesc($emailaddress)) or sqlerr(__FILE__, __LINE__);
             stderr($lang_self_invite['successful'], $lang_self_invite['add_bonus_for'] . $username . $lang_self_invite['is_success']);
-
-
         }
     }
 } elseif ($email || $send_again) {
@@ -112,8 +111,8 @@ if ($getcode) {
 <br />
 EOD;
     sent_mail($emailaddress, $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $title), change_email_encode(get_langfolder_cookie(), $message), "invitesignup", false, false, '', get_email_encode(get_langfolder_cookie()));
-    if ($send_again) sql_query("UPDATE self_invite SET code = '" . mysql_real_escape_string($code) . "' WHERE email = '" . mysql_real_escape_string($emailaddress) . "'");
-    else sql_query("INSERT INTO self_invite (email, used_type, code) VALUES ('" . mysql_real_escape_string($emailaddress) . "', 'none', '" . mysql_real_escape_string($code) . "')");
+    if ($send_again) sql_query("UPDATE self_invite SET code = " . sqlesc($code) . " WHERE email = " . sqlesc($emailaddress));
+    else sql_query("INSERT INTO self_invite (email, used_type, code) VALUES (" . sqlesc($emailaddress) . " , 'none', " . sqlesc($code) . " )");
     stderr($lang_self_invite['successful'], $lang_self_invite['email_to'] . htmlspecialchars($emailaddress) . $lang_self_invite['successfully_sent']);
 
 } else {
