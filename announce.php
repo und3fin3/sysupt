@@ -359,8 +359,10 @@ if (validateIPv6 ( $ip ))
 	// if($self['prevts'] > (TIMENOW - 120))$real_annnounce_interval += 60;
 	
 // min announce time
+/* Because of multi-tracker, I disabled this error.
 if (isset ( $self ) && $self ['prevts'] > (TIMENOW - $announce_wait) && $event != "stopped" && $event != "completed")
 	err ( '008-您的刷新过于频繁，请等候 ' . $announce_wait . ' 秒再尝试' );
+*/
 	
 	// current peer_id, or you could say session with tracker not found in table
 	// peers
