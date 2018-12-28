@@ -6628,3 +6628,17 @@ function rate_color($rate, $type = "bbcode")
     else
         return $color;
 }
+
+function auth_token($token, $sign, $msg)
+{
+    if (empty($token))
+        return false;
+    $query = sql_query("SELECT * FROM api_token WHERE token = " . sqlesc($token));
+    $row = mysql_fetch_array($query);
+    if (!$row) {
+        return false;
+    } else {
+        sql_query("UPDATE api_token SET last_activity = '" . time() . "' WHERE token = " . sqlesc($token));
+        return md5($token . $msg . $row['secret']) == $sign;
+    }
+}
