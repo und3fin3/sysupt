@@ -31,8 +31,7 @@ if ($getcode) {
         stdfoot();
         die();
     } elseif ($arr['used_type'] == 'invite') {
-        $res = sql_query("SELECT COUNT(*) FROM invites WHERE hash = " . sqlesc($arr['invite_code'])) or sqlerr(__FILE__, __LINE__);
-        $a = mysql_fetch_assoc($res);
+        $a = @mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM invites WHERE hash = " . sqlesc($arr['invite_code']))) or mysql_error();
         if ($a[0] != 0)
             header("Location: signup.php?type=invite&invitenumber=" . $arr['invite_code']);
     } else {
@@ -123,5 +122,5 @@ EOD;
     // print("</select>\n<input type=\"submit\" name=\"submit\" value=\"" . $lang_self_invite[enter] . "\" /></form></td></tr></table></td></tr>");
     print("\n<input type=\"submit\" name=\"submit\" value=\"" . $lang_self_invite['enter'] . "\" /></form></td></tr></table></td></tr>");
     print("<tr><td><h2>" . $lang_self_invite['notice'] . "</h2></td></tr></table>");
+    stdfoot();
 }
-stdfoot();
