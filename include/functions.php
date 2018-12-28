@@ -6631,7 +6631,7 @@ function rate_color($rate, $type = "bbcode")
 
 function auth_token($token, $sign, $msg)
 {
-    if (empty($token))
+    if (empty($token) || empty($sign))
         return false;
     $query = sql_query("SELECT * FROM api_token WHERE token = " . sqlesc($token));
     $row = mysql_fetch_array($query);

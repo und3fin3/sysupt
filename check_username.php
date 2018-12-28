@@ -1,5 +1,6 @@
 <?php
 require_once("include/bittorrent.php");
+require_once("api/API_Response.php");
 dbconn();
 $token = htmlspecialchars($_GET['token']);
 $sign = htmlspecialchars($_GET['sign']);
