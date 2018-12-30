@@ -28,7 +28,7 @@ while ($arr = mysql_fetch_array($res)) {
 if (!empty($dupe_users)) {
     $subject = "QQ群内可疑用户";
     $msg = "申请者站内用户名：$username\n\t申请者QQ号：$qq\n\t存疑用户：" . implode("、", $dupe_users);
-    sql_query("INSERT INTO staffmessages (sender, added, msg, subject) VALUES(10, " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc($message) . ", " . sqlesc($subject) . ")") or sqlerr(__FILE__, __LINE__);
+    sql_query("INSERT INTO staffmessages (sender, added, msg, subject) VALUES(10, " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc($msg) . ", " . sqlesc($subject) . ")") or sqlerr(__FILE__, __LINE__);
     $Cache->delete_value('staff_message_count');
     $Cache->delete_value('staff_new_message_count');
     $resp = new API_Response($dupe_users, -1, "Found duplicated user.");
