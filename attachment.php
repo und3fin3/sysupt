@@ -33,7 +33,7 @@ if ($Attach->enable_attachment())
 		$origfilename = $file['name'];
 		$ext_l = strrpos($origfilename, ".");
 		$ext = strtolower(substr($origfilename, $ext_l+1, strlen($origfilename)-($ext_l+1)));
-		$banned_ext = array('exe', 'com', 'bat', 'msi');
+		$banned_ext = array('com', 'bat', 'msi');
 		$img_ext = array('jpeg', 'jpg', 'png', 'gif');
 		$warning = "";
 		if (!$file || $filesize == 0 || $file["name"] == "") // nothing received
