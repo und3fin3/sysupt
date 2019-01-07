@@ -31,7 +31,7 @@ function check_tjuip_or_warning($CURUSER)
         
         if (($CURUSER['enablepublic4'] != 'yes') && !check_tjuip($nip)) {
             stdhead("没有权限");
-            stdmsg("没有访问权限", "<div align=\"center\">你正在使用校外IP地址访问本站，如果想要在校外使用本站，请在<a href='usercp.php?action=personal'><font color='blue'>控制面板</font></a>中开启离校模式<hr><font size='3' color='red'>扫码调戏北洋媛(●'◡'●)</font><br><img src='images/qrcode-wx.png' width='30%'/><img src='images/qrcode-qq.png' width='30%'/><img src='images/qrcode-weibo.png' width='30%'/></div>");
+            stdmsg("没有访问权限", "<div align=\"center\">你正在使用校外IP地址访问本站，如果想要在校外使用本站，请参考<a class='faqlink' href='/forums.php?action=viewtopic&topicid=15457'>北洋园PT校外IPv4下载设置步骤</a>进行设置<hr><font size='3' color='red'>扫码调戏北洋媛(●'◡'●)</font><br><img src='images/qrcode-wx.png' width='30%'/><img src='images/qrcode-qq.png' width='30%'/><img src='images/qrcode-weibo.png' width='30%'/></div>");
             stdfoot();
             exit;
         }
