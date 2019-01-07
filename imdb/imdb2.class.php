@@ -61,7 +61,7 @@ class imdb
 			case 'writing':
 				return $this->data['attrs']['writer'];
 			case 'producer':
-				return NULL;
+				return array();
 			case 'cast':
 				return $this->data['attrs']['cast'];
 			case 'plot':
@@ -69,17 +69,17 @@ class imdb
 			case 'plotoutline':
 				return $this->data['summary'];
 			case 'composer':
-				return NULL;
+				return array();
 			case 'genres':
 				return $this->data['attrs']['movie_type'];
 			case 'similiar_movies':
-				return NULL;
+				return array();
 			case 'title':
 				return $this->data['title'];
 			case 'transname':
 				return $this->data['alt_title'];
 			case 'alsoknow':
-				return NULL;
+				return array();
 			case 'runtime_all':
 				return implode($this->data['attrs']['movie_duration'], ', ');
 			case 'year':
@@ -99,8 +99,6 @@ class imdb
 				return implode($tags, ', ');
 			case 'photo_localurl':
 				return $this->data['image'];
-			case 'alsoknow':
-				return array();
 		}
 	}
 }

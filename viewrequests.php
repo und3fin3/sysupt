@@ -512,7 +512,7 @@ else {
 					else {
 						
 						list ( $pagertop, $pagerbottom, $limit ) = pager ( 10, $count, "viewrequests.php?action=view&id=$id&", array (
-								lastpagedefault => 1 
+								"lastpagedefault" => 1
 						) );
 						
 						$subres = sql_query ( "SELECT id, text, user, added, editedby, editdate FROM comments  WHERE request = " . sqlesc ( $id ) . " ORDER BY id $limit" ) or sqlerr ( __FILE__, __LINE__ );

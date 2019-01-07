@@ -4859,14 +4859,16 @@ function code($ibm_437, $swedishmagic = false) {
 
 // Tooltip container for hot movie, classic movie, etc
 function create_tooltip_container($id_content_arr, $width = 400) {
-	if (count ( $id_content_arr )) {
-		$result = "<div id=\"tooltipPool\" style=\"display: none\">";
-		foreach ( $id_content_arr as $id_content_arr_each ) {
-			$result .= "<div id=\"" . $id_content_arr_each ['id'] . "\">" . $id_content_arr_each ['content'] . "</div>";
-		}
-		$result .= "</div>";
-		print ($result) ;
-	}
+    if ($id_content_arr) {
+        if (count($id_content_arr)) {
+            $result = "<div id=\"tooltipPool\" style=\"display: none\">";
+            foreach ($id_content_arr as $id_content_arr_each) {
+                $result .= "<div id=\"" . $id_content_arr_each ['id'] . "\">" . $id_content_arr_each ['content'] . "</div>";
+            }
+            $result .= "</div>";
+            print ($result);
+        }
+    }
 }
 function getimdb($imdb_id, $cache_stamp, $mode = 'minor') {
 	global $lang_functions;
