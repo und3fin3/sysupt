@@ -49,7 +49,7 @@ function dltable($name, $arr, $torrent)
 /*	($enablelocation_tweak == 'yes' || get_user_class() >= $userprofile_class ? "<td class=colhead align=center width=1%>".$lang_viewpeerlist['col_location']."</td>" : "<td class=colhead align=center width=1%>".$lang_viewpeerlist['ip_type']."</td>").*/
 	($enablelocation_tweak == 'yes' || get_user_class() >= $userprofile_class ? "<td class=colhead align=center width=1%>".$lang_viewpeerlist['col_location']."</td>" : "").
 
-	"<td class=colhead align=center width=1%>".$lang_viewpeerlist['col_connectable']."</td>".
+	// "<td class=colhead align=center width=1%>".$lang_viewpeerlist['col_connectable']."</td>".
 
 	"<td class=colhead align=center width=1%>".$lang_viewpeerlist['col_uploaded']."</td>".
 
@@ -136,7 +136,7 @@ function dltable($name, $arr, $torrent)
 
 
 
-		$s .= "<td class=rowfollow align=center width=1%><nobr>" .$lang_viewpeerlist[$e['connectable']] . "</nobr></td>\n";
+		// $s .= "<td class=rowfollow align=center width=1%><nobr>" .$lang_viewpeerlist[$e['connectable']] . "</nobr></td>\n";
 
 		$s .= "<td class=rowfollow align=center width=1%><nobr>" . mksize($e["uploaded"]) . "</nobr></td>\n";
 
@@ -198,7 +198,8 @@ function dltable($name, $arr, $torrent)
 
 	$seeders = array();
 
-	$subres = sql_query("SELECT seeder, finishedat, downloadoffset, uploadoffset, ipv4, ipv6, port, uploaded, downloaded, to_go, UNIX_TIMESTAMP(started) AS st, connectable, agent, peer_id, UNIX_TIMESTAMP(last_action) AS la, userid FROM peers WHERE torrent = $id") or sqlerr();
+	// $subres = sql_query("SELECT seeder, finishedat, downloadoffset, uploadoffset, ipv4, ipv6, port, uploaded, downloaded, to_go, UNIX_TIMESTAMP(started) AS st, connectable, agent, peer_id, UNIX_TIMESTAMP(last_action) AS la, userid FROM peers WHERE torrent = $id") or sqlerr();
+    $subres = sql_query("SELECT seeder, finishedat, downloadoffset, uploadoffset, ipv4, ipv6, port, uploaded, downloaded, to_go, UNIX_TIMESTAMP(started) AS st, agent, peer_id, UNIX_TIMESTAMP(last_action) AS la, userid FROM peers WHERE torrent = $id") or sqlerr();
 
 	while ($subrow = mysql_fetch_array($subres)) {
 

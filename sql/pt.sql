@@ -1982,7 +1982,6 @@ CREATE TABLE `peers` (
   `started` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_action` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `prev_action` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `connectable` enum('yes-','no-','-yes','-no','yes/yes','yes/no','no/yes','no/no') NOT NULL DEFAULT 'yes-',
   `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `agent` varchar(60) NOT NULL DEFAULT '',
   `finishedat` int(10) unsigned NOT NULL DEFAULT '0',

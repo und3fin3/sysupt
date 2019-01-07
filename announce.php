@@ -275,7 +275,8 @@ else
 
 $announce_wait = 10;
 
-$fields = "seeder, peer_id, ipv4, ipv6, port, uploaded, downloaded, (" . TIMENOW . " - UNIX_TIMESTAMP(last_action)) AS announcetime, UNIX_TIMESTAMP(prev_action) AS prevts, connectable";
+// $fields = "seeder, peer_id, ipv4, ipv6, port, uploaded, downloaded, (" . TIMENOW . " - UNIX_TIMESTAMP(last_action)) AS announcetime, UNIX_TIMESTAMP(prev_action) AS prevts, connectable";
+$fields = "seeder, peer_id, ipv4, ipv6, port, uploaded, downloaded, (" . TIMENOW . " - UNIX_TIMESTAMP(last_action)) AS announcetime, UNIX_TIMESTAMP(prev_action) AS prevts";
 $peerlistsql = "SELECT " . $fields . " FROM peers WHERE torrent = " . $torrentid . " " . $only_leech_query . $limit;
 $res = sql_query ( $peerlistsql );
 $real_annnounce_interval = $announce_interval;
@@ -548,27 +549,30 @@ if (isset ( $self ) && $event == "stopped") {
 	}
 } else {
 	if ($event != "stopped") {
+	    /* Check user connectable will reveal server real IP, so it has been disabled.
 		if ($nip)
 			$sockres4 = @pfsockopen ( $ipv4, $port, $errno, $errstr, 5 );
-		
+
 		if (validateIPv6 ( $ipv6 ))
 			$sockres6 = @pfsockopen ( "[" . $ipv6 . "]", $port, $errno, $errstr, 5 );
-		
+
 		if ($nip && validateIPv6 ( $ipv6 ))
 			$connectable = ((! $sockres4) ? "no" : "yes") . "/" . ((! $sockres6) ? "no" : "yes");
 		elseif (validateIPv6 ( $ipv6 ))
 			$connectable = ((! $sockres6) ? "-no" : "-yes");
 		else
 			$connectable = ((! $sockres4) ? "no-" : "yes-");
-		
+
 		if ($sockres4)
 			@fclose ( $sockres4 );
-		
+
 		if ($sockres6)
 			@fclose ( $sockres6 );
-		
+		*/
+
 		if (! mysql_fetch_assoc ( sql_query ( "SELECT $fields FROM peers WHERE $selfwhere LIMIT 1" ) )) {
-			sql_query ( "INSERT INTO peers (torrent, userid, peer_id, " . ($ipv4 == "" ? "" : "ipv4, ") . ($ipv6 == "" ? "" : "ipv6, ") . "port, connectable, uploaded, downloaded, to_go, started, last_action, seeder, agent, downloadoffset, uploadoffset, passkey) VALUES ($torrentid, $userid, " . sqlesc ( $peer_id ) . ", " . ($ipv4 == "" ? "" : sqlesc ( $ipv4 ) . ", ") . ($ipv6 == "" ? "" : sqlesc ( $ipv6 ) . ", ") . "$port, '$connectable', $uploaded, $downloaded, $left, $dt, $dt, '$seeder', " . sqlesc ( $agent ) . ", $downloaded, $uploaded, " . sqlesc ( $passkey ) . ")" ) or err ( "插入P表失败（请向程序员汇报这个信息）" );
+            // sql_query ( "INSERT INTO peers (torrent, userid, peer_id, " . ($ipv4 == "" ? "" : "ipv4, ") . ($ipv6 == "" ? "" : "ipv6, ") . "port, connectable, uploaded, downloaded, to_go, started, last_action, seeder, agent, downloadoffset, uploadoffset, passkey) VALUES ($torrentid, $userid, " . sqlesc ( $peer_id ) . ", " . ($ipv4 == "" ? "" : sqlesc ( $ipv4 ) . ", ") . ($ipv6 == "" ? "" : sqlesc ( $ipv6 ) . ", ") . "$port, '$connectable', $uploaded, $downloaded, $left, $dt, $dt, '$seeder', " . sqlesc ( $agent ) . ", $downloaded, $uploaded, " . sqlesc ( $passkey ) . ")" ) or err ( "插入P表失败（请向程序员汇报这个信息）" );
+            sql_query ( "INSERT INTO peers (torrent, userid, peer_id, " . ($ipv4 == "" ? "" : "ipv4, ") . ($ipv6 == "" ? "" : "ipv6, ") . " port, uploaded, downloaded, to_go, started, last_action, seeder, agent, downloadoffset, uploadoffset, passkey) VALUES ($torrentid, $userid, " . sqlesc ( $peer_id ) . ", " . ($ipv4 == "" ? "" : sqlesc ( $ipv4 ) . ", ") . ($ipv6 == "" ? "" : sqlesc ( $ipv6 ) . ", ") . "$port, $uploaded, $downloaded, $left, $dt, $dt, '$seeder', " . sqlesc ( $agent ) . ", $downloaded, $uploaded, " . sqlesc ( $passkey ) . ")" ) or err ( "插入P表失败（请向程序员汇报这个信息）" );
 			
 			if (mysql_affected_rows ()) {
 				$updateset [] = ($seeder == "yes" ? "seeders = seeders + 1" : "leechers = leechers + 1");
