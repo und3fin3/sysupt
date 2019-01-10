@@ -3504,10 +3504,12 @@ function base64($string, $encode = true) {
 function loggedinorreturn($mainpage = false) {
 	global $CURUSER, $BASEURL;
 
+	/* I don't know what these wanna, but they occured a bug in searching torrents.
 	if (preg_match ( '/(jpg|png|bmp|gif)/', $_SERVER ['QUERY_STRING'] )) {
 		header ( "Refresh: 0; url=index.php" );
 		exit ();
 	}
+	*/
 
 	if (! $CURUSER) {
 		if ($mainpage) {
