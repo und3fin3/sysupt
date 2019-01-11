@@ -77,6 +77,7 @@ $lang_functions = array
 	'text_ratio' => "分享率：",
 	'text_uploaded' => "上传量：",
 	'text_downloaded' => "下载量：",
+	'text_upload_rate' => "上传排名：",
 	'text_active_torrents' => "当前活动：",
 	'title_torrents_seeding' => "当前做种",
 	'title_torrents_leeching' => "当前下载",

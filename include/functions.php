@@ -3081,6 +3081,18 @@ if (false) {
 		$datum ["minutes"] = sprintf ( "%02.0f", $datum ["minutes"] );
 		$ratio = get_ratio ( $CURUSER ['id'] );
 
+		// upload rate
+        if (!$upload_rates = $Cache->get_value('upload_rates')) {
+            $upload_rates = array();
+            $res = sql_query("SELECT id FROM users ORDER BY uploaded DESC") or sqlerr(__FILE__, __LINE__);
+            $rate = 1;
+            while (!$id = mysql_fetch_row($res)) {
+                $upload_rates[$id[0]] = $rate;
+                $rate++;
+            }
+            $Cache->cache_value('upload_rates', $upload_rates, 900);
+        }
+
 		// // check every 15 minutes //////////////////
 		$messages = $Cache->get_value ( 'user_' . $CURUSER ["id"] . '_inbox_count' );
 		if ($messages == "") {
@@ -3188,14 +3200,15 @@ if (false) {
 											<font class="color_ratio"><?php echo $lang_functions['text_ratio'] ?></font> <?php echo $ratio?>  <font
 											class='color_uploaded'><?php echo $lang_functions['text_uploaded'] ?></font> <?php echo mksize($CURUSER['uploaded'])?><font
 											class='color_downloaded'> <?php echo $lang_functions['text_downloaded'] ?></font> <?php echo mksize($CURUSER['downloaded'])?>  <font
-											class='color_active'><?php echo $lang_functions['text_active_torrents'] ?></font>
+                                                    class="color_active"> <?php echo $lang_functions['text_upload_rate'] ?></font> <?php echo $upload_rates[$CURUSER['id']]?> <font
+                                                    class='color_active'><?php echo $lang_functions['text_active_torrents'] ?></font>
 											<img class="arrowup" alt="Torrents seeding"
 											title="<?php echo $lang_functions['title_torrents_seeding'] ?>"
 											src="pic/trans.gif" /><?php echo $activeseed?>  <img
 											class="arrowdown" alt="Torrents leeching"
 											title="<?php echo $lang_functions['title_torrents_leeching'] ?>"
 											src="pic/trans.gif" /><?php echo $activeleech?>&nbsp;&nbsp;<font
-											class='color_connectable'><?php echo $lang_functions['text_connectable'] ?></font><?php echo $connectable?> <?php echo maxslots();?></span></td>
+											class='color_connectable'><?php echo $lang_functions['text_connectable'] ?></font><?php echo $connectable?> <?php //echo maxslots();?></span></td>
 
 									<td class="bottom" align="right"><span class="medium"><?php echo $lang_functions['text_the_time_is_now'] ?><?php echo $datum['hours'].":".$datum['minutes']?><br />
 
