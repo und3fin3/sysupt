@@ -273,7 +273,7 @@ if ($action == "viewattach")
 
 	$res = sql_query($query) or sqlerr(__FILE__, __LINE__);
 
-	$arr = mysql_fetch_row($res) or stderr($lang_userhistory['std_error'], $lang_userhistory['std_no_attach_found']."，点击<a class=faqlink href=userdetails.php?id=$id >这里</a>返回个人信息页。",0);
+	$arr = mysql_fetch_row($res) or stderr($lang_userhistory['std_error'], $lang_userhistory['std_no_attach_found']."，点击<a class=faqlink href=userdetails.php?id=$userid >这里</a>返回个人信息页。",0);
 
 	$postcount = $arr[0];
 
@@ -304,7 +304,7 @@ if ($action == "viewattach")
 
 	$res = sql_query($query) or sqlerr(__FILE__, __LINE__);
 
-	if (mysql_num_rows($res) == 0) stderr($lang_userhistory['std_error'], $lang_userhistory['std_no_attach_found']."，点击<a class=faqlink href=userdetails.php?id=$id >这里</a>返回个人信息页。",0);
+	if (mysql_num_rows($res) == 0) stderr($lang_userhistory['std_error'], $lang_userhistory['std_no_attach_found']."，点击<a class=faqlink href=userdetails.php?id=$userid >这里</a>返回个人信息页。",0);
 
 	stdhead($lang_userhistory['head_attach_history']);
 
@@ -395,7 +395,7 @@ if($action=="cacheattach")
 	$id=0+$_POST["attachid"];
 	$query = "SELECT id, added, userid, dlkey, location, others FROM attachments WHERE id = $id ";
 	$res = sql_query($query) or sqlerr(__FILE__, __LINE__);
-	if (mysql_num_rows($res) == 0) stderr($lang_userhistory['std_error'], $lang_userhistory['std_no_attach_found']."，点击<a class=faqlink href=userdetails.php?id=$id >这里</a>返回个人信息页。",0);
+	if (mysql_num_rows($res) == 0) stderr($lang_userhistory['std_error'], $lang_userhistory['std_no_attach_found']."，点击<a class=faqlink href=userdetails.php?id=$userid >这里</a>返回个人信息页。",0);
 	$arr = mysql_fetch_array($res);
 	
 	if ($_POST["others"]=="yes" && $arr["others"]=="no")$others=" ,others='yes' ";
