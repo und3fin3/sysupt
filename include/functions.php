@@ -3086,7 +3086,7 @@ if (false) {
             $upload_rates = array();
             $res = sql_query("SELECT id FROM users ORDER BY uploaded DESC") or sqlerr(__FILE__, __LINE__);
             $rate = 1;
-            while (!$id = mysql_fetch_row($res)) {
+            while ($id = mysql_fetch_row($res)) {
                 $upload_rates[$id[0]] = $rate;
                 $rate++;
             }
