@@ -7,10 +7,6 @@ include_once ($rootpath . 'include/config.php');
 include_once ($rootpath . 'classes/class_advertisement.php');
 require_once ($rootpath . get_langfile_path ( "functions.php" ));
 
-global $enable_public_ipv4;
-if (!$enable_public_ipv4)
-    disable_public_ipv4();
-
 $smiles = 1120; // 表情数目
 function get_langfolder_cookie() {
 	global $deflang;
@@ -2846,7 +2842,7 @@ function get_style_highlight() {
 }
 function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
 	global $lang_functions;
-	global $CURUSER, $CURLANGDIR, $USERUPDATESET, $iplog1, $oldip, $SITE_ONLINE, $FUNDS, $SITENAME, $SLOGAN, $logo_main, $logo_url, $BASEURL, $offlinemsg, $showversion, $enabledonation, $staffmem_class, $titlekeywords_tweak, $metakeywords_tweak, $metadescription_tweak, $cssdate_tweak, $deletenotransfertwo_account, $neverdelete_account, $iniupload_main;
+	global $CURUSER, $CURLANGDIR, $USERUPDATESET, $iplog1, $oldip, $SITE_ONLINE, $FUNDS, $SITENAME, $SLOGAN, $logo_main, $logo_url, $BASEURL, $offlinemsg, $showversion, $enabledonation, $staffmem_class, $titlekeywords_tweak, $metakeywords_tweak, $metadescription_tweak, $cssdate_tweak, $deletenotransfertwo_account, $neverdelete_account, $iniupload_main, $enable_public_ipv4;
 	global $tstart;
 	global $Cache;
 	global $Advertisement;
@@ -2878,6 +2874,10 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
 	if ($titlekeywords_tweak)
 		$title .= " " . htmlspecialchars ( $titlekeywords_tweak );
 	$title .= $showversion;
+
+    if ($enable_public_ipv4 == 'no' && get_user_class() < UC_VETERAN_USER)
+        disable_public_ipv4();
+
 	if ($SITE_ONLINE == "no") {
 		if (get_user_class () < UC_ADMINISTRATOR) {
 			die ( $lang_functions ['std_site_down_for_maintenance'] );
