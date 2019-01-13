@@ -203,6 +203,7 @@ $CODE=array(
 );
 $MAIN=array(
     'site_online' => 'yes',
+    'enable_public_ipv4' => 'yes',
     'max_torrent_size' => '10485760',
     'announce_interval' => '2100',
     'annintertwoage' => '7',

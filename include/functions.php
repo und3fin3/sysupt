@@ -6,6 +6,11 @@ include_once ($rootpath . 'include/globalfunctions.php');
 include_once ($rootpath . 'include/config.php');
 include_once ($rootpath . 'classes/class_advertisement.php');
 require_once ($rootpath . get_langfile_path ( "functions.php" ));
+
+global $enable_public_ipv4;
+if (!$enable_public_ipv4)
+    disable_public_ipv4();
+
 $smiles = 1120; // 表情数目
 function get_langfolder_cookie() {
 	global $deflang;
@@ -3440,10 +3445,11 @@ function mksecret($len = 20) {
 		$ret .= chr ( mt_rand ( 100, 120 ) );
 	return $ret;
 }
-function httperr($code = 404) {
-	header ( "HTTP/1.0 404 Not found" );
-	print ("<h1>Not Found</h1>\n") ;
-	exit ();
+
+function httperr($code = 404)
+{
+    http_response_code($code);
+    exit ();
 }
 function logincookie($id, $passhash, $updatedb = 1, $expires = 0x7fffffff, $securelogin = false, $ssl = false, $trackerssl = false) {
 	if ($expires != 0x7fffffff && $expires != 0)
@@ -6657,5 +6663,14 @@ function auth_token($token, $sign, $msg)
     } else {
         sql_query("UPDATE api_token SET last_activity = '" . time() . "' WHERE token = " . sqlesc($token));
         return md5($token . $msg . $row['secret']) == $sign;
+    }
+}
+
+function disable_public_ipv4()
+{
+    $ip = getip();
+    $nip = ip2long($ip);
+    if (!check_tjuip($nip)) {
+        httperr(403);
     }
 }

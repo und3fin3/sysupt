@@ -81,6 +81,7 @@ $mysql_pass = $BASIC ['mysql_pass'];
 $mysql_db = $BASIC ['mysql_db'];
 
 $SITE_ONLINE = $MAIN ['site_online'];
+$enable_public_ipv4 = $MAIN ['enable_public_ipv4'];
 $max_torrent_size = $MAIN ['max_torrent_size'];
 $announce_interval = ( int ) $MAIN ['announce_interval'];
 $annintertwoage = ( int ) $MAIN ['annintertwoage'];
