@@ -715,8 +715,9 @@ $lang_settings = array (
 		'row_donation_eight' => "第八档",
 		'row_donation_nine' => "第九档",
 		'head_save_donation_settings' => "保存捐赠设定",
-
-
+        'row_donation_settings' => "捐赠设定",
+        'submit_donation_settings' => "捐赠设定",
+        'text_donation_settings_note' => "配置开启捐赠及捐赠奖励策略。"
 );
 
 ?>
