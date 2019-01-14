@@ -6670,7 +6670,7 @@ function disable_public_ipv4()
 {
     $ip = getip();
     $nip = ip2long($ip);
-    if (!check_tjuip($nip)) {
+    if ($nip && !check_tjuip($nip)) {
         httperr(403);
     }
 }
