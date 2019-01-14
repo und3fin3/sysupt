@@ -696,7 +696,27 @@ $lang_settings = array (
 		'text_users_get' => "首次升级至此等级的用户将获得",
     	'text_invitations_default' => "个邀请名额。默认",
 		'row_exception_domain' => "例外邮箱域",
-		'text_exception_domain_note' => "使用下面设置的发信服务器进行发信的邮箱域，以英文逗号(,)分割"
+		'text_exception_domain_note' => "使用下面设置的发信服务器进行发信的邮箱域，以英文逗号(,)分割",
+		'head_donation_settings' => "捐赠设定",
+		'row_enable_donation' => "开启捐赠",
+		'text_enable_donation' => "默认'是'。是否开启捐赠，选择'否'并不会关掉捐赠列表。",
+		'text_donation_note' => "以下为捐赠金额及对应奖励设定。<font color='red'>注意：捐赠金额请务必递增排序！</font>捐赠奖励请按照'魔力值,上传量（GB）,邀请码,小黄星,永久VIP'的格式来填写，其中前三位可以通过添加'x'（小写英文字母）来代表倍数，例如'1000x'为1000乘以捐赠金额（元）。若某个奖励策略不启用，请将捐赠金额置零。",
+		'text_donation_amount' => "当捐赠金额不低于",
+		'text_donation_reward' => "元时，奖励策略为",
+		'row_donation_zero' => "第零档",
+		'text_donation_zero' => "低于第一档捐赠金额时，奖励策略为",
+		'row_donation_one' => "第一档",
+		'row_donation_two' => "第二档",
+		'row_donation_three' => "第三档",
+		'row_donation_four' => "第四档",
+		'row_donation_five' => "第五档",
+		'row_donation_six' => "第六档",
+		'row_donation_seven' => "第七档",
+		'row_donation_eight' => "第八档",
+		'row_donation_nine' => "第九档",
+		'head_save_donation_settings' => "保存捐赠设定",
+
+
 );
 
 ?>

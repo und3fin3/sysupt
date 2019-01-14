@@ -25,7 +25,7 @@ function yesorno($title, $name, $value, $note="")
 }
 
 $action = isset($_POST['action']) ? $_POST['action'] : 'showmenu';
-$allowed_actions = array('basicsettings','mainsettings','smtpsettings','securitysettings','authoritysettings','tweaksettings', 'botsettings','codesettings','bonussettings','accountsettings','torrentsettings', 'attachmentsettings', 'advertisementsettings', 'savesettings_basic', 'savesettings_main','savesettings_smtp','savesettings_security','savesettings_authority','savesettings_tweak','savesettings_bot','savesettings_code','savesettings_bonus', 'savesettings_account','savesettings_torrent', 'savesettings_attachment', 'savesettings_advertisement', 'showmenu');
+$allowed_actions = array('basicsettings','mainsettings','smtpsettings','securitysettings','authoritysettings','tweaksettings', 'botsettings','codesettings','bonussettings','accountsettings','torrentsettings', 'attachmentsettings', 'advertisementsettings','donationsettings', 'savesettings_basic', 'savesettings_main','savesettings_smtp','savesettings_security','savesettings_authority','savesettings_tweak','savesettings_bot','savesettings_code','savesettings_bonus', 'savesettings_account','savesettings_torrent', 'savesettings_attachment', 'savesettings_advertisement','savesettings_donation', 'showmenu');
 if (!in_array($action, $allowed_actions))
 $action = 'showmenu';
 $notice = "<h1 align=\"center\"><a class=\"faqlink\" href=\"settings.php\">".$lang_settings['text_website_settings']."</a></h1><table cellspacing=\"0\" cellpadding=\"10\" width=\"940\"><tr><td colspan=\"2\" style='padding: 10px; background: black' align=\"center\">
@@ -221,6 +221,17 @@ elseif ($action == 'savesettings_advertisement')	// save advertisement
 	WriteConfig('ADVERTISEMENT', $ADVERTISEMENT);
 	$actiontime = date("F j, Y, g:i a");
 	write_log("Tracker ADVERTISEMENT settings updated by $CURUSER[username]. $actiontime",'mod');
+	go_back();
+} elseif ($action == 'savesettings_donation') {
+	stdhead($lang_settings['head_save_donation_settings']);
+	$validConfig = array('enabled', 'rewardzero', 'rewardone', 'rewardtwo', 'rewardthree', 'rewardfour', 'rewardfive', 'rewardsix', 'rewardseven', 'rewardeight', 'rewardnine', 'amountone', 'amounttwo', 'amountthree', 'amountfour', 'amountfive', 'amountsix', 'amountseven', 'amounteight', 'amountnine');
+	GetVar($validConfig);
+	foreach($validConfig as $config) {
+		$DONATION[$config] = $$config;
+	}
+	WriteConfig('DONATION', $DONATION);
+	$actiontime = date("F j, Y, g:i a");
+	write_log("Tracker DONATION settings updated by $CURUSER[username]. $actiontime",'mod');
 	go_back();
 }
 elseif ($action == 'tweaksettings')		// tweak settings
@@ -623,8 +634,25 @@ elseif ($action == 'mainsettings')	// main settings
 	tr($lang_settings['row_torrent_name_prefix'], "<input type='text' style=\"width: 100px\" name=torrentnameprefix value='".($MAIN["torrentnameprefix"] ? $MAIN["torrentnameprefix"] : "[Nexus]")."'> ".$lang_settings['text_torrent_name_prefix_note'], 1);
 	tr($lang_settings['row_save_settings'],"<input type='submit' name='save' value='".$lang_settings['submit_save_settings']."'>", 1);
 	print ("</form>");
-}
-elseif ($action == 'showmenu')	// settings main page
+} elseif ($action == 'donationsettings') {
+	stdhead($lang_settings['head_donation_settings']);
+	print ($notice);
+	print ("<form method='post' action='".$_SERVER["SCRIPT_NAME"]."'><input type='hidden' name='action' value='savesettings_donation'>");
+	yesorno($lang_settings['row_enable_donation'], 'enabled', $DONATION['enabled'], $lang_settings['text_enable_donation']);
+	tr("", $lang_settings['text_donation_note'],1);
+	tr($lang_settings['row_donation_zero'], $lang_settings['text_donation_zero'] . "<input type='text' style=\"width: 100px\" name='rewardzero' value='{$DONATION['rewardzero']}'>", 1);
+	tr($lang_settings['row_donation_one'], $lang_settings['text_donation_amount'] . "<input type='text' style=\"width: 50px\" name='amountone' value='{$DONATION['amountone']}'>" . $lang_settings['text_donation_reward'] . "<input type='text' style=\"width: 100px\" name='rewardone' value='{$DONATION['rewardone']}'>", 1);
+	tr($lang_settings['row_donation_two'], $lang_settings['text_donation_amount'] . "<input type='text' style=\"width: 50px\" name='amounttwo' value='{$DONATION['amounttwo']}'>" . $lang_settings['text_donation_reward'] . "<input type='text' style=\"width: 100px\" name='rewardtwo' value='{$DONATION['rewardtwo']}'>", 1);
+	tr($lang_settings['row_donation_three'], $lang_settings['text_donation_amount'] . "<input type='text' style=\"width: 50px\" name='amountthree' value='{$DONATION['amountthree']}'>" . $lang_settings['text_donation_reward'] . "<input type='text' style=\"width: 100px\" name='rewardthree' value='{$DONATION['rewardthree']}'>", 1);
+	tr($lang_settings['row_donation_four'], $lang_settings['text_donation_amount'] . "<input type='text' style=\"width: 50px\" name='amountfour' value='{$DONATION['amountfour']}'>" . $lang_settings['text_donation_reward'] . "<input type='text' style=\"width: 100px\" name='rewardfour' value='{$DONATION['rewardfour']}'>", 1);
+	tr($lang_settings['row_donation_five'], $lang_settings['text_donation_amount'] . "<input type='text' style=\"width: 50px\" name='amountfive' value='{$DONATION['amountfive']}'>" . $lang_settings['text_donation_reward'] . "<input type='text' style=\"width: 100px\" name='rewardfive' value='{$DONATION['rewardfive']}'>", 1);
+	tr($lang_settings['row_donation_six'], $lang_settings['text_donation_amount'] . "<input type='text' style=\"width: 50px\" name='amountsix' value='{$DONATION['amountsix']}'>" . $lang_settings['text_donation_reward'] . "<input type='text' style=\"width: 100px\" name='rewardsix' value='{$DONATION['rewardsix']}'>", 1);
+	tr($lang_settings['row_donation_seven'], $lang_settings['text_donation_amount'] . "<input type='text' style=\"width: 50px\" name='amountseven' value='{$DONATION['amountseven']}'>" . $lang_settings['text_donation_reward'] . "<input type='text' style=\"width: 100px\" name='rewardseven' value='{$DONATION['rewardseven']}'>", 1);
+	tr($lang_settings['row_donation_eight'], $lang_settings['text_donation_amount'] . "<input type='text' style=\"width: 50px\" name='amounteight' value='{$DONATION['amounteight']}'>" . $lang_settings['text_donation_reward'] . "<input type='text' style=\"width: 100px\" name='rewardeight' value='{$DONATION['rewardeight']}'>", 1);
+	tr($lang_settings['row_donation_nine'], $lang_settings['text_donation_amount'] . "<input type='text' style=\"width: 50px\" name='amountnine' value='{$DONATION['amountnine']}'>" . $lang_settings['text_donation_reward'] . "<input type='text' style=\"width: 100px\" name='rewardnine' value='{$DONATION['rewardnine']}'>", 1);
+	tr($lang_settings['row_save_settings'],"<input type='submit' name='save' value='".$lang_settings['submit_save_settings']."'>", 1);
+	print ("</form>");
+} elseif ($action == 'showmenu')    // settings main page
 {
 	stdhead($lang_settings['head_website_settings']);
 	print ($notice);
