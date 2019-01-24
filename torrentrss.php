@@ -1,9 +1,6 @@
 <?php
 require "include/bittorrent.php";
 dbconn();
-function hex_esc($matches) {
-	return sprintf("%02x", ord($matches[0]));
-}
 $dllink = false;
 $passkey = $_GET['passkey'];
 $where = "";
@@ -171,7 +168,7 @@ print('
 			<category domain="'.$url.'/torrents.php?cat='.$row['cat_id'].'">'.$row['cat_name'].'</category>
 			<comments><![CDATA['.$url.'/details.php?id='.$row['id'].'&cmtpage=0#startcomments]]></comments>
 			<enclosure url="'.$itemdlurl.'" length="'.$row['size'].'" type="application/x-bittorrent" />
-			<guid isPermaLink="false">'.preg_replace_callback('/./s', 'hex_esc', hash_pad($row['info_hash'])).'</guid>
+			<guid isPermaLink="false">'. bin2hex($row['info_hash']) . '</guid>
 			<pubDate>'.date('r',strtotime($row['added'])).'</pubDate>
 		</item>
 ');
