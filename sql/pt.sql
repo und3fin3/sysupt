@@ -1,67 +1,60 @@
--- MySQL dump 10.16  Distrib 10.1.26-MariaDB, for debian-linux-gnu (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.8.4
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost    Database: pt2018
--- ------------------------------------------------------
--- Server version	10.1.26-MariaDB-0+deb9u1
+-- 主机： localhost
+-- 生成日期： 2019-02-01 01:42:51
+-- 服务器版本： 10.1.37-MariaDB-0+deb9u1
+-- PHP 版本： 7.3.0-2
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `tjupt`
+-- 数据库： `tjupt`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `tjupt` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-
-USE `tjupt`;
+-- --------------------------------------------------------
 
 --
--- Table structure for table `adclicks`
+-- 表的结构 `adclicks`
 --
 
-DROP TABLE IF EXISTS `adclicks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `adclicks` (
   `adid` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `added` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `adminpanel`
+-- 表的结构 `adminpanel`
 --
 
-DROP TABLE IF EXISTS `adminpanel`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `adminpanel` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(128) NOT NULL DEFAULT '',
   `url` varchar(256) NOT NULL DEFAULT '',
-  `info` varchar(256) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `info` varchar(256) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `advertisements`
+-- 表的结构 `advertisements`
 --
 
-DROP TABLE IF EXISTS `advertisements`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `advertisements` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `enabled` tinyint(1) NOT NULL DEFAULT '0',
   `type` enum('bbcodes','xhtml','text','image','flash') NOT NULL,
   `position` enum('header','footer','belownav','belowsearchbox','torrentdetail','comment','interoverforums','forumpost','popup') NOT NULL,
@@ -70,251 +63,219 @@ CREATE TABLE `advertisements` (
   `parameters` text NOT NULL,
   `code` text NOT NULL,
   `starttime` datetime DEFAULT NULL,
-  `endtime` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `endtime` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `agent_allowed_exception`
+-- 表的结构 `agent_allowed_exception`
 --
 
-DROP TABLE IF EXISTS `agent_allowed_exception`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `agent_allowed_exception` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `family_id` tinyint(3) unsigned NOT NULL,
+  `id` int(11) NOT NULL,
+  `family_id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL DEFAULT '',
   `peer_id` varchar(20) NOT NULL,
   `agent` varchar(100) NOT NULL,
-  `comment` varchar(200) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `comment` varchar(200) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `agent_allowed_family`
+-- 表的结构 `agent_allowed_family`
 --
 
-DROP TABLE IF EXISTS `agent_allowed_family`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `agent_allowed_family` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `family` varchar(50) NOT NULL DEFAULT '',
   `start_name` varchar(100) NOT NULL DEFAULT '',
   `peer_id_pattern` varchar(200) NOT NULL,
-  `peer_id_match_num` tinyint(3) unsigned NOT NULL,
+  `peer_id_match_num` tinyint(3) UNSIGNED NOT NULL,
   `peer_id_matchtype` enum('dec','hex') NOT NULL DEFAULT 'dec',
   `peer_id_start` varchar(20) NOT NULL,
   `agent_pattern` varchar(200) NOT NULL,
-  `agent_match_num` tinyint(3) unsigned NOT NULL,
+  `agent_match_num` tinyint(3) UNSIGNED NOT NULL,
   `agent_matchtype` enum('dec','hex') NOT NULL DEFAULT 'dec',
   `agent_start` varchar(100) NOT NULL,
   `exception` enum('yes','no') NOT NULL DEFAULT 'no',
   `allowhttps` enum('yes','no') NOT NULL DEFAULT 'no',
   `comment` varchar(200) NOT NULL DEFAULT '',
-  `hits` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `hits` mediumint(8) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `allowedemails`
+-- 表的结构 `allowedemails`
 --
 
-DROP TABLE IF EXISTS `allowedemails`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `allowedemails` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `value` mediumtext NOT NULL,
-  PRIMARY KEY (`id`)
+  `id` int(10) NOT NULL,
+  `value` mediumtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `app_luckydraw`
+-- 表的结构 `api_token`
 --
 
-DROP TABLE IF EXISTS `app_luckydraw`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_token` (
+  `token` varchar(32) NOT NULL,
+  `secret` varchar(32) NOT NULL,
+  `appname` varchar(20) DEFAULT NULL,
+  `last_activity` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `app_luckydraw`
+--
+
 CREATE TABLE `app_luckydraw` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL,
   `time_start` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `time_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `ticket_price` decimal(20,1) NOT NULL DEFAULT '100.0',
-  `ticket_tax_rate` decimal(10,2) unsigned NOT NULL DEFAULT '0.20',
-  `ticket_max_win_x` int(11) unsigned NOT NULL DEFAULT '250',
+  `ticket_tax_rate` decimal(10,2) UNSIGNED NOT NULL DEFAULT '0.20',
+  `ticket_max_win_x` int(11) UNSIGNED NOT NULL DEFAULT '250',
   `ticket_win` decimal(20,1) NOT NULL DEFAULT '0.0',
-  `user_class` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `user_max` int(11) unsigned NOT NULL DEFAULT '100',
-  `winners_max` int(11) unsigned NOT NULL DEFAULT '10',
-  `ticket_total` int(11) unsigned NOT NULL DEFAULT '0',
-  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `bonuspool` decimal(20,1) unsigned NOT NULL DEFAULT '0.0',
-  `bonuspool_next` decimal(20,1) unsigned NOT NULL DEFAULT '0.0',
-  `addby` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `time_start` (`time_start`,`time_until`,`status`),
-  KEY `time_until` (`time_until`),
-  KEY `status` (`status`)
+  `user_class` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `user_max` int(11) UNSIGNED NOT NULL DEFAULT '100',
+  `winners_max` int(11) UNSIGNED NOT NULL DEFAULT '10',
+  `ticket_total` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `bonuspool` decimal(20,1) UNSIGNED NOT NULL DEFAULT '0.0',
+  `bonuspool_next` decimal(20,1) UNSIGNED NOT NULL DEFAULT '0.0',
+  `addby` int(11) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `app_luckydraw_players`
+-- 表的结构 `app_luckydraw_players`
 --
 
-DROP TABLE IF EXISTS `app_luckydraw_players`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `app_luckydraw_players` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `luckydraw_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `user_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `ticket_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `Id` int(11) UNSIGNED NOT NULL,
+  `luckydraw_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `ticket_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `ticket_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `win_or_lose` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Id`),
-  KEY `luckydraw_id` (`luckydraw_id`,`user_id`),
-  KEY `user_id` (`user_id`),
-  KEY `win_or_lose` (`win_or_lose`)
+  `win_or_lose` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `app_rename`
+-- 表的结构 `app_rename`
 --
 
-DROP TABLE IF EXISTS `app_rename`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `app_rename` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` int(11) unsigned NOT NULL DEFAULT '0',
+  `id` int(11) UNSIGNED NOT NULL,
+  `userid` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `oldname` varchar(40) NOT NULL DEFAULT '',
   `newname` varchar(40) NOT NULL DEFAULT '',
   `timerename` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `paybonus` decimal(20,0) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `paybonus` decimal(20,0) UNSIGNED DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `app_tryluck`
+-- 表的结构 `app_tryluck`
 --
 
-DROP TABLE IF EXISTS `app_tryluck`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `app_tryluck` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `Id` int(11) UNSIGNED NOT NULL,
   `trytime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `userid` int(11) unsigned NOT NULL DEFAULT '0',
+  `userid` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `bonus_pay` decimal(20,1) NOT NULL DEFAULT '0.0',
-  `bonus_gain` decimal(20,1) NOT NULL DEFAULT '0.0',
-  PRIMARY KEY (`Id`),
-  KEY `userid` (`userid`)
+  `bonus_gain` decimal(20,1) NOT NULL DEFAULT '0.0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `attachments`
+-- 表的结构 `attachments`
 --
 
-DROP TABLE IF EXISTS `attachments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `attachments` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `width` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `width` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `filename` varchar(256) NOT NULL DEFAULT '',
   `dlkey` char(32) NOT NULL,
   `filetype` varchar(50) NOT NULL DEFAULT '',
-  `filesize` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `filesize` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
   `location` varchar(256) NOT NULL,
   `downloads` mediumint(8) NOT NULL DEFAULT '0',
-  `isimage` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `thumb` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `isimage` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `thumb` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `cache_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `forums` smallint(6) unsigned NOT NULL DEFAULT '0',
-  `torrents` smallint(6) unsigned NOT NULL DEFAULT '0',
-  `offers` smallint(6) unsigned NOT NULL DEFAULT '0',
-  `messages` smallint(6) unsigned NOT NULL DEFAULT '0',
-  `comments` smallint(6) unsigned NOT NULL DEFAULT '0',
-  `requests` smallint(6) unsigned NOT NULL DEFAULT '0',
-  `others` enum('yes','no') NOT NULL DEFAULT 'no',
-  PRIMARY KEY (`id`),
-  KEY `pid` (`userid`,`id`),
-  KEY `dateline` (`added`,`isimage`,`downloads`)
+  `forums` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
+  `torrents` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
+  `offers` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
+  `messages` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
+  `comments` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
+  `requests` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
+  `others` enum('yes','no') NOT NULL DEFAULT 'no'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `audiocodecs`
+-- 表的结构 `audiocodecs`
 --
 
-DROP TABLE IF EXISTS `audiocodecs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `audiocodecs` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
   `image` varchar(256) NOT NULL,
-  `sort_index` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `autoseeding`
+-- 表的结构 `autoseeding`
 --
 
-DROP TABLE IF EXISTS `autoseeding`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `autoseeding` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `torrentid` mediumint(8) unsigned NOT NULL,
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `torrentid` mediumint(8) UNSIGNED NOT NULL,
   `filename` varchar(255) DEFAULT NULL,
   `completed` enum('yes','no') CHARACTER SET utf8 NOT NULL DEFAULT 'no',
-  `remark` varchar(6) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `remark` varchar(6) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `avps`
+-- 表的结构 `avps`
 --
 
-DROP TABLE IF EXISTS `avps`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `avps` (
   `arg` varchar(20) NOT NULL DEFAULT '',
   `value_s` text NOT NULL,
   `value_i` int(11) NOT NULL DEFAULT '0',
-  `value_u` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`arg`)
+  `value_u` int(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `banipv6`
+-- 表的结构 `banipv6`
 --
 
-DROP TABLE IF EXISTS `banipv6`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `banipv6` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `addedby` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `addedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `comment` varchar(255) NOT NULL DEFAULT '',
   `ip0` int(11) NOT NULL DEFAULT '0',
   `ip1` int(11) NOT NULL DEFAULT '0',
@@ -325,489 +286,390 @@ CREATE TABLE `banipv6` (
   `ip6` int(11) NOT NULL DEFAULT '0',
   `ip7` int(11) NOT NULL DEFAULT '0',
   `type` enum('ip','school','building') NOT NULL DEFAULT 'ip',
-  `until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`ip0`,`ip1`,`ip2`,`ip3`),
-  KEY `until` (`until`),
-  KEY `id` (`id`)
+  `until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `banned_file_type`
+-- 表的结构 `bannedemails`
 --
 
-DROP TABLE IF EXISTS `banned_file_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `banned_file_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `catid` smallint(6) DEFAULT NULL,
-  `type` varchar(20) DEFAULT NULL,
-  `class` enum('banned','notallowed') DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `bannedemails`
---
-
-DROP TABLE IF EXISTS `bannedemails`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bannedemails` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `value` mediumtext NOT NULL,
-  PRIMARY KEY (`id`)
+  `id` int(10) NOT NULL,
+  `value` mediumtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `bannedkeywords`
+-- 表的结构 `bannedkeywords`
 --
 
-DROP TABLE IF EXISTS `bannedkeywords`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bannedkeywords` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `keywords` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `keywords` (`keywords`(4))
+  `id` int(10) UNSIGNED NOT NULL,
+  `keywords` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `bannedtitle`
+-- 表的结构 `bannedtitle`
 --
 
-DROP TABLE IF EXISTS `bannedtitle`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bannedtitle` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `keywords` varchar(255) NOT NULL DEFAULT '',
-  `catid` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `catid` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `comment` varchar(255) DEFAULT NULL,
-  `addedby` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `keywords` (`keywords`(4))
+  `addedby` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `bans`
+-- 表的结构 `banned_file_type`
 --
 
-DROP TABLE IF EXISTS `bans`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `banned_file_type` (
+  `id` int(11) NOT NULL,
+  `catid` smallint(6) DEFAULT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `class` enum('banned','notallowed') DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `bans`
+--
+
 CREATE TABLE `bans` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `addedby` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `addedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `comment` varchar(255) NOT NULL DEFAULT '',
   `first` bigint(20) NOT NULL,
   `last` bigint(20) NOT NULL,
-  `until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY `first_last` (`first`,`last`)
+  `until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `bitbucket`
+-- 表的结构 `bitbucket`
 --
 
-DROP TABLE IF EXISTS `bitbucket`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bitbucket` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `owner` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) UNSIGNED NOT NULL,
+  `owner` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `name` varchar(256) NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `public` enum('0','1') NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `public` enum('0','1') NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `blackjack`
+-- 表的结构 `blackjack`
 --
 
-DROP TABLE IF EXISTS `blackjack`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `blackjack` (
   `userid` int(11) NOT NULL DEFAULT '0',
   `points` int(11) NOT NULL DEFAULT '0',
   `status` enum('playing','waiting') NOT NULL DEFAULT 'playing',
   `cards` text NOT NULL,
   `date` int(11) DEFAULT '0',
-  `gameover` enum('yes','no') DEFAULT NULL,
-  PRIMARY KEY (`userid`)
+  `gameover` enum('yes','no') DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `blocks`
+-- 表的结构 `blocks`
 --
 
-DROP TABLE IF EXISTS `blocks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `blocks` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `blockid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `userfriend` (`userid`,`blockid`)
+  `id` int(10) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `blockid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `bookmarks`
+-- 表的结构 `bookmarks`
 --
 
-DROP TABLE IF EXISTS `bookmarks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bookmarks` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `torrentid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `userid_torrentid` (`userid`,`torrentid`)
+  `id` int(10) UNSIGNED NOT NULL,
+  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `cards`
+-- 表的结构 `cards`
 --
 
-DROP TABLE IF EXISTS `cards`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cards` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `points` int(11) NOT NULL DEFAULT '0',
-  `pic` text NOT NULL,
-  PRIMARY KEY (`id`)
+  `pic` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `carsi_invite`
+-- 表的结构 `carsimapping`
 --
 
-DROP TABLE IF EXISTS `carsi_invite`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `carsi_invite` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `institution` varchar(40) NOT NULL DEFAULT '',
-  `username` varchar(40) NOT NULL DEFAULT '',
-  `invite_code` char(32) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `institution` (`institution`,`username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `carsi_schools`
---
-
-DROP TABLE IF EXISTS `carsi_schools`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `carsi_schools` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `school` varchar(20) NOT NULL DEFAULT '',
-  `idp` varchar(10) NOT NULL DEFAULT '',
-  `allow_reg` enum('yes','no') NOT NULL DEFAULT 'yes',
-  PRIMARY KEY (`id`),
-  KEY `idp` (`idp`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `carsimapping`
---
-
-DROP TABLE IF EXISTS `carsimapping`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `carsimapping` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `tjuptid` mediumint(10) unsigned NOT NULL,
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `tjuptid` mediumint(10) UNSIGNED NOT NULL,
   `username` varchar(40) CHARACTER SET utf8 NOT NULL,
   `institution` varchar(40) CHARACTER SET utf8 NOT NULL,
-  `remarks` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tjuptid` (`tjuptid`,`username`,`institution`)
+  `remarks` varchar(20) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `catanime`
+-- 表的结构 `carsi_invite`
 --
 
-DROP TABLE IF EXISTS `catanime`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `carsi_invite` (
+  `id` int(10) NOT NULL,
+  `institution` varchar(40) NOT NULL DEFAULT '',
+  `username` varchar(40) NOT NULL DEFAULT '',
+  `invite_code` char(32) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `carsi_schools`
+--
+
+CREATE TABLE `carsi_schools` (
+  `id` int(11) NOT NULL,
+  `school` varchar(20) NOT NULL DEFAULT '',
+  `idp` varchar(10) NOT NULL DEFAULT '',
+  `allow_reg` enum('yes','no') NOT NULL DEFAULT 'yes'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `catanime`
+--
+
 CREATE TABLE `catanime` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `catdocum`
+-- 表的结构 `catdocum`
 --
 
-DROP TABLE IF EXISTS `catdocum`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catdocum` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `categories`
+-- 表的结构 `categories`
 --
 
-DROP TABLE IF EXISTS `categories`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `categories` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `mode` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `id` smallint(5) UNSIGNED NOT NULL,
+  `mode` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
   `class_name` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `mode_sort` (`mode`,`sort_index`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `catgame`
+-- 表的结构 `catgame`
 --
 
-DROP TABLE IF EXISTS `catgame`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catgame` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `cathq`
+-- 表的结构 `cathq`
 --
 
-DROP TABLE IF EXISTS `cathq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cathq` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `caticons`
+-- 表的结构 `caticons`
 --
 
-DROP TABLE IF EXISTS `caticons`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `caticons` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(64) NOT NULL DEFAULT '',
   `folder` varchar(256) NOT NULL,
   `cssfile` varchar(255) NOT NULL DEFAULT '',
   `multilang` enum('yes','no') NOT NULL DEFAULT 'no',
   `secondicon` enum('yes','no') NOT NULL DEFAULT 'no',
   `designer` varchar(50) NOT NULL DEFAULT '',
-  `comment` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `comment` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `catmovie`
+-- 表的结构 `catmovie`
 --
 
-DROP TABLE IF EXISTS `catmovie`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catmovie` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `catnewsreel`
+-- 表的结构 `catnewsreel`
 --
 
-DROP TABLE IF EXISTS `catnewsreel`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catnewsreel` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `catothers`
+-- 表的结构 `catothers`
 --
 
-DROP TABLE IF EXISTS `catothers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catothers` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) DEFAULT NULL,
-  `sort_index` smallint(5) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `catplatform`
+-- 表的结构 `catplatform`
 --
 
-DROP TABLE IF EXISTS `catplatform`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catplatform` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `catseries`
+-- 表的结构 `catseries`
 --
 
-DROP TABLE IF EXISTS `catseries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catseries` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `catsoftware`
+-- 表的结构 `catsoftware`
 --
 
-DROP TABLE IF EXISTS `catsoftware`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catsoftware` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `catsports`
+-- 表的结构 `catsports`
 --
 
-DROP TABLE IF EXISTS `catsports`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catsports` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `cheaters`
+-- 表的结构 `cheaters`
 --
 
-DROP TABLE IF EXISTS `cheaters`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cheaters` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `torrentid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `uploaded` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `downloaded` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `anctime` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `seeders` mediumint(5) unsigned NOT NULL DEFAULT '0',
-  `leechers` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `hit` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `dealtby` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `anctime` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `seeders` mediumint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `leechers` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `hit` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `dealtby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `dealtwith` tinyint(1) NOT NULL DEFAULT '0',
   `comment` varchar(256) NOT NULL DEFAULT '',
   `ip` varchar(64) DEFAULT NULL,
-  `port` mediumint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `port` mediumint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `chronicle`
+-- 表的结构 `chronicle`
 --
 
-DROP TABLE IF EXISTS `chronicle`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `chronicle` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `txt` text,
-  PRIMARY KEY (`id`),
-  KEY `added` (`added`)
+  `txt` text
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `class`
+-- 表的结构 `class`
 --
 
-DROP TABLE IF EXISTS `class`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `class` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `名称` varchar(20) DEFAULT NULL,
   `peasant` varchar(20) DEFAULT NULL,
   `user` varchar(20) DEFAULT NULL,
@@ -825,137 +687,109 @@ CREATE TABLE `class` (
   `moderator` varchar(20) DEFAULT NULL,
   `administrator` varchar(20) DEFAULT NULL,
   `sysop` varchar(20) DEFAULT NULL,
-  `staff_leader` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`Id`)
+  `staff_leader` varchar(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `codecs`
+-- 表的结构 `codecs`
 --
 
-DROP TABLE IF EXISTS `codecs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `codecs` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `comments`
+-- 表的结构 `comments`
 --
 
-DROP TABLE IF EXISTS `comments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comments` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `torrent` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) UNSIGNED NOT NULL,
+  `user` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `torrent` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `text` text,
   `ori_text` text,
-  `editedby` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `editedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `editdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `offer` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `request` mediumint(8) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `user` (`user`),
-  KEY `torrent_id` (`torrent`,`id`),
-  KEY `offer_id` (`offer`,`id`),
-  KEY `text` (`text`(10))
+  `offer` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `request` mediumint(8) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `connect`
+-- 表的结构 `connect`
 --
 
-DROP TABLE IF EXISTS `connect`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `connect` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `school` varchar(255) DEFAULT NULL,
   `speed` varchar(255) DEFAULT NULL,
-  `quality` enum('极差','差','一般','好','极好') DEFAULT '一般',
-  PRIMARY KEY (`Id`)
+  `quality` enum('极差','差','一般','好','极好') DEFAULT '一般'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `countries`
+-- 表的结构 `countries`
 --
 
-DROP TABLE IF EXISTS `countries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `countries` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(50) NOT NULL,
-  `flagpic` varchar(256) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `flagpic` varchar(256) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `districtanime`
+-- 表的结构 `districtanime`
 --
 
-DROP TABLE IF EXISTS `districtanime`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `districtanime` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `districtmovie`
+-- 表的结构 `districtmovie`
 --
 
-DROP TABLE IF EXISTS `districtmovie`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `districtmovie` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `districttvshows`
+-- 表的结构 `districttvshows`
 --
 
-DROP TABLE IF EXISTS `districttvshows`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `districttvshows` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `donation`
+-- 表的结构 `donation`
 --
 
-DROP TABLE IF EXISTS `donation`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `donation` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL,
   `uid` int(10) NOT NULL,
   `amount` double(10,2) NOT NULL DEFAULT '0.00',
   `message` varchar(500) NOT NULL DEFAULT '',
@@ -965,415 +799,336 @@ CREATE TABLE `donation` (
   `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `success_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `status` tinyint(1) NOT NULL DEFAULT '-1',
-  `used` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `used` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `douban`
+-- 表的结构 `douban`
 --
 
-DROP TABLE IF EXISTS `douban`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `douban` (
-  `rank` int(11) unsigned NOT NULL DEFAULT '0',
+  `rank` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `title` varchar(50) DEFAULT NULL,
-  `year` int(11) unsigned DEFAULT NULL,
-  `rating` double(2,1) unsigned DEFAULT NULL,
+  `year` int(11) UNSIGNED DEFAULT NULL,
+  `rating` double(2,1) UNSIGNED DEFAULT NULL,
   `votes` varchar(38) DEFAULT NULL,
-  `english_title` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`rank`)
+  `english_title` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `downloadspeed`
+-- 表的结构 `downloadspeed`
 --
 
-DROP TABLE IF EXISTS `downloadspeed`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `downloadspeed` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
+  `id` tinyint(3) UNSIGNED NOT NULL,
+  `name` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `faq`
+-- 表的结构 `faq`
 --
 
-DROP TABLE IF EXISTS `faq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `faq` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `link_id` smallint(5) unsigned NOT NULL,
-  `lang_id` smallint(5) unsigned NOT NULL DEFAULT '6',
+  `id` smallint(5) UNSIGNED NOT NULL,
+  `link_id` smallint(5) UNSIGNED NOT NULL,
+  `lang_id` smallint(5) UNSIGNED NOT NULL DEFAULT '6',
   `type` enum('categ','item') NOT NULL DEFAULT 'item',
   `question` text NOT NULL,
   `answer` text NOT NULL,
-  `flag` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `categ` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `order` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `flag` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `categ` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `order` smallint(5) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `files`
+-- 表的结构 `files`
 --
 
-DROP TABLE IF EXISTS `files`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `files` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `torrent` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) UNSIGNED NOT NULL,
+  `torrent` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `filename` varchar(255) NOT NULL DEFAULT '',
-  `size` bigint(20) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `torrent` (`torrent`)
+  `size` bigint(20) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `formatanime`
+-- 表的结构 `formatanime`
 --
 
-DROP TABLE IF EXISTS `formatanime`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `formatanime` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `formatdocum`
+-- 表的结构 `formatdocum`
 --
 
-DROP TABLE IF EXISTS `formatdocum`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `formatdocum` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `formatgame`
+-- 表的结构 `formatgame`
 --
 
-DROP TABLE IF EXISTS `formatgame`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `formatgame` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `formathqaudio`
+-- 表的结构 `formathqaudio`
 --
 
-DROP TABLE IF EXISTS `formathqaudio`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `formathqaudio` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `formatmovie`
+-- 表的结构 `formatmovie`
 --
 
-DROP TABLE IF EXISTS `formatmovie`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `formatmovie` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `formatnewsreel`
+-- 表的结构 `formatnewsreel`
 --
 
-DROP TABLE IF EXISTS `formatnewsreel`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `formatnewsreel` (
-  `id` smallint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(3) UNSIGNED NOT NULL,
   `name` varchar(10) NOT NULL,
-  `sort_index` smallint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `formatsoftware`
+-- 表的结构 `formatsoftware`
 --
 
-DROP TABLE IF EXISTS `formatsoftware`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `formatsoftware` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `formatsports`
+-- 表的结构 `formatsports`
 --
 
-DROP TABLE IF EXISTS `formatsports`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `formatsports` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `formattvseries`
+-- 表的结构 `formattvseries`
 --
 
-DROP TABLE IF EXISTS `formattvseries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `formattvseries` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `formattvshows`
+-- 表的结构 `formattvshows`
 --
 
-DROP TABLE IF EXISTS `formattvshows`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `formattvshows` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `forummods`
+-- 表的结构 `forummods`
 --
 
-DROP TABLE IF EXISTS `forummods`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `forummods` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `forumid` smallint(5) unsigned NOT NULL,
-  `userid` mediumint(8) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `forumid` (`forumid`)
+  `id` smallint(5) UNSIGNED NOT NULL,
+  `forumid` smallint(5) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `forums`
+-- 表的结构 `forums`
 --
 
-DROP TABLE IF EXISTS `forums`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `forums` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `sort` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `id` smallint(5) UNSIGNED NOT NULL,
+  `sort` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   `name` varchar(60) NOT NULL,
   `description` varchar(256) NOT NULL DEFAULT '',
-  `minclassread` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `minclasswrite` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `postcount` int(10) unsigned NOT NULL DEFAULT '0',
-  `topiccount` int(10) unsigned NOT NULL DEFAULT '0',
-  `minclasscreate` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `forid` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `minclassread` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `minclasswrite` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `postcount` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `topiccount` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `minclasscreate` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `forid` smallint(5) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `friends`
+-- 表的结构 `friends`
 --
 
-DROP TABLE IF EXISTS `friends`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `friends` (
-  `id` int(12) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL,
-  `friendid` mediumint(8) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `userfriend` (`userid`,`friendid`)
+  `id` int(12) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL,
+  `friendid` mediumint(8) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `fun`
+-- 表的结构 `fun`
 --
 
-DROP TABLE IF EXISTS `fun`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fun` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `body` text,
   `title` varchar(256) NOT NULL DEFAULT '',
   `status` enum('normal','dull','notfunny','funny','veryfunny','banned') NOT NULL DEFAULT 'normal',
-  `comment` text,
-  PRIMARY KEY (`id`)
+  `comment` text
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `funds`
+-- 表的结构 `funds`
 --
 
-DROP TABLE IF EXISTS `funds`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `funds` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `usd` decimal(8,2) NOT NULL DEFAULT '0.00',
   `cny` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `user` mediumint(8) unsigned NOT NULL,
+  `user` mediumint(8) UNSIGNED NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `memo` varchar(256) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `memo` varchar(256) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `funvotes`
+-- 表的结构 `funvotes`
 --
 
-DROP TABLE IF EXISTS `funvotes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `funvotes` (
-  `funid` mediumint(8) unsigned NOT NULL,
-  `userid` mediumint(8) unsigned NOT NULL,
+  `funid` mediumint(8) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `vote` enum('fun','dull') NOT NULL DEFAULT 'fun',
-  PRIMARY KEY (`funid`,`userid`)
+  `vote` enum('fun','dull') NOT NULL DEFAULT 'fun'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `gift`
+-- 表的结构 `gift`
 --
 
-DROP TABLE IF EXISTS `gift`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gift` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `userid` int(11) NOT NULL DEFAULT '0',
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY `userid` (`userid`)
+  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `givebonus`
+-- 表的结构 `givebonus`
 --
 
-DROP TABLE IF EXISTS `givebonus`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `givebonus` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `bonusfromuserid` mediumint(8) unsigned NOT NULL,
-  `bonustotorrentid` mediumint(8) unsigned NOT NULL,
-  `bonus` decimal(10,1) unsigned NOT NULL,
-  `type` int(1) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `id` int(10) UNSIGNED NOT NULL,
+  `bonusfromuserid` mediumint(8) UNSIGNED NOT NULL,
+  `bonustotorrentid` mediumint(8) UNSIGNED NOT NULL,
+  `bonus` decimal(10,1) UNSIGNED NOT NULL,
+  `type` int(1) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `hqtone`
+-- 表的结构 `hqtone`
 --
 
-DROP TABLE IF EXISTS `hqtone`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `hqtone` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `imdb`
+-- 表的结构 `imdb`
 --
 
-DROP TABLE IF EXISTS `imdb`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `imdb` (
-  `rank` int(11) unsigned NOT NULL DEFAULT '0',
+  `rank` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `title` varchar(50) DEFAULT NULL,
-  `imdb_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `year` int(11) unsigned DEFAULT NULL,
-  `rating` double(2,1) unsigned DEFAULT NULL,
+  `imdb_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `year` int(11) UNSIGNED DEFAULT NULL,
+  `rating` double(2,1) UNSIGNED DEFAULT NULL,
   `votes` varchar(38) DEFAULT NULL,
   `torrent_id` int(11) DEFAULT NULL,
-  `translate_title` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`rank`)
+  `translate_title` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `invitebox`
+-- 表的结构 `invitebox`
 --
 
-DROP TABLE IF EXISTS `invitebox`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invitebox` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL DEFAULT '',
   `email` varchar(30) NOT NULL DEFAULT '',
   `school` varchar(30) DEFAULT NULL,
@@ -1384,491 +1139,403 @@ CREATE TABLE `invitebox` (
   `self_introduction` varchar(255) DEFAULT NULL,
   `added` datetime DEFAULT NULL,
   `dealt_by` varchar(20) NOT NULL DEFAULT 'no',
-  `ip` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`Id`)
+  `ip` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `invites`
+-- 表的结构 `invites`
 --
 
-DROP TABLE IF EXISTS `invites`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invites` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `inviter` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) UNSIGNED NOT NULL,
+  `inviter` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `invitee` varchar(80) NOT NULL DEFAULT '',
   `hash` char(32) NOT NULL,
-  `time_invited` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
+  `time_invited` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `iplog`
+-- 表的结构 `iplog`
 --
 
-DROP TABLE IF EXISTS `iplog`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `iplog` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `ip` varchar(64) NOT NULL,
-  `userid` mediumint(8) unsigned NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL,
   `access` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `duplicate` enum('yes','no') NOT NULL DEFAULT 'no',
-  `subject_id` smallint(6) DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `userid` (`userid`),
-  KEY `ip` (`ip`)
+  `subject_id` smallint(6) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `ipv6school`
+-- 表的结构 `ipv6school`
 --
 
-DROP TABLE IF EXISTS `ipv6school`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ipv6school` (
   `id` tinyint(3) NOT NULL,
   `ipv6` varchar(13) NOT NULL,
   `school` varchar(17) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `isp`
+-- 表的结构 `isp`
 --
 
-DROP TABLE IF EXISTS `isp`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `isp` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `id` tinyint(3) UNSIGNED NOT NULL,
+  `name` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `jc_options`
+-- 表的结构 `jc_options`
 --
 
-DROP TABLE IF EXISTS `jc_options`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `jc_options` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `option_id` int(10) unsigned NOT NULL DEFAULT '1',
+  `Id` int(11) UNSIGNED NOT NULL,
+  `parent_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `option_id` int(10) UNSIGNED NOT NULL DEFAULT '1',
   `option_name` varchar(40) NOT NULL DEFAULT '',
-  `option_players` int(10) unsigned NOT NULL DEFAULT '0',
-  `option_total` decimal(10,1) NOT NULL DEFAULT '0.0',
-  PRIMARY KEY (`Id`)
+  `option_players` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `option_total` decimal(10,1) NOT NULL DEFAULT '0.0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='竞猜选项';
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `jc_rank`
+-- 表的结构 `jc_rank`
 --
 
-DROP TABLE IF EXISTS `jc_rank`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `jc_rank` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `win_times` int(11) unsigned NOT NULL DEFAULT '0',
-  `lose_times` int(11) unsigned NOT NULL DEFAULT '0',
+  `Id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `win_times` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `lose_times` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `yin_kui` decimal(10,1) NOT NULL DEFAULT '0.0',
-  `total_times` int(11) unsigned DEFAULT '0',
-  `win_percent` decimal(10,2) unsigned DEFAULT '0.00',
-  PRIMARY KEY (`Id`)
+  `total_times` int(11) UNSIGNED DEFAULT '0',
+  `win_percent` decimal(10,2) UNSIGNED DEFAULT '0.00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `jc_record`
+-- 表的结构 `jc_record`
 --
 
-DROP TABLE IF EXISTS `jc_record`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `jc_record` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `subject_id` int(10) NOT NULL DEFAULT '0',
   `option_id` int(10) NOT NULL DEFAULT '0',
   `user_total` decimal(10,1) DEFAULT NULL,
   `state` tinyint(3) DEFAULT '0',
   `yin_kui` decimal(10,1) DEFAULT '0.0',
-  `last_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
+  `last_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `jc_subjects`
+-- 表的结构 `jc_subjects`
 --
 
-DROP TABLE IF EXISTS `jc_subjects`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `jc_subjects` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `creater_id` int(11) unsigned DEFAULT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
+  `creater_id` int(11) UNSIGNED DEFAULT NULL,
   `creater_name` varchar(40) NOT NULL DEFAULT '',
   `subject` varchar(100) NOT NULL DEFAULT '',
   `description` varchar(200) DEFAULT '',
-  `type` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `start` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `end` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `limit` int(10) unsigned NOT NULL DEFAULT '0',
+  `limit` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `total` decimal(10,1) NOT NULL DEFAULT '0.0',
-  `players` int(10) unsigned NOT NULL DEFAULT '0',
+  `players` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `state` tinyint(1) NOT NULL DEFAULT '1',
-  `options` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `win_options` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `options` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `win_options` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `remark` varchar(512) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `note` varchar(255) DEFAULT '' COMMENT '备注',
-  PRIMARY KEY (`id`)
+  `note` varchar(255) DEFAULT '' COMMENT '备注'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='竞猜';
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `keepseed`
+-- 表的结构 `keepseed`
 --
 
-DROP TABLE IF EXISTS `keepseed`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `keepseed` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `torrentid` int(11) NOT NULL DEFAULT '0',
-  `userid` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `userid` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `langgame`
+-- 表的结构 `langgame`
 --
 
-DROP TABLE IF EXISTS `langgame`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `langgame` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `langhq`
+-- 表的结构 `langhq`
 --
 
-DROP TABLE IF EXISTS `langhq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `langhq` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `langsoftware`
+-- 表的结构 `langsoftware`
 --
 
-DROP TABLE IF EXISTS `langsoftware`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `langsoftware` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `langtvseries`
+-- 表的结构 `langtvseries`
 --
 
-DROP TABLE IF EXISTS `langtvseries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `langtvseries` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `langtvshows`
+-- 表的结构 `langtvshows`
 --
 
-DROP TABLE IF EXISTS `langtvshows`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `langtvshows` (
-  `id` smallint(5) unsigned NOT NULL,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `language`
+-- 表的结构 `language`
 --
 
-DROP TABLE IF EXISTS `language`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `language` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `lang_name` varchar(50) NOT NULL,
   `flagpic` varchar(256) NOT NULL DEFAULT '',
-  `sub_lang` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `rule_lang` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `site_lang` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `sub_lang` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `rule_lang` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `site_lang` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `site_lang_folder` varchar(256) NOT NULL DEFAULT '',
-  `trans_state` enum('up-to-date','outdate','incomplete','need-new','unavailable') NOT NULL DEFAULT 'unavailable',
-  PRIMARY KEY (`id`)
+  `trans_state` enum('up-to-date','outdate','incomplete','need-new','unavailable') NOT NULL DEFAULT 'unavailable'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `links`
+-- 表的结构 `links`
 --
 
-DROP TABLE IF EXISTS `links`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `links` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `url` varchar(256) NOT NULL,
-  `title` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `title` varchar(50) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `locations`
+-- 表的结构 `locations`
 --
 
-DROP TABLE IF EXISTS `locations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `locations` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `location_main` varchar(200) NOT NULL,
   `location_sub` varchar(200) NOT NULL,
   `flagpic` varchar(50) DEFAULT NULL,
   `start_ip` varchar(20) NOT NULL,
   `end_ip` varchar(20) NOT NULL,
-  `theory_upspeed` int(10) unsigned NOT NULL DEFAULT '10',
-  `practical_upspeed` int(10) unsigned NOT NULL DEFAULT '10',
-  `theory_downspeed` int(10) unsigned NOT NULL DEFAULT '10',
-  `practical_downspeed` int(10) unsigned NOT NULL DEFAULT '10',
-  `hit` int(10) unsigned NOT NULL DEFAULT '0',
-  `privilege` int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `theory_upspeed` int(10) UNSIGNED NOT NULL DEFAULT '10',
+  `practical_upspeed` int(10) UNSIGNED NOT NULL DEFAULT '10',
+  `theory_downspeed` int(10) UNSIGNED NOT NULL DEFAULT '10',
+  `practical_downspeed` int(10) UNSIGNED NOT NULL DEFAULT '10',
+  `hit` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `privilege` int(10) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `loginattempts`
+-- 表的结构 `loginattempts`
 --
 
-DROP TABLE IF EXISTS `loginattempts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `loginattempts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `ip` varchar(64) NOT NULL DEFAULT '',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `banned` enum('yes','no') NOT NULL DEFAULT 'no',
-  `attempts` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `type` enum('login','recover') NOT NULL DEFAULT 'login',
-  PRIMARY KEY (`id`)
+  `attempts` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `type` enum('login','recover') NOT NULL DEFAULT 'login'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `marked_topic`
+-- 表的结构 `marked_topic`
 --
 
-DROP TABLE IF EXISTS `marked_topic`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `marked_topic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tid` int(11) unsigned NOT NULL DEFAULT '0',
-  `uid` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `id` int(11) NOT NULL,
+  `tid` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `uid` int(11) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `maxslots`
+-- 表的结构 `maxslots`
 --
 
-DROP TABLE IF EXISTS `maxslots`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `maxslots` (
   `id` int(4) NOT NULL,
   `name` varchar(10) CHARACTER SET utf8 NOT NULL,
-  `maxslot` int(4) NOT NULL,
-  PRIMARY KEY (`name`)
+  `maxslot` int(4) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `media`
+-- 表的结构 `media`
 --
 
-DROP TABLE IF EXISTS `media`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `media` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `messages`
+-- 表的结构 `messages`
 --
 
-DROP TABLE IF EXISTS `messages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `messages` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `sender` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `receiver` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) UNSIGNED NOT NULL,
+  `sender` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `receiver` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `subject` varchar(128) NOT NULL DEFAULT '',
   `msg` text,
   `unread` enum('yes','no') NOT NULL DEFAULT 'yes',
   `location` smallint(6) NOT NULL DEFAULT '1',
-  `saved` enum('no','yes') NOT NULL DEFAULT 'no',
-  PRIMARY KEY (`id`),
-  KEY `receiver` (`receiver`),
-  KEY `sender` (`sender`),
-  KEY `msg` (`msg`(10))
+  `saved` enum('no','yes') NOT NULL DEFAULT 'no'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `modpanel`
+-- 表的结构 `modpanel`
 --
 
-DROP TABLE IF EXISTS `modpanel`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `modpanel` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(128) NOT NULL DEFAULT '',
   `url` varchar(256) NOT NULL DEFAULT '',
-  `info` varchar(256) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `info` varchar(256) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `news`
+-- 表的结构 `news`
 --
 
-DROP TABLE IF EXISTS `news`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `news` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `body` text,
   `title` varchar(255) NOT NULL DEFAULT '',
-  `notify` enum('yes','no') NOT NULL DEFAULT 'no',
-  PRIMARY KEY (`id`),
-  KEY `added` (`added`)
+  `notify` enum('yes','no') NOT NULL DEFAULT 'no'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `nontjuip`
+-- 表的结构 `nontjuip`
 --
 
-DROP TABLE IF EXISTS `nontjuip`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `nontjuip` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `comment` varchar(255) NOT NULL DEFAULT '',
   `first` bigint(20) NOT NULL,
-  `last` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `first_last` (`first`,`last`)
+  `last` bigint(20) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `offers`
+-- 表的结构 `offers`
 --
 
-DROP TABLE IF EXISTS `offers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `offers` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `name` varchar(225) NOT NULL,
   `descr` text,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `allowedtime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `yeah` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `against` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `category` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `comments` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `allowed` enum('allowed','pending','denied','freeze') NOT NULL DEFAULT 'pending',
-  PRIMARY KEY (`id`),
-  KEY `userid` (`userid`)
+  `yeah` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `against` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `category` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `comments` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `allowed` enum('allowed','pending','denied','freeze') NOT NULL DEFAULT 'pending'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `offersinfo`
+-- 表的结构 `offersinfo`
 --
 
-DROP TABLE IF EXISTS `offersinfo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `offersinfo` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `offerid` mediumint(8) unsigned NOT NULL,
-  `category` smallint(5) unsigned NOT NULL,
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `offerid` mediumint(8) UNSIGNED NOT NULL,
+  `category` smallint(5) UNSIGNED NOT NULL,
   `cname` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `ename` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `issuedate` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `subsinfo` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `subsinfo` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   `format` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `imdbnum` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `specificcat` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
@@ -1887,158 +1554,127 @@ CREATE TABLE `offersinfo` (
   `platform` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `artist` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `hqname` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `hqtone` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `hqtone` varchar(255) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `offervotes`
+-- 表的结构 `offervotes`
 --
 
-DROP TABLE IF EXISTS `offervotes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `offervotes` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `offerid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `vote` enum('yeah','against') NOT NULL DEFAULT 'yeah',
-  PRIMARY KEY (`id`),
-  KEY `userid` (`userid`)
+  `id` int(10) UNSIGNED NOT NULL,
+  `offerid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `vote` enum('yeah','against') NOT NULL DEFAULT 'yeah'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `openapi_token`
+-- 表的结构 `openapi_token`
 --
 
-DROP TABLE IF EXISTS `openapi_token`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `openapi_token` (
   `token` varchar(40) NOT NULL,
   `uid` int(11) NOT NULL,
-  `last_activity` bigint(20) NOT NULL,
-  PRIMARY KEY (`token`)
+  `last_activity` bigint(20) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- 表的结构 `orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `orders` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `uid` int(11) unsigned NOT NULL DEFAULT '0',
+  `id` int(11) UNSIGNED NOT NULL,
+  `uid` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `type` tinyint(3) NOT NULL DEFAULT '0',
   `contact` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) DEFAULT NULL,
   `num` smallint(6) NOT NULL DEFAULT '1',
   `groups` tinyint(2) NOT NULL DEFAULT '2',
-  `status` enum('sending','okay') NOT NULL DEFAULT 'sending',
-  PRIMARY KEY (`id`)
+  `status` enum('sending','okay') NOT NULL DEFAULT 'sending'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `overforums`
+-- 表的结构 `overforums`
 --
 
-DROP TABLE IF EXISTS `overforums`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `overforums` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(60) NOT NULL,
   `description` varchar(256) NOT NULL DEFAULT '',
-  `minclassview` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `sort` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `minclassview` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `sort` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `peers`
+-- 表的结构 `peers`
 --
 
-DROP TABLE IF EXISTS `peers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `peers` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `torrent` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) UNSIGNED NOT NULL,
+  `torrent` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `peer_id` binary(20) NOT NULL,
   `ipv4` varchar(15) DEFAULT NULL,
   `ipv6` varchar(64) DEFAULT NULL,
-  `port` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `uploaded` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `downloaded` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `to_go` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `port` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `to_go` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
   `seeder` enum('yes','no') NOT NULL DEFAULT 'no',
   `started` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_action` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `prev_action` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `agent` varchar(60) NOT NULL DEFAULT '',
-  `finishedat` int(10) unsigned NOT NULL DEFAULT '0',
-  `downloadoffset` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `uploadoffset` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `passkey` char(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `userid` (`userid`),
-  KEY `torrent` (`torrent`),
-  KEY `ipv4` (`ipv4`,`ipv6`,`port`)
+  `finishedat` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `downloadoffset` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `uploadoffset` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `passkey` char(32) NOT NULL DEFAULT ''
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `pmboxes`
+-- 表的结构 `pmboxes`
 --
 
-DROP TABLE IF EXISTS `pmboxes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pmboxes` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL,
-  `boxnumber` tinyint(3) unsigned NOT NULL DEFAULT '2',
-  `name` varchar(15) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL,
+  `boxnumber` tinyint(3) UNSIGNED NOT NULL DEFAULT '2',
+  `name` varchar(15) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `pollanswers`
+-- 表的结构 `pollanswers`
 --
 
-DROP TABLE IF EXISTS `pollanswers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pollanswers` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `pollid` mediumint(8) unsigned NOT NULL,
-  `userid` mediumint(8) unsigned NOT NULL,
-  `selection` tinyint(3) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pollid` (`pollid`),
-  KEY `selection` (`selection`),
-  KEY `userid` (`userid`)
+  `id` int(10) UNSIGNED NOT NULL,
+  `pollid` mediumint(8) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL,
+  `selection` tinyint(3) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `polls`
+-- 表的结构 `polls`
 --
 
-DROP TABLE IF EXISTS `polls`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `polls` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `question` varchar(255) NOT NULL DEFAULT '',
   `option0` varchar(40) NOT NULL DEFAULT '',
@@ -2061,74 +1697,88 @@ CREATE TABLE `polls` (
   `option17` varchar(40) NOT NULL DEFAULT '',
   `option18` varchar(40) NOT NULL DEFAULT '',
   `option19` varchar(40) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `option20` varchar(40) NOT NULL DEFAULT '',
+  `option21` varchar(40) NOT NULL DEFAULT '',
+  `option22` varchar(40) NOT NULL DEFAULT '',
+  `option23` varchar(40) NOT NULL DEFAULT '',
+  `option24` varchar(40) NOT NULL DEFAULT '',
+  `option25` varchar(40) NOT NULL DEFAULT '',
+  `option26` varchar(40) NOT NULL DEFAULT '',
+  `option27` varchar(40) NOT NULL DEFAULT '',
+  `option28` varchar(40) NOT NULL DEFAULT '',
+  `option29` varchar(40) NOT NULL DEFAULT '',
+  `option30` varchar(40) NOT NULL DEFAULT '',
+  `option31` varchar(40) NOT NULL DEFAULT '',
+  `option32` varchar(40) NOT NULL DEFAULT '',
+  `option33` varchar(40) NOT NULL DEFAULT '',
+  `option34` varchar(40) NOT NULL DEFAULT '',
+  `option35` varchar(40) NOT NULL DEFAULT '',
+  `option36` varchar(40) NOT NULL DEFAULT '',
+  `option37` varchar(40) NOT NULL DEFAULT '',
+  `option38` varchar(40) NOT NULL DEFAULT '',
+  `option39` varchar(40) NOT NULL DEFAULT '',
+  `option40` varchar(40) NOT NULL DEFAULT '',
+  `option41` varchar(40) NOT NULL DEFAULT '',
+  `option42` varchar(40) NOT NULL DEFAULT '',
+  `option43` varchar(40) NOT NULL DEFAULT '',
+  `option44` varchar(40) NOT NULL DEFAULT '',
+  `option45` varchar(40) NOT NULL DEFAULT '',
+  `option46` varchar(40) NOT NULL DEFAULT '',
+  `option47` varchar(40) NOT NULL DEFAULT '',
+  `option48` varchar(40) NOT NULL DEFAULT '',
+  `option49` varchar(40) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- 表的结构 `posts`
 --
 
-DROP TABLE IF EXISTS `posts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `posts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `topicid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) UNSIGNED NOT NULL,
+  `topicid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `body` text,
   `ori_body` text,
-  `editedby` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `editdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY `userid` (`userid`),
-  KEY `topicid_id` (`topicid`,`id`),
-  KEY `added` (`added`),
-  FULLTEXT KEY `body` (`body`)
+  `editedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `editdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `processings`
+-- 表的结构 `processings`
 --
 
-DROP TABLE IF EXISTS `processings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `processings` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `prolinkclicks`
+-- 表的结构 `prolinkclicks`
 --
 
-DROP TABLE IF EXISTS `prolinkclicks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `prolinkclicks` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `ip` varchar(64) NOT NULL DEFAULT '',
-  `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
+  `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `propname`
+-- 表的结构 `propname`
 --
 
-DROP TABLE IF EXISTS `propname`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `propname` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `name` varchar(20) NOT NULL DEFAULT '',
   `type` enum('sale','position','amount','class','name','title','color') DEFAULT 'sale',
   `value` int(11) NOT NULL DEFAULT '0',
@@ -2136,109 +1786,89 @@ CREATE TABLE `propname` (
   `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
   `timelength` int(11) NOT NULL DEFAULT '0',
   `amountlimit` smallint(6) NOT NULL DEFAULT '0',
-  `note` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `note` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `props`
+-- 表的结构 `props`
 --
 
-DROP TABLE IF EXISTS `props`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `props` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `propid` int(11) NOT NULL DEFAULT '0',
   `userid` int(11) NOT NULL DEFAULT '0',
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
+  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `questions`
+-- 表的结构 `questions`
 --
 
-DROP TABLE IF EXISTS `questions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `questions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `question` varchar(255) NOT NULL DEFAULT '',
   `answer1` varchar(255) DEFAULT NULL,
   `answer2` varchar(255) DEFAULT NULL,
   `answer4` varchar(255) DEFAULT NULL,
   `answer8` varchar(255) DEFAULT NULL,
-  `answer` tinyint(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `answer` tinyint(2) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `readposts`
+-- 表的结构 `readposts`
 --
 
-DROP TABLE IF EXISTS `readposts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `readposts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `topicid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `lastpostread` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `topicid` (`topicid`),
-  KEY `userid` (`userid`)
+  `id` int(10) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `topicid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `lastpostread` int(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `regimages`
+-- 表的结构 `regimages`
 --
 
-DROP TABLE IF EXISTS `regimages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `regimages` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `imagehash` varchar(32) NOT NULL DEFAULT '',
   `imagestring` varchar(8) NOT NULL DEFAULT '',
-  `dateline` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `dateline` int(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `reports`
+-- 表的结构 `reports`
 --
 
-DROP TABLE IF EXISTS `reports`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `reports` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `addedby` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `addedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `reportid` int(10) unsigned NOT NULL DEFAULT '0',
+  `reportid` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `type` enum('torrent','user','offer','request','post','comment','subtitle') NOT NULL DEFAULT 'torrent',
   `reason` varchar(255) NOT NULL DEFAULT '',
-  `dealtby` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `dealtwith` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `dealtby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `dealtwith` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `req`
+-- 表的结构 `req`
 --
 
-DROP TABLE IF EXISTS `req`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `req` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `catid` int(11) NOT NULL DEFAULT '401',
   `name` varchar(255) DEFAULT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -2250,101 +1880,80 @@ CREATE TABLE `req` (
   `comments` int(11) NOT NULL DEFAULT '0',
   `finish` enum('yes','no','cancel') NOT NULL DEFAULT 'no',
   `finished_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `resetdate` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `finish` (`finish`,`name`,`added`,`amount`,`introduce`(10)),
-  KEY `resetdate` (`resetdate`) USING BTREE
+  `resetdate` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `resolutionanime`
+-- 表的结构 `resolutionanime`
 --
 
-DROP TABLE IF EXISTS `resolutionanime`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resolutionanime` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `resolutionsports`
+-- 表的结构 `resolutionsports`
 --
 
-DROP TABLE IF EXISTS `resolutionsports`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resolutionsports` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `resreq`
+-- 表的结构 `resreq`
 --
 
-DROP TABLE IF EXISTS `resreq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resreq` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `reqid` int(11) NOT NULL DEFAULT '0',
   `torrentid` int(11) NOT NULL DEFAULT '0',
   `chosen` enum('yes','no') NOT NULL DEFAULT 'no',
-  `submitted_by` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `reqid` (`reqid`,`chosen`)
+  `submitted_by` int(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `rules`
+-- 表的结构 `rules`
 --
 
-DROP TABLE IF EXISTS `rules`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rules` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `lang_id` smallint(5) unsigned NOT NULL DEFAULT '6',
+  `id` smallint(5) UNSIGNED NOT NULL,
+  `lang_id` smallint(5) UNSIGNED NOT NULL DEFAULT '6',
   `title` varchar(255) NOT NULL,
-  `text` text,
-  PRIMARY KEY (`id`)
+  `text` text
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `schools`
+-- 表的结构 `schools`
 --
 
-DROP TABLE IF EXISTS `schools`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `schools` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(50) DEFAULT NULL,
-  `ip` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `ip` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `searchbox`
+-- 表的结构 `searchbox`
 --
 
-DROP TABLE IF EXISTS `searchbox`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `searchbox` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) DEFAULT NULL,
   `showsubcat` tinyint(1) NOT NULL DEFAULT '0',
   `showsource` tinyint(1) NOT NULL DEFAULT '0',
@@ -2354,44 +1963,38 @@ CREATE TABLE `searchbox` (
   `showprocessing` tinyint(1) NOT NULL DEFAULT '0',
   `showteam` tinyint(1) NOT NULL DEFAULT '0',
   `showaudiocodec` tinyint(1) NOT NULL DEFAULT '0',
-  `catsperrow` smallint(5) unsigned NOT NULL DEFAULT '7',
-  `catpadding` smallint(5) unsigned NOT NULL DEFAULT '25',
-  PRIMARY KEY (`id`)
+  `catsperrow` smallint(5) UNSIGNED NOT NULL DEFAULT '7',
+  `catpadding` smallint(5) UNSIGNED NOT NULL DEFAULT '25'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `secondicons`
+-- 表的结构 `secondicons`
 --
 
-DROP TABLE IF EXISTS `secondicons`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `secondicons` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `source` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `medium` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `codec` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `standard` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `processing` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `team` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `audiocodec` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `id` smallint(5) UNSIGNED NOT NULL,
+  `source` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `medium` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `codec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `standard` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `processing` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `team` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `audiocodec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `name` varchar(30) NOT NULL,
   `class_name` varchar(255) DEFAULT NULL,
-  `image` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  `image` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `seedbox_torrents`
+-- 表的结构 `seedbox_torrents`
 --
 
-DROP TABLE IF EXISTS `seedbox_torrents`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `seedbox_torrents` (
-  `torid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `torid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `info_hash` binary(20) NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `filename` varchar(255) NOT NULL DEFAULT '',
@@ -2399,188 +2002,148 @@ CREATE TABLE `seedbox_torrents` (
   `descr` text,
   `small_descr` varchar(255) NOT NULL DEFAULT '',
   `ori_descr` text,
-  `category` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `source` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `medium` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `codec` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `standard` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `processing` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `team` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `audiocodec` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `size` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `category` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `source` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `medium` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `codec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `standard` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `processing` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `team` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `audiocodec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `size` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
   `type` enum('single','multi') NOT NULL DEFAULT 'single',
-  `numfiles` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `nfo` blob,
-  PRIMARY KEY (`torid`),
-  UNIQUE KEY `info_hash` (`info_hash`),
-  KEY `category_visible_banned` (`category`),
-  KEY `visible_pos_id` (`torid`),
-  KEY `visible_banned_pos_id` (`torid`),
-  FULLTEXT KEY `name` (`name`)
+  `numfiles` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `nfo` blob
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `self_invite`
+-- 表的结构 `self_invite`
 --
 
-DROP TABLE IF EXISTS `self_invite`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `self_invite` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(80) NOT NULL DEFAULT '',
   `used_type` enum('none','invite','revive','addbonus') NOT NULL DEFAULT 'none',
   `code` char(32) NOT NULL,
-  `invite_code` char(32) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`(10)),
-  KEY `code` (`code`),
-  KEY `id` (`id`)
+  `invite_code` char(32) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `shoutbox`
+-- 表的结构 `shoutbox`
 --
 
-DROP TABLE IF EXISTS `shoutbox`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `shoutbox` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `date` int(10) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `date` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `text` text CHARACTER SET utf8 NOT NULL,
   `type` enum('sb','hb') CHARACTER SET utf8 NOT NULL DEFAULT 'sb',
-  `ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `date` (`date`)
+  `ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `sitelog`
+-- 表的结构 `sitelog`
 --
 
-DROP TABLE IF EXISTS `sitelog`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sitelog` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `txt` text NOT NULL,
-  `security_level` enum('normal','mod') NOT NULL DEFAULT 'normal',
-  PRIMARY KEY (`id`),
-  KEY `added` (`added`)
+  `security_level` enum('normal','mod') NOT NULL DEFAULT 'normal'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `sitelog_stats`
+-- 表的结构 `sitelog_stats`
 --
 
-DROP TABLE IF EXISTS `sitelog_stats`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sitelog_stats` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `statstime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `totaltorrentssize` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `totaluploaded` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `totaldownloaded` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `totaltorrentssize` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `totaluploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `totaldownloaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
   `totalbonus` decimal(20,2) NOT NULL DEFAULT '0.00',
-  `totalinvites` bigint(20) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Id`)
+  `totalinvites` bigint(20) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `snatched`
+-- 表的结构 `snatched`
 --
 
-DROP TABLE IF EXISTS `snatched`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `snatched` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `torrentid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` int(10) NOT NULL,
+  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `ip` varchar(64) NOT NULL DEFAULT '',
-  `port` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `uploaded` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `downloaded` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `to_go` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `seedtime` int(10) unsigned NOT NULL DEFAULT '0',
-  `leechtime` int(10) unsigned NOT NULL DEFAULT '0',
+  `port` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `to_go` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `seedtime` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `leechtime` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `last_action` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `startdat` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `completedat` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `finished` enum('yes','no') NOT NULL DEFAULT 'no',
-  PRIMARY KEY (`id`),
-  KEY `torrentid_userid` (`torrentid`,`userid`),
-  KEY `userid` (`userid`),
-  KEY `seedtime` (`seedtime`,`leechtime`)
+  `finished` enum('yes','no') NOT NULL DEFAULT 'no'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `sources`
+-- 表的结构 `sources`
 --
 
-DROP TABLE IF EXISTS `sources`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sources` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `staffmessages`
+-- 表的结构 `staffmessages`
 --
 
-DROP TABLE IF EXISTS `staffmessages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `staffmessages` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `sender` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `sender` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `msg` text,
   `subject` varchar(128) NOT NULL DEFAULT '',
-  `answeredby` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `answeredby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `answered` tinyint(1) NOT NULL DEFAULT '0',
-  `answer` text,
-  PRIMARY KEY (`id`)
+  `answer` text
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `standards`
+-- 表的结构 `standards`
 --
 
-DROP TABLE IF EXISTS `standards`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `standards` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `statistics`
+-- 表的结构 `statistics`
 --
 
-DROP TABLE IF EXISTS `statistics`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `statistics` (
   `date` int(11) NOT NULL,
   `registered` int(11) NOT NULL,
@@ -2590,187 +2153,148 @@ CREATE TABLE `statistics` (
   `torrents` int(11) NOT NULL,
   `dead` int(11) NOT NULL,
   `totaltorrentssize` double NOT NULL,
-  `totalbonus` int(11) NOT NULL,
-  PRIMARY KEY (`date`)
+  `totalbonus` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=gbk;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `stylesheets`
+-- 表的结构 `stylesheets`
 --
 
-DROP TABLE IF EXISTS `stylesheets`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stylesheets` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `uri` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(64) NOT NULL DEFAULT '',
   `addicode` text,
   `designer` varchar(50) NOT NULL DEFAULT '',
-  `comment` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `comment` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `subs`
+-- 表的结构 `subs`
 --
 
-DROP TABLE IF EXISTS `subs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `subs` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `torrent_id` mediumint(8) unsigned NOT NULL,
-  `lang_id` smallint(5) unsigned NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
+  `torrent_id` mediumint(8) UNSIGNED NOT NULL,
+  `lang_id` smallint(5) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL DEFAULT '',
   `filename` varchar(255) NOT NULL DEFAULT '',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `size` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `uppedby` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `size` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `uppedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `anonymous` enum('yes','no') NOT NULL DEFAULT 'no',
-  `hits` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `ext` varchar(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `torrentid_langid` (`torrent_id`,`lang_id`)
+  `hits` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `ext` varchar(10) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `subsinfo`
+-- 表的结构 `subsinfo`
 --
 
-DROP TABLE IF EXISTS `subsinfo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `subsinfo` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `sort_index` smallint(5) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `suggest`
+-- 表的结构 `suggest`
 --
 
-DROP TABLE IF EXISTS `suggest`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `suggest` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `keywords` varchar(255) NOT NULL DEFAULT '',
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `adddate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY `keywords` (`keywords`(4)),
-  KEY `adddate` (`adddate`)
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `adddate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `sysoppanel`
+-- 表的结构 `sysoppanel`
 --
 
-DROP TABLE IF EXISTS `sysoppanel`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sysoppanel` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(128) NOT NULL DEFAULT '',
   `url` varchar(256) NOT NULL DEFAULT '',
-  `info` varchar(256) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `info` varchar(256) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `teams`
+-- 表的结构 `teams`
 --
 
-DROP TABLE IF EXISTS `teams`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `teams` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `thanks`
+-- 表的结构 `thanks`
 --
 
-DROP TABLE IF EXISTS `thanks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `thanks` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `torrentid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `torrentid_id` (`torrentid`,`id`),
-  KEY `torrentid_userid` (`torrentid`,`userid`)
+  `id` int(10) UNSIGNED NOT NULL,
+  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `tju_autosalary`
+-- 表的结构 `tju_autosalary`
 --
 
-DROP TABLE IF EXISTS `tju_autosalary`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tju_autosalary` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `user_class` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `salary` decimal(10,1) unsigned NOT NULL DEFAULT '0.0',
+  `Id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `user_class` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `salary` decimal(10,1) UNSIGNED NOT NULL DEFAULT '0.0',
   `salarytime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `remark` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`Id`)
+  `remark` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `topics`
+-- 表的结构 `topics`
 --
 
-DROP TABLE IF EXISTS `topics`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `topics` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `subject` varchar(128) NOT NULL,
   `locked` enum('yes','no') NOT NULL DEFAULT 'no',
-  `forumid` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `firstpost` int(10) unsigned NOT NULL DEFAULT '0',
-  `lastpost` int(10) unsigned NOT NULL DEFAULT '0',
+  `forumid` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `firstpost` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `lastpost` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `sticky` enum('no','yes') NOT NULL DEFAULT 'no',
-  `hlcolor` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `views` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `userid` (`userid`),
-  KEY `subject` (`subject`),
-  KEY `forumid_lastpost` (`forumid`,`lastpost`),
-  KEY `forumid_sticky_lastpost` (`forumid`,`sticky`,`lastpost`)
+  `hlcolor` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `views` int(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `torrents`
+-- 表的结构 `torrents`
 --
 
-DROP TABLE IF EXISTS `torrents`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `torrents` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `info_hash` binary(20) NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `filename` varchar(255) NOT NULL DEFAULT '',
@@ -2778,37 +2302,37 @@ CREATE TABLE `torrents` (
   `descr` text,
   `small_descr` varchar(255) NOT NULL DEFAULT '',
   `ori_descr` text,
-  `category` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `source` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `medium` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `codec` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `standard` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `processing` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `team` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `audiocodec` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `size` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `category` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `source` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `medium` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `codec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `standard` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `processing` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `team` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `audiocodec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `size` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `type` enum('single','multi') NOT NULL DEFAULT 'single',
-  `numfiles` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `comments` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `views` int(10) unsigned NOT NULL DEFAULT '0',
-  `hits` int(10) unsigned NOT NULL DEFAULT '0',
-  `times_completed` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `numfiles` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `comments` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `views` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `hits` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `times_completed` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `leechers` mediumint(8) NOT NULL DEFAULT '0',
   `seeders` mediumint(8) NOT NULL DEFAULT '0',
   `last_action` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `visible` enum('yes','no') NOT NULL DEFAULT 'yes',
   `banned` enum('yes','no') NOT NULL DEFAULT 'no',
-  `owner` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `owner` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `nfo` blob,
-  `sp_state` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `promotion_time_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `sp_state` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `promotion_time_type` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `promotion_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `anonymous` enum('yes','no') NOT NULL DEFAULT 'no',
-  `url` int(10) unsigned DEFAULT NULL,
+  `url` int(10) UNSIGNED DEFAULT NULL,
   `pos_state` enum('normal','sticky') NOT NULL DEFAULT 'normal',
   `pos_state_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `cache_stamp` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `cache_stamp` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `picktype` enum('hot','classic','recommended','normal','0day','IMDB','study') NOT NULL DEFAULT 'normal',
   `picktime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `sp_state_temp` enum('2up_free','2up','free','half_down','normal') NOT NULL DEFAULT 'normal',
@@ -2823,50 +2347,22 @@ CREATE TABLE `torrents` (
   `bonus_sale` enum('2up_free','2x_half','2up','free','half_down','normal') NOT NULL DEFAULT 'normal',
   `exclusive` enum('yes','no') NOT NULL DEFAULT 'no',
   `tjuptrip` enum('yes','no') NOT NULL DEFAULT 'no',
-  `connectable` varchar(11) DEFAULT '-/-/-',
-  PRIMARY KEY (`id`),
-  KEY `owner` (`owner`),
-  KEY `visible_pos_id` (`visible`,`pos_state`,`id`),
-  KEY `url` (`url`),
-  KEY `category_visible_banned` (`category`,`visible`,`banned`),
-  KEY `visible_banned_pos_id` (`visible`,`banned`,`pos_state`,`id`),
-  KEY `descr` (`descr`(10)),
-  KEY `pulling_out` (`pulling_out`),
-  KEY `info_hash` (`info_hash`) USING BTREE,
-  KEY `query_by_user` (`banned`,`owner`,`pulling_out`) USING BTREE,
-  KEY `query_by_user2` (`banned`,`pulling_out`) USING BTREE,
-  KEY `pos_state` (`pos_state`),
-  FULLTEXT KEY `name` (`name`)
+  `connectable` varchar(11) DEFAULT '-/-/-'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `torrents_state`
+-- 表的结构 `torrentsinfo`
 --
 
-DROP TABLE IF EXISTS `torrents_state`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `torrents_state` (
-  `global_sp_state` tinyint(3) unsigned NOT NULL DEFAULT '1'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `torrentsinfo`
---
-
-DROP TABLE IF EXISTS `torrentsinfo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `torrentsinfo` (
-  `id` mediumint(8) unsigned NOT NULL,
-  `torid` mediumint(8) unsigned NOT NULL,
-  `category` smallint(5) unsigned NOT NULL,
+  `torid` mediumint(8) UNSIGNED NOT NULL,
+  `category` smallint(5) UNSIGNED NOT NULL,
   `cname` varchar(255) DEFAULT NULL,
   `ename` varchar(255) DEFAULT NULL,
   `issuedate` varchar(255) DEFAULT NULL,
-  `subsinfo` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `subsinfo` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   `format` varchar(255) DEFAULT NULL,
   `imdbnum` varchar(255) DEFAULT NULL,
   `specificcat` varchar(255) DEFAULT NULL,
@@ -2887,84 +2383,78 @@ CREATE TABLE `torrentsinfo` (
   `hqname` varchar(255) DEFAULT NULL,
   `hqtone` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `uploader_autosalary`
+-- 表的结构 `torrents_state`
 --
 
-DROP TABLE IF EXISTS `uploader_autosalary`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `uploader_autosalary` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `user_class` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `salary` decimal(10,1) unsigned NOT NULL DEFAULT '0.0',
-  `salarytime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `remark` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE `torrents_state` (
+  `global_sp_state` tinyint(3) UNSIGNED NOT NULL DEFAULT '1'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `uploaders`
+-- 表的结构 `uploaders`
 --
 
-DROP TABLE IF EXISTS `uploaders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `uploaders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(10) unsigned NOT NULL DEFAULT '0',
-  `deleted_last` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `deleted_torrents` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `rate` varchar(3) NOT NULL DEFAULT 'F',
-  PRIMARY KEY (`id`),
-  KEY `uid` (`uid`)
+  `id` int(11) NOT NULL,
+  `uid` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `deleted_last` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `deleted_torrents` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `rate` varchar(3) NOT NULL DEFAULT 'F'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `uploadspeed`
+-- 表的结构 `uploader_autosalary`
 --
 
-DROP TABLE IF EXISTS `uploadspeed`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `uploader_autosalary` (
+  `Id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `user_class` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `salary` decimal(10,1) UNSIGNED NOT NULL DEFAULT '0.0',
+  `salarytime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `remark` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `uploadspeed`
+--
+
 CREATE TABLE `uploadspeed` (
-  `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `id` tinyint(3) UNSIGNED NOT NULL,
+  `name` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `usercss`
+-- 表的结构 `usercss`
 --
 
-DROP TABLE IF EXISTS `usercss`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usercss` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userid` int(11) unsigned NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL,
+  `userid` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `css` text NOT NULL,
-  `time` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `userid` (`userid`)
+  `time` int(11) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- 表的结构 `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `username` varchar(40) NOT NULL DEFAULT '',
   `passhash` varchar(32) NOT NULL DEFAULT '',
   `secret` varbinary(20) NOT NULL,
@@ -2980,29 +2470,29 @@ CREATE TABLE `users` (
   `last_pm` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_comment` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_post` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `last_browse` int(10) unsigned NOT NULL DEFAULT '0',
-  `last_music` int(10) unsigned NOT NULL DEFAULT '0',
-  `last_catchup` int(10) unsigned NOT NULL DEFAULT '0',
+  `last_browse` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `last_music` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `last_catchup` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `editsecret` varbinary(20) NOT NULL,
   `privacy` enum('strong','normal','low') NOT NULL DEFAULT 'normal',
-  `stylesheet` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `caticon` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `stylesheet` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `caticon` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
   `fontsize` enum('small','medium','large') NOT NULL DEFAULT 'medium',
   `info` text,
   `acceptpms` enum('yes','friends','no') NOT NULL DEFAULT 'yes',
   `commentpm` enum('yes','no') NOT NULL DEFAULT 'yes',
   `acceptatpms` enum('yes','friends','no') NOT NULL DEFAULT 'yes',
   `ip` varchar(64) NOT NULL DEFAULT '',
-  `class` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `class` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
   `max_class_once` tinyint(3) NOT NULL DEFAULT '1',
   `avatar` varchar(256) NOT NULL DEFAULT '',
-  `uploaded` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `downloaded` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `seedtime` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `leechtime` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `seedtime` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `leechtime` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
   `title` varchar(30) NOT NULL DEFAULT '',
   `color` varchar(6) NOT NULL DEFAULT '000000',
-  `country` smallint(5) unsigned NOT NULL DEFAULT '1',
+  `country` smallint(5) UNSIGNED NOT NULL DEFAULT '1',
   `notifs` varchar(500) DEFAULT NULL,
   `modcomment` text,
   `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
@@ -3015,9 +2505,9 @@ CREATE TABLE `users` (
   `warneduntil` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `noad` enum('yes','no') NOT NULL DEFAULT 'no',
   `noaduntil` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `torrentsperpage` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `topicsperpage` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `postsperpage` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `torrentsperpage` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `topicsperpage` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `postsperpage` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `clicktopic` enum('firstpage','lastpage') NOT NULL DEFAULT 'firstpage',
   `deletepms` enum('yes','no') NOT NULL DEFAULT 'yes',
   `savepms` enum('yes','no') NOT NULL DEFAULT 'no',
@@ -3037,16 +2527,16 @@ CREATE TABLE `users` (
   `forumpost` enum('yes','no') NOT NULL DEFAULT 'yes',
   `forumbanuntil` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `downloadpos` enum('yes','no') NOT NULL DEFAULT 'yes',
-  `clientselect` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `clientselect` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `signatures` enum('yes','no') NOT NULL DEFAULT 'yes',
   `signature` varchar(800) NOT NULL DEFAULT '',
-  `lang` smallint(5) unsigned NOT NULL DEFAULT '6',
+  `lang` smallint(5) UNSIGNED NOT NULL DEFAULT '6',
   `cheat` smallint(6) NOT NULL DEFAULT '0',
-  `download` int(10) unsigned NOT NULL DEFAULT '0',
-  `upload` int(10) unsigned NOT NULL DEFAULT '0',
-  `isp` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `download` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `upload` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `isp` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `invites` smallint(5) NOT NULL DEFAULT '0',
-  `invited_by` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `invited_by` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
   `gender` enum('Male','Female','N/A') NOT NULL DEFAULT 'N/A',
   `vip_added` enum('yes','no') NOT NULL DEFAULT 'no',
   `vip_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -3057,10 +2547,10 @@ CREATE TABLE `users` (
   `leechwarn` enum('yes','no') NOT NULL DEFAULT 'no',
   `leechwarnuntil` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `lastwarned` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `timeswarned` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `warnedby` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `sbnum` smallint(5) unsigned NOT NULL DEFAULT '70',
-  `sbrefresh` smallint(5) unsigned NOT NULL DEFAULT '120',
+  `timeswarned` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `warnedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `sbnum` smallint(5) UNSIGNED NOT NULL DEFAULT '70',
+  `sbrefresh` smallint(5) UNSIGNED NOT NULL DEFAULT '120',
   `hidehb` enum('yes','no') DEFAULT 'no',
   `showimdb` enum('yes','no') DEFAULT 'yes',
   `showdescription` enum('yes','no') DEFAULT 'yes',
@@ -3080,45 +2570,1812 @@ CREATE TABLE `users` (
   `showcomnum` enum('yes','no') DEFAULT 'yes',
   `showlastcom` enum('yes','no') DEFAULT 'no',
   `showlastpost` enum('yes','no') NOT NULL DEFAULT 'no',
-  `pmnum` tinyint(3) unsigned NOT NULL DEFAULT '10',
-  `school` smallint(5) unsigned NOT NULL DEFAULT '35',
+  `pmnum` tinyint(3) UNSIGNED NOT NULL DEFAULT '10',
+  `school` smallint(5) UNSIGNED NOT NULL DEFAULT '35',
   `showfb` enum('yes','no') NOT NULL DEFAULT 'yes',
   `bjlosses` int(10) NOT NULL DEFAULT '0',
   `bjwins` int(10) NOT NULL DEFAULT '0',
-  `answer` smallint(2) unsigned NOT NULL DEFAULT '0',
-  `renamenum` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `answer` smallint(2) UNSIGNED NOT NULL DEFAULT '0',
+  `renamenum` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
   `classtype` tinyint(2) DEFAULT '4',
   `width` enum('wide','narrow') NOT NULL DEFAULT 'wide',
   `jc_manager` enum('yes','no') NOT NULL DEFAULT 'no',
   `enablepublic4` enum('yes','no') NOT NULL DEFAULT 'no',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  KEY `status_added` (`status`,`added`),
-  KEY `ip` (`ip`),
-  KEY `uploaded` (`uploaded`),
-  KEY `downloaded` (`downloaded`),
-  KEY `country` (`country`),
-  KEY `last_access` (`last_access`),
-  KEY `enabled` (`enabled`),
-  KEY `warned` (`warned`),
-  KEY `cheat` (`cheat`),
-  KEY `class` (`class`),
-  KEY `passkey` (`passkey`(8)),
-  KEY `title` (`title`)
+  `qq` bigint(15) UNSIGNED DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping routines for database 'tjupt'
+-- 转储表的索引
 --
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- 表的索引 `adminpanel`
+--
+ALTER TABLE `adminpanel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `advertisements`
+--
+ALTER TABLE `advertisements`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `agent_allowed_exception`
+--
+ALTER TABLE `agent_allowed_exception`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `agent_allowed_family`
+--
+ALTER TABLE `agent_allowed_family`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `allowedemails`
+--
+ALTER TABLE `allowedemails`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `api_token`
+--
+ALTER TABLE `api_token`
+  ADD PRIMARY KEY (`token`),
+  ADD UNIQUE KEY `api_token_token_uindex` (`token`);
+
+--
+-- 表的索引 `app_luckydraw`
+--
+ALTER TABLE `app_luckydraw`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `time_start` (`time_start`,`time_until`,`status`),
+  ADD KEY `time_until` (`time_until`),
+  ADD KEY `status` (`status`);
+
+--
+-- 表的索引 `app_luckydraw_players`
+--
+ALTER TABLE `app_luckydraw_players`
+  ADD PRIMARY KEY (`Id`),
+  ADD KEY `luckydraw_id` (`luckydraw_id`,`user_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `win_or_lose` (`win_or_lose`);
+
+--
+-- 表的索引 `app_rename`
+--
+ALTER TABLE `app_rename`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `app_tryluck`
+--
+ALTER TABLE `app_tryluck`
+  ADD PRIMARY KEY (`Id`),
+  ADD KEY `userid` (`userid`);
+
+--
+-- 表的索引 `attachments`
+--
+ALTER TABLE `attachments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pid` (`userid`,`id`),
+  ADD KEY `dateline` (`added`,`isimage`,`downloads`);
+
+--
+-- 表的索引 `audiocodecs`
+--
+ALTER TABLE `audiocodecs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `autoseeding`
+--
+ALTER TABLE `autoseeding`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `avps`
+--
+ALTER TABLE `avps`
+  ADD PRIMARY KEY (`arg`);
+
+--
+-- 表的索引 `banipv6`
+--
+ALTER TABLE `banipv6`
+  ADD PRIMARY KEY (`ip0`,`ip1`,`ip2`,`ip3`),
+  ADD KEY `until` (`until`),
+  ADD KEY `id` (`id`);
+
+--
+-- 表的索引 `bannedemails`
+--
+ALTER TABLE `bannedemails`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `bannedkeywords`
+--
+ALTER TABLE `bannedkeywords`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `keywords` (`keywords`(4));
+
+--
+-- 表的索引 `bannedtitle`
+--
+ALTER TABLE `bannedtitle`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `keywords` (`keywords`(4));
+
+--
+-- 表的索引 `banned_file_type`
+--
+ALTER TABLE `banned_file_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `bans`
+--
+ALTER TABLE `bans`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `first_last` (`first`,`last`);
+
+--
+-- 表的索引 `bitbucket`
+--
+ALTER TABLE `bitbucket`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `blackjack`
+--
+ALTER TABLE `blackjack`
+  ADD PRIMARY KEY (`userid`);
+
+--
+-- 表的索引 `blocks`
+--
+ALTER TABLE `blocks`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `userfriend` (`userid`,`blockid`);
+
+--
+-- 表的索引 `bookmarks`
+--
+ALTER TABLE `bookmarks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid_torrentid` (`userid`,`torrentid`);
+
+--
+-- 表的索引 `cards`
+--
+ALTER TABLE `cards`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `carsimapping`
+--
+ALTER TABLE `carsimapping`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tjuptid` (`tjuptid`,`username`,`institution`);
+
+--
+-- 表的索引 `carsi_invite`
+--
+ALTER TABLE `carsi_invite`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `institution` (`institution`,`username`);
+
+--
+-- 表的索引 `carsi_schools`
+--
+ALTER TABLE `carsi_schools`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idp` (`idp`);
+
+--
+-- 表的索引 `catanime`
+--
+ALTER TABLE `catanime`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `catdocum`
+--
+ALTER TABLE `catdocum`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `mode_sort` (`mode`,`sort_index`);
+
+--
+-- 表的索引 `catgame`
+--
+ALTER TABLE `catgame`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `cathq`
+--
+ALTER TABLE `cathq`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `caticons`
+--
+ALTER TABLE `caticons`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `catmovie`
+--
+ALTER TABLE `catmovie`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `catnewsreel`
+--
+ALTER TABLE `catnewsreel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `catothers`
+--
+ALTER TABLE `catothers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `catplatform`
+--
+ALTER TABLE `catplatform`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `catseries`
+--
+ALTER TABLE `catseries`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `catsoftware`
+--
+ALTER TABLE `catsoftware`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `catsports`
+--
+ALTER TABLE `catsports`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `cheaters`
+--
+ALTER TABLE `cheaters`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `chronicle`
+--
+ALTER TABLE `chronicle`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `added` (`added`);
+
+--
+-- 表的索引 `class`
+--
+ALTER TABLE `class`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- 表的索引 `codecs`
+--
+ALTER TABLE `codecs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user` (`user`),
+  ADD KEY `torrent_id` (`torrent`,`id`),
+  ADD KEY `offer_id` (`offer`,`id`),
+  ADD KEY `text` (`text`(10));
+
+--
+-- 表的索引 `connect`
+--
+ALTER TABLE `connect`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- 表的索引 `countries`
+--
+ALTER TABLE `countries`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `districtanime`
+--
+ALTER TABLE `districtanime`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `districtmovie`
+--
+ALTER TABLE `districtmovie`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `districttvshows`
+--
+ALTER TABLE `districttvshows`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `donation`
+--
+ALTER TABLE `donation`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `douban`
+--
+ALTER TABLE `douban`
+  ADD PRIMARY KEY (`rank`);
+
+--
+-- 表的索引 `downloadspeed`
+--
+ALTER TABLE `downloadspeed`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `faq`
+--
+ALTER TABLE `faq`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `files`
+--
+ALTER TABLE `files`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `torrent` (`torrent`);
+
+--
+-- 表的索引 `formatanime`
+--
+ALTER TABLE `formatanime`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `formatdocum`
+--
+ALTER TABLE `formatdocum`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `formatgame`
+--
+ALTER TABLE `formatgame`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `formathqaudio`
+--
+ALTER TABLE `formathqaudio`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `formatmovie`
+--
+ALTER TABLE `formatmovie`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `formatnewsreel`
+--
+ALTER TABLE `formatnewsreel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `formatsoftware`
+--
+ALTER TABLE `formatsoftware`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `formatsports`
+--
+ALTER TABLE `formatsports`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `formattvseries`
+--
+ALTER TABLE `formattvseries`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `formattvshows`
+--
+ALTER TABLE `formattvshows`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `forummods`
+--
+ALTER TABLE `forummods`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `forumid` (`forumid`);
+
+--
+-- 表的索引 `forums`
+--
+ALTER TABLE `forums`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `friends`
+--
+ALTER TABLE `friends`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `userfriend` (`userid`,`friendid`);
+
+--
+-- 表的索引 `fun`
+--
+ALTER TABLE `fun`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `funds`
+--
+ALTER TABLE `funds`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `funvotes`
+--
+ALTER TABLE `funvotes`
+  ADD PRIMARY KEY (`funid`,`userid`);
+
+--
+-- 表的索引 `gift`
+--
+ALTER TABLE `gift`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid` (`userid`);
+
+--
+-- 表的索引 `givebonus`
+--
+ALTER TABLE `givebonus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `hqtone`
+--
+ALTER TABLE `hqtone`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `imdb`
+--
+ALTER TABLE `imdb`
+  ADD PRIMARY KEY (`rank`);
+
+--
+-- 表的索引 `invitebox`
+--
+ALTER TABLE `invitebox`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- 表的索引 `invites`
+--
+ALTER TABLE `invites`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `iplog`
+--
+ALTER TABLE `iplog`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid` (`userid`),
+  ADD KEY `ip` (`ip`);
+
+--
+-- 表的索引 `isp`
+--
+ALTER TABLE `isp`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `jc_options`
+--
+ALTER TABLE `jc_options`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- 表的索引 `jc_rank`
+--
+ALTER TABLE `jc_rank`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- 表的索引 `jc_record`
+--
+ALTER TABLE `jc_record`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `jc_subjects`
+--
+ALTER TABLE `jc_subjects`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `keepseed`
+--
+ALTER TABLE `keepseed`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `langgame`
+--
+ALTER TABLE `langgame`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `langhq`
+--
+ALTER TABLE `langhq`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `langsoftware`
+--
+ALTER TABLE `langsoftware`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `langtvseries`
+--
+ALTER TABLE `langtvseries`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `langtvshows`
+--
+ALTER TABLE `langtvshows`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `language`
+--
+ALTER TABLE `language`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `links`
+--
+ALTER TABLE `links`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `locations`
+--
+ALTER TABLE `locations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `loginattempts`
+--
+ALTER TABLE `loginattempts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `marked_topic`
+--
+ALTER TABLE `marked_topic`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `maxslots`
+--
+ALTER TABLE `maxslots`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- 表的索引 `media`
+--
+ALTER TABLE `media`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `receiver` (`receiver`),
+  ADD KEY `sender` (`sender`),
+  ADD KEY `msg` (`msg`(10));
+
+--
+-- 表的索引 `modpanel`
+--
+ALTER TABLE `modpanel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `added` (`added`);
+
+--
+-- 表的索引 `nontjuip`
+--
+ALTER TABLE `nontjuip`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `first_last` (`first`,`last`);
+
+--
+-- 表的索引 `offers`
+--
+ALTER TABLE `offers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid` (`userid`);
+
+--
+-- 表的索引 `offersinfo`
+--
+ALTER TABLE `offersinfo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `offervotes`
+--
+ALTER TABLE `offervotes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid` (`userid`);
+
+--
+-- 表的索引 `openapi_token`
+--
+ALTER TABLE `openapi_token`
+  ADD PRIMARY KEY (`token`);
+
+--
+-- 表的索引 `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `overforums`
+--
+ALTER TABLE `overforums`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `peers`
+--
+ALTER TABLE `peers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid` (`userid`),
+  ADD KEY `torrent` (`torrent`),
+  ADD KEY `ipv4` (`ipv4`,`ipv6`,`port`);
+
+--
+-- 表的索引 `pmboxes`
+--
+ALTER TABLE `pmboxes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `pollanswers`
+--
+ALTER TABLE `pollanswers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pollid` (`pollid`),
+  ADD KEY `selection` (`selection`),
+  ADD KEY `userid` (`userid`);
+
+--
+-- 表的索引 `polls`
+--
+ALTER TABLE `polls`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid` (`userid`),
+  ADD KEY `topicid_id` (`topicid`,`id`),
+  ADD KEY `added` (`added`);
+ALTER TABLE `posts` ADD FULLTEXT KEY `body` (`body`);
+
+--
+-- 表的索引 `processings`
+--
+ALTER TABLE `processings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `prolinkclicks`
+--
+ALTER TABLE `prolinkclicks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `propname`
+--
+ALTER TABLE `propname`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `props`
+--
+ALTER TABLE `props`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `questions`
+--
+ALTER TABLE `questions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `readposts`
+--
+ALTER TABLE `readposts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `topicid` (`topicid`),
+  ADD KEY `userid` (`userid`);
+
+--
+-- 表的索引 `regimages`
+--
+ALTER TABLE `regimages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `reports`
+--
+ALTER TABLE `reports`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `req`
+--
+ALTER TABLE `req`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `finish` (`finish`,`name`,`added`,`amount`,`introduce`(10)),
+  ADD KEY `resetdate` (`resetdate`) USING BTREE;
+
+--
+-- 表的索引 `resolutionanime`
+--
+ALTER TABLE `resolutionanime`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `resolutionsports`
+--
+ALTER TABLE `resolutionsports`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `resreq`
+--
+ALTER TABLE `resreq`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reqid` (`reqid`,`chosen`);
+
+--
+-- 表的索引 `rules`
+--
+ALTER TABLE `rules`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `schools`
+--
+ALTER TABLE `schools`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `searchbox`
+--
+ALTER TABLE `searchbox`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `secondicons`
+--
+ALTER TABLE `secondicons`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `seedbox_torrents`
+--
+ALTER TABLE `seedbox_torrents`
+  ADD PRIMARY KEY (`torid`),
+  ADD UNIQUE KEY `info_hash` (`info_hash`),
+  ADD KEY `category_visible_banned` (`category`),
+  ADD KEY `visible_pos_id` (`torid`),
+  ADD KEY `visible_banned_pos_id` (`torid`);
+ALTER TABLE `seedbox_torrents` ADD FULLTEXT KEY `name` (`name`);
+
+--
+-- 表的索引 `self_invite`
+--
+ALTER TABLE `self_invite`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`(10)),
+  ADD KEY `code` (`code`),
+  ADD KEY `id` (`id`);
+
+--
+-- 表的索引 `shoutbox`
+--
+ALTER TABLE `shoutbox`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `date` (`date`);
+
+--
+-- 表的索引 `sitelog`
+--
+ALTER TABLE `sitelog`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `added` (`added`);
+
+--
+-- 表的索引 `sitelog_stats`
+--
+ALTER TABLE `sitelog_stats`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- 表的索引 `snatched`
+--
+ALTER TABLE `snatched`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `torrentid_userid` (`torrentid`,`userid`),
+  ADD KEY `userid` (`userid`),
+  ADD KEY `seedtime` (`seedtime`,`leechtime`);
+
+--
+-- 表的索引 `sources`
+--
+ALTER TABLE `sources`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `staffmessages`
+--
+ALTER TABLE `staffmessages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `standards`
+--
+ALTER TABLE `standards`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `statistics`
+--
+ALTER TABLE `statistics`
+  ADD PRIMARY KEY (`date`);
+
+--
+-- 表的索引 `stylesheets`
+--
+ALTER TABLE `stylesheets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `subs`
+--
+ALTER TABLE `subs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `torrentid_langid` (`torrent_id`,`lang_id`);
+
+--
+-- 表的索引 `subsinfo`
+--
+ALTER TABLE `subsinfo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `suggest`
+--
+ALTER TABLE `suggest`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `keywords` (`keywords`(4)),
+  ADD KEY `adddate` (`adddate`);
+
+--
+-- 表的索引 `sysoppanel`
+--
+ALTER TABLE `sysoppanel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `teams`
+--
+ALTER TABLE `teams`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `thanks`
+--
+ALTER TABLE `thanks`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `torrentid_id` (`torrentid`,`id`),
+  ADD KEY `torrentid_userid` (`torrentid`,`userid`);
+
+--
+-- 表的索引 `tju_autosalary`
+--
+ALTER TABLE `tju_autosalary`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- 表的索引 `topics`
+--
+ALTER TABLE `topics`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid` (`userid`),
+  ADD KEY `subject` (`subject`),
+  ADD KEY `forumid_lastpost` (`forumid`,`lastpost`),
+  ADD KEY `forumid_sticky_lastpost` (`forumid`,`sticky`,`lastpost`);
+
+--
+-- 表的索引 `torrents`
+--
+ALTER TABLE `torrents`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `owner` (`owner`),
+  ADD KEY `visible_pos_id` (`visible`,`pos_state`,`id`),
+  ADD KEY `url` (`url`),
+  ADD KEY `category_visible_banned` (`category`,`visible`,`banned`),
+  ADD KEY `visible_banned_pos_id` (`visible`,`banned`,`pos_state`,`id`),
+  ADD KEY `descr` (`descr`(10)),
+  ADD KEY `pulling_out` (`pulling_out`),
+  ADD KEY `info_hash` (`info_hash`) USING BTREE,
+  ADD KEY `query_by_user` (`banned`,`owner`,`pulling_out`) USING BTREE,
+  ADD KEY `query_by_user2` (`banned`,`pulling_out`) USING BTREE,
+  ADD KEY `pos_state` (`pos_state`);
+ALTER TABLE `torrents` ADD FULLTEXT KEY `name` (`name`);
+
+--
+-- 表的索引 `torrentsinfo`
+--
+ALTER TABLE `torrentsinfo`
+  ADD PRIMARY KEY (`torid`);
+
+--
+-- 表的索引 `uploaders`
+--
+ALTER TABLE `uploaders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `uid` (`uid`);
+
+--
+-- 表的索引 `uploader_autosalary`
+--
+ALTER TABLE `uploader_autosalary`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- 表的索引 `uploadspeed`
+--
+ALTER TABLE `uploadspeed`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `usercss`
+--
+ALTER TABLE `usercss`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `userid` (`userid`);
+
+--
+-- 表的索引 `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `status_added` (`status`,`added`),
+  ADD KEY `ip` (`ip`),
+  ADD KEY `uploaded` (`uploaded`),
+  ADD KEY `downloaded` (`downloaded`),
+  ADD KEY `country` (`country`),
+  ADD KEY `last_access` (`last_access`),
+  ADD KEY `enabled` (`enabled`),
+  ADD KEY `warned` (`warned`),
+  ADD KEY `cheat` (`cheat`),
+  ADD KEY `class` (`class`),
+  ADD KEY `passkey` (`passkey`(8)),
+  ADD KEY `title` (`title`);
+
+--
+-- 在导出的表使用AUTO_INCREMENT
+--
+
+--
+-- 使用表AUTO_INCREMENT `adminpanel`
+--
+ALTER TABLE `adminpanel`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `advertisements`
+--
+ALTER TABLE `advertisements`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `agent_allowed_exception`
+--
+ALTER TABLE `agent_allowed_exception`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `agent_allowed_family`
+--
+ALTER TABLE `agent_allowed_family`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `allowedemails`
+--
+ALTER TABLE `allowedemails`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `app_luckydraw`
+--
+ALTER TABLE `app_luckydraw`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `app_luckydraw_players`
+--
+ALTER TABLE `app_luckydraw_players`
+  MODIFY `Id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `app_rename`
+--
+ALTER TABLE `app_rename`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `app_tryluck`
+--
+ALTER TABLE `app_tryluck`
+  MODIFY `Id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `attachments`
+--
+ALTER TABLE `attachments`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `audiocodecs`
+--
+ALTER TABLE `audiocodecs`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `autoseeding`
+--
+ALTER TABLE `autoseeding`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `banipv6`
+--
+ALTER TABLE `banipv6`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `bannedemails`
+--
+ALTER TABLE `bannedemails`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `bannedkeywords`
+--
+ALTER TABLE `bannedkeywords`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `bannedtitle`
+--
+ALTER TABLE `bannedtitle`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `banned_file_type`
+--
+ALTER TABLE `banned_file_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `bans`
+--
+ALTER TABLE `bans`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `bitbucket`
+--
+ALTER TABLE `bitbucket`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `blocks`
+--
+ALTER TABLE `blocks`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `bookmarks`
+--
+ALTER TABLE `bookmarks`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `cards`
+--
+ALTER TABLE `cards`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `carsimapping`
+--
+ALTER TABLE `carsimapping`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `carsi_invite`
+--
+ALTER TABLE `carsi_invite`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `carsi_schools`
+--
+ALTER TABLE `carsi_schools`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `catanime`
+--
+ALTER TABLE `catanime`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `caticons`
+--
+ALTER TABLE `caticons`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `catnewsreel`
+--
+ALTER TABLE `catnewsreel`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `catothers`
+--
+ALTER TABLE `catothers`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `cheaters`
+--
+ALTER TABLE `cheaters`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `chronicle`
+--
+ALTER TABLE `chronicle`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `class`
+--
+ALTER TABLE `class`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `codecs`
+--
+ALTER TABLE `codecs`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `connect`
+--
+ALTER TABLE `connect`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `countries`
+--
+ALTER TABLE `countries`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `donation`
+--
+ALTER TABLE `donation`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `downloadspeed`
+--
+ALTER TABLE `downloadspeed`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `faq`
+--
+ALTER TABLE `faq`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `files`
+--
+ALTER TABLE `files`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `formatgame`
+--
+ALTER TABLE `formatgame`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `formathqaudio`
+--
+ALTER TABLE `formathqaudio`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `formatmovie`
+--
+ALTER TABLE `formatmovie`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `formatnewsreel`
+--
+ALTER TABLE `formatnewsreel`
+  MODIFY `id` smallint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `formatsoftware`
+--
+ALTER TABLE `formatsoftware`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `formatsports`
+--
+ALTER TABLE `formatsports`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `formattvseries`
+--
+ALTER TABLE `formattvseries`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `formattvshows`
+--
+ALTER TABLE `formattvshows`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `forummods`
+--
+ALTER TABLE `forummods`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `forums`
+--
+ALTER TABLE `forums`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `friends`
+--
+ALTER TABLE `friends`
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `fun`
+--
+ALTER TABLE `fun`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `funds`
+--
+ALTER TABLE `funds`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `gift`
+--
+ALTER TABLE `gift`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `givebonus`
+--
+ALTER TABLE `givebonus`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `hqtone`
+--
+ALTER TABLE `hqtone`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `invitebox`
+--
+ALTER TABLE `invitebox`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `invites`
+--
+ALTER TABLE `invites`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `iplog`
+--
+ALTER TABLE `iplog`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `isp`
+--
+ALTER TABLE `isp`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `jc_options`
+--
+ALTER TABLE `jc_options`
+  MODIFY `Id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `jc_rank`
+--
+ALTER TABLE `jc_rank`
+  MODIFY `Id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `jc_record`
+--
+ALTER TABLE `jc_record`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `jc_subjects`
+--
+ALTER TABLE `jc_subjects`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `keepseed`
+--
+ALTER TABLE `keepseed`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `langgame`
+--
+ALTER TABLE `langgame`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `language`
+--
+ALTER TABLE `language`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `links`
+--
+ALTER TABLE `links`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `locations`
+--
+ALTER TABLE `locations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `loginattempts`
+--
+ALTER TABLE `loginattempts`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `marked_topic`
+--
+ALTER TABLE `marked_topic`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `media`
+--
+ALTER TABLE `media`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `modpanel`
+--
+ALTER TABLE `modpanel`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `news`
+--
+ALTER TABLE `news`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `nontjuip`
+--
+ALTER TABLE `nontjuip`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `offers`
+--
+ALTER TABLE `offers`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `offersinfo`
+--
+ALTER TABLE `offersinfo`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `offervotes`
+--
+ALTER TABLE `offervotes`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `overforums`
+--
+ALTER TABLE `overforums`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `peers`
+--
+ALTER TABLE `peers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `pmboxes`
+--
+ALTER TABLE `pmboxes`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `pollanswers`
+--
+ALTER TABLE `pollanswers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `polls`
+--
+ALTER TABLE `polls`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `processings`
+--
+ALTER TABLE `processings`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `prolinkclicks`
+--
+ALTER TABLE `prolinkclicks`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `propname`
+--
+ALTER TABLE `propname`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `props`
+--
+ALTER TABLE `props`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `readposts`
+--
+ALTER TABLE `readposts`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `regimages`
+--
+ALTER TABLE `regimages`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `reports`
+--
+ALTER TABLE `reports`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `req`
+--
+ALTER TABLE `req`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `resolutionanime`
+--
+ALTER TABLE `resolutionanime`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `resolutionsports`
+--
+ALTER TABLE `resolutionsports`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `resreq`
+--
+ALTER TABLE `resreq`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `rules`
+--
+ALTER TABLE `rules`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `schools`
+--
+ALTER TABLE `schools`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `searchbox`
+--
+ALTER TABLE `searchbox`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `secondicons`
+--
+ALTER TABLE `secondicons`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `self_invite`
+--
+ALTER TABLE `self_invite`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `shoutbox`
+--
+ALTER TABLE `shoutbox`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `sitelog`
+--
+ALTER TABLE `sitelog`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `sitelog_stats`
+--
+ALTER TABLE `sitelog_stats`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `snatched`
+--
+ALTER TABLE `snatched`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `sources`
+--
+ALTER TABLE `sources`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `staffmessages`
+--
+ALTER TABLE `staffmessages`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `standards`
+--
+ALTER TABLE `standards`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `stylesheets`
+--
+ALTER TABLE `stylesheets`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `subs`
+--
+ALTER TABLE `subs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `subsinfo`
+--
+ALTER TABLE `subsinfo`
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `suggest`
+--
+ALTER TABLE `suggest`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `sysoppanel`
+--
+ALTER TABLE `sysoppanel`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `teams`
+--
+ALTER TABLE `teams`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `thanks`
+--
+ALTER TABLE `thanks`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `tju_autosalary`
+--
+ALTER TABLE `tju_autosalary`
+  MODIFY `Id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `topics`
+--
+ALTER TABLE `topics`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `torrents`
+--
+ALTER TABLE `torrents`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `uploaders`
+--
+ALTER TABLE `uploaders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `uploader_autosalary`
+--
+ALTER TABLE `uploader_autosalary`
+  MODIFY `Id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `uploadspeed`
+--
+ALTER TABLE `uploadspeed`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `usercss`
+--
+ALTER TABLE `usercss`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-07-29 10:13:47

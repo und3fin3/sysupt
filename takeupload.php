@@ -453,7 +453,7 @@ if ($largesize_torrent && $totallen > ($largesize_torrent * 1073741824)) // Larg
 if ($catid == 404)
 	$sp_state = 11; // 资料类特殊优惠
 // TJUPT作品优惠
-$pos_until = "";
+$pos_until = "0000-00-00 00:00:00";
 $pos_state = 'normal';
 if ($tjuptrip == 'yes'){
 	$sp_state = 2;

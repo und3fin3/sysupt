@@ -1681,7 +1681,7 @@ function parse_imdb_id($url) {
 	} elseif ($url && is_numeric ( $url ) && strlen ( $url ) < 7) {
 		return str_pad ( $url, 7, '0', STR_PAD_LEFT );
 	} else {
-		return false;
+		return 0;
 	}
 }
 function build_imdb_url($imdb_id) {

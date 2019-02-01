@@ -646,26 +646,28 @@ else {
 			// color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font></strong>";
 
 			// $autodata .= "<br />".$comment;
-
-			$Cache->add_whole_row ();
-			print ("<tr>") ;
-			print ("<td class=\"rowhead\"><a href=\"javascript: klappe_ext('imdb')\"><span class=\"nowrap\"><img class=\"minus\" src=\"pic/trans.gif\" alt=\"Show/Hide\" id=\"picimdb\" title=\"" . $lang_detail ['title_show_or_hide'] . "\" /> " . $lang_details ['text_imdb'] . $lang_details ['row_info'] . "</span></a><div id=\"posterimdb\">" . $smallth . "</div></td>") ;
-			$Cache->end_whole_row ();
-			$Cache->add_row ();
-			$Cache->add_part ();
-			print ("<td class=\"rowfollow\" align=\"left\"><div id='kimdb'>" . $autodata) ;
-			$Cache->end_part ();
-			$Cache->end_row ();
-			$Cache->add_whole_row ();
-			print ("</div></td></tr>") ;
-			$Cache->end_whole_row ();
-			$Cache->cache_page ();
-			echo $Cache->next_row ();
-			$Cache->next_row ();
-			echo $Cache->next_part ();
-			if (get_user_class () >= $updateextinfo_class)
-				echo $Cache->next_part ();
-			echo $Cache->next_row ();
+            $Cache->new_page('detail_page_imdb_' . $imdb_id);
+            if (!$Cache->get_page()){
+                $Cache->add_whole_row();
+                print ("<tr>") ;
+                print ("<td class=\"rowhead\"><a href=\"javascript: klappe_ext('imdb')\"><span class=\"nowrap\"><img class=\"minus\" src=\"pic/trans.gif\" alt=\"Show/Hide\" id=\"picimdb\" title=\"" . $lang_detail ['title_show_or_hide'] . "\" /> " . $lang_details ['text_imdb'] . $lang_details ['row_info'] . "</span></a><div id=\"posterimdb\">" . $smallth . "</div></td>") ;
+                $Cache->end_whole_row ();
+                $Cache->add_row ();
+                $Cache->add_part ();
+                print ("<td class=\"rowfollow\" align=\"left\"><div id='kimdb'>" . $autodata) ;
+                $Cache->end_part ();
+                $Cache->end_row ();
+                $Cache->add_whole_row ();
+                print ("</div></td></tr>") ;
+                $Cache->end_whole_row ();
+                $Cache->cache_page ();
+            }
+            echo $Cache->next_row ();
+            $Cache->next_row ();
+            echo $Cache->next_part ();
+            if (get_user_class () >= $updateextinfo_class)
+                echo $Cache->next_part ();
+            echo $Cache->next_row ();
 		}
 
 		if ($imdb_id) {
