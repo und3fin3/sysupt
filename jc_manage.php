@@ -551,7 +551,7 @@ if($action == 'add_manage')
         print "</td>";
         print "</tr>";
 
-        tr($lang_manage['jc_type'],"<select name='type' value='".$_POST['type']."'><option value='1'>football</option><option value='2'>basketball</option><option value='3'>tennis</option><option value='4'>tabletennis</option><option value='5'>others</option></select>".$lang_manage['jc_type_explain'], 1 );
+        tr($lang_manage['jc_type'],"<select name='type' value='".$_POST['type']."'><option value='1'>足球竞猜</option><option value='2'>篮球竞猜</option><option value='3'>网球竞猜</option><option value='4'>乒乓竞猜</option><option value='5'>其他竞猜</option></select>", 1 );
         tr($lang_manage['jc_limit'],"<input type='text' value=100 name='limit'>".$lang_manage['jc_limit_explain'],1);
         tr($lang_manage['jc_start'],"<input type='text' id='time1' name='start' value='$current_time'/>".$lang_manage['time_explain'],1);
         tr($lang_manage['jc_end'],"<input type='text' id='time2' name='end' value='$current_time'/>".$lang_manage['time_explain'],1);

@@ -399,7 +399,7 @@ print "</div>";
 print "<p style=\"float:left;\">" .$lang_jc_bet['jc_option_explain']. "</p>";
 print "</td>";
 print "</tr>";
-tr($lang_jc_bet['jc_type'],"<select name='type' value='".$_POST['type']."'><option value='1'>football</option><option value='2'>basketball</option><option value='3'>tennis</option><option value='4'>tabletennis</option><option value='5'>others</option></select>".$lang_jc_bet['jc_type_explain'], 1 );
+tr($lang_jc_bet['jc_type'],"<select name='type' value='".$_POST['type']."'><option value='1'>足球竞猜</option><option value='2'>篮球竞猜</option><option value='3'>网球竞猜</option><option value='4'>乒乓竞猜</option><option value='5'>其他竞猜</option></select>", 1 );
 tr($lang_jc_bet['jc_limit'],"<input type='text' name='limit' value='".($_POST['limit']?$_POST['limit']:100)."'/>".$lang_jc_bet['jc_limit_explain'],1);
 tr($lang_jc_bet['jc_start'],"<input type='text' id='time1' name='start' value='".(isset($_POST['start']) ? $_POST['start'] :date ( "Y-m-d H:i:s"))."'/>".$lang_jc_bet['time_explain'],1);
 tr($lang_jc_bet['jc_end'],"<input type='text' id='time2' name='end' value='".(isset($_POST['end']) ? $_POST['end'] :date ( "Y-m-d H:i:s", time () + 24 * 3600 ))."'/>".$lang_jc_bet['time_explain'],1);
@@ -431,11 +431,7 @@ else
             bark("已达到每日发布上限");
         }
     }else{
-        if(mysql_num_rows($res)!=0){
-            bark($lang_jc_bet['deliver_only_once_aday']);
-
-        }
-
+        sql_query("INSERT INTO jc_sub_users ( user_id ) VALUES (" . sqlesc($CURUSER['id']) . ")");
     }
 
     while($row=mysql_fetch_assoc($res)){
@@ -620,7 +616,7 @@ if(!isset($_POST['submit']))
     print "<p style=\"float:left;\">" .$lang_jc_bet['jc_option_explain']. "</p>";
     print "</td>";
     print "</tr>";
-    tr($lang_jc_bet['jc_type'],"<select name='type' value='".$type."'><option value='1'>football</option><option value='2'>basketball</option><option value='3'>tennis</option><option value='4'>tabletennis</option><option value='5'>others</option></select>".$lang_jc_bet['jc_type_explain'], 1 );
+    tr($lang_jc_bet['jc_type'],"<select name='type' value='".$type."'><option value='1'>足球竞猜</option><option value='2'>篮球竞猜</option><option value='3'>网球竞猜</option><option value='4'>乒乓竞猜</option><option value='5'>其他竞猜</option></select>", 1 );
     tr($lang_jc_bet['jc_limit'],"<input type='text' name='limit' value='".$limit."'/>".$lang_jc_bet['jc_limit_explain'],1);
     tr($lang_jc_bet['jc_start'],"<input type='text' id='time1' name='start' value='".$start."'/>".$lang_jc_bet['time_explain'],1);
     tr($lang_jc_bet['jc_end'],"<input type='text' id='time2' name='end' value='".$end."'/>".$lang_jc_bet['time_explain'],1);

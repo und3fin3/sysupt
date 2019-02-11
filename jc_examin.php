@@ -116,7 +116,7 @@ if(!in_array($action,$allowedaction)){
             tr($lang_examin['creatername_text'], $creater_name, 1);
             tr($lang_examin['subject_text'], "<input type='text' style='width:500px;' name='subject' value='$subject'/><br />".$lang_examin['subject_explain'], 1);
             tr($lang_examin['description_text'], "<input type='text' style='width:500px' name='description' value='$description'/><br />".$lang_examin['description_explain'], 1);
-            tr($lang_examin['type_text'], "<select name='type' id='default'><option value='1'>football</option><option value='2'>basketball</option><option value='3'>car</option><option value='4'>esport</option><option value='5'>tennis</option><option value='6'>tabletennis</option><option value='7'>Olimpics</option><option value='8'>others</option></select>", 1);
+            tr($lang_subedit['type_text'], "<select name='type' id='default'><option value='1'>足球竞猜</option><option value='2'>篮球竞猜</option><option value='3'>网球竞猜</option><option value='4'>乒乓竞猜</option><option value='5'>其他竞猜</option></select>", 1);
             tr($lang_examin['start_text'],"<input type='text' id='time1' name='start' value='$start'>".$lang_examin['start_explain'],1);
             tr($lang_examin['end_text'],"<input type='text' id='time2'  name='end' value='$end'>".$lang_examin['end_explain'],1);
             tr($lang_examin['limit_text'],"<input type='text' name='limit' value='$limit'/>".$lang_examin['limit_explain'],1);

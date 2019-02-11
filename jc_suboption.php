@@ -42,7 +42,7 @@ if(!in_array($action,$allowedactions)){
                     bark("The subject you wanna manipulate doesn't exist now.Please contact with the top-admin!");
                 stdhead();
                sql_query("UPDATE jc_subjects SET `state`= 4 WHERE `id` = ".sqlesc($subid));
-                sql_query("UPDATE users SET seedbonus=seedbonus+10 WHERE `id` = ".sqlesc($row['creater_id']));
+                sql_query("UPDATE users SET seedbonus=seedbonus+1000 WHERE `id` = ".sqlesc($row['creater_id']));
                 $mydate=getdate();
                 $current_time = "$mydate[year]-$mydate[mon]-$mydate[mday] $mydate[hours]:$mydate[minutes]:$mydate[seconds]";
                 $msg=$lang_suboption['congratulation'].$row['subject'].$lang_suboption['give_you_bonus'];
@@ -64,7 +64,8 @@ if(!in_array($action,$allowedactions)){
             if($_POST['subject']=='' || $_POST['type']=='' ||  $_POST['start']=='' || $_POST['end']==''|| $_POST['limit']=='')
                 bark($lang_suboption['std_missing_form_data']);
             $op=array();
-            for($option_id =1; $option_id<=($row['options']+$_POST['add_rows']); $option_id++)
+            $add_rows = $_POST['add_rows'] ? $_POST['add_rows'] : 0;
+            for($option_id =1; $option_id<=($row['options']+$add_rows); $option_id++)
 
             {
                 $temp='option'.$option_id;
