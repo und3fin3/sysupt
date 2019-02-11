@@ -5,7 +5,7 @@ require_once ("include/bittorrent.php");
 dbconn ();
 
 require_once (get_langfile_path ( "fastdelete.php", true ));
-
+require_once (get_langfile_path ( "fastdelete.php", false ));
 require_once (get_langfile_path ( "delete.php", true ));
 
 loggedinorreturn ();
@@ -22,6 +22,9 @@ function bark($msg) {
 }
 
 $checked_torrent = $_POST ['checked_torrent'];
+
+if (is_null($checked_torrent))
+    bark("未选中任何种子");
 
 foreach ( $checked_torrent as $val ) 
 
