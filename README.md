@@ -9,7 +9,7 @@
 ### 2.Change permission of config
     chmod -R 777 config torrents bitbucket attachments imdb/cache subs
 ### 3.Create Database
-**Please use Mysql/MariaDB and DISABLE NO_ZERO_DATE and NO_ZERO_IN_DATE!**<br>
+**Please use Mysql/MariaDB and DISABLE NO_ZERO_DATE, NO_ZERO_IN_DATE AND STRICT_TRANS_TABLES in `sql_mode`!**<br>
 ```bash
     source sql/pt.sql
     source sql/data.sql

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2019-02-01 01:42:51
--- 服务器版本： 10.1.37-MariaDB-0+deb9u1
--- PHP 版本： 7.3.0-2
+-- 生成日期： 2019-02-11 12:24:21
+-- 服务器版本： 10.3.12-MariaDB-log
+-- PHP 版本： 7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -55,10 +55,10 @@ CREATE TABLE `adminpanel` (
 
 CREATE TABLE `advertisements` (
   `id` mediumint(8) UNSIGNED NOT NULL,
-  `enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) NOT NULL DEFAULT 0,
   `type` enum('bbcodes','xhtml','text','image','flash') NOT NULL,
   `position` enum('header','footer','belownav','belowsearchbox','torrentdetail','comment','interoverforums','forumpost','popup') NOT NULL,
-  `displayorder` tinyint(3) NOT NULL DEFAULT '0',
+  `displayorder` tinyint(3) NOT NULL DEFAULT 0,
   `name` varchar(255) NOT NULL DEFAULT '',
   `parameters` text NOT NULL,
   `code` text NOT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE `agent_allowed_family` (
   `exception` enum('yes','no') NOT NULL DEFAULT 'no',
   `allowhttps` enum('yes','no') NOT NULL DEFAULT 'no',
   `comment` varchar(200) NOT NULL DEFAULT '',
-  `hits` mediumint(8) UNSIGNED NOT NULL DEFAULT '0'
+  `hits` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -126,8 +126,8 @@ CREATE TABLE `api_token` (
   `token` varchar(32) NOT NULL,
   `secret` varchar(32) NOT NULL,
   `appname` varchar(20) DEFAULT NULL,
-  `last_activity` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `last_activity` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -139,18 +139,18 @@ CREATE TABLE `app_luckydraw` (
   `id` int(11) UNSIGNED NOT NULL,
   `time_start` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `time_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `ticket_price` decimal(20,1) NOT NULL DEFAULT '100.0',
-  `ticket_tax_rate` decimal(10,2) UNSIGNED NOT NULL DEFAULT '0.20',
-  `ticket_max_win_x` int(11) UNSIGNED NOT NULL DEFAULT '250',
-  `ticket_win` decimal(20,1) NOT NULL DEFAULT '0.0',
-  `user_class` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `user_max` int(11) UNSIGNED NOT NULL DEFAULT '100',
-  `winners_max` int(11) UNSIGNED NOT NULL DEFAULT '10',
-  `ticket_total` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `bonuspool` decimal(20,1) UNSIGNED NOT NULL DEFAULT '0.0',
-  `bonuspool_next` decimal(20,1) UNSIGNED NOT NULL DEFAULT '0.0',
-  `addby` int(11) UNSIGNED NOT NULL DEFAULT '0'
+  `ticket_price` decimal(20,1) NOT NULL DEFAULT 100.0,
+  `ticket_tax_rate` decimal(10,2) UNSIGNED NOT NULL DEFAULT 0.20,
+  `ticket_max_win_x` int(11) UNSIGNED NOT NULL DEFAULT 250,
+  `ticket_win` decimal(20,1) NOT NULL DEFAULT 0.0,
+  `user_class` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `user_max` int(11) UNSIGNED NOT NULL DEFAULT 100,
+  `winners_max` int(11) UNSIGNED NOT NULL DEFAULT 10,
+  `ticket_total` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `bonuspool` decimal(20,1) UNSIGNED NOT NULL DEFAULT 0.0,
+  `bonuspool_next` decimal(20,1) UNSIGNED NOT NULL DEFAULT 0.0,
+  `addby` int(11) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -161,11 +161,11 @@ CREATE TABLE `app_luckydraw` (
 
 CREATE TABLE `app_luckydraw_players` (
   `Id` int(11) UNSIGNED NOT NULL,
-  `luckydraw_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `ticket_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `luckydraw_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `ticket_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `ticket_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `win_or_lose` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
+  `win_or_lose` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -176,7 +176,7 @@ CREATE TABLE `app_luckydraw_players` (
 
 CREATE TABLE `app_rename` (
   `id` int(11) UNSIGNED NOT NULL,
-  `userid` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `oldname` varchar(40) NOT NULL DEFAULT '',
   `newname` varchar(40) NOT NULL DEFAULT '',
   `timerename` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -192,9 +192,9 @@ CREATE TABLE `app_rename` (
 CREATE TABLE `app_tryluck` (
   `Id` int(11) UNSIGNED NOT NULL,
   `trytime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `userid` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `bonus_pay` decimal(20,1) NOT NULL DEFAULT '0.0',
-  `bonus_gain` decimal(20,1) NOT NULL DEFAULT '0.0'
+  `userid` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `bonus_pay` decimal(20,1) NOT NULL DEFAULT 0.0,
+  `bonus_gain` decimal(20,1) NOT NULL DEFAULT 0.0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -205,24 +205,24 @@ CREATE TABLE `app_tryluck` (
 
 CREATE TABLE `attachments` (
   `id` int(10) UNSIGNED NOT NULL,
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `width` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `width` smallint(6) UNSIGNED NOT NULL DEFAULT 0,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `filename` varchar(256) NOT NULL DEFAULT '',
   `dlkey` char(32) NOT NULL,
   `filetype` varchar(50) NOT NULL DEFAULT '',
-  `filesize` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `filesize` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `location` varchar(256) NOT NULL,
-  `downloads` mediumint(8) NOT NULL DEFAULT '0',
-  `isimage` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `thumb` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `downloads` mediumint(8) NOT NULL DEFAULT 0,
+  `isimage` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
+  `thumb` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `cache_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `forums` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
-  `torrents` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
-  `offers` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
-  `messages` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
-  `comments` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
-  `requests` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
+  `forums` smallint(6) UNSIGNED NOT NULL DEFAULT 0,
+  `torrents` smallint(6) UNSIGNED NOT NULL DEFAULT 0,
+  `offers` smallint(6) UNSIGNED NOT NULL DEFAULT 0,
+  `messages` smallint(6) UNSIGNED NOT NULL DEFAULT 0,
+  `comments` smallint(6) UNSIGNED NOT NULL DEFAULT 0,
+  `requests` smallint(6) UNSIGNED NOT NULL DEFAULT 0,
   `others` enum('yes','no') NOT NULL DEFAULT 'no'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -236,7 +236,7 @@ CREATE TABLE `audiocodecs` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
   `image` varchar(256) NOT NULL,
-  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -262,8 +262,8 @@ CREATE TABLE `autoseeding` (
 CREATE TABLE `avps` (
   `arg` varchar(20) NOT NULL DEFAULT '',
   `value_s` text NOT NULL,
-  `value_i` int(11) NOT NULL DEFAULT '0',
-  `value_u` int(10) UNSIGNED NOT NULL DEFAULT '0'
+  `value_i` int(11) NOT NULL DEFAULT 0,
+  `value_u` int(10) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -275,16 +275,16 @@ CREATE TABLE `avps` (
 CREATE TABLE `banipv6` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `addedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `addedby` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `comment` varchar(255) NOT NULL DEFAULT '',
-  `ip0` int(11) NOT NULL DEFAULT '0',
-  `ip1` int(11) NOT NULL DEFAULT '0',
-  `ip2` int(11) NOT NULL DEFAULT '0',
-  `ip3` int(11) NOT NULL DEFAULT '0',
-  `ip4` int(11) NOT NULL DEFAULT '0',
-  `ip5` int(11) NOT NULL DEFAULT '0',
-  `ip6` int(11) NOT NULL DEFAULT '0',
-  `ip7` int(11) NOT NULL DEFAULT '0',
+  `ip0` int(11) NOT NULL DEFAULT 0,
+  `ip1` int(11) NOT NULL DEFAULT 0,
+  `ip2` int(11) NOT NULL DEFAULT 0,
+  `ip3` int(11) NOT NULL DEFAULT 0,
+  `ip4` int(11) NOT NULL DEFAULT 0,
+  `ip5` int(11) NOT NULL DEFAULT 0,
+  `ip6` int(11) NOT NULL DEFAULT 0,
+  `ip7` int(11) NOT NULL DEFAULT 0,
   `type` enum('ip','school','building') NOT NULL DEFAULT 'ip',
   `until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
@@ -320,7 +320,7 @@ CREATE TABLE `bannedkeywords` (
 CREATE TABLE `bannedtitle` (
   `id` int(10) UNSIGNED NOT NULL,
   `keywords` varchar(255) NOT NULL DEFAULT '',
-  `catid` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `catid` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `comment` varchar(255) DEFAULT NULL,
@@ -349,7 +349,7 @@ CREATE TABLE `banned_file_type` (
 CREATE TABLE `bans` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `addedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `addedby` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `comment` varchar(255) NOT NULL DEFAULT '',
   `first` bigint(20) NOT NULL,
   `last` bigint(20) NOT NULL,
@@ -364,7 +364,7 @@ CREATE TABLE `bans` (
 
 CREATE TABLE `bitbucket` (
   `id` int(10) UNSIGNED NOT NULL,
-  `owner` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `owner` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `name` varchar(256) NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `public` enum('0','1') NOT NULL DEFAULT '0'
@@ -377,11 +377,11 @@ CREATE TABLE `bitbucket` (
 --
 
 CREATE TABLE `blackjack` (
-  `userid` int(11) NOT NULL DEFAULT '0',
-  `points` int(11) NOT NULL DEFAULT '0',
+  `userid` int(11) NOT NULL DEFAULT 0,
+  `points` int(11) NOT NULL DEFAULT 0,
   `status` enum('playing','waiting') NOT NULL DEFAULT 'playing',
   `cards` text NOT NULL,
-  `date` int(11) DEFAULT '0',
+  `date` int(11) DEFAULT 0,
   `gameover` enum('yes','no') DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -393,8 +393,8 @@ CREATE TABLE `blackjack` (
 
 CREATE TABLE `blocks` (
   `id` int(10) UNSIGNED NOT NULL,
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `blockid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0'
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `blockid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -405,8 +405,8 @@ CREATE TABLE `blocks` (
 
 CREATE TABLE `bookmarks` (
   `id` int(10) UNSIGNED NOT NULL,
-  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0'
+  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -417,7 +417,7 @@ CREATE TABLE `bookmarks` (
 
 CREATE TABLE `cards` (
   `id` int(11) NOT NULL,
-  `points` int(11) NOT NULL DEFAULT '0',
+  `points` int(11) NOT NULL DEFAULT 0,
   `pic` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -493,11 +493,11 @@ CREATE TABLE `catdocum` (
 
 CREATE TABLE `categories` (
   `id` smallint(5) UNSIGNED NOT NULL,
-  `mode` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `mode` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
   `class_name` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(30) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `sort_index` smallint(5) UNSIGNED NOT NULL DEFAULT '0'
+  `sort_index` smallint(5) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -562,7 +562,7 @@ CREATE TABLE `catmovie` (
 CREATE TABLE `catnewsreel` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) UNSIGNED NOT NULL DEFAULT '0'
+  `sort_index` smallint(5) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -634,19 +634,19 @@ CREATE TABLE `catsports` (
 CREATE TABLE `cheaters` (
   `id` mediumint(8) UNSIGNED NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `anctime` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `seeders` mediumint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `leechers` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `hit` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `dealtby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `dealtwith` tinyint(1) NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `anctime` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `seeders` mediumint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `leechers` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `hit` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `dealtby` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `dealtwith` tinyint(1) NOT NULL DEFAULT 0,
   `comment` varchar(256) NOT NULL DEFAULT '',
   `ip` varchar(64) DEFAULT NULL,
-  `port` mediumint(3) UNSIGNED NOT NULL DEFAULT '0'
+  `port` mediumint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -657,9 +657,9 @@ CREATE TABLE `cheaters` (
 
 CREATE TABLE `chronicle` (
   `id` mediumint(8) UNSIGNED NOT NULL,
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `txt` text
+  `txt` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -699,7 +699,7 @@ CREATE TABLE `class` (
 CREATE TABLE `codecs` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -710,15 +710,15 @@ CREATE TABLE `codecs` (
 
 CREATE TABLE `comments` (
   `id` int(10) UNSIGNED NOT NULL,
-  `user` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `torrent` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `user` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `torrent` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `text` text,
-  `ori_text` text,
-  `editedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `text` text DEFAULT NULL,
+  `ori_text` text DEFAULT NULL,
+  `editedby` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `editdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `offer` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `request` mediumint(8) NOT NULL DEFAULT '0'
+  `offer` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `request` mediumint(8) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -791,15 +791,15 @@ CREATE TABLE `districttvshows` (
 CREATE TABLE `donation` (
   `id` int(10) NOT NULL,
   `uid` int(10) NOT NULL,
-  `amount` double(10,2) NOT NULL DEFAULT '0.00',
+  `amount` double(10,2) NOT NULL DEFAULT 0.00,
   `message` varchar(500) NOT NULL DEFAULT '',
   `anonymous` enum('yes','no') NOT NULL DEFAULT 'no',
   `nickname` varchar(20) NOT NULL DEFAULT '',
-  `qrid` int(15) NOT NULL DEFAULT '0',
+  `qrid` int(15) NOT NULL DEFAULT 0,
   `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `success_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `status` tinyint(1) NOT NULL DEFAULT '-1',
-  `used` tinyint(1) NOT NULL DEFAULT '0'
+  `status` tinyint(1) NOT NULL DEFAULT -1,
+  `used` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -809,7 +809,7 @@ CREATE TABLE `donation` (
 --
 
 CREATE TABLE `douban` (
-  `rank` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `rank` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `title` varchar(50) DEFAULT NULL,
   `year` int(11) UNSIGNED DEFAULT NULL,
   `rating` double(2,1) UNSIGNED DEFAULT NULL,
@@ -837,13 +837,13 @@ CREATE TABLE `downloadspeed` (
 CREATE TABLE `faq` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `link_id` smallint(5) UNSIGNED NOT NULL,
-  `lang_id` smallint(5) UNSIGNED NOT NULL DEFAULT '6',
+  `lang_id` smallint(5) UNSIGNED NOT NULL DEFAULT 6,
   `type` enum('categ','item') NOT NULL DEFAULT 'item',
   `question` text NOT NULL,
   `answer` text NOT NULL,
-  `flag` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
-  `categ` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `order` smallint(5) UNSIGNED NOT NULL DEFAULT '0'
+  `flag` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
+  `categ` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `order` smallint(5) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -854,9 +854,9 @@ CREATE TABLE `faq` (
 
 CREATE TABLE `files` (
   `id` int(10) UNSIGNED NOT NULL,
-  `torrent` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `torrent` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `filename` varchar(255) NOT NULL DEFAULT '',
-  `size` bigint(20) UNSIGNED NOT NULL DEFAULT '0'
+  `size` bigint(20) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -928,7 +928,7 @@ CREATE TABLE `formatmovie` (
 CREATE TABLE `formatnewsreel` (
   `id` smallint(3) UNSIGNED NOT NULL,
   `name` varchar(10) NOT NULL,
-  `sort_index` smallint(3) UNSIGNED NOT NULL DEFAULT '0'
+  `sort_index` smallint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -976,7 +976,7 @@ CREATE TABLE `formattvseries` (
 CREATE TABLE `formattvshows` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sort_index` smallint(5) UNSIGNED NOT NULL DEFAULT '0'
+  `sort_index` smallint(5) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -999,15 +999,15 @@ CREATE TABLE `forummods` (
 
 CREATE TABLE `forums` (
   `id` smallint(5) UNSIGNED NOT NULL,
-  `sort` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `sort` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `name` varchar(60) NOT NULL,
   `description` varchar(256) NOT NULL DEFAULT '',
-  `minclassread` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `minclasswrite` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `postcount` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `topiccount` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `minclasscreate` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `forid` smallint(5) UNSIGNED NOT NULL DEFAULT '0'
+  `minclassread` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `minclasswrite` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `postcount` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `topiccount` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `minclasscreate` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `forid` smallint(5) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1030,12 +1030,12 @@ CREATE TABLE `friends` (
 
 CREATE TABLE `fun` (
   `id` mediumint(8) UNSIGNED NOT NULL,
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `body` text,
+  `body` text DEFAULT NULL,
   `title` varchar(256) NOT NULL DEFAULT '',
   `status` enum('normal','dull','notfunny','funny','veryfunny','banned') NOT NULL DEFAULT 'normal',
-  `comment` text
+  `comment` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1046,8 +1046,8 @@ CREATE TABLE `fun` (
 
 CREATE TABLE `funds` (
   `id` int(10) UNSIGNED NOT NULL,
-  `usd` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `cny` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `usd` decimal(8,2) NOT NULL DEFAULT 0.00,
+  `cny` decimal(8,2) NOT NULL DEFAULT 0.00,
   `user` mediumint(8) UNSIGNED NOT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `memo` varchar(256) NOT NULL DEFAULT ''
@@ -1074,7 +1074,7 @@ CREATE TABLE `funvotes` (
 
 CREATE TABLE `gift` (
   `id` int(11) NOT NULL,
-  `userid` int(11) NOT NULL DEFAULT '0',
+  `userid` int(11) NOT NULL DEFAULT 0,
   `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1111,9 +1111,9 @@ CREATE TABLE `hqtone` (
 --
 
 CREATE TABLE `imdb` (
-  `rank` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `rank` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `title` varchar(50) DEFAULT NULL,
-  `imdb_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `imdb_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `year` int(11) UNSIGNED DEFAULT NULL,
   `rating` double(2,1) UNSIGNED DEFAULT NULL,
   `votes` varchar(38) DEFAULT NULL,
@@ -1150,7 +1150,7 @@ CREATE TABLE `invitebox` (
 
 CREATE TABLE `invites` (
   `id` int(10) UNSIGNED NOT NULL,
-  `inviter` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `inviter` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `invitee` varchar(80) NOT NULL DEFAULT '',
   `hash` char(32) NOT NULL,
   `time_invited` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
@@ -1168,7 +1168,7 @@ CREATE TABLE `iplog` (
   `userid` mediumint(8) UNSIGNED NOT NULL,
   `access` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `duplicate` enum('yes','no') NOT NULL DEFAULT 'no',
-  `subject_id` smallint(6) DEFAULT '0'
+  `subject_id` smallint(6) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1202,11 +1202,11 @@ CREATE TABLE `isp` (
 
 CREATE TABLE `jc_options` (
   `Id` int(11) UNSIGNED NOT NULL,
-  `parent_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `option_id` int(10) UNSIGNED NOT NULL DEFAULT '1',
+  `parent_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `option_id` int(10) UNSIGNED NOT NULL DEFAULT 1,
   `option_name` varchar(40) NOT NULL DEFAULT '',
-  `option_players` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `option_total` decimal(10,1) NOT NULL DEFAULT '0.0'
+  `option_players` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `option_total` decimal(10,1) NOT NULL DEFAULT 0.0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='竞猜选项';
 
 -- --------------------------------------------------------
@@ -1217,12 +1217,12 @@ CREATE TABLE `jc_options` (
 
 CREATE TABLE `jc_rank` (
   `Id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `win_times` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `lose_times` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `yin_kui` decimal(10,1) NOT NULL DEFAULT '0.0',
-  `total_times` int(11) UNSIGNED DEFAULT '0',
-  `win_percent` decimal(10,2) UNSIGNED DEFAULT '0.00'
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `win_times` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `lose_times` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `yin_kui` decimal(10,1) NOT NULL DEFAULT 0.0,
+  `total_times` int(11) UNSIGNED DEFAULT 0,
+  `win_percent` decimal(10,2) UNSIGNED DEFAULT 0.00
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1233,12 +1233,12 @@ CREATE TABLE `jc_rank` (
 
 CREATE TABLE `jc_record` (
   `id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `subject_id` int(10) NOT NULL DEFAULT '0',
-  `option_id` int(10) NOT NULL DEFAULT '0',
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `subject_id` int(10) NOT NULL DEFAULT 0,
+  `option_id` int(10) NOT NULL DEFAULT 0,
   `user_total` decimal(10,1) DEFAULT NULL,
-  `state` tinyint(3) DEFAULT '0',
-  `yin_kui` decimal(10,1) DEFAULT '0.0',
+  `state` tinyint(3) DEFAULT 0,
+  `yin_kui` decimal(10,1) DEFAULT 0.0,
   `last_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1254,19 +1254,33 @@ CREATE TABLE `jc_subjects` (
   `creater_name` varchar(40) NOT NULL DEFAULT '',
   `subject` varchar(100) NOT NULL DEFAULT '',
   `description` varchar(200) DEFAULT '',
-  `type` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `type` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `start` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `end` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `limit` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `total` decimal(10,1) NOT NULL DEFAULT '0.0',
-  `players` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `state` tinyint(1) NOT NULL DEFAULT '1',
-  `options` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `win_options` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `limit` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `total` decimal(10,1) NOT NULL DEFAULT 0.0,
+  `players` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `state` tinyint(1) NOT NULL DEFAULT 1,
+  `options` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `win_options` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `remark` varchar(512) DEFAULT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_time` timestamp NOT NULL DEFAULT current_timestamp(),
   `note` varchar(255) DEFAULT '' COMMENT '备注'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='竞猜';
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `jc_sub_users`
+--
+
+CREATE TABLE `jc_sub_users` (
+  `user_id` int(10) NOT NULL,
+  `deliver_count` int(10) NOT NULL DEFAULT 0,
+  `limit_deliver` int(10) NOT NULL DEFAULT 5,
+  `total_deliver` int(11) NOT NULL DEFAULT 0,
+  `last_modify_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1276,8 +1290,8 @@ CREATE TABLE `jc_subjects` (
 
 CREATE TABLE `keepseed` (
   `id` int(11) NOT NULL,
-  `torrentid` int(11) NOT NULL DEFAULT '0',
-  `userid` int(11) NOT NULL DEFAULT '0'
+  `torrentid` int(11) NOT NULL DEFAULT 0,
+  `userid` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1350,9 +1364,9 @@ CREATE TABLE `language` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `lang_name` varchar(50) NOT NULL,
   `flagpic` varchar(256) NOT NULL DEFAULT '',
-  `sub_lang` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
-  `rule_lang` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `site_lang` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `sub_lang` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
+  `rule_lang` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `site_lang` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `site_lang_folder` varchar(256) NOT NULL DEFAULT '',
   `trans_state` enum('up-to-date','outdate','incomplete','need-new','unavailable') NOT NULL DEFAULT 'unavailable'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1384,12 +1398,12 @@ CREATE TABLE `locations` (
   `flagpic` varchar(50) DEFAULT NULL,
   `start_ip` varchar(20) NOT NULL,
   `end_ip` varchar(20) NOT NULL,
-  `theory_upspeed` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `practical_upspeed` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `theory_downspeed` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `practical_downspeed` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `hit` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `privilege` int(10) NOT NULL DEFAULT '0'
+  `theory_upspeed` int(10) UNSIGNED NOT NULL DEFAULT 10,
+  `practical_upspeed` int(10) UNSIGNED NOT NULL DEFAULT 10,
+  `theory_downspeed` int(10) UNSIGNED NOT NULL DEFAULT 10,
+  `practical_downspeed` int(10) UNSIGNED NOT NULL DEFAULT 10,
+  `hit` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `privilege` int(10) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1403,7 +1417,7 @@ CREATE TABLE `loginattempts` (
   `ip` varchar(64) NOT NULL DEFAULT '',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `banned` enum('yes','no') NOT NULL DEFAULT 'no',
-  `attempts` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `attempts` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `type` enum('login','recover') NOT NULL DEFAULT 'login'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1415,8 +1429,8 @@ CREATE TABLE `loginattempts` (
 
 CREATE TABLE `marked_topic` (
   `id` int(11) NOT NULL,
-  `tid` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `uid` int(11) UNSIGNED NOT NULL DEFAULT '0'
+  `tid` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `uid` int(11) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1440,7 +1454,7 @@ CREATE TABLE `maxslots` (
 CREATE TABLE `media` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1451,13 +1465,13 @@ CREATE TABLE `media` (
 
 CREATE TABLE `messages` (
   `id` int(10) UNSIGNED NOT NULL,
-  `sender` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `receiver` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `sender` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `receiver` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `subject` varchar(128) NOT NULL DEFAULT '',
-  `msg` text,
+  `msg` text DEFAULT NULL,
   `unread` enum('yes','no') NOT NULL DEFAULT 'yes',
-  `location` smallint(6) NOT NULL DEFAULT '1',
+  `location` smallint(6) NOT NULL DEFAULT 1,
   `saved` enum('no','yes') NOT NULL DEFAULT 'no'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1482,9 +1496,9 @@ CREATE TABLE `modpanel` (
 
 CREATE TABLE `news` (
   `id` mediumint(8) UNSIGNED NOT NULL,
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `body` text,
+  `body` text DEFAULT NULL,
   `title` varchar(255) NOT NULL DEFAULT '',
   `notify` enum('yes','no') NOT NULL DEFAULT 'no'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1510,15 +1524,15 @@ CREATE TABLE `nontjuip` (
 
 CREATE TABLE `offers` (
   `id` mediumint(8) UNSIGNED NOT NULL,
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `name` varchar(225) NOT NULL,
-  `descr` text,
+  `descr` text DEFAULT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `allowedtime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `yeah` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `against` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `category` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `comments` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `yeah` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `against` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `category` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `comments` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `allowed` enum('allowed','pending','denied','freeze') NOT NULL DEFAULT 'pending'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1535,7 +1549,7 @@ CREATE TABLE `offersinfo` (
   `cname` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `ename` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `issuedate` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `subsinfo` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `subsinfo` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `format` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `imdbnum` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `specificcat` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
@@ -1565,8 +1579,8 @@ CREATE TABLE `offersinfo` (
 
 CREATE TABLE `offervotes` (
   `id` int(10) UNSIGNED NOT NULL,
-  `offerid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `offerid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `vote` enum('yeah','against') NOT NULL DEFAULT 'yeah'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1590,12 +1604,12 @@ CREATE TABLE `openapi_token` (
 
 CREATE TABLE `orders` (
   `id` int(11) UNSIGNED NOT NULL,
-  `uid` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `type` tinyint(3) NOT NULL DEFAULT '0',
+  `uid` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `type` tinyint(3) NOT NULL DEFAULT 0,
   `contact` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(255) DEFAULT NULL,
-  `num` smallint(6) NOT NULL DEFAULT '1',
-  `groups` tinyint(2) NOT NULL DEFAULT '2',
+  `num` smallint(6) NOT NULL DEFAULT 1,
+  `groups` tinyint(2) NOT NULL DEFAULT 2,
   `status` enum('sending','okay') NOT NULL DEFAULT 'sending'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1609,8 +1623,8 @@ CREATE TABLE `overforums` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(60) NOT NULL,
   `description` varchar(256) NOT NULL DEFAULT '',
-  `minclassview` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `sort` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
+  `minclassview` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `sort` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1621,23 +1635,24 @@ CREATE TABLE `overforums` (
 
 CREATE TABLE `peers` (
   `id` int(10) UNSIGNED NOT NULL,
-  `torrent` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `torrent` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `peer_id` binary(20) NOT NULL,
   `ipv4` varchar(15) DEFAULT NULL,
   `ipv6` varchar(64) DEFAULT NULL,
-  `port` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `to_go` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `port` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `to_go` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `seeder` enum('yes','no') NOT NULL DEFAULT 'no',
   `started` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_action` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `prev_action` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `connectable` enum('yes-','no-','-yes','-no','yes/yes','yes/no','no/yes','no/no') NOT NULL DEFAULT 'yes-',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `agent` varchar(60) NOT NULL DEFAULT '',
-  `finishedat` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `downloadoffset` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `uploadoffset` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `finishedat` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `downloadoffset` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `uploadoffset` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `passkey` char(32) NOT NULL DEFAULT ''
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
 
@@ -1650,7 +1665,7 @@ CREATE TABLE `peers` (
 CREATE TABLE `pmboxes` (
   `id` mediumint(8) UNSIGNED NOT NULL,
   `userid` mediumint(8) UNSIGNED NOT NULL,
-  `boxnumber` tinyint(3) UNSIGNED NOT NULL DEFAULT '2',
+  `boxnumber` tinyint(3) UNSIGNED NOT NULL DEFAULT 2,
   `name` varchar(15) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1737,12 +1752,12 @@ CREATE TABLE `polls` (
 
 CREATE TABLE `posts` (
   `id` int(10) UNSIGNED NOT NULL,
-  `topicid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `topicid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `body` text,
-  `ori_body` text,
-  `editedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `body` text DEFAULT NULL,
+  `ori_body` text DEFAULT NULL,
+  `editedby` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `editdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1755,7 +1770,7 @@ CREATE TABLE `posts` (
 CREATE TABLE `processings` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1766,7 +1781,7 @@ CREATE TABLE `processings` (
 
 CREATE TABLE `prolinkclicks` (
   `id` int(10) UNSIGNED NOT NULL,
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `ip` varchar(64) NOT NULL DEFAULT '',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1781,11 +1796,11 @@ CREATE TABLE `propname` (
   `id` int(11) NOT NULL,
   `name` varchar(20) NOT NULL DEFAULT '',
   `type` enum('sale','position','amount','class','name','title','color') DEFAULT 'sale',
-  `value` int(11) NOT NULL DEFAULT '0',
-  `price` int(11) NOT NULL DEFAULT '0',
+  `value` int(11) NOT NULL DEFAULT 0,
+  `price` int(11) NOT NULL DEFAULT 0,
   `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
-  `timelength` int(11) NOT NULL DEFAULT '0',
-  `amountlimit` smallint(6) NOT NULL DEFAULT '0',
+  `timelength` int(11) NOT NULL DEFAULT 0,
+  `amountlimit` smallint(6) NOT NULL DEFAULT 0,
   `note` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1797,8 +1812,8 @@ CREATE TABLE `propname` (
 
 CREATE TABLE `props` (
   `id` int(11) NOT NULL,
-  `propid` int(11) NOT NULL DEFAULT '0',
-  `userid` int(11) NOT NULL DEFAULT '0',
+  `propid` int(11) NOT NULL DEFAULT 0,
+  `userid` int(11) NOT NULL DEFAULT 0,
   `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1815,7 +1830,7 @@ CREATE TABLE `questions` (
   `answer2` varchar(255) DEFAULT NULL,
   `answer4` varchar(255) DEFAULT NULL,
   `answer8` varchar(255) DEFAULT NULL,
-  `answer` tinyint(2) NOT NULL DEFAULT '0'
+  `answer` tinyint(2) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1826,9 +1841,9 @@ CREATE TABLE `questions` (
 
 CREATE TABLE `readposts` (
   `id` int(10) UNSIGNED NOT NULL,
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `topicid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `lastpostread` int(10) UNSIGNED NOT NULL DEFAULT '0'
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `topicid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `lastpostread` int(10) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1841,7 +1856,7 @@ CREATE TABLE `regimages` (
   `id` mediumint(8) UNSIGNED NOT NULL,
   `imagehash` varchar(32) NOT NULL DEFAULT '',
   `imagestring` varchar(8) NOT NULL DEFAULT '',
-  `dateline` int(10) UNSIGNED NOT NULL DEFAULT '0'
+  `dateline` int(10) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1852,13 +1867,13 @@ CREATE TABLE `regimages` (
 
 CREATE TABLE `reports` (
   `id` mediumint(8) UNSIGNED NOT NULL,
-  `addedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `addedby` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `reportid` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `reportid` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `type` enum('torrent','user','offer','request','post','comment','subtitle') NOT NULL DEFAULT 'torrent',
   `reason` varchar(255) NOT NULL DEFAULT '',
-  `dealtby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `dealtwith` tinyint(1) NOT NULL DEFAULT '0'
+  `dealtby` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `dealtwith` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1869,15 +1884,15 @@ CREATE TABLE `reports` (
 
 CREATE TABLE `req` (
   `id` int(11) NOT NULL,
-  `catid` int(11) NOT NULL DEFAULT '401',
+  `catid` int(11) NOT NULL DEFAULT 401,
   `name` varchar(255) DEFAULT NULL,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `introduce` text,
-  `ori_introduce` text,
-  `amount` int(11) NOT NULL DEFAULT '0',
-  `userid` int(11) NOT NULL DEFAULT '0',
-  `ori_amount` int(11) NOT NULL DEFAULT '0',
-  `comments` int(11) NOT NULL DEFAULT '0',
+  `introduce` text DEFAULT NULL,
+  `ori_introduce` text DEFAULT NULL,
+  `amount` int(11) NOT NULL DEFAULT 0,
+  `userid` int(11) NOT NULL DEFAULT 0,
+  `ori_amount` int(11) NOT NULL DEFAULT 0,
+  `comments` int(11) NOT NULL DEFAULT 0,
   `finish` enum('yes','no','cancel') NOT NULL DEFAULT 'no',
   `finished_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `resetdate` datetime DEFAULT NULL
@@ -1915,10 +1930,10 @@ CREATE TABLE `resolutionsports` (
 
 CREATE TABLE `resreq` (
   `id` int(11) NOT NULL,
-  `reqid` int(11) NOT NULL DEFAULT '0',
-  `torrentid` int(11) NOT NULL DEFAULT '0',
+  `reqid` int(11) NOT NULL DEFAULT 0,
+  `torrentid` int(11) NOT NULL DEFAULT 0,
   `chosen` enum('yes','no') NOT NULL DEFAULT 'no',
-  `submitted_by` int(10) UNSIGNED NOT NULL DEFAULT '0'
+  `submitted_by` int(10) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1929,9 +1944,9 @@ CREATE TABLE `resreq` (
 
 CREATE TABLE `rules` (
   `id` smallint(5) UNSIGNED NOT NULL,
-  `lang_id` smallint(5) UNSIGNED NOT NULL DEFAULT '6',
+  `lang_id` smallint(5) UNSIGNED NOT NULL DEFAULT 6,
   `title` varchar(255) NOT NULL,
-  `text` text
+  `text` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1955,16 +1970,16 @@ CREATE TABLE `schools` (
 CREATE TABLE `searchbox` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `name` varchar(30) DEFAULT NULL,
-  `showsubcat` tinyint(1) NOT NULL DEFAULT '0',
-  `showsource` tinyint(1) NOT NULL DEFAULT '0',
-  `showmedium` tinyint(1) NOT NULL DEFAULT '0',
-  `showcodec` tinyint(1) NOT NULL DEFAULT '0',
-  `showstandard` tinyint(1) NOT NULL DEFAULT '0',
-  `showprocessing` tinyint(1) NOT NULL DEFAULT '0',
-  `showteam` tinyint(1) NOT NULL DEFAULT '0',
-  `showaudiocodec` tinyint(1) NOT NULL DEFAULT '0',
-  `catsperrow` smallint(5) UNSIGNED NOT NULL DEFAULT '7',
-  `catpadding` smallint(5) UNSIGNED NOT NULL DEFAULT '25'
+  `showsubcat` tinyint(1) NOT NULL DEFAULT 0,
+  `showsource` tinyint(1) NOT NULL DEFAULT 0,
+  `showmedium` tinyint(1) NOT NULL DEFAULT 0,
+  `showcodec` tinyint(1) NOT NULL DEFAULT 0,
+  `showstandard` tinyint(1) NOT NULL DEFAULT 0,
+  `showprocessing` tinyint(1) NOT NULL DEFAULT 0,
+  `showteam` tinyint(1) NOT NULL DEFAULT 0,
+  `showaudiocodec` tinyint(1) NOT NULL DEFAULT 0,
+  `catsperrow` smallint(5) UNSIGNED NOT NULL DEFAULT 7,
+  `catpadding` smallint(5) UNSIGNED NOT NULL DEFAULT 25
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1975,13 +1990,13 @@ CREATE TABLE `searchbox` (
 
 CREATE TABLE `secondicons` (
   `id` smallint(5) UNSIGNED NOT NULL,
-  `source` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `medium` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `codec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `standard` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `processing` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `team` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `audiocodec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `source` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `medium` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `codec` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `standard` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `processing` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `team` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `audiocodec` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `name` varchar(30) NOT NULL,
   `class_name` varchar(255) DEFAULT NULL,
   `image` varchar(255) NOT NULL
@@ -1994,26 +2009,26 @@ CREATE TABLE `secondicons` (
 --
 
 CREATE TABLE `seedbox_torrents` (
-  `torid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `torid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `info_hash` binary(20) NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `filename` varchar(255) NOT NULL DEFAULT '',
   `save_as` varchar(255) NOT NULL DEFAULT '',
-  `descr` text,
+  `descr` text DEFAULT NULL,
   `small_descr` varchar(255) NOT NULL DEFAULT '',
-  `ori_descr` text,
-  `category` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `source` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `medium` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `codec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `standard` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `processing` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `team` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `audiocodec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `size` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `ori_descr` text DEFAULT NULL,
+  `category` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `source` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `medium` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `codec` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `standard` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `processing` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `team` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `audiocodec` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `size` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `type` enum('single','multi') NOT NULL DEFAULT 'single',
-  `numfiles` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `nfo` blob
+  `numfiles` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `nfo` blob DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -2038,8 +2053,8 @@ CREATE TABLE `self_invite` (
 
 CREATE TABLE `shoutbox` (
   `id` int(10) NOT NULL,
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `date` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `date` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `text` text CHARACTER SET utf8 NOT NULL,
   `type` enum('sb','hb') CHARACTER SET utf8 NOT NULL DEFAULT 'sb',
   `ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
@@ -2067,11 +2082,11 @@ CREATE TABLE `sitelog` (
 CREATE TABLE `sitelog_stats` (
   `Id` int(11) NOT NULL,
   `statstime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `totaltorrentssize` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `totaluploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `totaldownloaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `totalbonus` decimal(20,2) NOT NULL DEFAULT '0.00',
-  `totalinvites` bigint(20) UNSIGNED NOT NULL DEFAULT '0'
+  `totaltorrentssize` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `totaluploaded` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `totaldownloaded` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `totalbonus` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `totalinvites` bigint(20) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2082,15 +2097,15 @@ CREATE TABLE `sitelog_stats` (
 
 CREATE TABLE `snatched` (
   `id` int(10) NOT NULL,
-  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `ip` varchar(64) NOT NULL DEFAULT '',
-  `port` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `to_go` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `seedtime` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `leechtime` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `port` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `to_go` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `seedtime` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `leechtime` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `last_action` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `startdat` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `completedat` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -2106,7 +2121,7 @@ CREATE TABLE `snatched` (
 CREATE TABLE `sources` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2117,13 +2132,13 @@ CREATE TABLE `sources` (
 
 CREATE TABLE `staffmessages` (
   `id` mediumint(8) UNSIGNED NOT NULL,
-  `sender` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `sender` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `msg` text,
+  `msg` text DEFAULT NULL,
   `subject` varchar(128) NOT NULL DEFAULT '',
-  `answeredby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `answered` tinyint(1) NOT NULL DEFAULT '0',
-  `answer` text
+  `answeredby` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `answered` tinyint(1) NOT NULL DEFAULT 0,
+  `answer` text DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2135,7 +2150,7 @@ CREATE TABLE `staffmessages` (
 CREATE TABLE `standards` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2166,7 +2181,7 @@ CREATE TABLE `stylesheets` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `uri` varchar(255) NOT NULL DEFAULT '',
   `name` varchar(64) NOT NULL DEFAULT '',
-  `addicode` text,
+  `addicode` text DEFAULT NULL,
   `designer` varchar(50) NOT NULL DEFAULT '',
   `comment` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -2184,10 +2199,10 @@ CREATE TABLE `subs` (
   `title` varchar(255) NOT NULL DEFAULT '',
   `filename` varchar(255) NOT NULL DEFAULT '',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `size` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `uppedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `size` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `uppedby` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `anonymous` enum('yes','no') NOT NULL DEFAULT 'no',
-  `hits` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `hits` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `ext` varchar(10) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -2212,7 +2227,7 @@ CREATE TABLE `subsinfo` (
 CREATE TABLE `suggest` (
   `id` int(10) UNSIGNED NOT NULL,
   `keywords` varchar(255) NOT NULL DEFAULT '',
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `adddate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -2238,7 +2253,7 @@ CREATE TABLE `sysoppanel` (
 CREATE TABLE `teams` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(30) NOT NULL,
-  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
+  `sort_index` tinyint(3) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -2249,8 +2264,8 @@ CREATE TABLE `teams` (
 
 CREATE TABLE `thanks` (
   `id` int(10) UNSIGNED NOT NULL,
-  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0'
+  `torrentid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2261,9 +2276,9 @@ CREATE TABLE `thanks` (
 
 CREATE TABLE `tju_autosalary` (
   `Id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `user_class` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `salary` decimal(10,1) UNSIGNED NOT NULL DEFAULT '0.0',
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `user_class` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `salary` decimal(10,1) UNSIGNED NOT NULL DEFAULT 0.0,
   `salarytime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `remark` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -2276,15 +2291,15 @@ CREATE TABLE `tju_autosalary` (
 
 CREATE TABLE `topics` (
   `id` mediumint(8) UNSIGNED NOT NULL,
-  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `subject` varchar(128) NOT NULL,
   `locked` enum('yes','no') NOT NULL DEFAULT 'no',
-  `forumid` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `firstpost` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `lastpost` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `forumid` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `firstpost` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `lastpost` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `sticky` enum('no','yes') NOT NULL DEFAULT 'no',
-  `hlcolor` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `views` int(10) UNSIGNED NOT NULL DEFAULT '0'
+  `hlcolor` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `views` int(10) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2299,40 +2314,40 @@ CREATE TABLE `torrents` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `filename` varchar(255) NOT NULL DEFAULT '',
   `save_as` varchar(255) NOT NULL DEFAULT '',
-  `descr` text,
+  `descr` text DEFAULT NULL,
   `small_descr` varchar(255) NOT NULL DEFAULT '',
-  `ori_descr` text,
-  `category` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `source` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `medium` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `codec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `standard` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `processing` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `team` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `audiocodec` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `size` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `ori_descr` text DEFAULT NULL,
+  `category` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `source` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `medium` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `codec` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `standard` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `processing` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `team` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `audiocodec` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `size` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `type` enum('single','multi') NOT NULL DEFAULT 'single',
-  `numfiles` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `comments` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `views` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `hits` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `times_completed` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `leechers` mediumint(8) NOT NULL DEFAULT '0',
-  `seeders` mediumint(8) NOT NULL DEFAULT '0',
+  `numfiles` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `comments` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `views` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `hits` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `times_completed` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `leechers` mediumint(8) NOT NULL DEFAULT 0,
+  `seeders` mediumint(8) NOT NULL DEFAULT 0,
   `last_action` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `visible` enum('yes','no') NOT NULL DEFAULT 'yes',
   `banned` enum('yes','no') NOT NULL DEFAULT 'no',
-  `owner` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `nfo` blob,
-  `sp_state` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
-  `promotion_time_type` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `owner` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `nfo` blob DEFAULT NULL,
+  `sp_state` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
+  `promotion_time_type` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `promotion_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `anonymous` enum('yes','no') NOT NULL DEFAULT 'no',
   `url` int(10) UNSIGNED DEFAULT NULL,
   `pos_state` enum('normal','sticky') NOT NULL DEFAULT 'normal',
   `pos_state_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `cache_stamp` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `cache_stamp` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `picktype` enum('hot','classic','recommended','normal','0day','IMDB','study') NOT NULL DEFAULT 'normal',
   `picktime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `sp_state_temp` enum('2up_free','2up','free','half_down','normal') NOT NULL DEFAULT 'normal',
@@ -2340,8 +2355,8 @@ CREATE TABLE `torrents` (
   `last_seed` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `sp_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `needkeepseed` enum('yes','no') NOT NULL DEFAULT 'no',
-  `seedkeeper` int(11) NOT NULL DEFAULT '0',
-  `pulling_out` int(11) DEFAULT '0',
+  `seedkeeper` int(11) NOT NULL DEFAULT 0,
+  `pulling_out` int(11) DEFAULT 0,
   `imdb_rating` varchar(5) DEFAULT NULL,
   `sale_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `bonus_sale` enum('2up_free','2x_half','2up','free','half_down','normal') NOT NULL DEFAULT 'normal',
@@ -2362,7 +2377,7 @@ CREATE TABLE `torrentsinfo` (
   `cname` varchar(255) DEFAULT NULL,
   `ename` varchar(255) DEFAULT NULL,
   `issuedate` varchar(255) DEFAULT NULL,
-  `subsinfo` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `subsinfo` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `format` varchar(255) DEFAULT NULL,
   `imdbnum` varchar(255) DEFAULT NULL,
   `specificcat` varchar(255) DEFAULT NULL,
@@ -2391,7 +2406,7 @@ CREATE TABLE `torrentsinfo` (
 --
 
 CREATE TABLE `torrents_state` (
-  `global_sp_state` tinyint(3) UNSIGNED NOT NULL DEFAULT '1'
+  `global_sp_state` tinyint(3) UNSIGNED NOT NULL DEFAULT 1
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2402,9 +2417,9 @@ CREATE TABLE `torrents_state` (
 
 CREATE TABLE `uploaders` (
   `id` int(11) NOT NULL,
-  `uid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `deleted_last` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `deleted_torrents` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `uid` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `deleted_last` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
+  `deleted_torrents` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `rate` varchar(3) NOT NULL DEFAULT 'F'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -2416,9 +2431,9 @@ CREATE TABLE `uploaders` (
 
 CREATE TABLE `uploader_autosalary` (
   `Id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `user_class` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `salary` decimal(10,1) UNSIGNED NOT NULL DEFAULT '0.0',
+  `user_id` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `user_class` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `salary` decimal(10,1) UNSIGNED NOT NULL DEFAULT 0.0,
   `salarytime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `remark` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
@@ -2442,9 +2457,9 @@ CREATE TABLE `uploadspeed` (
 
 CREATE TABLE `usercss` (
   `id` int(11) NOT NULL,
-  `userid` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` int(11) UNSIGNED NOT NULL DEFAULT 0,
   `css` text NOT NULL,
-  `time` int(11) UNSIGNED NOT NULL DEFAULT '0'
+  `time` int(11) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2470,44 +2485,44 @@ CREATE TABLE `users` (
   `last_pm` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_comment` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_post` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `last_browse` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `last_music` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `last_catchup` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `last_browse` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `last_music` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `last_catchup` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `editsecret` varbinary(20) NOT NULL,
   `privacy` enum('strong','normal','low') NOT NULL DEFAULT 'normal',
-  `stylesheet` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
-  `caticon` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `stylesheet` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
+  `caticon` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
   `fontsize` enum('small','medium','large') NOT NULL DEFAULT 'medium',
-  `info` text,
+  `info` text DEFAULT NULL,
   `acceptpms` enum('yes','friends','no') NOT NULL DEFAULT 'yes',
   `commentpm` enum('yes','no') NOT NULL DEFAULT 'yes',
   `acceptatpms` enum('yes','friends','no') NOT NULL DEFAULT 'yes',
   `ip` varchar(64) NOT NULL DEFAULT '',
-  `class` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
-  `max_class_once` tinyint(3) NOT NULL DEFAULT '1',
+  `class` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
+  `max_class_once` tinyint(3) NOT NULL DEFAULT 1,
   `avatar` varchar(256) NOT NULL DEFAULT '',
-  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `seedtime` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `leechtime` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `seedtime` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `leechtime` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `title` varchar(30) NOT NULL DEFAULT '',
   `color` varchar(6) NOT NULL DEFAULT '000000',
-  `country` smallint(5) UNSIGNED NOT NULL DEFAULT '1',
+  `country` smallint(5) UNSIGNED NOT NULL DEFAULT 1,
   `notifs` varchar(500) DEFAULT NULL,
-  `modcomment` text,
+  `modcomment` text DEFAULT NULL,
   `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
   `avatars` enum('yes','no') NOT NULL DEFAULT 'yes',
   `donor` enum('yes','no') NOT NULL DEFAULT 'no',
-  `donated` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `donated_cny` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `donated` decimal(8,2) NOT NULL DEFAULT 0.00,
+  `donated_cny` decimal(8,2) NOT NULL DEFAULT 0.00,
   `donoruntil` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `warned` enum('yes','no') NOT NULL DEFAULT 'no',
   `warneduntil` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `noad` enum('yes','no') NOT NULL DEFAULT 'no',
   `noaduntil` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `torrentsperpage` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `topicsperpage` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `postsperpage` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `torrentsperpage` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `topicsperpage` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `postsperpage` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `clicktopic` enum('firstpage','lastpage') NOT NULL DEFAULT 'firstpage',
   `deletepms` enum('yes','no') NOT NULL DEFAULT 'yes',
   `savepms` enum('yes','no') NOT NULL DEFAULT 'no',
@@ -2527,36 +2542,36 @@ CREATE TABLE `users` (
   `forumpost` enum('yes','no') NOT NULL DEFAULT 'yes',
   `forumbanuntil` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `downloadpos` enum('yes','no') NOT NULL DEFAULT 'yes',
-  `clientselect` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `clientselect` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `signatures` enum('yes','no') NOT NULL DEFAULT 'yes',
   `signature` varchar(800) NOT NULL DEFAULT '',
-  `lang` smallint(5) UNSIGNED NOT NULL DEFAULT '6',
-  `cheat` smallint(6) NOT NULL DEFAULT '0',
-  `download` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `upload` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `isp` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `invites` smallint(5) NOT NULL DEFAULT '0',
-  `invited_by` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
+  `lang` smallint(5) UNSIGNED NOT NULL DEFAULT 6,
+  `cheat` smallint(6) NOT NULL DEFAULT 0,
+  `download` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `upload` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `isp` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `invites` smallint(5) NOT NULL DEFAULT 0,
+  `invited_by` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `gender` enum('Male','Female','N/A') NOT NULL DEFAULT 'N/A',
   `vip_added` enum('yes','no') NOT NULL DEFAULT 'no',
   `vip_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `seedbonus` decimal(10,1) NOT NULL DEFAULT '0.0',
-  `charity` decimal(10,1) NOT NULL DEFAULT '0.0',
-  `bonuscomment` text,
+  `seedbonus` decimal(10,1) NOT NULL DEFAULT 0.0,
+  `charity` decimal(10,1) NOT NULL DEFAULT 0.0,
+  `bonuscomment` text DEFAULT NULL,
   `parked` enum('yes','no') NOT NULL DEFAULT 'no',
   `leechwarn` enum('yes','no') NOT NULL DEFAULT 'no',
   `leechwarnuntil` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `lastwarned` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `timeswarned` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `warnedby` mediumint(8) UNSIGNED NOT NULL DEFAULT '0',
-  `sbnum` smallint(5) UNSIGNED NOT NULL DEFAULT '70',
-  `sbrefresh` smallint(5) UNSIGNED NOT NULL DEFAULT '120',
+  `timeswarned` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `warnedby` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `sbnum` smallint(5) UNSIGNED NOT NULL DEFAULT 70,
+  `sbrefresh` smallint(5) UNSIGNED NOT NULL DEFAULT 120,
   `hidehb` enum('yes','no') DEFAULT 'no',
   `showimdb` enum('yes','no') DEFAULT 'yes',
   `showdescription` enum('yes','no') DEFAULT 'yes',
   `showcomment` enum('yes','no') DEFAULT 'yes',
   `showclienterror` enum('yes','no') NOT NULL DEFAULT 'no',
-  `showdlnotice` tinyint(1) NOT NULL DEFAULT '1',
+  `showdlnotice` tinyint(1) NOT NULL DEFAULT 1,
   `tooltip` enum('minorimdb','medianimdb','off') NOT NULL DEFAULT 'off',
   `shownfo` enum('yes','no') DEFAULT 'yes',
   `timetype` enum('timeadded','timealive') DEFAULT 'timealive',
@@ -2570,18 +2585,18 @@ CREATE TABLE `users` (
   `showcomnum` enum('yes','no') DEFAULT 'yes',
   `showlastcom` enum('yes','no') DEFAULT 'no',
   `showlastpost` enum('yes','no') NOT NULL DEFAULT 'no',
-  `pmnum` tinyint(3) UNSIGNED NOT NULL DEFAULT '10',
-  `school` smallint(5) UNSIGNED NOT NULL DEFAULT '35',
+  `pmnum` tinyint(3) UNSIGNED NOT NULL DEFAULT 10,
+  `school` smallint(5) UNSIGNED NOT NULL DEFAULT 35,
   `showfb` enum('yes','no') NOT NULL DEFAULT 'yes',
-  `bjlosses` int(10) NOT NULL DEFAULT '0',
-  `bjwins` int(10) NOT NULL DEFAULT '0',
-  `answer` smallint(2) UNSIGNED NOT NULL DEFAULT '0',
-  `renamenum` smallint(6) UNSIGNED NOT NULL DEFAULT '0',
-  `classtype` tinyint(2) DEFAULT '4',
+  `bjlosses` int(10) NOT NULL DEFAULT 0,
+  `bjwins` int(10) NOT NULL DEFAULT 0,
+  `answer` smallint(2) UNSIGNED NOT NULL DEFAULT 0,
+  `renamenum` smallint(6) UNSIGNED NOT NULL DEFAULT 0,
+  `classtype` tinyint(2) DEFAULT 4,
   `width` enum('wide','narrow') NOT NULL DEFAULT 'wide',
   `jc_manager` enum('yes','no') NOT NULL DEFAULT 'no',
   `enablepublic4` enum('yes','no') NOT NULL DEFAULT 'no',
-  `qq` bigint(15) UNSIGNED DEFAULT NULL
+  `qq` int(15) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -3123,6 +3138,12 @@ ALTER TABLE `jc_record`
 --
 ALTER TABLE `jc_subjects`
   ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `jc_sub_users`
+--
+ALTER TABLE `jc_sub_users`
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- 表的索引 `keepseed`
