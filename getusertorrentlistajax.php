@@ -190,6 +190,9 @@ switch ($type) {
 			$count = mysql_num_rows ( $res );
 			if ($count > 0) {
 				$torrentlist = maketable ( $res, 'uploaded' );
+                $total_size = 0;
+                while ($arr = mysql_fetch_assoc($res))
+                    $total_size += $arr['size'];
 			}
 			break;
 		}
@@ -201,6 +204,9 @@ switch ($type) {
 			$count = mysql_num_rows ( $res );
 			if ($count > 0) {
 				$torrentlist = maketable ( $res, 'seeding' );
+				$total_size = 0;
+                while ($arr = mysql_fetch_assoc($res))
+                    $total_size += $arr['size'];
 			}
 			break;
 		}
@@ -212,6 +218,9 @@ switch ($type) {
 			$count = mysql_num_rows ( $res );
 			if ($count > 0) {
 				$torrentlist = maketable ( $res, 'leeching' );
+				$total_size = 0;
+                while ($arr = mysql_fetch_assoc($res))
+                    $total_size += $arr['size'];
 			}
 			break;
 		}
@@ -245,7 +254,9 @@ switch ($type) {
 		}
 }
 
-if ($count)
+if ($total_size)
+    echo "<b>" . $count . "</b>" . $lang_getusertorrentlistajax ['text_record'] . add_s ( $count ) . $lang_getusertorrentlistajax['text_total_size'] . mksize($total_size) . "<br />" . $torrentlist;
+else if ($count)
 	echo "<b>" . $count . "</b>" . $lang_getusertorrentlistajax ['text_record'] . add_s ( $count ) . "<br />" . $torrentlist;
 else
 	echo $lang_getusertorrentlistajax ['text_no_record'];
