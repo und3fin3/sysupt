@@ -42,7 +42,7 @@ switch ($_POST['action'])
 				break;
 			}
 			sql_query("UPDATE torrents SET needkeepseed = 'yes' WHERE id =".$_POST['torrentid']);
-            write_log("管理员 " . $CURUSER['username'] . " 将资源　" . $arr['id'] . " " . $arr['name'] . " 设置为需要保种");
+            write_log("管理员 " . $CURUSER['username'] . " 将资源 " . $arr['id'] . " " . $arr['name'] . " 设置为需要保种");
 			stdmsg("成功","已经成功将该种子设置为需要保种。<a href=\"details.php?id=".$_POST['torrentid']."&hit=1\">点击这里返回种子介绍页</a>");
 			break;
 		}
@@ -61,7 +61,7 @@ switch ($_POST['action'])
 			}
 			sql_query("UPDATE torrents SET needkeepseed = 'no' , seedkeeper=0 WHERE id =".$_POST['torrentid']);
 			sql_query("DELETE FROM keepseed where torrentid =".$_POST['torrentid']);
-            write_log("管理员 " . $CURUSER['username'] . " 将资源　" . $arr['id'] . " " . $arr['name'] . " 设置为不需要保种");
+            write_log("管理员 " . $CURUSER['username'] . " 将资源 " . $arr['id'] . " " . $arr['name'] . " 设置为不需要保种");
 			stdmsg("成功","已经成功取消对该种子的保种需求。<a href=\"details.php?id=".$_POST['torrentid']."&hit=1\">点击这里返回种子介绍页</a>");
 			break;
 		}
