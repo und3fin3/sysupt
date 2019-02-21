@@ -61,7 +61,7 @@ if (strlen ( $passkey ) != 32)
 	err ( "001-错误的passkey( $passkey )! 请从" . $BASEURL . "重新下载torrent文件" );
 
 if (!$az = $Cache->get_value('user_passkey_' . $passkey . '_content')) {
-    $res = sql_query("SELECT id, username, downloadpos, enabled, uploaded, downloaded, class, parked, clientselect, showclienterror, enablepublic4 FROM users WHERE passkey='" . mysql_real_escape_string($passkey) . "' LIMIT 1");
+    $res = sql_query("SELECT id, username, downloadpos, enabled, uploaded, downloaded, class, parked, clientselect, showclienterror, enablepublic4, showtjuipnotice FROM users WHERE passkey='" . mysql_real_escape_string($passkey) . "' LIMIT 1");
     $az = mysql_fetch_array($res);
     $Cache->cache_value('user_passkey_' . $passkey . '_content', $az, 950);
 }
@@ -152,6 +152,9 @@ if ($_SERVER['HTTP_HOST'] == 'pttracker4.tjupt.org') {
         err("403-您未允许Tracker服务器向您提供公网IPv4地址，如需要请前往控制面板修改");
     }
     unset($ipv6);
+
+    if (check_tjuip($nip) && $az['showtjuipnotice'] == 'no')
+        sql_query("UPDATE users SET showtjuipnotice = 'yes' WHERE id = " . sqlesc($az['id']));
 }
 
 // This is a validated IPv6 address

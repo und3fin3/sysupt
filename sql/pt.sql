@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2019-02-11 12:24:21
+-- 生成日期： 2019-02-21 16:23:15
 -- 服务器版本： 10.3.12-MariaDB-log
 -- PHP 版本： 7.3.1
 
@@ -2572,6 +2572,7 @@ CREATE TABLE `users` (
   `showcomment` enum('yes','no') DEFAULT 'yes',
   `showclienterror` enum('yes','no') NOT NULL DEFAULT 'no',
   `showdlnotice` tinyint(1) NOT NULL DEFAULT 1,
+  `showtjuipnotice` enum('yes','no','never') NOT NULL DEFAULT 'no',
   `tooltip` enum('minorimdb','medianimdb','off') NOT NULL DEFAULT 'off',
   `shownfo` enum('yes','no') DEFAULT 'yes',
   `timetype` enum('timeadded','timealive') DEFAULT 'timealive',

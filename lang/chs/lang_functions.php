@@ -329,7 +329,8 @@ $lang_functions = array
     'no/no/-' => "<font color='red'><i class='fa fa-close'></i>校内IPv4</font>&nbsp;&nbsp;<font color='red'><i class='fa fa-close'></i>IPv6</font>&nbsp;&nbsp;<font color='#ff9000'><i class='fa fa-question'></i>校外IPv4</font>",
     'no/no/no' => "<font color='red'><i class='fa fa-close'></i>校内IPv4</font>&nbsp;&nbsp;<font color='red'><i class='fa fa-close'></i>IPv6</font>&nbsp;&nbsp;<font color='red'><i class='fa fa-close'></i>校外IPv4</font>",
 	'text_exclusive' => "<font color='red'> [禁转] </font>",
-	'text_tjuptrip' => "<font color='#ff8c00'> [TJUPT小组] </font>"
+	'text_tjuptrip' => "<font color='#ff8c00'> [TJUPT小组] </font>",
+	'text_pub4_notice' => "校园网环境下请及时关闭“离校模式”，避免校园网流量损失"
 	);
 
 ?>

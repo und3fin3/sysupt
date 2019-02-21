@@ -159,7 +159,14 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	if ($printProgress) {
 		printProgress ( "更新幸运抽奖开奖" );
 	}
-	
+
+
+    sql_query("UPDATE users SET showtjuipnotice = 'no' WHERE showtjuipnotice = 'yes' AND enablepublic4 = 'no'") or sqlerr(__FILE__, __LINE__);
+
+    if ($printProgress) {
+        printProgress("取消离校模式提醒");
+    }
+
 	// Priority Class 3: cleanup every 60 mins
 	$res = sql_query ( "SELECT value_u FROM avps WHERE arg = 'lastcleantime3'" );
 	$row = mysql_fetch_array ( $res );

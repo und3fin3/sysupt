@@ -3309,6 +3309,10 @@ if (false) {
 				$text = $lang_functions ['text_you_have'] . $unread . $lang_functions ['text_new_message'] . add_s ( $unread ) . $lang_functions ['text_click_here_to_read'];
 				msgalert ( "messages.php", $text, "red" );
 			}
+
+			if ($CURUSER['showtjuipnotice'] == 'yes') {
+                msgalert("forums.php?action=viewtopic&topicid=15712", $lang_functions['text_pub4_notice'], "orange");
+            }
 			/*
 			 * $pending_invitee =
 			 * $Cache->get_value('user_'.$CURUSER["id"].'_pending_invitee_count');
