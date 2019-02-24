@@ -2916,6 +2916,7 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
 	$css_uri = get_css_uri ();
 	$cssupdatedate = ($cssupdatedate ? "?" . htmlspecialchars ( $cssupdatedate ) : "");
 	?>
+    <meta name="referrer" content="same-origin" />
 <title><?php echo $title?></title>
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 <link rel="search" type="application/opensearchdescription+xml"
