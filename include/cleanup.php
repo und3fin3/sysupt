@@ -401,7 +401,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	
 	// **********************************add by because move to class 3
 	// *************************
-	// delete inactive user accounts, no transfer. Alt. 1: last access time
+	// ban inactive user accounts, no transfer. Alt. 1: last access time
 	$neverdelete_account = ($neverdelete_account <= UC_VIP ? $neverdelete_account : UC_VIP);
 	if ($deletenotransfer_account) {
 		$secs = $deletenotransfer_account * 24 * 60 * 60;
@@ -409,25 +409,25 @@ function docleanup($forceAll = 0, $printProgress = false) {
 		$maxclass = $neverdelete_account;
 		$res = sql_query ( "SELECT * FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
 		while ( $arr = mysql_fetch_assoc ( $res ) )
-			write_log ( "系统删除了帐号 $arr[id] ($arr[username]) (无流量帐号连续" . $deletenotransfer_account . "天未登录)", 'normal' );
-		sql_query ( "DELETE FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
+			write_log ( "系统禁用了帐号 $arr[id] ($arr[username]) (无流量帐号连续" . $deletenotransfer_account . "天未登录)", 'normal' );
+		sql_query ( "UPDATE users SET enabled = 'no' WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
 	}
 	if ($printProgress) {
-		printProgress ( "删除无流量且连续N天不登录的帐号" );
+		printProgress ( "禁用无流量且连续N天不登录的帐号" );
 	}
 	
-	// delete inactive user accounts, no transfer. Alt. 2: registering time
+	// ban inactive user accounts, no transfer. Alt. 2: registering time
 	if ($deletenotransfertwo_account) {
 		$secs = $deletenotransfertwo_account * 24 * 60 * 60;
 		$dt = sqlesc ( date ( "Y-m-d H:i:s", (TIMENOW - $secs) ) );
 		$maxclass = $neverdelete_account;
 		$res = sql_query ( "SELECT * FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND added < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
 		while ( $arr = mysql_fetch_assoc ( $res ) )
-			write_log ( "系统删除了帐号 $arr[id] ($arr[username]) (注册" . $deletenotransfertwo_account . "天后依然无流量的帐号)", 'normal' );
-		sql_query ( "DELETE FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND added < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
+			write_log ( "系统禁用了帐号 $arr[id] ($arr[username]) (注册" . $deletenotransfertwo_account . "天后依然无流量的帐号)", 'normal' );
+		sql_query ( "UPDATE users SET enabled = 'no' WHERE parked='no' AND status='confirmed' AND class < $maxclass AND added < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
 	}
 	if ($printProgress) {
-		printProgress ( "删除注册N天依旧无流量的帐号" );
+		printProgress ( "禁用注册N天依旧无流量的帐号" );
 	}
 /*
 	// delete accounts disabled for 50 days
@@ -799,17 +799,18 @@ function docleanup($forceAll = 0, $printProgress = false) {
 	if ($printProgress) {
 		printProgress ( "删除过期验证码" );
 	}
-	
-			// 扣除被禁用户的魔力值
-	if ($deleteunpacked_account) {
-		$res = sql_query ( "SELECT * FROM users WHERE enabled='no' AND seedbonus<0" ) or sqlerr ( __FILE__, __LINE__ );
-			while ( $arr = mysql_fetch_assoc ( $res ) )
-			write_log ( "系统删除了帐号 $arr[id] ($arr[username]) (被禁用帐号魔力值小于0)", 'normal' );
-		sql_query ( "DELETE FROM users WHERE enabled='no' AND seedbonus<=0" ) or sqlerr ( __FILE__, __LINE__ );
-		sql_query ( "UPDATE users SET seedbonus = seedbonus - 200 WHERE enabled='no' AND seedbonus>0" ) or sqlerr ( __FILE__, __LINE__ );
-	}
+
+	// 扣除被禁用户的魔力值
+	// if ($deleteunpacked_account) {
+	// 	$res = sql_query ( "SELECT * FROM users WHERE enabled='no' AND seedbonus<0" ) or sqlerr ( __FILE__, __LINE__ );
+	// 		while ( $arr = mysql_fetch_assoc ( $res ) )
+	// 		write_log ( "系统删除了帐号 $arr[id] ($arr[username]) (被禁用帐号魔力值小于0)", 'normal' );
+	// 	sql_query ( "DELETE FROM users WHERE enabled='no' AND seedbonus<=0" ) or sqlerr ( __FILE__, __LINE__ );
+    sql_query ( "UPDATE users SET seedbonus = seedbonus - 100 WHERE enabled='no' AND seedbonus >= 100" ) or sqlerr ( __FILE__, __LINE__ );
+    sql_query ( "UPDATE users SET seedbonus = 0 WHERE enabled='no' AND seedbonus < 100" ) or sqlerr ( __FILE__, __LINE__ );
+    // }
 	if ($printProgress) {
-		printProgress ( "删除被禁用且魔力值小于0的帐号" );
+		printProgress ( "扣除被禁用户的魔力值" );
 	}
 	
 	// 10.clean up user accounts
