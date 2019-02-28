@@ -407,7 +407,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 		$secs = $deletenotransfer_account * 24 * 60 * 60;
 		$dt = sqlesc ( date ( "Y-m-d H:i:s", (TIMENOW - $secs) ) );
 		$maxclass = $neverdelete_account;
-		$res = sql_query ( "SELECT * FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
+		$res = sql_query ( "SELECT * FROM users WHERE enabled = 'yes' AND parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
 		while ( $arr = mysql_fetch_assoc ( $res ) )
 			write_log ( "系统禁用了帐号 $arr[id] ($arr[username]) (无流量帐号连续" . $deletenotransfer_account . "天未登录)", 'normal' );
 		sql_query ( "UPDATE users SET enabled = 'no' WHERE parked='no' AND status='confirmed' AND class < $maxclass AND last_access < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
@@ -421,7 +421,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 		$secs = $deletenotransfertwo_account * 24 * 60 * 60;
 		$dt = sqlesc ( date ( "Y-m-d H:i:s", (TIMENOW - $secs) ) );
 		$maxclass = $neverdelete_account;
-		$res = sql_query ( "SELECT * FROM users WHERE parked='no' AND status='confirmed' AND class < $maxclass AND added < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
+		$res = sql_query ( "SELECT * FROM users WHERE enabled = 'yes' AND parked='no' AND status='confirmed' AND class < $maxclass AND added < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
 		while ( $arr = mysql_fetch_assoc ( $res ) )
 			write_log ( "系统禁用了帐号 $arr[id] ($arr[username]) (注册" . $deletenotransfertwo_account . "天后依然无流量的帐号)", 'normal' );
 		sql_query ( "UPDATE users SET enabled = 'no' WHERE parked='no' AND status='confirmed' AND class < $maxclass AND added < $dt AND (uploaded = 0 || uploaded = " . sqlesc ( $iniupload_main ) . ") AND downloaded = 0" ) or sqlerr ( __FILE__, __LINE__ );
@@ -452,7 +452,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 		$dt = sqlesc ( date ( "Y-m-d H:i:s", (TIMENOW - $secs) ) );
 		$maxclass = $neverdelete_account;
 		
-		$res = sql_query ( "SELECT * FROM users WHERE parked='no' AND status='confirmed' AND enabled = 'yes' AND class < $maxclass AND last_access < $dt" ) or sqlerr ( __FILE__, __LINE__ );
+		$res = sql_query ( "SELECT * FROM users WHERE enabled = 'yes' AND parked='no' AND status='confirmed' AND enabled = 'yes' AND class < $maxclass AND last_access < $dt" ) or sqlerr ( __FILE__, __LINE__ );
 		while ( $arr = mysql_fetch_assoc ( $res ) ){
 			write_log ( "系统禁用了帐号 $arr[id] ($arr[username]) (未封存帐号" . $deleteunpacked_account . "天内未登录)", 'normal' );
 			writecomment ( $arr ['id'], "被禁用——未封存帐号" . $deleteunpacked_account . "天内未登录." );
@@ -469,7 +469,7 @@ function docleanup($forceAll = 0, $printProgress = false) {
 		$secs = $deletepacked_account * 24 * 60 * 60;
 		$dt = sqlesc ( date ( "Y-m-d H:i:s", (TIMENOW - $secs) ) );
 		$maxclass = $neverdeletepacked_account;
-		$res = sql_query ( "SELECT * FROM users WHERE parked='yes' AND status='confirmed' AND enabled = 'yes' AND class < $maxclass AND last_access < $dt" ) or sqlerr ( __FILE__, __LINE__ );
+		$res = sql_query ( "SELECT * FROM users WHERE enabled = 'yes' AND parked='yes' AND status='confirmed' AND enabled = 'yes' AND class < $maxclass AND last_access < $dt" ) or sqlerr ( __FILE__, __LINE__ );
 		while ( $arr = mysql_fetch_assoc ( $res ) ){
 			write_log ( "系统禁用了帐号 $arr[id] ($arr[username]) (已封存帐号" . $deletepacked_account . "天内未登录)", 'normal' );
 			sql_query ( "UPDATE users SET enabled = 'no' WHERE id = $arr[id]" ) or sqlerr ( __FILE__, __LINE__ );
