@@ -212,8 +212,8 @@ if (! $action) {
 		} elseif ($i == 13) { // for Rename!
 			print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "<br /><br />" . "<b>请输入新的" . $lang_mybonus ['text_username'] . "</b><input type=\"text\" name=\"newusername\" style=\"width: 200px\" maxlength=\"30\" /></td><td class=\"rowfollow\" align='center'>" . number_format ( $bonusarray ['points'] ) . "</td>") ;
 		} elseif ($i == 7) { // for Give A Karma Gift
-			$otheroption = "<table width=\"100%\"><tr><td class=\"embedded\"><b>" . $lang_mybonus ['text_username'] . "</b><input type=\"text\" name=\"username\" style=\"width: 200px\" maxlength=\"24\" /></td><td class=\"embedded\"><b>" . $lang_mybonus ['text_to_be_given'] . "</b><select name=\"bonusgift\" id=\"giftselect\" onchange=\"customgift();\"> <option value=\"25\"> 25</option><option value=\"50\"> 50</option><option value=\"100\"> 100</option> <option value=\"200\"> 200</option> <option value=\"300\"> 300</option> <option value=\"400\"> 400</option><option value=\"500\"> 500</option><option value=\"1000\" selected=\"selected\"> 1,000</option><option value=\"5000\"> 5,000</option><option value=\"10000\"> 10,000</option><option value=\"0\">" . $lang_mybonus ['text_custom'] . "</option></select><input type=\"text\" name=\"bonusgift\" id=\"giftcustom\" style='width: 80px' disabled=\"disabled\" />" . $lang_mybonus ['text_karma_points'] . "</td></tr><tr><td class=\"embedded\" colspan=\"2\"><b>" . $lang_mybonus ['text_message'] . "</b><input type=\"text\" name=\"message\" style=\"width: 400px\" maxlength=\"100\" /></td></tr></table>";
-			print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "<br /><br />" . $lang_mybonus ['text_enter_receiver_name'] . "<br />$otheroption</td><td class=\"rowfollow nowrap\" align='center'>" . $lang_mybonus ['text_min'] . "25<br />" . $lang_mybonus ['text_max'] . "10,000</td>") ;
+			$otheroption = "<table width=\"100%\"><tr><td class=\"embedded\"><b>" . $lang_mybonus ['text_username'] . "</b><input type=\"text\" name=\"username\" style=\"width: 200px\" maxlength=\"24\" /></td><td class=\"embedded\"><b>" . $lang_mybonus ['text_to_be_given'] . "</b><select name=\"bonusgift\" id=\"giftselect\" onchange=\"customgift();\"> <option value=\"25\"> 25</option><option value=\"50\"> 50</option><option value=\"100\"> 100</option> <option value=\"200\"> 200</option> <option value=\"300\"> 300</option> <option value=\"400\"> 400</option><option value=\"500\"> 500</option><option value=\"1000\" selected=\"selected\"> 1,000</option><option value=\"5000\"> 5,000</option><option value=\"10000\"> 10,000</option><option value=\"20000\"> 20,000</option><option value=\"50000\"> 50,000</option><option value=\"0\">" . $lang_mybonus ['text_custom'] . "</option></select><input type=\"text\" name=\"bonusgift\" id=\"giftcustom\" style='width: 80px' disabled=\"disabled\" />" . $lang_mybonus ['text_karma_points'] . "</td></tr><tr><td class=\"embedded\" colspan=\"2\"><b>" . $lang_mybonus ['text_message'] . "</b><input type=\"text\" name=\"message\" style=\"width: 400px\" maxlength=\"100\" /></td></tr></table>";
+			print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "<br /><br />" . $lang_mybonus ['text_enter_receiver_name'] . "<br />$otheroption</td><td class=\"rowfollow nowrap\" align='center'>" . $lang_mybonus ['text_min'] . "25<br />" . $lang_mybonus ['text_max'] . "50,000</td>") ;
 		} elseif ($i == 9) { // charity giving
 			$otheroption = "<table width=\"100%\"><tr><td class=\"embedded\">" . $lang_mybonus ['text_ratio_below'] . "<select name=\"ratiocharity\"> <option value=\"0.1\"> 0.1</option><option value=\"0.2\"> 0.2</option><option value=\"0.3\" selected=\"selected\"> 0.3</option> <option value=\"0.4\"> 0.4</option> <option value=\"0.5\"> 0.5</option> <option value=\"0.6\"> 0.6</option><option value=\"0.7\"> 0.7</option><option value=\"0.8\"> 0.8</option></select>" . $lang_mybonus ['text_and_downloaded_above'] . " 10 GB</td><td class=\"embedded\"><b>" . $lang_mybonus ['text_to_be_given'] . "</b><select name=\"bonuscharity\" id=\"charityselect\" > <option value=\"1000\"> 1,000</option><option value=\"2000\"> 2,000</option><option value=\"3000\" selected=\"selected\"> 3000</option> <option value=\"5000\"> 5,000</option> <option value=\"8000\"> 8,000</option> <option value=\"10000\"> 10,000</option><option value=\"20000\"> 20,000</option><option value=\"50000\"> 50,000</option></select>" . $lang_mybonus ['text_karma_points'] . "</td></tr></table>";
 			print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "<br /><br />" . $lang_mybonus ['text_select_receiver_ratio'] . "<br />$otheroption</td><td class=\"rowfollow nowrap\" align='center'>" . $lang_mybonus ['text_min'] . "1,000<br />" . $lang_mybonus ['text_max'] . "50,000</td>") ;
@@ -466,12 +466,15 @@ if ($action == "exchange") {
 				die ();
 		}
 		stdmsg ( "确认操作", "<form action=\"?action=exchange\" method=\"post\"><input type=\"hidden\" name=\"option\" value=" . $option . " />" . $confirm . "<br />请输入你的密码确认上述操作：<input type=password name=passwd /><input type=submit value=\"确定\"> &nbsp;<input type=button value=\"返回\" onclick=\"location.href='javascript:history.go(-1)'\" /></form>", 0 );
+		stdfoot();
 		die ();
 	} elseif ($CURUSER ["passhash"] != md5 ( $CURUSER ["secret"] . $_POST ['passwd'] . $CURUSER ["secret"] )) {
 		stdmsg ( "出错了！", "密码不正确<input type=button value=\"返回上一页\" onclick=\"location.href='javascript:history.go(-1)'\" />", 0 );
+		stdfoot();
 		die ();
 	} elseif (($option == 4 || $option == 10 || $option == 11) && $_POST ['ori_points'] != $bonusarray ['points']) {
 		stdmsg ( "兑换价格有变化", "由于物价变动，当前价格产生了变化。新的价格是 " . $bonusarray ['points'] . " 个魔力值。<form action=\"?action=exchange\" method=\"post\"><input type=hidden name=ori_points value=\"" . $bonusarray ['points'] . "\"><input type=\"hidden\" name=\"option\" value=" . $option . " />" . ($option == 10 ? "<input type=hidden name=username value=\"" . $_POST ['username'] . "\" />" : "") . "<br /><input type=hidden name=passwd value=\"" . $_POST ["passwd"] . "\" /><input type=submit value=\"继续兑换\"> &nbsp;<input type=button value=\"取消兑换\" onclick=\"location.href='mybonus.php'\" /></form>", 0 );
+		stdfoot();
 		die ();
 	} else if ($CURUSER ['seedbonus'] >= $points) {
 		// === trade for upload
@@ -491,6 +494,7 @@ if ($action == "exchange") {
 				$bonuscomment = date ( "Y-m-d" ) . " 使用 " . $points . " 个魔力值兑换上传。\n" . $bonuscomment;
 				sql_query ( "UPDATE users SET uploaded = " . sqlesc ( $up ) . ", seedbonus = seedbonus - $points, bonuscomment = " . sqlesc ( $bonuscomment ) . " WHERE id = " . sqlesc ( $userid ) ) or sqlerr ( __FILE__, __LINE__ );
 				stdmsg ( $lang_mybonus ['successful'], $lang_mybonus ['text_success_upload'] );
+				stdfoot();
 			}
 		} 		// === trade for one month VIP status ***note "SET class = '10'" change
 		  // "10" to whatever your VIP class number is
@@ -505,6 +509,7 @@ if ($action == "exchange") {
 			sql_query ( "UPDATE users SET class = '" . UC_VIP . "', vip_added = 'yes', vip_until = " . sqlesc ( $vip_until ) . ", seedbonus = seedbonus - $points, bonuscomment = " . sqlesc ( $bonuscomment ) . " WHERE id = " . sqlesc ( $userid ) ) or sqlerr ( __FILE__, __LINE__ );
 			$msg = $lang_mybonus ['text_success_vip'] . "<b>" . get_user_class_name ( UC_VIP, false, false, true ) . "</b>" . $lang_mybonus ['text_success_vip_two'];
 			stdmsg ( $lang_mybonus ['successful'], $msg );
+			stdfoot();
 		} 		// === trade for invites
 		elseif ($art == "invite") {
 			if (get_user_class () < $buyinvite_class)
@@ -514,6 +519,7 @@ if ($action == "exchange") {
 			$bonuscomment = date ( "Y-m-d" ) . " 使用 " . $points . " 购买了一个邀请名额。\n" . htmlspecialchars ( $bonuscomment );
 			sql_query ( "UPDATE users SET invites = " . sqlesc ( $inv ) . ", seedbonus = seedbonus - $points, bonuscomment = " . sqlesc ( $bonuscomment ) . " WHERE id = " . sqlesc ( $userid ) ) or sqlerr ( __FILE__, __LINE__ );
 			stdmsg ( $lang_mybonus ['successful'], $lang_mybonus ['text_success_invites'] );
+			stdfoot();
 		} elseif ($art == "invite_for_sale") {
 			if ($CURUSER ["invites"] < 1)
 				die ( "您没有可以用于售卖的邀请资格！" );
@@ -524,6 +530,7 @@ if ($action == "exchange") {
 			$bonuscomment = date ( "Y-m-d" ) . " 通过出售一个邀请名额获得了 " . - $points . "个魔力值。\n" . htmlspecialchars ( $bonuscomment );
 			sql_query ( "UPDATE users SET invites = " . sqlesc ( $inv ) . ", seedbonus = seedbonus - $points, bonuscomment = " . sqlesc ( $bonuscomment ) . " WHERE id = " . sqlesc ( $userid ) ) or sqlerr ( __FILE__, __LINE__ );
 			stdmsg ( $lang_mybonus ['successful'], "祝贺你，你成功售出了<b>1</b>个邀请名额！" );
+			stdfoot();
 		} 		// === trade for enableaccount
 		elseif ($art == "enableaccount") {
 			$usernameenable = sqlesc ( trim ( $_POST ["username"] ) );
@@ -555,6 +562,7 @@ if ($action == "exchange") {
 			
 			sql_query ( "UPDATE users SET seedbonus = seedbonus - $points, bonuscomment = " . sqlesc ( $bonuscomment ) . " WHERE id = " . sqlesc ( $userid ) ) or sqlerr ( __FILE__, __LINE__ );
 			stdmsg ( $lang_mybonus ['successful'], $lang_mybonus ['text_account'] . $usernameenable . $lang_mybonus ['text_success_enable_account'] );
+			stdfoot();
 		} 		// === trade for special title
 		/**
 		 * ** the $words array are words that you DO NOT want the user to
@@ -580,6 +588,7 @@ if ($action == "exchange") {
 			sql_query ( "UPDATE users SET title = $title, seedbonus = seedbonus - $points, bonuscomment = " . sqlesc ( $bonuscomment ) . " WHERE id = " . sqlesc ( $userid ) ) or sqlerr ( __FILE__, __LINE__ );
 			$Cache->delete_value ( 'user_' . $userid . '_title' );
 			stdmsg ( $lang_mybonus ['successful'], $lang_mybonus ['text_success_custom_title1'] . $title . $lang_mybonus ['text_success_custom_title2'] );
+			stdfoot();
 		} elseif ($art == "custom_color") {
 			// ===custom color
 			$color = $_POST ["color"];
@@ -587,6 +596,7 @@ if ($action == "exchange") {
 			sql_query ( "UPDATE users SET color = \"" . $color . "\", seedbonus = seedbonus - $points, bonuscomment = " . sqlesc ( $bonuscomment ) . " WHERE id = " . sqlesc ( $userid ) ) or sqlerr ( __FILE__, __LINE__ );
 			$Cache->delete_value ( 'user_' . $userid . '_color' );
 			stdmsg ( $lang_mybonus ['successful'], $lang_mybonus ['text_success_custom_color'] );
+			stdfoot();
 		} elseif ($art == "rename") {
 			// ===rename
 			$newusername = trim ( $_POST ["newusername"] );
@@ -625,6 +635,7 @@ if ($action == "exchange") {
 			sql_query ( "UPDATE users SET username = " . $newusername . ", seedbonus = seedbonus - $points, bonuscomment = " . sqlesc ( $bonuscomment ) . ", renamenum = renamenum + 1 WHERE id = " . sqlesc ( $userid ) ) or sqlerr ( __FILE__, __LINE__ );
 			$Cache->delete_value ( 'user_' . $userid . '_content' );
 			stdmsg ( $lang_mybonus ['successful'], '你成功将ID的用户名改为 <b>' . trim ( $_POST ["newusername"] ) . '</b> ！' );
+			stdfoot();
 			sql_query ( "INSERT INTO app_rename (userid, oldname, newname, timerename, paybonus) VALUES (" . sqlesc ( $CURUSER ['id'] ) . ", " . sqlesc ( htmlspecialchars ( trim ( $CURUSER ["username"] ) ) ) . ", " . sqlesc ( htmlspecialchars ( trim ( $_POST ["newusername"] ) ) ) . ", " . sqlesc ( date ( "Y-m-d H:i:s" ) ) . ", " . sqlesc ( $points ) . ")" ) or sqlerr ( __FILE__, __LINE__ );
 		} elseif ($art == "noad" && $enablead_advertisement == 'yes' && $enablebonusnoad_advertisement == 'yes') {
 			if (($enablenoad_advertisement == 'yes' && get_user_class () >= $noad_advertisement) || strtotime ( $CURUSER ['noaduntil'] ) >= TIMENOW || get_user_class () < $bonusnoad_advertisement)
@@ -634,6 +645,7 @@ if ($action == "exchange") {
 				$bonuscomment = date ( "Y-m-d" ) . " 花费 " . $points . " 兑换 " . $bonusnoadtime_advertisement . " 天不显示广告资格。\n" . htmlspecialchars ( $bonuscomment );
 				sql_query ( "UPDATE users SET noad='yes', noaduntil='" . $noaduntil . "', seedbonus = seedbonus - $points, bonuscomment = " . sqlesc ( $bonuscomment ) . " WHERE id=" . sqlesc ( $userid ) );
 				stdmsg ( $lang_mybonus ['successful'], $lang_mybonus ['text_success_no_ad'] );
+				stdfoot();
 			}
 		} elseif ($art == 'gift_2') 		// charity giving
 		{
@@ -657,7 +669,8 @@ if ($action == "exchange") {
 					sql_query ( "UPDATE users SET seedbonus = seedbonus - $points, charity = charity + $points, bonuscomment = " . sqlesc ( $bonuscomment ) . " WHERE id = " . sqlesc ( $userid ) ) or sqlerr ( __FILE__, __LINE__ );
 					$charityPerUser = $points / $charityReceiverCount;
 					sql_query ( "UPDATE users SET seedbonus = seedbonus + $charityPerUser WHERE enabled='yes' AND 10737418240 < downloaded AND $ratiocharity > uploaded/downloaded" ) or sqlerr ( __FILE__, __LINE__ );
-					stdmsg ( $lang_mybonus ['successful'], $lang_mybonus ['text_success_charity'] );
+					stdmsg( $lang_mybonus ['successful'], $lang_mybonus ['text_success_charity'] );
+					stdfoot();
 				} else {
 					stdmsg ( $lang_mybonus ['std_sorry'], $lang_mybonus ['std_no_users_need_charity'] );
 					stdfoot ();
@@ -675,7 +688,7 @@ if ($action == "exchange") {
 			$useridgift = $arr ['id'];
 			$userseedbonus = $arr ['seedbonus'];
 			$receiverbonuscomment = $arr ['bonuscomment'];
-			if ($points < 25 || $points > 10000) {
+			if ($points < 25 || $points > 50000) {
 				// write_log("User " . $CURUSER["username"] . "," .
 				// $CURUSER["ip"] . " is hacking bonus system",'mod');
 				stdmsg ( $lang_mybonus ['text_error'], $lang_mybonus ['bonus_amount_not_allowed'] );
@@ -724,6 +737,7 @@ if ($action == "exchange") {
 				sql_query ( "INSERT INTO messages (sender, subject, receiver, msg, added) VALUES(0, $subject, $useridgift, $msg, $added)" ) or sqlerr ( __FILE__, __LINE__ );
 				$usernamegift = unesc ( $_POST ["username"] );
 				stdmsg ( $lang_mybonus ['successful'], $lang_mybonus ['text_success_gift'] );
+				stdfoot();
 			} else {
 				print ("<table width=\"940\"><tr><td class=\"colhead\" align=\"left\" colspan=\"2\"><h1>" . $lang_mybonus ['text_oups'] . "</h1></td></tr>") ;
 				print ("<tr><td align=\"left\"></td><td align=\"left\">" . $lang_mybonus ['text_not_enough_karma'] . "<br /><br /></td></tr></table>") ;
