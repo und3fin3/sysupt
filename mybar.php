@@ -51,50 +51,53 @@ if (! $my_img = unserialize ( $Cache->get_value ( 'userbar_' . $_SERVER ['REQUES
 	imagealphablending ( $my_img, true );
 	// imageantialias($my_img, true);
 	// putenv('GDFONTPATH=' . realpath('pic/userbar/'));
-	$im = imagecreatetruecolor ( 350 * $fsaa, 19 * $fsaa );
+	$im = imagecreatetruecolor ( 450 * $fsaa, 75 * $fsaa );
 	imagealphablending ( $im, true );
 	$trans_colour = imagecolorallocatealpha ( $im, 0, 0, 0, 127 );
 	imagefill ( $im, 0, 0, $trans_colour );
 	
 	if ($row ['privacy'] == 'strong') {
-		$color = imagecolorallocatealpha ( $my_img, 255, 255, 255, 0 );
-		$font = 'pic/userbar/Hiragino Sans GB W6.otf';
-		imagettftext ( $im, 11 * $fsaa, 0, 10 * $fsaa, 15 * $fsaa, $color, $font, '啦啦啦，媛媛抓到你偷窥高隐私等级的用户啦~~~' );
+		$color = imagecolorallocatealpha ( $my_img, 77, 60, 42, 0 );
+		$font = 'pic/userbar/方正宋刻本秀楷简.TTF';
+		imagettftext ( $im, 11 * $fsaa, 0, 10 * $fsaa, 15 * $fsaa, $color, $font, '~这是个秘密~' );
 	} elseif ($row ['class'] < $userbar_class) {
-		$color = imagecolorallocatealpha ( $my_img, 255, 255, 255, 0 );
-		$font = 'pic/userbar/Hiragino Sans GB W6.otf';
-		imagettftext ( $im, 11 * $fsaa, 0, 10 * $fsaa, 15 * $fsaa, $color, $font, '该用户等级还不够高哦，升升级再来偷窥吧~~~~' );
+		$color = imagecolorallocatealpha ( $my_img, 77, 60, 42, 0 );
+		$font = 'pic/userbar/方正宋刻本秀楷简.TTF';
+		imagettftext ( $im, 11 * $fsaa, 0, 10 * $fsaa, 15 * $fsaa, $color, $font, '~等级太低啦~' );
 	} else {
-		$username = $row ['username'];
+		// $username = $row ['username'];
+        $username = "德莱文";
 		$uploaded = mksize ( $row ['uploaded'] );
 		$downloaded = mksize ( $row ['downloaded'] );
-		$font = 'pic/userbar/Hiragino Sans GB W6.otf';
+		$font = 'pic/userbar/方正宋刻本秀楷简.TTF';
 		
 		if (! $_GET ['noname']) {
 			if (isset ( $_GET ['namered'] ) && $_GET ['namered'] >= 0 && $_GET ['namered'] <= 255)
 				$namered = 0 + $_GET ['namered'];
 			else
-				$namered = 255;
+				$namered = 77;
 			if (isset ( $_GET ['namegreen'] ) && $_GET ['namegreen'] >= 0 && $_GET ['namegreen'] <= 255)
 				$namegreen = 0 + $_GET ['namegreen'];
 			else
-				$namegreen = 255;
+				$namegreen = 60;
 			if (isset ( $_GET ['nameblue'] ) && $_GET ['nameblue'] >= 0 && $_GET ['nameblue'] <= 255)
 				$nameblue = 0 + $_GET ['nameblue'];
 			else
-				$nameblue = 255;
+				$nameblue = 42;
 			if (isset ( $_GET ['namesize'] ) && $_GET ['namesize'] >= 1 && $_GET ['namesize'] <= 5)
 				$namesize = 0 + $_GET ['namesize'];
 			else
-				$namesize = 10;
-			if (isset ( $_GET ['namex'] ) && $_GET ['namex'] >= 0 && $_GET ['namex'] <= 350)
+				$namesize = 20;
+			if (isset ( $_GET ['namex'] ) && $_GET ['namex'] >= 0 && $_GET ['namex'] <= 450)
 				$namex = 0 + $_GET ['namex'];
-			else
-				$namex = 10;
-			if (isset ( $_GET ['namey'] ) && $_GET ['namey'] >= 0 && $_GET ['namey'] <= 19)
+			else{
+                $name_box = imagettfbbox($namesize, 0, $font, $username);
+                $namex = ceil((450 - $name_box[2]) / 2);
+            }
+			if (isset ( $_GET ['namey'] ) && $_GET ['namey'] >= 0 && $_GET ['namey'] <= 75)
 				$namey = 0 + $_GET ['namey'];
 			else
-				$namey = 15;
+				$namey = 37;
 			$name_colour = imagecolorallocate ( $my_img, $namered, $namegreen, $nameblue );
 			// imagestring($my_img, $namesize, $namex, $namey, $username,
 			// $name_colour);
@@ -105,27 +108,27 @@ if (! $my_img = unserialize ( $Cache->get_value ( 'userbar_' . $_SERVER ['REQUES
 			if (isset ( $_GET ['upred'] ) && $_GET ['upred'] >= 0 && $_GET ['upred'] <= 255)
 				$upred = 0 + $_GET ['upred'];
 			else
-				$upred = 0;
+				$upred = 77;
 			if (isset ( $_GET ['upgreen'] ) && $_GET ['upgreen'] >= 0 && $_GET ['upgreen'] <= 255)
 				$upgreen = 0 + $_GET ['upgreen'];
 			else
-				$upgreen = 255;
+				$upgreen = 60;
 			if (isset ( $_GET ['upblue'] ) && $_GET ['upblue'] >= 0 && $_GET ['upblue'] <= 255)
 				$upblue = 0 + $_GET ['upblue'];
 			else
-				$upblue = 0;
+				$upblue = 42;
 			if (isset ( $_GET ['upsize'] ) && $_GET ['upsize'] >= 1 && $_GET ['upsize'] <= 5)
 				$upsize = 0 + $_GET ['upsize'];
 			else
-				$upsize = 10;
-			if (isset ( $_GET ['upx'] ) && $_GET ['upx'] >= 0 && $_GET ['upx'] <= 350)
+				$upsize = 12;
+			if (isset ( $_GET ['upx'] ) && $_GET ['upx'] >= 0 && $_GET ['upx'] <= 450)
 				$upx = 0 + $_GET ['upx'];
 			else
-				$upx = 120;
-			if (isset ( $_GET ['upy'] ) && $_GET ['upy'] >= 0 && $_GET ['upy'] <= 19)
+				$upx = 137;
+			if (isset ( $_GET ['upy'] ) && $_GET ['upy'] >= 0 && $_GET ['upy'] <= 75)
 				$upy = 0 + $_GET ['upy'];
 			else
-				$upy = 15;
+				$upy = 61.5;
 			$up_colour = imagecolorallocate ( $my_img, $upred, $upgreen, $upblue );
 			// imagestring($my_img, $upsize, $upx, $upy, $uploaded, $up_colour);
 			imagettftext ( $im, $upsize * $fsaa, 0, $upx * $fsaa, $upy * $fsaa, $up_colour, $font, $uploaded );
@@ -135,34 +138,34 @@ if (! $my_img = unserialize ( $Cache->get_value ( 'userbar_' . $_SERVER ['REQUES
 			if (isset ( $_GET ['downred'] ) && $_GET ['downred'] >= 0 && $_GET ['downred'] <= 255)
 				$downred = 0 + $_GET ['downred'];
 			else
-				$downred = 255;
+				$downred = 77;
 			if (isset ( $_GET ['downgreen'] ) && $_GET ['downgreen'] >= 0 && $_GET ['downgreen'] <= 255)
 				$downgreen = 0 + $_GET ['downgreen'];
 			else
-				$downgreen = 0;
+				$downgreen = 60;
 			if (isset ( $_GET ['downblue'] ) && $_GET ['downblue'] >= 0 && $_GET ['downblue'] <= 255)
 				$downblue = 0 + $_GET ['downblue'];
 			else
-				$downblue = 0;
+				$downblue = 42;
 			if (isset ( $_GET ['downsize'] ) && $_GET ['downsize'] >= 1 && $_GET ['downsize'] <= 5)
 				$downsize = 0 + $_GET ['downsize'];
 			else
-				$downsize = 10;
-			if (isset ( $_GET ['downx'] ) && $_GET ['downx'] >= 0 && $_GET ['downx'] <= 350)
+				$downsize = 12;
+			if (isset ( $_GET ['downx'] ) && $_GET ['downx'] >= 0 && $_GET ['downx'] <= 450)
 				$downx = 0 + $_GET ['downx'];
 			else
-				$downx = 220;
-			if (isset ( $_GET ['downy'] ) && $_GET ['downy'] >= 0 && $_GET ['downy'] <= 19)
+				$downx = 250;
+			if (isset ( $_GET ['downy'] ) && $_GET ['downy'] >= 0 && $_GET ['downy'] <= 75)
 				$downy = 0 + $_GET ['downy'];
 			else
-				$downy = 15;
+				$downy = 61.5;
 			$down_colour = imagecolorallocate ( $my_img, $downred, $downgreen, $downblue );
 			// imagestring($my_img, $downsize, $downx, $downy, $downloaded,
 			// $down_colour);
 			imagettftext ( $im, $downsize * $fsaa, 0, $downx * $fsaa, $downy * $fsaa, $down_colour, $font, $downloaded );
 		}
 	}
-	imagecopyresampled ( $my_img, $im, 0, 0, 0, 0, 350, 19, 350 * 4, 19 * 4 );
+	imagecopyresampled ( $my_img, $im, 0, 0, 0, 0, 450, 75, 450 * 4, 75 * 4 );
 	imagedestroy ( $im );
 	imagesavealpha ( $my_img, true );
 	$Cache->cache_value ( 'userbar_' . $_SERVER ['REQUEST_URI'], serialize ( $my_img ), 300 );
