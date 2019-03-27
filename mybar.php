@@ -65,8 +65,7 @@ if (! $my_img = unserialize ( $Cache->get_value ( 'userbar_' . $_SERVER ['REQUES
 		$font = 'pic/userbar/方正宋刻本秀楷简.TTF';
 		imagettftext ( $im, 11 * $fsaa, 0, 10 * $fsaa, 15 * $fsaa, $color, $font, '~等级太低啦~' );
 	} else {
-		// $username = $row ['username'];
-        $username = "德莱文";
+		$username = $row ['username'];
 		$uploaded = mksize ( $row ['uploaded'] );
 		$downloaded = mksize ( $row ['downloaded'] );
 		$font = 'pic/userbar/方正宋刻本秀楷简.TTF';
