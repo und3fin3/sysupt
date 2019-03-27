@@ -104,12 +104,13 @@ switch ($_GET ["action"]) {
 			$row ['imdb_id'] = str_pad ( $row ['imdb_id'], 7, '0', STR_PAD_LEFT );
 			$imdb_url = build_imdb_url ( $row ['imdb_id'] );
 			$row ['search_title'] = preg_replace ( '/[[:punct:]]/', ' ', html_entity_decode ( $row ['title'], ENT_COMPAT, "UTF-8" ) );
-			$row ['search_translate_title'] = str_replace ( array (
-					"(",
-					")",
-					"：",
-					"·" 
-			), " ", $row ['translate_title'] );
+            $row ['search_translate_title'] = str_replace(array(
+                "(",
+                ")",
+                "：",
+                "·",
+                "/"
+            ), " ", $row ['translate_title'] );
 			print ("<tr><td>" . $row ['rank'] . "</td><td><a href=\"torrents.php?search=" . $row ['search_translate_title'] . "&notnewword=1 \" target=\"_blank\"><b>" . $row ['translate_title'] . "</b></td><td><a href=\"torrents.php?search=" . $row ['search_title'] . "&notnewword=1 \"target=\"_blank\"><b>" . $row ['title'] . "</b></td></a><td><a href=\"" . $imdb_url . "\" target=\"_blank\"><b>" . "tt" . $row ['imdb_id'] . "</b></td><td align=\"center\">" . $row ['year'] . "</td><td align=\"center\">" . $row ['rating'] . "</td><td align=\"center\">" . $row ['votes'] . "</td></tr>") ;
 		}
 		
