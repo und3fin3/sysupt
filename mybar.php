@@ -59,11 +59,15 @@ if (! $my_img = unserialize ( $Cache->get_value ( 'userbar_' . $_SERVER ['REQUES
 	if ($row ['privacy'] == 'strong') {
 		$color = imagecolorallocatealpha ( $my_img, 77, 60, 42, 0 );
 		$font = 'pic/userbar/方正宋刻本秀楷简.TTF';
-		imagettftext ( $im, 11 * $fsaa, 0, 10 * $fsaa, 15 * $fsaa, $color, $font, '~这是个秘密~' );
+        $name_box = imagettfbbox(20, 0, $font, '~这是个秘密~');
+        $namex = ceil((450 - $name_box[2]) / 2);
+		imagettftext ( $im, 20 * $fsaa, 0, $namex * $fsaa, 37 * $fsaa, $color, $font, '~这是个秘密~' );
 	} elseif ($row ['class'] < $userbar_class) {
 		$color = imagecolorallocatealpha ( $my_img, 77, 60, 42, 0 );
 		$font = 'pic/userbar/方正宋刻本秀楷简.TTF';
-		imagettftext ( $im, 11 * $fsaa, 0, 10 * $fsaa, 15 * $fsaa, $color, $font, '~等级太低啦~' );
+        $name_box = imagettfbbox(20, 0, $font, '~等级太低啦~');
+        $namex = ceil((450 - $name_box[2]) / 2);
+		imagettftext ( $im, 20 * $fsaa, 0, $namex * $fsaa, 37 * $fsaa, $color, $font, '~等级太低啦~' );
 	} else {
 		$username = $row ['username'];
 		$uploaded = mksize ( $row ['uploaded'] );
