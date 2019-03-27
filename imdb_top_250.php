@@ -110,7 +110,7 @@ switch ($_GET ["action"]) {
                 "：",
                 "·",
                 "/"
-            ), " ", $row ['translate_title'] );
+            ), " ", explode(" / ", $row ['translate_title'])[0] );
 			print ("<tr><td>" . $row ['rank'] . "</td><td><a href=\"torrents.php?search=" . $row ['search_translate_title'] . "&notnewword=1 \" target=\"_blank\"><b>" . $row ['translate_title'] . "</b></td><td><a href=\"torrents.php?search=" . $row ['search_title'] . "&notnewword=1 \"target=\"_blank\"><b>" . $row ['title'] . "</b></td></a><td><a href=\"" . $imdb_url . "\" target=\"_blank\"><b>" . "tt" . $row ['imdb_id'] . "</b></td><td align=\"center\">" . $row ['year'] . "</td><td align=\"center\">" . $row ['rating'] . "</td><td align=\"center\">" . $row ['votes'] . "</td></tr>") ;
 		}
 		
