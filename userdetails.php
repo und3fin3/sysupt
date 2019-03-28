@@ -373,6 +373,10 @@ tr_small($lang_userdetails['row_completed_torrents'], "<a href=\"javascript: get
 tr_small($lang_userdetails['row_incomplete_torrents'], "<a href=\"javascript: getusertorrentlistajax('".$user['id']."', 'incomplete', 'ka4'); klappe_news('a4')\"><img class=\"plus\" src=\"pic/trans.gif\" id=\"pica4\" alt=\"Show/Hide\" title=\"".$lang_userdetails['title_show_or_hide']."\" />   <u>".$lang_userdetails['text_show_or_hide']."</u></a><div id=\"ka4\" style=\"display: none;\"></div>", 1);
 }
 
+if ($user["id"] == $CURUSER["id"]){
+    tr_small($lang_userdetails['row_userbar'], "<img src='mybar.php?userid={$CURUSER['id']}.png' alt='userbar' title='{$lang_userdetails['row_userbar']}'>", 1);
+}
+
 if ($CURUSER["id"] == $user["id"]&&$_SERVER['HTTP_USERNAME']!=""){
 	$username = $_SERVER['HTTP_USERNAME'];
 	$institution = $_SERVER['HTTP_INSTITUTION'];

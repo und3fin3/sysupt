@@ -153,5 +153,6 @@ $lang_userdetails = array
 	'alreadybindedbutton' => "已绑定",
 	'unbind' => "解除绑定",
 	'alreadyunbindedbutton' => "已解除绑定",
+	'row_userbar' => "流量条"
 );
 ?>
