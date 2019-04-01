@@ -374,7 +374,7 @@ tr_small($lang_userdetails['row_incomplete_torrents'], "<a href=\"javascript: ge
 }
 
 if ($user["id"] == $CURUSER["id"]){
-    tr_small($lang_userdetails['row_userbar'], "<img src='mybar.php?userid={$CURUSER['id']}.png' alt='userbar' title='{$lang_userdetails['row_userbar']}'>", 1);
+    tr_small($lang_userdetails['row_userbar'], "<a href='promotionlink.php'><img src='mybar.php?userid={$CURUSER['id']}.png' alt='userbar' title='{$lang_userdetails['row_userbar']}'></a>", 1);
 }
 
 if ($CURUSER["id"] == $user["id"]&&$_SERVER['HTTP_USERNAME']!=""){
