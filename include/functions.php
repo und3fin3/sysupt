@@ -1675,21 +1675,17 @@ function get_torrent_extinfo_identifier($torrentid) {
 	}
 	return $result;
 }
-
-function parse_imdb_id($url)
-{
-    if ($url != "" && preg_match("/tt(\d+)/i", $url, $matches)) {
-        return $matches [1];
-    } elseif ($url && is_numeric($url)) {
-        return $url;
-    } else {
-        return 0;
-    }
+function parse_imdb_id($url) {
+	if ($url != "" && preg_match ( "/[0-9]{7,8}/i", $url, $matches )) {
+		return $matches [0];
+	} elseif ($url && is_numeric ( $url ) && strlen ( $url ) < 7) {
+		return str_pad ( $url, 7, '0', STR_PAD_LEFT );
+	} else {
+		return 0;
+	}
 }
-
-function build_imdb_url($imdb_id)
-{
-    return $imdb_id == "" ? "" : "https://www.imdb.com/title/tt" . (strlen($imdb_id) < 7 ? str_pad($imdb_id, 7, '0', STR_PAD_LEFT) : $imdb_id) . "/";
+function build_imdb_url($imdb_id) {
+	return $imdb_id == "" ? "" : "https://www.imdb.com/title/tt" . $imdb_id . "/";
 }
 
 // it's a stub implemetation here, we need more acurate regression analysis to
