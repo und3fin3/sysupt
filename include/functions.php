@@ -1678,7 +1678,7 @@ function get_torrent_extinfo_identifier($torrentid) {
 
 function parse_imdb_id($url)
 {
-    if ($url != '') {
+    if ($url) {
         if (preg_match("/tt(\d+)/i", $url, $matches)) $url = $matches[1];
         if (is_numeric($url)) return (strlen($url) < 7) ? str_pad($url, 7, '0', STR_PAD_LEFT) : $url;
     }
