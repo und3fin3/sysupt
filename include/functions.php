@@ -1675,15 +1675,16 @@ function get_torrent_extinfo_identifier($torrentid) {
 	}
 	return $result;
 }
-function parse_imdb_id($url) {
-	if ($url != "" && preg_match ( "/[0-9]{7,8}/i", $url, $matches )) {
-		return $matches [0];
-	} elseif ($url && is_numeric ( $url ) && strlen ( $url ) < 7) {
-		return str_pad ( $url, 7, '0', STR_PAD_LEFT );
-	} else {
-		return 0;
-	}
+
+function parse_imdb_id($url)
+{
+    if ($url != '') {
+        if (preg_match("/tt(\d+)/i", $url, $matches)) $url = $matches[1];
+        if (is_numeric($url)) return (strlen($url) < 7) ? str_pad($url, 7, '0', STR_PAD_LEFT) : $url;
+    }
+    return false;
 }
+
 function build_imdb_url($imdb_id) {
 	return $imdb_id == "" ? "" : "https://www.imdb.com/title/tt" . $imdb_id . "/";
 }
