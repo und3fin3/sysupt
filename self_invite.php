@@ -12,6 +12,7 @@ assert_tjuip();
 
 global $lang_takesignup;
 global $oneinvite_bonus;
+global $SITENAME, $SITEEMAIL, $BASEURL;
 $revive_bonus = 3000;
 $add_bonus = 7000;
 $getcode = $_GET['code'];
@@ -34,6 +35,8 @@ if ($getcode) {
         $a = @mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM invites WHERE hash = " . sqlesc($arr['invite_code']))) or mysql_error();
         if ($a[0] != 0)
             header("Location: signup.php?type=invite&invitenumber=" . $arr['invite_code']);
+        else
+            stderr($lang_self_invite['std_error'], $lang_self_invite['code_be_used'], 0);
     } else {
         stderr($lang_self_invite['std_error'], $lang_self_invite['code_be_used'], 0);
     }
