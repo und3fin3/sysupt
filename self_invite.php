@@ -112,9 +112,9 @@ if ($getcode) {
 {$lang_self_invite['mail_two']}{$ip}{$lang_self_invite['mail_three']}
 <br />
 EOD;
-    sent_mail($emailaddress, $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $title), change_email_encode(get_langfolder_cookie(), $message), "invitesignup", false, false, '', get_email_encode(get_langfolder_cookie()));
     if ($send_again) sql_query("UPDATE self_invite SET code = " . sqlesc($code) . " WHERE email = " . sqlesc($emailaddress));
     else sql_query("INSERT INTO self_invite (email, used_type, code) VALUES (" . sqlesc($emailaddress) . " , 'none', " . sqlesc($code) . " )");
+    sent_mail($emailaddress, $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $title), change_email_encode(get_langfolder_cookie(), $message), "invitesignup", false, false, '', get_email_encode(get_langfolder_cookie()));
     stderr($lang_self_invite['successful'], $lang_self_invite['email_to'] . htmlspecialchars($emailaddress) . $lang_self_invite['successfully_sent']);
 
 } else {
