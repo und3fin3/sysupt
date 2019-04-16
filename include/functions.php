@@ -804,7 +804,6 @@ function get_user_class_name($class, $compact = false, $b_colored = false, $I18N
     $class_name = ($compact == true ? str_replace(" ", "", $class_name) : $class_name);
     if ($class_name)
         return ($b_colored == true ? "<b class='" . str_replace(" ", "", $class_name_color) . "_Name'>" . $class_name . "</b>" : $class_name);
-    return $class;
 }
 
 function is_valid_user_class($class)
