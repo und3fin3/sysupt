@@ -241,7 +241,7 @@ function formatUrl($url, $newWindow = false, $text = '', $linkClass = '')
     }
     $url_host = strtolower(parse_url($url, PHP_URL_HOST));
 
-    if ($url_host !== NULL && strpos($url_host, $BASEURL) === false) {
+    if ($url_host !== NULL && $url_host !== "" && strpos($url_host, $BASEURL) === false) {
         return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"/jump_external.php?ext_url=" . urlencode($url) . "\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>");
     }
     $url = preg_replace('/(https?:\/\/)?(www.)?tjupt.org)/i', '', $url);
