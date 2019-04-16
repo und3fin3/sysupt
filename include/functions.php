@@ -2830,7 +2830,7 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
                             break;
                     }
                     if (mysql_num_rows($res3) > 0) {
-                        $connect = ($school_ipv4_connectable ? 'yes' : 'no') . '/' . ($ipv6_connectable ? 'yes' : 'no') . '/' . ($public_ipv4_connectable ? 'yes' : 'no');
+                        $connect = ($public_ipv4_connectable ? 'yes' : 'no') . '/' . ($ipv6_connectable ? 'yes' : 'no') . '/' . ($school_ipv4_connectable ? 'yes' : 'no');
                     } else {
                         $connect = 'unknown';
                     }
@@ -2840,7 +2840,7 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
                     $connectable = "<b><font color=\"red\">" . $lang_functions ['text_unknown'] . "</font></b>";
                 } else {
                     $connectable = str_replace('no', "<b><font color='red'><i class='fa fa-close'></i></font></b>", str_replace('yes', "<b><font color='green'><i class='fa fa-check'></i></font></b>", $connect));
-                    $connectable = "<a title='校内IPv4/IPv6/校外IPv4'>" . $connectable . "</a>";
+                    $connectable = "<a title='校外IPv4/IPv6/校内IPv4'>" . $connectable . "</a>";
                 }
                 // // check every 60 seconds //////////////////
                 $activeseed = $Cache->get_value('user_' . $CURUSER ["id"] . '_active_seed_count');
