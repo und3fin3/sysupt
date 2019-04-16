@@ -672,7 +672,6 @@ function get_user_class_name($class, $compact = false, $b_colored = false, $I18N
     static $current_user_lang_functions;
     if (!$en_lang_functions) {
         require(get_langfile_path("functions.php", false, "en"));
-        global $lang_functions;
         $en_lang_functions = $lang_functions;
     }
 
