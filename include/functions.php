@@ -235,16 +235,18 @@ function formatAdUrl($adid, $url, $content, $newWindow = true)
 
 function formatUrl($url, $newWindow = false, $text = '', $linkClass = '')
 {
-    global $BASEURL;
     if (!$text) {
         $text = $url;
     }
     $url_host = strtolower(parse_url($url, PHP_URL_HOST));
-
-    if ($url_host !== NULL && $url_host !== "" && strpos($url_host, $BASEURL) === false) {
-        return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"/jump_external.php?ext_url=" . urlencode($url) . "\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>");
+    $host_whitelist = array('www.tjupt.org',
+                            'tjupt.org',
+							NULL //no domain
+							);
+	if (!in_array($url_host, $host_whitelist)) {
+	    return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"/jump_external.php?ext_url=" . urlencode($url) . "\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>");
     }
-    $url = preg_replace('/(https?:\/\/)?(www.)?tjupt.org)/i', '', $url);
+    $url = preg_replace('/(https?:\/\/)?(www.)?tjupt.org/i', '', $url);
     return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"$url\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>");
 }
 
@@ -2878,18 +2880,12 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
                                         }
                                     }
                                     ?>  [<a href="logout.php"><?php echo $lang_functions['text_logout'] ?></a>]
-                                            <?php if (get_user_class() >= UC_MODERATOR) { ?>
-                                                [
-                                                <a href="staffpanel.php"><?php echo $lang_functions['text_staff_panel'] ?></a>]
+                                            <?php if (get_user_class() >= UC_MODERATOR) { ?>[<a href="staffpanel.php"><?php echo $lang_functions['text_staff_panel'] ?></a>]
                                             <?php } ?>
-                                            <?php if (get_user_class() >= UC_SYSOP) { ?>
-                                                [
-                                                <a href="settings.php"><?php echo $lang_functions['text_site_settings'] ?></a>]
-                                            <?php } ?>
-                                            [<a href="torrents.php?inclbookmarked=1&amp;allsec=1&amp;incldead=0"><?php echo $lang_functions['text_bookmarks'] ?></a>]
+                                            <?php if (get_user_class() >= UC_SYSOP) { ?>[<a href="settings.php"><?php echo $lang_functions['text_site_settings'] ?></a>]
+                                            <?php } ?>[<a href="torrents.php?inclbookmarked=1&amp;allsec=1&amp;incldead=0"><?php echo $lang_functions['text_bookmarks'] ?></a>]
 											<font class='color_bonus'><?php echo $lang_functions['text_bonus'] ?></font>
-                                            [<a href="mybonus.php"><?php echo $lang_functions['text_use'] ?></a>|
-                                            <a href="mybonusapps.php">应用</a>]: <?php echo number_format($CURUSER['seedbonus'], 1) ?>
+                                            [<a href="mybonus.php"><?php echo $lang_functions['text_use'] ?></a>|<a href="mybonusapps.php">应用</a>]: <?php echo number_format($CURUSER['seedbonus'], 1) ?>
                                             <font class='color_invite'><?php echo $lang_functions['text_invite'] ?></font>
                                             [<a href="invite.php?id=<?php echo $CURUSER['id'] ?>"><?php echo $lang_functions['text_send'] ?></a>]: <?php echo $CURUSER['invites'] ?><br/>
 											<font class="color_ratio"><?php echo $lang_functions['text_ratio'] ?></font> <?php echo $ratio ?>
