@@ -41,11 +41,11 @@ HTML;
         switch ($option) {
             case 'ban':
                 suicide();
-                $message='<h1>您的账号已经被禁用</h1>';
+                $message = '<h1>您的账号已经被禁用</h1>';
                 break;
             case 'delete':
                 suicide(true);
-                $message='<h1>您的账号已经被删除</h1>';
+                $message = '<h1>您的账号已经被删除</h1>';
                 break;
         }
     }

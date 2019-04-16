@@ -3,6 +3,7 @@ require "include/bittorrent.php";
 dbconn();
 require_once(get_langfile_path());
 loggedinorreturn();
+global $forummanage_class;
 
 if (get_user_class() < $forummanage_class)
     permissiondenied();
@@ -35,7 +36,7 @@ elseif ($_POST['action'] == "editforum") {
 	$desc = $_POST['desc'];
 	$id = $_POST['id'];
 	if (!$name && !$desc && !$id) {
-		header("Location: " . get_protocol_prefix() . "$BASEURL/forummanage.php");
+		header("Location: /forummanage.php");
 		die();
 	}
 	if ($_POST["moderator"]){
@@ -57,7 +58,7 @@ elseif ($_POST['action'] == "addforum") {
 	$name = ($_POST['name']);
 	$desc = ($_POST['desc']);
 	if (!$name && !$desc) {
-		header("Location: " . get_protocol_prefix() . "$BASEURL/forummanage.php");
+		header("Location: /forummanage.php");
 		die();
 	}
 	sql_query("INSERT INTO forums (sort, name,  description, minclassread,  minclasswrite, minclasscreate, forid) VALUES(" . $_POST['sort'] . ", " . sqlesc($_POST['name']). ", " . sqlesc($_POST['desc']). ", " . $_POST['readclass'] . ", " . $_POST['writeclass'] . ", " . $_POST['createclass'] . ", ".sqlesc(($_POST['overforums'])).")") or sqlerr(__FILE__, __LINE__);
@@ -289,7 +290,7 @@ $moderators = get_forum_moderators($row['id'],false);
 if (!$moderators)
 	$moderators = $lang_forummanage['text_not_available'];
 echo "<tr><td><a href=forums.php?action=viewforum&forumid=".$row["id"]."><b>".htmlspecialchars($row["name"])."</b></a><br />".htmlspecialchars($row["description"])."</td>";
-echo "<td>".htmlspecialchars($name)."</td><td>" . get_user_class_name($row["minclassread"],false,true,true) . "</td><td>" . get_user_class_name($row["minclasswrite"],false,true,true) . "</td><td>" . get_user_class_name($row["minclasscreate"],false,true,true) . "</td><td>".$moderators."</td><td><b><a href=\"".$PHP_SELF."?action=editforum&id=".$row["id"]."\">".$lang_forummanage['text_edit']."</a>&nbsp;|&nbsp;<a href=\"javascript:confirm_delete('".$row["id"]."', '".$lang_forummanage['js_sure_to_delete_forum']."', '');\"><font color=red>".$lang_forummanage['text_delete']."</font></a></b></td></tr>";
+echo "<td>".htmlspecialchars($name)."</td><td>" . get_user_class_name($row["minclassread"],false,true,true) . "</td><td>" . get_user_class_name($row["minclasswrite"],false,true,true) . "</td><td>" . get_user_class_name($row["minclasscreate"],false,true,true) . "</td><td>".$moderators."</td><td><b><a href=\"".$_SERVER['PHP_SELF']."?action=editforum&id=".$row["id"]."\">".$lang_forummanage['text_edit']."</a>&nbsp;|&nbsp;<a href=\"javascript:confirm_delete('".$row["id"]."', '".$lang_forummanage['js_sure_to_delete_forum']."', '');\"><font color=red>".$lang_forummanage['text_delete']."</font></a></b></td></tr>";
 } while($row = mysql_fetch_array($result));
 } else {print "<tr><td colspan=6>".$lang_forummanage['text_no_records_found']."</td></tr>";}
 echo "</table>";

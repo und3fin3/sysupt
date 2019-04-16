@@ -3,6 +3,7 @@ require "include/bittorrent.php";
 dbconn();
 require_once(get_langfile_path());
 loggedinorreturn();
+global $clientsmanage_class;
 if (get_user_class() < $clientsmanage_class) 
     permissiondenied();
 	
@@ -26,7 +27,7 @@ elseif ($_POST['action'] == "editclients") {
 	$agent_start=$_POST['agent_start'];
 	$id = $_POST['id'];
 	if (!$family && !$start_name && !$id && !$agent_pattern && !$agent_start) {
-		header("Location: " . get_protocol_prefix() . "$BASEURL/clientsmanage.php");
+		header("Location: /clientsmanage.php");
 		die();
 	}
 	sql_query("UPDATE agent_allowed_family SET family = '" . $_POST['family'] .
@@ -56,7 +57,7 @@ elseif ($_POST['action'] == "newclients") {
 	$agent_start=$_POST['agent_start'];
 	$id = $_POST['id'];
 	if (!$family && !$start_name && !$id && !$agent_pattern && !$agent_start) {
-		header("Location: " . get_protocol_prefix() . "$BASEURL/clientsmanage.php");
+		header("Location: /clientsmanage.php");
 		die();
 	}
 	sql_query("INSERT INTO agent_allowed_family (id, family, start_name, peer_id_pattern,  peer_id_match_num, peer_id_matchtype, peer_id_start, agent_pattern, agent_match_num, agent_matchtype, agent_start, exception, allowhttps, comment, hits) VALUES ( '',"
@@ -254,7 +255,7 @@ echo "<tr><td class=colhead align=left>".$lang_clientsmanage['col_id']."</td><td
 $result = sql_query ("SELECT * FROM agent_allowed_family ORDER BY id");
 if ($row = mysql_fetch_array($result)) {
 do {
-echo "<tr><td >".$row['id']."</td><td >".$row['family']."</td><td >".htmlspecialchars($row['start_name'])."</td><td >".htmlspecialchars($row['peer_id_start'])."</td><td >".htmlspecialchars($row['agent_start'])."</td><td >".htmlspecialchars($row['allowhttps'])."</td><td >".htmlspecialchars($row['hits'])."</td><td><b><a href=\"".$PHP_SELF."?action=editclients&id=".$row["id"]."\">".htmlspecialchars($lang_clientsmanage['text_edit'])."</a>&nbsp;|&nbsp;<a href=\"javascript:confirm_delete('".$row["id"]."', '".htmlspecialchars($lang_clientsmanage['js_sure_to_delete_forum'])."', '');\"><font color=red>".htmlspecialchars($lang_clientsmanage['text_delete'])."</font></a></b></td></tr>";
+echo "<tr><td >".$row['id']."</td><td >".$row['family']."</td><td >".htmlspecialchars($row['start_name'])."</td><td >".htmlspecialchars($row['peer_id_start'])."</td><td >".htmlspecialchars($row['agent_start'])."</td><td >".htmlspecialchars($row['allowhttps'])."</td><td >".htmlspecialchars($row['hits'])."</td><td><b><a href=\"".$_SERVER['PHP_SELF']."?action=editclients&id=".$row["id"]."\">".htmlspecialchars($lang_clientsmanage['text_edit'])."</a>&nbsp;|&nbsp;<a href=\"javascript:confirm_delete('".$row["id"]."', '".htmlspecialchars($lang_clientsmanage['js_sure_to_delete_forum'])."', '');\"><font color=red>".htmlspecialchars($lang_clientsmanage['text_delete'])."</font></a></b></td></tr>";
 } while($row = mysql_fetch_array($result));
 } else {print "<tr><td colspan=15>".htmlspecialchars($lang_clientsmanage['text_no_records_found'])."</td></tr>";}
 echo "</table>";

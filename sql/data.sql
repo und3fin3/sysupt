@@ -35,7 +35,6 @@ INSERT INTO `adminpanel` (`id`, `name`, `url`, `info`) VALUES
 (9, '常见问题管理', 'faqmanage.php', '编辑/添加/删除常见问题'),
 (10, '规则管理', 'modrules.php', '编辑/添加/删除规则'),
 (11, '分类管理', 'catmanage.php', '管理网站的分类'),
-(12, '下载数限制', 'maxslot.php', '用户最大下载数目管理'),
 (13, 'IPv4地址封禁', 'banipv4.php', '封禁连续的IPv4地址段'),
 (14, 'IPv6地址封禁', 'banipv6.php', '封禁一个或者多个ipv6地址/地址段'),
 (17, '历史数据统计', 'statistics.php', '查看历史数据统计图表'),
@@ -1479,27 +1478,6 @@ INSERT INTO `language` (`id`, `lang_name`, `flagpic`, `sub_lang`, `rule_lang`, `
 (29, '土耳其语', 'turkey.gif', 1, 0, 0, '', 'unavailable'),
 (30, 'Slovenian', 'slovenia.gif', 1, 0, 0, '', 'unavailable'),
 (31, '泰语', 'thailand.gif', 1, 0, 0, 'th', 'unavailable');
-
-
---
--- 转存表中的数据 `maxslots`
---
-
-INSERT INTO `maxslots` (`id`, `name`, `maxslot`) VALUES
-(0, '农民', 1),
-(1, '一般用户', 2),
-(2, '高级用户', 3),
-(3, '精英', 4),
-(4, 'CRAZY_USER', 5),
-(5, 'INSANE_USE', 5),
-(6, 'VETERAN_US', 6),
-(7, 'EXTREME_US', 6),
-(8, 'ULTIMATE_U', 7),
-(9, 'NEXUS_MAST', 7),
-(10, '贵宾', 8),
-(11, '养老族', 10),
-(12, '发布员', 0),
-(13, '类管理员', 15);
 
 --
 -- 转存表中的数据 `media`

@@ -2,6 +2,7 @@
 require "include/bittorrent.php";
 dbconn();
 require_once(get_langfile_path());
+global $mainversion_code, $subversion_code, $releasedate_code, $website_code;
 
 stdhead(PROJECTNAME);
 print ("<h1>".PROJECTNAME."</h1>");

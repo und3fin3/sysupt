@@ -3,6 +3,7 @@ require_once("include/bittorrent.php");
 dbconn();
 require_once(get_langfile_path());
 require_once(get_langfile_path("", true));
+global $CURUSER, $funboxvote_bonus, $funboxreward_bonus, $funmanage_class;
 $action = $_GET["action"];
 
 if ($_POST['fun_text']) {
@@ -89,7 +90,7 @@ if ($action == 'add') {
             $warning = $lang_fun['std_fun_added_successfully'];
         else
             stderr($lang_fun['std_error'], $lang_fun['std_error_happened']);
-        header("Location: " . get_protocol_prefix() . "$BASEURL/index.php");
+        header("Location: /index.php");
     }
 }
 if ($action == 'view')

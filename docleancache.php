@@ -4,7 +4,7 @@ require_once("include/bittorrent.php");
 dbconn();
 
 if (get_user_class() < UC_SYSOP) {
-die('forbidden');
+    die('forbidden');
 }
 echo "<html><head><title>清理memcache</title></head><body>";
 echo "<p>";
@@ -13,6 +13,6 @@ $tstart = getmicrotime();
 $Cache->flush();
 $tend = getmicrotime();
 $totaltime = ($tend - $tstart);
-printf ("一共耗时:  %f 秒<br />", $totaltime);
+printf("一共耗时:  %f 秒<br />", $totaltime);
 echo "清理完成<br />";
 echo "</body></html>";

@@ -2,6 +2,10 @@
 require "include/bittorrent.php";
 dbconn();
 require_once(get_langfile_path());
+global $CURUSER, $enablebitbucket_main, $BASEURL, $enablead_advertisement, $noad_advertisement, $enablebonusnoad_advertisement,
+       $enabletooltip_tweak, $showmovies, $showfunbox_main, $enablenfo_main, $showextinfo, $enablespecial, $showshoutbox_main,
+       $disableemailchange, $smtptype, $enablelocation_tweak, $prolinkpoint_bonus, $enablenoad_advertisement, $SITENAME, $SITEEMAIL,
+       $bonusnoad_advertisement;
 loggedinorreturn();
 
 function bark($msg)
@@ -62,7 +66,7 @@ function format_tz($a)
     $h = floor($a);
     $m = ($a - floor($a)) * 60;
     return ($a >= 0 ? "+" : "-") . (strlen(abs($h)) > 1 ? "" : "0") . abs($h) .
-    ":" . ($m == 0 ? "00" : $m);
+        ":" . ($m == 0 ? "00" : $m);
 }
 
 function priv($name, $descr)
@@ -216,7 +220,7 @@ if ($action) {
   </select><input type=text name=avatar style=\"width: 400px\" value=\"" . htmlspecialchars($CURUSER["avatar"]) .
                     "\"><br />\n" . $lang_usercp['text_avatar_note'] . ($enablebitbucket_main == 'yes' ? $lang_usercp['text_bitbucket_note'] : ""), 1);
                 tr($lang_usercp['row_info'], "<textarea name=\"info\" style=\"width:700px\" rows=\"10\" >" . htmlspecialchars($CURUSER["info"]) . "</textarea><br />" . $lang_usercp['text_info_note'], 1);
-                tr('自杀', "<a class=\"faqlink\" href=\"suicide.php\" target=\"_new\">点击这里删除或禁用您的账号</a>",1);
+                tr('自杀', "<a class=\"faqlink\" href=\"suicide.php\" target=\"_new\">点击这里删除或禁用您的账号</a>", 1);
                 submit();
                 print("</table>");
                 stdfoot();
@@ -573,7 +577,7 @@ if ($action) {
                 ksort($ss_sa);
                 reset($ss_sa);
                 // while (list($ss_name, $ss_id) = each($ss_sa)) {
-                foreach ($ss_sa as $ss_name => $ss_id){
+                foreach ($ss_sa as $ss_name => $ss_id) {
                     if ($ss_id == $CURUSER["stylesheet"]) $ss = " selected"; else $ss = "";
                     $stylesheets .= "<option value=$ss_id$ss>$ss_name</option>\n";
                 }
@@ -914,36 +918,36 @@ if ($forumposts) {
     $percentages = round($forumposts * 100 / $postcount, 3) . "%";
 }
 ?>
-<table border="0" cellspacing="0" cellpadding="5" width=940>
-    <?php
-    tr_small($lang_usercp['row_join_date'], $joindate, 1);
-    tr_small($lang_usercp['row_email_address'], $CURUSER['email'], 1);
-    if ($enablelocation_tweak == 'yes') {
-        list($loc_pub, $loc_mod) = get_ip_location($CURUSER["ip"]);
-        tr_small($lang_usercp['row_ip_location'], $CURUSER["ip"] . " <span title='" . $loc_mod . "'>[" . $loc_pub . "]</span>", 1);
-    } else {
-        tr_small($lang_usercp['row_ip_location'], $CURUSER["ip"], 1);
-    }
-    if ($CURUSER["avatar"])
-        tr_small($lang_usercp['row_avatar'], "<img src=\"" . $CURUSER["avatar"] . "\" border=0>", 1);
-    tr_small($lang_usercp['row_passkey'], $CURUSER["passkey"], 1);
-    if ($prolinkpoint_bonus) {
-        $prolinkclick = get_row_count("prolinkclicks", "WHERE userid=" . $CURUSER['id']);
-        tr_small($lang_usercp['row_promotion_link'], $prolinkclick . " [<a href=\"promotionlink.php\">" . $lang_usercp['text_read_more'] . "</a>]", 1);
-        //tr_small($lang_usercp['row_promotion_link'], $prolinkclick. " [<a href=\"promotionlink.php?updatekey=1\">".$lang_usercp['text_update_promotion_link']."</a>] [<a href=\"promotionlink.php\">".$lang_usercp['text_read_more']."</a>]", 1);
-    }
-    tr_small($lang_usercp['row_invitations'], $CURUSER['invites'] . " [<a href=\"invite.php?id=" . $CURUSER['id'] . "\" title=\"" . $lang_usercp['link_send_invitation'] . "\">" . $lang_usercp['text_send'] . "</a>]", 1);
-    tr_small($lang_usercp['row_karma_points'], $CURUSER['seedbonus'] . " [<a href=\"mybonus.php\" title=\"" . $lang_usercp['link_use_karma_points'] . "\">" . $lang_usercp['text_use'] . "</a>]", 1);
-    tr_small($lang_usercp['row_written_comments'], $commentcount . " [<a href=\"userhistory.php?action=viewcomments&id=" . $CURUSER['id'] . "\" title=\"" . $lang_usercp['link_view_comments'] . "\">" . $lang_usercp['text_view'] . "</a>]", 1);
-    if ($forumposts)
-        tr($lang_usercp['row_forum_posts'], $forumposts . " [<a href=\"userhistory.php?action=viewposts&id=" . $CURUSER['id'] . "\" title=\"" . $lang_usercp['link_view_posts'] . "\">" . $lang_usercp['text_view'] . "</a>] (" . $dayposts . $lang_usercp['text_posts_per_day'] . "; " . $percentages . $lang_usercp['text_of_total_posts'] . ")", 1);
-    ?>
-</table>
-<table border="0" cellspacing="0" cellpadding="5" width=940>
-    <?php
-    print("<td align=center class=tabletitle><b>" . $lang_usercp['text_recently_read_topics'] . "</b></td>");
-    ?>
-</table>
+    <table border="0" cellspacing="0" cellpadding="5" width=940>
+        <?php
+        tr_small($lang_usercp['row_join_date'], $joindate, 1);
+        tr_small($lang_usercp['row_email_address'], $CURUSER['email'], 1);
+        if ($enablelocation_tweak == 'yes') {
+            list($loc_pub, $loc_mod) = get_ip_location($CURUSER["ip"]);
+            tr_small($lang_usercp['row_ip_location'], $CURUSER["ip"] . " <span title='" . $loc_mod . "'>[" . $loc_pub . "]</span>", 1);
+        } else {
+            tr_small($lang_usercp['row_ip_location'], $CURUSER["ip"], 1);
+        }
+        if ($CURUSER["avatar"])
+            tr_small($lang_usercp['row_avatar'], "<img src=\"" . $CURUSER["avatar"] . "\" border=0>", 1);
+        tr_small($lang_usercp['row_passkey'], $CURUSER["passkey"], 1);
+        if ($prolinkpoint_bonus) {
+            $prolinkclick = get_row_count("prolinkclicks", "WHERE userid=" . $CURUSER['id']);
+            tr_small($lang_usercp['row_promotion_link'], $prolinkclick . " [<a href=\"promotionlink.php\">" . $lang_usercp['text_read_more'] . "</a>]", 1);
+            //tr_small($lang_usercp['row_promotion_link'], $prolinkclick. " [<a href=\"promotionlink.php?updatekey=1\">".$lang_usercp['text_update_promotion_link']."</a>] [<a href=\"promotionlink.php\">".$lang_usercp['text_read_more']."</a>]", 1);
+        }
+        tr_small($lang_usercp['row_invitations'], $CURUSER['invites'] . " [<a href=\"invite.php?id=" . $CURUSER['id'] . "\" title=\"" . $lang_usercp['link_send_invitation'] . "\">" . $lang_usercp['text_send'] . "</a>]", 1);
+        tr_small($lang_usercp['row_karma_points'], $CURUSER['seedbonus'] . " [<a href=\"mybonus.php\" title=\"" . $lang_usercp['link_use_karma_points'] . "\">" . $lang_usercp['text_use'] . "</a>]", 1);
+        tr_small($lang_usercp['row_written_comments'], $commentcount . " [<a href=\"userhistory.php?action=viewcomments&id=" . $CURUSER['id'] . "\" title=\"" . $lang_usercp['link_view_comments'] . "\">" . $lang_usercp['text_view'] . "</a>]", 1);
+        if ($forumposts)
+            tr($lang_usercp['row_forum_posts'], $forumposts . " [<a href=\"userhistory.php?action=viewposts&id=" . $CURUSER['id'] . "\" title=\"" . $lang_usercp['link_view_posts'] . "\">" . $lang_usercp['text_view'] . "</a>] (" . $dayposts . $lang_usercp['text_posts_per_day'] . "; " . $percentages . $lang_usercp['text_of_total_posts'] . ")", 1);
+        ?>
+    </table>
+    <table border="0" cellspacing="0" cellpadding="5" width=940>
+        <?php
+        print("<td align=center class=tabletitle><b>" . $lang_usercp['text_recently_read_topics'] . "</b></td>");
+        ?>
+    </table>
 <?php
 print("<table border=0 cellspacing=0 cellpadding=3 width=940><tr>" .
     "<td class=colhead align=left width=80%>" . $lang_usercp['col_topic_title'] . "</td>" .
@@ -985,8 +989,8 @@ while ($topicarr = mysql_fetch_assoc($res_topics)) {
         "<td align=center class=rowfollow><nobr>" . $added . " | " . $username . "</nobr></td></tr>");
 }
 ?>
-</table>
-</td>
-</tr>
+    </table>
+    </td>
+    </tr>
 <?php
 stdfoot();

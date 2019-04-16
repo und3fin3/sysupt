@@ -3,6 +3,7 @@ require "include/bittorrent.php";
 dbconn();
 require_once(get_langfile_path());
 loggedinorreturn();
+global $pollmanage_class;
 if (get_user_class() < $pollmanage_class)
   permissiondenied();
 
@@ -188,11 +189,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	$Cache->delete_value('current_poll_content');
 	$Cache->delete_value('current_poll_result', true);
   	if ($returnto == "main")
-		header("Location: " . get_protocol_prefix() . "$BASEURL");
+		header("Location: ");
   	elseif ($pollid)
-		header("Location: " . get_protocol_prefix() . "$BASEURL/log.php?action=poll#$pollid");
+		header("Location: /log.php?action=poll#$pollid");
 	else
-		header("Location: " . get_protocol_prefix() . "$BASEURL");
+		header("Location: ");
 	die;
 }
 

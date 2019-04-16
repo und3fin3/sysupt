@@ -8,6 +8,7 @@
 require "include/bittorrent.php";
 dbconn();
 loggedinorreturn();
+global $CURUSER, $SITENAME, $BASEURL, $REPORTMAIL, $invite_timeout, $SITEEMAIL, $restrictemaildomain;
 $permission_class = UC_ADMINISTRATOR;
 if (get_user_class() < $permission_class)
     stderr("权限不足", "仅允许" . get_user_class_name($permission_class, false, true, true) . "及以上用户组使用批量邀请");
@@ -28,14 +29,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $arr = mysql_fetch_assoc($ret);
             $hash = md5(mt_rand(1, 10000) . $CURUSER['username'] . TIMENOW . $CURUSER['passhash']);
             sql_query("INSERT INTO invites (inviter, invitee, hash, time_invited) VALUES ('" . mysql_real_escape_string($id) . "', '" . mysql_real_escape_string($a) . "', '" . mysql_real_escape_string($hash) . "', " . sqlesc(date("Y-m-d H:i:s")) . ")");
-            $title = "北洋园PT网站邀请函";
-            $message = "你好，<br /><br />恭喜你从【".$event."】活动获得一个".$SITENAME."邀请资格<br />如果你有意加入，请在阅读网站规则后确认该邀请。<br /><br />请点击以下链接确认邀请：".
-                "<b><a href=\"https://$BASEURL/signup.php?type=invite&invitenumber=$hash\" target=\"_blank\">点击这里</a></b><br />https://$BASEURL/signup.php?type=invite&invitenumber=$hash<br />".
-                "请在".$invite_timeout."天内确认该邀请，之后邀请将作废。<br />".$SITENAME."真诚欢迎你加入我们的社区！<br /><br />".
-                "如果你没有参加过此次活动，请将此邮件转发至".$REPORTMAIL."<br /><br />------<br />".$SITENAME."-https://tjupt.org";
-            sent_mail($a,$SITENAME,$SITEEMAIL,change_email_encode(get_langfolder_cookie(), $title),change_email_encode(get_langfolder_cookie(),$message),"invitesignup",false,false,'',get_email_encode(get_langfolder_cookie()));
+            $title = "{$SITENAME}网站邀请函";
+            $message = "你好，<br /><br />恭喜你从【{$event}】活动获得一个{$SITENAME}邀请资格<br />如果你有意加入，请在阅读网站规则后确认该邀请。<br /><br />请点击以下链接确认邀请：" .
+                "<b><a href=\"https://$BASEURL/signup.php?type=invite&invitenumber=$hash\" target=\"_blank\">点击这里</a></b><br />https://$BASEURL/signup.php?type=invite&invitenumber=$hash<br />" .
+                "请在{$invite_timeout}天内确认该邀请，之后邀请将作废。<br />{$SITENAME}真诚欢迎你加入我们的社区！<br /><br />" .
+                "如果你没有参加过此次活动，请将此邮件转发至{$REPORTMAIL}<br /><br />------<br />{$SITENAME}-" . get_protocol_prefix() . $BASEURL;
+            sent_mail($a, $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $title), change_email_encode(get_langfolder_cookie(), $message), "invitesignup", false, false, '', get_email_encode(get_langfolder_cookie()));
             print("<tr><td class='colfollow'>$a</td><td class='colfollow'><font color='green'>发送成功</font></td>");
-        }else{
+        } else {
             print("<tr><td class='colfollow'>$a</td><td class='colfollow'><font color='red'>$err</font></td>");
         }
     }
@@ -56,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 function checkemail($email)
 {
-    $email = safe_email(unesc(htmlspecialchars(trim($email))));
+    $email = safe_email(htmlspecialchars(trim($email)));
     $err = "";
     if (!$email)
         $err .= "邮箱地址为空";
@@ -73,5 +74,4 @@ function checkemail($email)
     if ($b[0] != 0)
         $err .= "此邮箱已被发送过邀请";
     return $err;
-
 }

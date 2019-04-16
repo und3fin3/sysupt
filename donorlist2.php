@@ -14,16 +14,8 @@ global $Cache;
 
 $action = isset ($_POST ['action']) ? htmlspecialchars($_POST ['action']) : (isset ($_GET ['action']) ? htmlspecialchars($_GET ['action']) : '');
 
-$allowed_actions = array(
-    "donor",
-    "star",
-    "top10",
-    "export",
-);
-$need_cache = array(
-    "star",
-    "top10",
-);
+$allowed_actions = array("donor", "star", "top10", "export");
+$need_cache = array("star", "top10");
 if (!$action) {
     $action = "donor";
 }
@@ -43,7 +35,7 @@ else {
         }
         print ("</ul></div>");
     }
-    
+
     switch ($action) {
         case 'donor':
             donormenu('donor', $lang_donorls['head_donor']);
@@ -277,7 +269,7 @@ else {
                         $i = $total = 0;
                         $db_table = "\n\n[b][size=3][color=Green]捐赠系统[/color][/size][/b]";
                         // $db_table .= "\n[table][tr][td]捐赠时间[/td][td]捐赠者[/td][td]金额（元）[/td][/tr]";
-                        
+
                         while ($row = mysql_fetch_assoc($res)) {
                             /*
                             if ($row['anonymous'] == 'yes') {
@@ -295,7 +287,7 @@ else {
                         $db_table .= "\n总计： $i 笔， $total 元";
                         $i_all += $i;
                         $total_all += $total;
-                        
+
                         $text = "[b][size=6][color=Red] $year 年 $month 月财报[/color][/size][/b]
                     \n\n[hr=[b][size=5]货币收入[/size][/b]]
                     \n[b][size=4][color=DarkOrange]捐款收入：[/color][/size][/b]";

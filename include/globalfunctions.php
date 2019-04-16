@@ -1,13 +1,13 @@
 <?php
-if(!defined('IN_TRACKER'))
+if (!defined('IN_TRACKER'))
     die('Hacking attempt!');
 
 function get_global_sp_state()
 {
     global $Cache;
     static $global_promotion_state;
-    if (!$global_promotion_state){
-        if (!$global_promotion_state = $Cache->get_value('global_promotion_state')){
+    if (!$global_promotion_state) {
+        if (!$global_promotion_state = $Cache->get_value('global_promotion_state')) {
             $res = mysql_query("SELECT * FROM torrents_state");
             $row = mysql_fetch_assoc($res);
             $global_promotion_state = $row["global_sp_state"];
@@ -22,59 +22,67 @@ function validip($ip)
 {
     if (!ip2long($ip)) //IPv6
         return true;
-    if (!empty($ip) && $ip == long2ip(ip2long($ip)))
-    {
+    if (!empty($ip) && $ip == long2ip(ip2long($ip))) {
         // reserved IANA IPv4 addresses
         // http://www.iana.org/assignments/ipv4-address-space
-        $reserved_ips = array (
-            array('192.0.2.0','192.0.2.255'),
-            array('192.168.0.0','192.168.255.255'),
-            array('255.255.255.0','255.255.255.255')
+        $reserved_ips = array(
+            array('192.0.2.0', '192.0.2.255'),
+            array('192.168.0.0', '192.168.255.255'),
+            array('255.255.255.0', '255.255.255.255')
         );
 
-        foreach ($reserved_ips as $r)
-        {
+        foreach ($reserved_ips as $r) {
             $min = ip2long($r[0]);
             $max = ip2long($r[1]);
             if ((ip2long($ip) >= $min) && (ip2long($ip) <= $max)) return false;
         }
         return true;
-    }
-    else return false;
+    } else return false;
 }
+
 /*** Replace '::' with appropriate number of ':0'*/
-function ExpandIPv6Notation($ip) {
+function ExpandIPv6Notation($ip)
+{
     if (strpos($ip, '::') !== false)
-        $ip = str_replace('::', str_repeat(':0', 8 - substr_count($ip, ':')).':', $ip);
-    if (strpos($ip, ':') === 0) $ip = '0'.$ip;
+        $ip = str_replace('::', str_repeat(':0', 8 - substr_count($ip, ':')) . ':', $ip);
+    if (strpos($ip, ':') === 0) $ip = '0' . $ip;
     return $ip;
 }
+
 /*
  * Convert IPv6 address to an integer
  * Optionally split in to two parts.
  * @see http://stackoverflow.com/questions/420680/
  */
-function IPv6ToLong($ip, $DatabaseParts= 2) {
-    $ip=preg_replace('/[.]/', ':',$ip);
+function IPv6ToLong($ip, $DatabaseParts = 2)
+{
+    $ip = preg_replace('/[.]/', ':', $ip);
     $ip = ExpandIPv6Notation($ip);
     $Parts = explode(':', $ip);
     $ip = array('', '');
     for ($i = 0; $i < 8; $i++) $ip[$i] .= str_pad(base_convert($Parts[$i], 16, 2), 16, 0, STR_PAD_LEFT);
     if ($DatabaseParts == 2)
-        return array(base_convert($ip[0], 2, 10), base_convert($ip[1], 2, 10),base_convert($ip[2], 2, 10),base_convert($ip[3], 2, 10), base_convert($ip[4], 2, 10),base_convert($ip[5], 2, 10),base_convert($ip[6], 2, 10),base_convert($ip[7], 2, 10));
-    else    return base_convert($ip[0], 2, 10) + base_convert($ip[1], 2, 10)+ base_convert($ip[2], 2, 10)+ base_convert($ip[3], 2, 10) + base_convert($ip[4], 2, 10)+ base_convert($ip[5], 2, 10)+ base_convert($ip[6], 2, 10) + base_convert($ip[7], 2, 10);
+        return array(base_convert($ip[0], 2, 10), base_convert($ip[1], 2, 10), base_convert($ip[2], 2, 10), base_convert($ip[3], 2, 10), base_convert($ip[4], 2, 10), base_convert($ip[5], 2, 10), base_convert($ip[6], 2, 10), base_convert($ip[7], 2, 10));
+    else    return base_convert($ip[0], 2, 10) + base_convert($ip[1], 2, 10) + base_convert($ip[2], 2, 10) + base_convert($ip[3], 2, 10) + base_convert($ip[4], 2, 10) + base_convert($ip[5], 2, 10) + base_convert($ip[6], 2, 10) + base_convert($ip[7], 2, 10);
 }
 
 function LongToIPv6($ip)
 {
 
-    $IP1=dechex($ip[0]);$IP2=dechex($ip[1]);$IP3=dechex($ip[2]);$IP4=dechex($ip[3]);
-    $IP5=dechex($ip[4]);$IP6=dechex($ip[5]);$IP7=dechex($ip[6]);$IP8=dechex($ip[7]);
-    $ip=$IP1.':'.$IP2.':'.$IP3.':'.$IP4.':'.$IP5.':'.$IP6.':'.$IP7.':'.$IP8;
+    $IP1 = dechex($ip[0]);
+    $IP2 = dechex($ip[1]);
+    $IP3 = dechex($ip[2]);
+    $IP4 = dechex($ip[3]);
+    $IP5 = dechex($ip[4]);
+    $IP6 = dechex($ip[5]);
+    $IP7 = dechex($ip[6]);
+    $IP8 = dechex($ip[7]);
+    $ip = $IP1 . ':' . $IP2 . ':' . $IP3 . ':' . $IP4 . ':' . $IP5 . ':' . $IP6 . ':' . $IP7 . ':' . $IP8;
     return $ip;
 }
 
-function getip() {
+function getip()
+{
     if (isset($_SERVER)) {
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && validip($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -108,7 +116,8 @@ function sql_query($query)
     return mysql_query($query);
 }
 
-function sqlesc($value) {
+function sqlesc($value)
+{
     // Stripslashes
     if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
         $value = stripslashes($value);
@@ -120,11 +129,13 @@ function sqlesc($value) {
     return $value;
 }
 
-function hash_pad($hash) {
+function hash_pad($hash)
+{
     return str_pad($hash, 20);
 }
 
-function hash_where($name, $hash) {
+function hash_where($name, $hash)
+{
     $shhash = preg_replace('/ *$/s', "", $hash);
     return "($name = " . sqlesc($hash) . " OR $name = " . sqlesc($shhash) . ")";
 }

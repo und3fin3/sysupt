@@ -2,7 +2,7 @@
 require_once("include/bittorrent.php");
 require_once("include/tjuip_helper.php");
 dbconn();
-
+global $CURUSER, $torrent_dir, $seebanned_class, $torrentnameprefix, $max_torrent_size, $iplog1;
 set_time_limit(120);
 $id = (int)$_GET["id"];
 if (!$id)
@@ -89,7 +89,7 @@ if (count($announce_urls) > 1) // add multi-tracker
 {
     $dict['value']['announce-list']['type'] = "list";
     $dict['value']['announce-list']['string'] = "l";
-    for($i = 0; $i < count($announce_urls); $i++){
+    for ($i = 0; $i < count($announce_urls); $i++) {
         $dict['value']['announce-list']['value'][$i]['type'] = "list";
         $dict['value']['announce-list']['value'][$i]['value'][0]["type"] = "string";
         $dict['value']['announce-list']['value'][$i]['value'][0]["value"] = $ssl_torrent . $announce_urls[$i] . "?passkey=$CURUSER[passkey]";

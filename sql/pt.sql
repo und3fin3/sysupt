@@ -1436,18 +1436,6 @@ CREATE TABLE `marked_topic` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `maxslots`
---
-
-CREATE TABLE `maxslots` (
-  `id` int(4) NOT NULL,
-  `name` varchar(10) CHARACTER SET utf8 NOT NULL,
-  `maxslot` int(4) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `media`
 --
 
@@ -2345,7 +2333,7 @@ CREATE TABLE `torrents` (
   `promotion_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `anonymous` enum('yes','no') NOT NULL DEFAULT 'no',
   `url` int(10) UNSIGNED DEFAULT NULL,
-  `pos_state` enum('normal','sticky') NOT NULL DEFAULT 'normal',
+  `pos_state` enum('normal','sticky', 'double_sticky', 'triple_sticky') NOT NULL DEFAULT 'normal',
   `pos_state_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `cache_stamp` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `picktype` enum('hot','classic','recommended','normal','0day','IMDB','study') NOT NULL DEFAULT 'normal',
@@ -3211,12 +3199,6 @@ ALTER TABLE `loginattempts`
 --
 ALTER TABLE `marked_topic`
   ADD PRIMARY KEY (`id`);
-
---
--- 表的索引 `maxslots`
---
-ALTER TABLE `maxslots`
-  ADD PRIMARY KEY (`name`);
 
 --
 -- 表的索引 `media`

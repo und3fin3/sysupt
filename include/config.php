@@ -1,79 +1,82 @@
 <?php
 // IMPORTANT: Do not edit below unless you know what you are doing!
-if (! defined ( 'IN_TRACKER' ))
-	die ( 'Hacking attempt!' );
+if (!defined('IN_TRACKER'))
+    die ('Hacking attempt!');
 
-$CONFIGURATIONS = array (
-		'ACCOUNT',
-		'ADVERTISEMENT',
-		'ATTACHMENT',
-		'AUTHORITY',
-		'BASIC',
-		'BONUS',
-		'CODE',
-		'MAIN',
-		'SECURITY',
-		'SMTP',
-		'TORRENT',
-		'TWEAK',
-		'DONATION'
+$CONFIGURATIONS = array(
+    'ACCOUNT',
+    'ADVERTISEMENT',
+    'ATTACHMENT',
+    'AUTHORITY',
+    'BASIC',
+    'BONUS',
+    'CODE',
+    'MAIN',
+    'SECURITY',
+    'SMTP',
+    'TORRENT',
+    'TWEAK',
+    'DONATION'
 );
-function ReadConfig($configname = NULL) {
-	global $CONFIGURATIONS;
-	if ($configname) {
-		$configname = basename ( $configname );
-		$tmp = oldReadConfig ( $configname );
-		WriteConfig ( $configname, $tmp );
-		@unlink ( './config/' . $configname );
-		return $tmp;
-	} else {
-		foreach ( $CONFIGURATIONS as $CONFIGURATION ) {
-			$GLOBALS [$CONFIGURATION] = ReadConfig ( $CONFIGURATION );
-		}
-	}
-}
-function oldReadConfig($configname) {
-	if (strstr ( $configname, ',' )) {
-		$configlist = explode ( ',', $configname );
-		foreach ( $configlist as $key => $configname ) {
-			ReadConfig ( trim ( $configname ) );
-		}
-	} else {
-		$configname = basename ( $configname );
-		$path = './config/' . $configname;
-		if (! file_exists ( $path )) {
-			die ( "Error! File <b>" . htmlspecialchars ( $configname ) . "</b> doesn't exist!</font><br /><font color=blue>Before the setup starts, please ensure that you have properly configured file and directory access permissions. Please see below.</font><br /><br />chmod 777 config/<br />chmod 777 config/" . $configname );
-		}
-		
-		$fp = fopen ( $path, 'r' );
-		$content = '';
-		while ( ! feof ( $fp ) ) {
-			$content .= fread ( $fp, 102400 );
-		}
-		fclose ( $fp );
-		
-		if (empty ( $content )) {
-			return array ();
-		}
-		$tmp = @unserialize ( $content );
-		
-		if (empty ( $tmp )) {
-			die ( "Error! <font color=red>Cannot read configuration file <b>" . htmlspecialchars ( $configname ) . "</b></font><br /><font color=blue>Before the setup starts, please ensure that you have properly configured file and directory access permissions. For *nix system, please see below.</font><br />chmod 777 config <br />chmod 777 config/" . $configname . "<br /><br /> If access permission is alright, perhaps there's some misconfiguration or the configuration file is corrupted. Please check config/" . $configname );
-		}
-		$GLOBALS [$configname] = $tmp;
-		return $tmp;
-	}
+function ReadConfig($configname = NULL)
+{
+    global $CONFIGURATIONS;
+    if ($configname) {
+        $configname = basename($configname);
+        $tmp = oldReadConfig($configname);
+        WriteConfig($configname, $tmp);
+        @unlink('./config/' . $configname);
+        return $tmp;
+    } else {
+        foreach ($CONFIGURATIONS as $CONFIGURATION) {
+            $GLOBALS [$CONFIGURATION] = ReadConfig($CONFIGURATION);
+        }
+    }
 }
 
-if (file_exists ( 'config/allconfig.php' )) {
-	require ('config/allconfig.php');
+function oldReadConfig($configname)
+{
+    if (strstr($configname, ',')) {
+        $configlist = explode(',', $configname);
+        foreach ($configlist as $key => $configname) {
+            ReadConfig(trim($configname));
+        }
+    } else {
+        $configname = basename($configname);
+        $path = './config/' . $configname;
+        if (!file_exists($path)) {
+            die ("Error! File <b>" . htmlspecialchars($configname) . "</b> doesn't exist!</font><br /><font color=blue>Before the setup starts, please ensure that you have properly configured file and directory access permissions. Please see below.</font><br /><br />chmod 777 config/<br />chmod 777 config/" . $configname);
+        }
+
+        $fp = fopen($path, 'r');
+        $content = '';
+        while (!feof($fp)) {
+            $content .= fread($fp, 102400);
+        }
+        fclose($fp);
+
+        if (empty ($content)) {
+            return array();
+        }
+        $tmp = @unserialize($content);
+
+        if (empty ($tmp)) {
+            die ("Error! <font color=red>Cannot read configuration file <b>" . htmlspecialchars($configname) . "</b></font><br /><font color=blue>Before the setup starts, please ensure that you have properly configured file and directory access permissions. For *nix system, please see below.</font><br />chmod 777 config <br />chmod 777 config/" . $configname . "<br /><br /> If access permission is alright, perhaps there's some misconfiguration or the configuration file is corrupted. Please check config/" . $configname);
+        }
+        $GLOBALS [$configname] = $tmp;
+        return $tmp;
+    }
+}
+
+if (file_exists('config/allconfig.php')) {
+    require('config/allconfig.php');
 } else {
-	ReadConfig ();
+    ReadConfig();
 }
 
 $SITENAME = $BASIC ['SITENAME'];
 $BASEURL = $BASIC ['BASEURL'];
-$announce_urls = array ();
+$announce_urls = array();
 $announce_urls [] = $BASIC ['announce_url'];
 $mysql_host = $BASIC ['mysql_host'];
 $mysql_user = $BASIC ['mysql_user'];
@@ -83,11 +86,11 @@ $mysql_db = $BASIC ['mysql_db'];
 $SITE_ONLINE = $MAIN ['site_online'];
 $enable_public_ipv4 = $MAIN ['enable_public_ipv4'];
 $max_torrent_size = $MAIN ['max_torrent_size'];
-$announce_interval = ( int ) $MAIN ['announce_interval'];
-$annintertwoage = ( int ) $MAIN ['annintertwoage'];
-$annintertwo = ( int ) $MAIN ['annintertwo'];
-$anninterthreeage = ( int ) $MAIN ['anninterthreeage'];
-$anninterthree = ( int ) $MAIN ['anninterthree'];
+$announce_interval = ( int )$MAIN ['announce_interval'];
+$annintertwoage = ( int )$MAIN ['annintertwoage'];
+$annintertwo = ( int )$MAIN ['annintertwo'];
+$anninterthreeage = ( int )$MAIN ['anninterthreeage'];
+$anninterthree = ( int )$MAIN ['anninterthree'];
 $signup_timeout = $MAIN ['signup_timeout'];
 $minoffervotes = $MAIN ['minoffervotes'];
 $offervotetimeout_main = $MAIN ['offervotetimeout'];
@@ -96,13 +99,13 @@ $maxsubsize_main = $MAIN ['maxsubsize'];
 $maxnewsnum_main = $MAIN ['maxnewsnum'];
 $forumpostsperpage = $MAIN ['postsperpage'];
 $forumtopicsperpage_main = $MAIN ['topicsperpage'];
-$torrentsperpage_main = ( int ) $MAIN ['torrentsperpage'];
+$torrentsperpage_main = ( int )$MAIN ['torrentsperpage'];
 $max_dead_torrent_time = $MAIN ['max_dead_torrent_time'];
 $maxusers = $MAIN ['maxusers'];
 $torrent_dir = $MAIN ['torrent_dir'];
 $iniupload_main = $MAIN ['iniupload'];
 $SITEEMAIL = $MAIN ['SITEEMAIL'];
-$ACCOUNTANTID = ( int ) $MAIN ['ACCOUNTANTID'];
+$ACCOUNTANTID = ( int )$MAIN ['ACCOUNTANTID'];
 $ALIPAYACCOUNT = $MAIN ['ALIPAYACCOUNT'];
 $PAYPALACCOUNT = $MAIN ['PAYPALACCOUNT'];
 $SLOGAN = $MAIN ['SLOGAN'];
@@ -142,10 +145,9 @@ $deflang = $MAIN ['defaultlang'];
 $defcss = $MAIN ['defstylesheet'];
 $enabledonation = $MAIN ['donation'];
 $enablespecial = $MAIN ['spsct'];
-$browsecatmode = ( int ) $MAIN ['browsecat'];
-$specialcatmode = ( int ) $MAIN ['specialcat'];
+$browsecatmode = ( int )$MAIN ['browsecat'];
+$specialcatmode = ( int )$MAIN ['specialcat'];
 $waitsystem = $MAIN ['waitsystem'];
-$maxdlsystem = $MAIN ['maxdlsystem'];
 $bitbucket = $MAIN ['bitbucket'];
 $torrentnameprefix = $MAIN ['torrentnameprefix'];
 $showforumstats_main = $MAIN ['showforumstats'];
@@ -160,8 +162,8 @@ $emailnotify_smtp = $SMTP ['emailnotify'];
 $smtptype = $SMTP ['smtptype'];
 $smtp_host = $SMTP ['smtp_host'];
 $smtp_port = $SMTP ['smtp_port'];
-if (strtoupper ( substr ( PHP_OS, 0, 3 ) == 'WIN' ))
-	$smtp_from = $SMTP ['smtp_from'];
+if (strtoupper(substr(PHP_OS, 0, 3) == 'WIN'))
+    $smtp_from = $SMTP ['smtp_from'];
 $smtpaddress = $SMTP ['smtpaddress'];
 $smtpport = $SMTP ['smtpport'];
 $accountname = $SMTP ['accountname'];
@@ -174,7 +176,7 @@ $accountpassword2 = $SMTP ['accountpassword2'];
 
 $securelogin = $SECURITY ['securelogin'];
 $securetracker = $SECURITY ['securetracker'];
-$https_announce_urls = array ();
+$https_announce_urls = array();
 $https_announce_urls [] = $SECURITY ['https_announce_url'];
 $iv = $SECURITY ['iv'];
 $maxip = $SECURITY ['maxip'];
@@ -441,8 +443,8 @@ $donation_reward_eight = $DONATION ['rewardeight'];
 $donation_amount_nine = $DONATION ['amountnine'];
 $donation_reward_nine = $DONATION ['rewardnine'];
 
-foreach ( $CONFIGURATIONS as $CONFIGURATION ) {
-	unset ( $GLOBALS [$CONFIGURATION] );
+foreach ($CONFIGURATIONS as $CONFIGURATION) {
+    unset ($GLOBALS [$CONFIGURATION]);
 }
 
 // Directory for subs
@@ -460,36 +462,36 @@ $SUBSPATH = "subs";
 // */5 * * * * curl -k 'https://127.0.0.1/cron.php'
 $useCronTriggerCleanUp = true;
 // some promotion rules
-$promotionrules_torrent = array (
-		0 => array (
-				"mediumid" => array (
-						1 
-				),
-				"promotion" => 5 
-		),
-		1 => array (
-				"mediumid" => array (
-						3 
-				),
-				"promotion" => 5 
-		),
-		2 => array (
-				"catid" => array (
-						402 
-				),
-				"standardid" => array (
-						3 
-				),
-				"promotion" => 4 
-		),
-		3 => array (
-				"catid" => array (
-						403 
-				),
-				"standardid" => array (
-						3 
-				),
-				"promotion" => 4 
-		) 
+$promotionrules_torrent = array(
+    0 => array(
+        "mediumid" => array(
+            1
+        ),
+        "promotion" => 5
+    ),
+    1 => array(
+        "mediumid" => array(
+            3
+        ),
+        "promotion" => 5
+    ),
+    2 => array(
+        "catid" => array(
+            402
+        ),
+        "standardid" => array(
+            3
+        ),
+        "promotion" => 4
+    ),
+    3 => array(
+        "catid" => array(
+            403
+        ),
+        "standardid" => array(
+            3
+        ),
+        "promotion" => 4
+    )
 );
 ?>

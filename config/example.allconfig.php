@@ -266,7 +266,6 @@ $MAIN=array(
     'browsecat' => '4',
     'specialcat' => NULL,
     'waitsystem' => 'no',
-    'maxdlsystem' => 'no',
     'bitbucket' => 'bitbucket',
     'torrentnameprefix' => '[TJUPT]',
     'showforumstats' => 'yes',
@@ -275,7 +274,7 @@ $MAIN=array(
     'invite_timeout' => '7',
     'seeding_leeching_time_calc_start' => '',
     'startsubid' => NULL,
-    'logo' => 'https://i.loli.net/2018/07/29/5b5d7bf497a9d.jpg',
+    'logo' => 'https://via.placeholder.com/1180x300.png?text=Banner+Here',
     'logo_url' => '',
 );
 $SECURITY=array(
@@ -347,7 +346,7 @@ $TWEAK=array(
     'enablelocation' => 'no',
     'titlekeywords' => '',
     'metakeywords' => 'PT 校园 资源',
-    'metadescription' => 'TJUPT是天津市首个、全国前列的校园Private Tracker，建立于2010年，由天津大学信网协会和天外天共同开发的，旨在为大家建立一个更好的资源共享环境，提高资源水准。',
+    'metadescription' => 'TJUPT',
     'enablesqldebug' => 'yes',
     'sqldebug' => '15',
     'cssdate' => '',
@@ -356,7 +355,7 @@ $TWEAK=array(
     'analyticscode' => '',
 );
 $DONATION=array(
-    'enabled' => 'yes',
+    'enabled' => 'no',
     // todo: edit this
     'clientid' => 'YOUZAN_CLIENT_ID',
     'clientsecret' => 'YOUZAN_CLIENT_SECRET_KEY',

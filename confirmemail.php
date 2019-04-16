@@ -31,4 +31,4 @@ sql_query("UPDATE users SET editsecret='', email=" . sqlesc($email) . " WHERE id
 if (!mysql_affected_rows())
 	httperr();
 
-header("Refresh: 0; url=" . get_protocol_prefix() . "$BASEURL/usercp.php?action=security&type=saved");
+header("Refresh: 0; url=/usercp.php?action=security&type=saved");

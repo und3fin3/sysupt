@@ -3,6 +3,7 @@ require "include/bittorrent.php";
 dbconn();
 require_once(get_langfile_path());
 loggedinorreturn();
+global $newsmanage_class, $CURUSER;
 if (get_user_class() < $newsmanage_class)
     permissiondenied();
 

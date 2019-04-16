@@ -2,6 +2,8 @@
 require_once("include/bittorrent.php");
 dbconn();
 loggedinorreturn();
+global $torrentmanage_class, $CURUSER;
+
 if (get_user_class() < $torrentmanage_class)
 permissiondenied();
 

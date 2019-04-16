@@ -4,6 +4,7 @@ require ("imdb/imdb2.class.php");
 require ("imdb/douban.php");
 dbconn();
 loggedinorreturn();
+global $updateextinfo_class;
 if (get_user_class() < $updateextinfo_class) {
 permissiondenied();
 }

@@ -9,7 +9,7 @@ require "include/bittorrent.php";
 dbconn();
 loggedinorreturn();
 require_once(get_langfile_path());
-global $donation_enabled;
+global $donation_enabled, $CURUSER;
 if ($donation_enabled != 'yes')
     stderr($lang_donate['std_sorry'], $lang_donate['std_do_not_accept_donation']);
 stdhead($lang_donate['head_donation']);
