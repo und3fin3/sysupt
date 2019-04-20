@@ -597,16 +597,16 @@ if ($catid == 402) {
         $nameset .= "[" . $cname . "]";
     if ($ename != "")
         $nameset .= "[" . $ename . "]";
-    if ($tvseasoninfo != "")
-        $nameset .= "[" . $tvseasoninfo . "]";
-    if ($format != "")
-        $nameset .= "[" . $format . "]";
-    if ($language != "")
-        $nameset .= "[" . $language . "]";
-    if ($subsinfo != 0) {
-        $result = sql_query("SELECT * FROM subsinfo WHERE id = " . $subsinfo);
-        $result_ = mysql_fetch_array($result);
-        $nameset .= "[" . $result_ ['name'] . "]";
+    // if ($tvseasoninfo != "")
+    //     $nameset .= "[" . $tvseasoninfo . "]";
+    // if ($format != "")
+    //     $nameset .= "[" . $format . "]";
+    // if ($language != "")
+    //     $nameset .= "[" . $language . "]";
+    // if ($subsinfo != 0) {
+    //     $result = sql_query("SELECT * FROM subsinfo WHERE id = " . $subsinfo);
+    //     $result_ = mysql_fetch_array($result);
+    //     $nameset .= "[" . $result_ ['name'] . "]";
     }
 }
 if ($catid == 403) {
