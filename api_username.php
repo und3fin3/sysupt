@@ -38,7 +38,7 @@ switch ($type) {
         }
     case "verify_id_passkey":
         {
-            $arr = @mysql_fetch_array(@sql_query("SELECT COUNT(*) FROM users WHERE id = " . sqlesc($id) . "AND passkey = " . sqlesc($passkey)));
+            $arr = @mysql_fetch_array(@sql_query("SELECT COUNT(*) FROM users WHERE id = " . sqlesc($id) . " AND passkey = " . sqlesc($passkey))) or mysql_error();
             if ($arr[0] > 0) {
                 $response = new API_Response("", 0, "Passkey is valid!");
             } else {
