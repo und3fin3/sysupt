@@ -10,7 +10,7 @@ $qq = htmlspecialchars($_GET['qq']);
 $id = htmlspecialchars($_GET['id']);
 $passkey = htmlspecialchars($_GET['passkey']);
 
-if (!auth_token($token, $sign, $type . $username . $qq)) {
+if (!auth_token($token, $sign, $type . $username . $qq . $id . $passkey)) {
     header('HTTP/1.1 401 Unauthorized');
     die();
 }
