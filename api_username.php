@@ -7,6 +7,8 @@ $sign = htmlspecialchars($_GET['sign']);
 $type = htmlspecialchars($_GET['type']);
 $username = htmlspecialchars($_GET['username']);
 $qq = htmlspecialchars($_GET['qq']);
+$id = htmlspecialchars($_GET['id']);
+$passkey = htmlspecialchars($_GET['passkey']);
 
 if (!auth_token($token, $sign, $type . $username . $qq)) {
     header('HTTP/1.1 401 Unauthorized');
@@ -31,6 +33,16 @@ switch ($type) {
                 $response = new API_Response($arr['username'], 0, "Found matched user.");
             } else {
                 $response = new API_Response("", -1, "Not found matched user.");
+            }
+            break;
+        }
+    case "verify_id_passkey":
+        {
+            $arr = @mysql_fetch_array(@sql_query("SELECT COUNT(*) FROM users WHERE id = " . sqlesc($id) . "AND passkey = " . sqlesc($passkey)));
+            if ($arr[0] > 0) {
+                $response = new API_Response("", 0, "Passkey is valid!");
+            } else {
+                $response = new API_Response("", -1, "Passkey is invalid!");
             }
             break;
         }
