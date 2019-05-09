@@ -1244,6 +1244,7 @@ function docleanup($forceAll = 0, $printProgress = false)
 	 * lastpostread < ".sqlesc($postIdHalfYearAgo)); } if ($printProgress) {
 	 * printProgress("delete old readpost records"); }
 	 */
+    /* There's no need to delete them~
     // delete old ip log
     $length = 365 * 86400; // a year
     $until = date("Y-m-d H:i:s", (TIMENOW - $length));
@@ -1259,6 +1260,7 @@ function docleanup($forceAll = 0, $printProgress = false)
     if ($printProgress) {
         printProgress("删除过旧的系统日志");
     }
+    */
 
     // 1.delete torrents that doesn't exist any more
     do {

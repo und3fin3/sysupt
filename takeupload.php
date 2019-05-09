@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 require_once("include/benc.php");
 require_once("include/bittorrent.php");
@@ -811,12 +811,14 @@ if ($nameset != "") {
 
     sql_query("UPDATE torrents SET name = " . sqlesc($nameset) . $pick . " WHERE id = $id") or sqlerr(__FILE__, __LINE__);
 }
+/* Shut up!
 if ($tjuptrip == 'yes') {
     $pre_to_shoutbox ['text'] = "TJUPT小组作品[b][color=red]" . $nameset . "[/color][/b]发布啦：[url=details.php?id=" . mysql_real_escape_string($id) . "&hit=1]大家这里使劲戳[/url]";
     $pre_to_shoutbox ['type'] = "sb";
     $pre_to_shoutbox ['ip'] = "北洋媛隐身啦～啦啦啦～";
     sql_query("INSERT INTO shoutbox (userid, date, text, type, ip) VALUES (0, " . sqlesc(time()) . ", " . sqlesc($pre_to_shoutbox ['text']) . ", " . sqlesc($pre_to_shoutbox ['type']) . ", '$pre_to_shoutbox[ip]' )") or sqlerr(__FILE__, __LINE__);
 }
+*/
 
 /*
  * /* tag a 0day/scene torrent uploaded by account '0day' with a '0day' label /*
