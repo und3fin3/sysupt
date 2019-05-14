@@ -77,12 +77,14 @@ crashlytics.properties
 crashlytics-build.properties
 
 # Production env dirs
-attachments
-bitbucket
-torrents
+attachments/*
+bitbucket/*
+torrents/*
 config/allconfig.php
-imdb/cache
-subs
+douban/cache/*
+subs/*
+
+!.gitkeep
 
 # Composer lock file and dir
 vendor
