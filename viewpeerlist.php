@@ -46,7 +46,7 @@ if (isset($CURUSER)) {
             /*	($enablelocation_tweak == 'yes' || get_user_class() >= $userprofile_class ? "<td class=colhead align=center width=1%>".$lang_viewpeerlist['col_location']."</td>" : "<td class=colhead align=center width=1%>".$lang_viewpeerlist['ip_type']."</td>").*/
             ($enablelocation_tweak == 'yes' || get_user_class() >= $userprofile_class ? "<td class=colhead align=center width=1%>" . $lang_viewpeerlist['col_location'] . "</td>" : "") .
 
-            // "<td class=colhead align=center width=1%>".$lang_viewpeerlist['col_connectable']."</td>".
+            "<td class=colhead align=center width=1%>" . $lang_viewpeerlist['col_connectable'] . "</td>".
 
             "<td class=colhead align=center width=1%>" . $lang_viewpeerlist['col_uploaded'] . "</td>" .
 
@@ -123,8 +123,21 @@ if (isset($CURUSER)) {
 
                     }*/
 
+            $arrConn = [];
+            if (!empty($e["ipv4"])){
+                if (check_tjuip($e["ipv4"])){
+                    $arrConn[] = $lang_viewpeerlist['text_ipv4_in'];
+                }else{
+                    $arrConn[] = $lang_viewpeerlist['text_ipv4_out'];
+                }
+            }
+            if (!empty($e["ipv6"])){
+                $arrConn[] = $lang_viewpeerlist['text_ipv6'];
+            }
+            empty($arrConn) && $arrConn[] = $lang_viewpeerlist['text_unknown'];
 
-            // $s .= "<td class=rowfollow align=center width=1%><nobr>" .$lang_viewpeerlist[$e['connectable']] . "</nobr></td>\n";
+
+            $s .= "<td class=rowfollow align=center width=1%><nobr>" . implode('/', $arrConn) . "</nobr></td>\n";
 
             $s .= "<td class=rowfollow align=center width=1%><nobr>" . mksize($e["uploaded"]) . "</nobr></td>\n";
 

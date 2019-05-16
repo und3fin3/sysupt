@@ -5698,8 +5698,9 @@ function salary($total_num, $total_size, $standard_num, $standard_size)
 // ***********************************************//判断TJUIP
 function check_tjuip($nip)
 {
+    static $nontjuip = null;
     global $Cache;
-    $nontjuip = $Cache->get_value('nontjuip');
+    empty($nontjuip) && $nontjuip = $Cache->get_value('nontjuip');
     if (!$nontjuip) {
         $nontjuip = array();
         $res = sql_query("SELECT * FROM nontjuip");
