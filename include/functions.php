@@ -5698,6 +5698,7 @@ function salary($total_num, $total_size, $standard_num, $standard_size)
 // ***********************************************//判断TJUIP
 function check_tjuip($nip)
 {
+    // 这是极少变动的配置，因此做内存缓存，防止重复查询
     static $nontjuip = null;
     global $Cache;
     empty($nontjuip) && $nontjuip = $Cache->get_value('nontjuip');

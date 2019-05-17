@@ -123,6 +123,7 @@ if (isset($CURUSER)) {
 
                     }*/
 
+            // 检测连通性，是否是校内IPV4/校外IPV4/IPV6
             $arrConn = [];
             if (!empty($e["ipv4"])){
                 if (check_tjuip($e["ipv4"])){
