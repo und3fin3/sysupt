@@ -126,7 +126,7 @@ if (isset($CURUSER)) {
             // 检测连通性，是否是校内IPV4/校外IPV4/IPV6
             $arrConn = [];
             if (!empty($e["ipv4"])){
-                if (check_tjuip($e["ipv4"])){
+                if (check_tjuip(long2ip($e['ipv4'])){
                     $arrConn[] = $lang_viewpeerlist['text_ipv4_in'];
                 }else{
                     $arrConn[] = $lang_viewpeerlist['text_ipv4_out'];
