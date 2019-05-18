@@ -34,7 +34,7 @@ $lang_viewpeerlist = array
 
 	'text_ipv4_out' => '校外IPV4',
 
-	'text_ipv6' => 'IPV4',
+	'text_ipv6' => 'IPV6',
 
 	'text_anonymous' => "匿名",
 
