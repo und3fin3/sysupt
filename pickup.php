@@ -139,7 +139,7 @@ if (get_user_class() >= $torrentsticky_class) {
         if ($_POST ["posstateuntil"] && strtotime($torrentAddedTimeString) <= strtotime($_POST ["posstateuntil"])) {
             $updateset [] = "pos_state = 'double_sticky'";
             $updateset [] = "pos_state_until = " . sqlesc($_POST ["posstateuntil"]);
-            if ($row ["pos_state"] != 'sticky')
+            if ($row ["pos_state"] != 'double_sticky')
                 $posstate = "二级置顶 ";
         } else {
             $updateset [] = "pos_state = 'normal'";
@@ -149,7 +149,7 @@ if (get_user_class() >= $torrentsticky_class) {
         if ($_POST ["posstateuntil"] && strtotime($torrentAddedTimeString) <= strtotime($_POST ["posstateuntil"])) {
             $updateset [] = "pos_state = 'triple_sticky'";
             $updateset [] = "pos_state_until = " . sqlesc($_POST ["posstateuntil"]);
-            if ($row ["pos_state"] != 'sticky')
+            if ($row ["pos_state"] != 'triple_sticky')
                 $posstate = "三级置顶 ";
         } else {
             $updateset [] = "pos_state = 'normal'";
@@ -200,7 +200,7 @@ $returl = "details.php?id=$id";
 if (isset ($_POST ["returnto"]))
     $returl = $_POST ["returnto"];
 
-if ((0 + $_POST ["sel_posstate"]) == 1 && $row ["pos_state"] != 'sticky') {
+if ((0 + $_POST ["sel_posstate"]) > 1 && $row ["pos_state"] == 'normal') {
     $pre_to_shoutbox ['text'] = "[b][color=red]" . $row ['name'] . "[/color][/b]被置顶啦：[url=details.php?id=" . mysql_real_escape_string($id) . "&hit=1]大家这里使劲戳[/url]";
     $pre_to_shoutbox ['type'] = "sb";
     $pre_to_shoutbox ['ip'] = "北洋媛隐身啦～啦啦啦～";
