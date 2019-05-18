@@ -3365,6 +3365,8 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                     begin_main_frame();
                     begin_frame();
 
+                    $stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />";
+
                     $count = 0;
                     if ($Advertisement->enable_ad())
                         $commentad = $Advertisement->get_ad('comment');
@@ -3376,7 +3378,7 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                                     echo "<div align=\"center\" style=\"margin-top: 10px\" id=\"ad_comment_" . $count . "\">" . $commentad [$count - 1] . "</div>";
                             }
                         }
-                        print ("<div style=\"margin-top: 8pt; margin-bottom: 8pt;\"><table id=\"cid" . $row ["id"] . "\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td class=\"embedded\" width=\"99%\">#" . $row ["id"] . "&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_by'] . "</font>");
+                        print ("<div style=\"margin-top: 8pt; margin-bottom: 8pt;\"><table id=\"cid" . $row ["id"] . "\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td class=\"embedded\" width=\"99%\">" . ($row['is_top'] > 0 ? $stickyicon . "&nbsp;" : "") . "#" . $row ["id"] . "&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_by'] . "</font>");
                         print (get_username($row ["user"], false, true, true, false, false, true));
                         print ("&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_at'] . "</font>" . gettime($row ["added"]) . ($row ["editedby"] && get_user_class() >= $commanage_class ? " - [<a href=\"comment.php?action=vieworiginal&amp;cid=" . $row ['id'] . "&amp;type=" . $type . "\">" . $lang_functions ['text_view_original'] . "</a>]" : "") . "</td><td class=\"embedded nowrap\" width=\"1%\"><a href=\"#top\"><img class=\"top\" src=\"pic/trans.gif\" alt=\"Top\" title=\"Top\" /></a>&nbsp;&nbsp;</td></tr></table></div>");
                         $avatar = ($CURUSER ["avatars"] == "yes" ? htmlspecialchars(trim($userRow ["avatar"])) : "");

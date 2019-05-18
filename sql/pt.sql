@@ -4378,6 +4378,13 @@ ALTER TABLE `usercss`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 增加种子评论置顶功能
+--
+ALTER TABLE `comments` ADD COLUMN is_top tinyint(4) unsigned NOT NULL DEFAULT 0 COMMENT '评论置顶';
+ALTER TABLE `comments` ADD INDEX idx_ttid(`torrent`,`is_top`,`id`);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
