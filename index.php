@@ -7,7 +7,7 @@ global $showextinfo, $showpolls_main, $CURUSER, $pollvote_bonus, $newsmanage_cla
        $showmovies, $showfunbox_main, $showstats_main, $newfunitem_class, $log_class, $funmanage_class, $showlastxtorrents_main,
        $maxusers, $pollmanage_class, $showtrackerload, $applylink_class, $linkmanage_class;
 if ($showextinfo ['imdb'] == 'yes')
-    require_once("imdb/imdb.class.php");
+    require_once("douban/douban.class.php");
 if ($_SERVER ["REQUEST_METHOD"] == "POST") {
     if ($showpolls_main == "yes") {
         $choice = $_POST ["choice"];
@@ -142,7 +142,7 @@ if ($showextinfo ['imdb'] == 'yes' && ($showmovies ['hot'] == "yes" || $showmovi
             if (!$Cache->get_page()) {
                 $Cache->add_whole_row();
 
-                $imdbcfg = new imdb_config ();
+                $imdb = new Douban ($imdb_id, 'imdb');
                 $res = sql_query("SELECT * FROM torrents WHERE picktype = " . sqlesc($type_each) . " AND seeders > 0 AND url != '' ORDER BY id DESC LIMIT 30") or sqlerr(__FILE__, __LINE__);
                 if (mysql_num_rows($res) > 0) {
                     $movies_list = "";
@@ -151,14 +151,11 @@ if ($showextinfo ['imdb'] == 'yes' && ($showmovies ['hot'] == "yes" || $showmovi
                     while ($array = mysql_fetch_array($res)) {
                         $pro_torrent = get_torrent_promotion_append($array ['sp_state'], 'word');
                         if ($imdb_id = parse_imdb_id($array ["url"])) {
-                            if (array_search($imdb_id, $allImdb) !== false) { // a
-                                // torrent with the
-                                // same IMDb url
-                                // already exists
+                            if (array_search($imdb_id, $allImdb) !== false) { // a torrent with the same IMDb url already exists
                                 continue;
                             }
                             $allImdb [] = $imdb_id;
-                            $photo_url = $imdbcfg->photodir . $imdb_id . $imdbcfg->imageext;
+                            $photo_url = $imdb->get_data('photo_localurl');
 
                             if (file_exists($photo_url))
                                 $thumbnail = "<img width=\"101\" height=\"140\" src=\"" . $photo_url . "\" border=\"0\" alt=\"poster\" />";

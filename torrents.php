@@ -8,8 +8,6 @@ global $CURUSER, $seebanned_class, $torrentmanage_class, $enablespecial, $smalld
 loggedinorreturn();
 parked();
 
-if ($showextinfo['imdb'] == 'yes')
-    require_once("imdb/imdb.class.php");
 //check searchbox
 $sectiontype = $browsecatmode;
 $showsubcat = get_searchbox_value($sectiontype, 'showsubcat');//whether show subcategory (i.e. sources, codecs) or not

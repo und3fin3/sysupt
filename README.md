@@ -15,28 +15,24 @@ By the license, using these code is your privilege, but we also recommended you 
 
 ## Build Manual
 
-### 1.Create Folders
+### 1.Change permission of config
 ```bash
-mkdir torrents bitbucket attachments imdb/cache subs
+chmod -R 777 config torrents bitbucket attachments douban/cache subs
 ```
-### 2.Change permission of config
-```bash
-chmod -R 777 config torrents bitbucket attachments imdb/cache subs
-```
-### 3.Create Database
+### 2.Create Database
 **Please use Mysql/MariaDB and DISABLE NO_ZERO_DATE, NO_ZERO_IN_DATE AND STRICT_TRANS_TABLES in `sql_mode`!**<br>
 ```bash
 source sql/pt.sql
 source sql/data.sql
 ```
-### 4.Edit allconfig.php
-Copy *config/example.allconfig.php* to *config/allconfig.php*,<br/>
-Edit BASIC array, which contains mysql configure.<br>
-If you want to use donate system, you should install dependency by composer:
+### 3.Install required package
+You can find required ext in `composer.json`, enable them in `php.ini`.
 ```bash
 composer install
 ```
-Then edit DONATION array in allconfig.php.
+### 4.Edit allconfig.php
+Copy *config/example.allconfig.php* to *config/allconfig.php*,<br/>
+Edit BASIC array, which contains mysql configure.<br>
 ### 5.Something you need edit
 Please edit the argument *domain*(.tjupt.org) to your domain name or just delete it in function logincookie(), set_langfolder_cookie() and logoutcookie() (You can find them in include/functions.php), otherwise you will not be able to log in.<br>
 In vim, you can use this command:

@@ -1,6 +1,6 @@
 <?php
 require "include/bittorrent.php";
-require_once("imdb/imdb2.class.php");
+require_once("douban/douban.class.php");
 dbconn();
 //Send some headers to keep the user's browser from caching the response.
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

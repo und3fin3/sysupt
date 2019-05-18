@@ -8,8 +8,11 @@ global $showextinfo, $CURUSER, $torrentmanage_class, $seebanned_class, $viewanon
        $submanage_class, $enablenfo_main, $uploadsub_class, $viewnfo_class, $Advertisement, $delownsub_class,
        $updateextinfo_class, $torrentstructure_class, $lang_details, $askreseed_class, $max_dead_torrent_time, $torrentnameprefix;
 
-if ($showextinfo ['imdb'] == 'yes')
-    require_once("imdb/imdb2.class.php");
+if ($showextinfo ['imdb'] == 'yes'){
+    require_once("douban/douban.class.php");
+    require_once("vendor/imdbphp/imdbphp/bootstrap.php");
+}
+
 loggedinorreturn();
 
 $id = 0 + $_GET ["id"];
@@ -382,13 +385,15 @@ else {
         if ($imdb_id && $showextinfo ['imdb'] == 'yes') {
             $thenumbers = $imdb_id;
             if (!$moviename = $Cache->get_value('imdb_id_' . $thenumbers . '_movie_name')) {
-                $movie = new imdb ($thenumbers);
+                $movie = new Douban ($thenumbers, 'imdb');
                 $movie->get_movie();
                 $moviename = $movie->get_data('title');
             }
-            $rating = $movie->get_data('rating');
-            if ($row['imdb_rating'] != $rating) {
-                sql_query("UPDATE torrents SET imdb_rating = '{$rating}' WHERE id = " . sqlesc($row ["id"]) . " LIMIT 1");
+            $douban_rating = $movie->get_data('rating');
+            $imdb = new \Imdb\Title($imdb_id);
+            $imdb_rating = $imdb->rating();
+            if ($row['imdb_rating'] != $imdb_rating) {
+                sql_query("UPDATE torrents SET imdb_rating = '{$imdb_rating}' WHERE url = " . sqlesc($row ["url"]));
             }
         }
         //print ("<td class=\"embedded\"><form method=\"get\" action=\"http://shooter.cn/sub/\" target=\"_blank\"><input type=\"text\" name=\"searchword\" id=\"keyword\" style=\"width: 250px\" value=\"" . $moviename . "\" /><input type=\"submit\" value=\"" . $lang_details ['submit_search_at_shooter'] . "\" /></form></td><td class=\"embedded\"><form method=\"get\" action=\"http://www.opensubtitles.org/en/search2/\" target=\"_blank\"><input type=\"hidden\" id=\"moviename\" name=\"MovieName\" /><input type=\"hidden\" name=\"action\" value=\"search\" /><input type=\"hidden\" name=\"SubLanguageID\" value=\"all\" /><input onclick=\"document.getElementById('moviename').value=document.getElementById('keyword').value;\" type=\"submit\" value=\"" . $lang_details ['submit_search_at_opensubtitles'] . "\" /></form></td>\n") ;
@@ -416,42 +421,34 @@ else {
         if ($imdb_id && $showextinfo ['imdb'] == 'yes' && $CURUSER ['showimdb'] != 'no') {
             $thenumbers = $imdb_id;
 
-            $movie = new imdb ($thenumbers);
-            $movieid = $thenumbers;
+            $movie = new Douban ($thenumbers, 'imdb');
             $movie->get_movie();
             reset_cachetimestamp($row ['id']);
+            $title = $movie->get_data('title');
+            $trans_title = $movie->get_data('transname');
             $country = $movie->get_data('country');
             $director = $movie->get_data('director');
             $creator = $movie->get_data('creator'); // For TV series
             $write = $movie->get_data('writing');
-            $produce = $movie->get_data('producer');
             $cast = $movie->get_data('cast');
-            $plot = $movie->get_data('plot');
             $plot_outline = $movie->get_data('plotoutline');
-            $compose = $movie->get_data('composer');
             $gen = $movie->get_data('genres');
-            // $comment = $movie->comment();
+            $douban_id = $movie->get_data('douban_id');
+            $year = $movie->get_data('year');
 
             if (($photo_url = $movie->get_data('photo_localurl')) != FALSE)
                 $smallth = "<img src=\"" . $photo_url . "\" width=\"105\" onclick=\"Preview(this);\" alt=\"poster\" />";
             else
                 $smallth = "<img src=\"pic/imdb_pic/nophoto.gif\" alt=\"no poster\" />";
 
-            $autodata = '<a href="http://www.imdb.com/title/tt' . $thenumbers . '">http://www.imdb.com/title/tt' . $thenumbers . "</a><br /><strong><font color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font><br />\n";
+            $autodata = "<a href='https://movie.douban.com/subject/" . $douban_id . "/'><img src='pic/douban.png' alt='douban'>" . $title . " ({$year}) [{$douban_rating}/10]</a> <a href='https://www.imdb.com/title/tt" . $thenumbers . "'><img src='pic/imdb.png' height='16px' width='16px' alt='imdb'> {$imdb_rating}/10</a><br />";
+            $autodata .= "<strong><font color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font><br />\n";
             $autodata .= "<font color=\"darkred\" size=\"3\">" . $lang_details ['text_information'] . "</font><br />\n";
             $autodata .= "<font color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font></strong><br />\n";
-            $autodata .= "<strong><font color=\"DarkRed\">" . $lang_details ['text_title'] . "</font></strong>" . $movie->get_data('title') . "<br />\n";
-            $autodata .= (($movie->get_data('transname') && $movie->get_data('transname') != $movie->get_data('title')) ? ("<strong><font color=\"DarkRed\">" . " 译名: " . "</font></strong>" . $movie->get_data('transname') . "<br />\n") : "");
-            $autodata .= "<strong><font color=\"DarkRed\">" . $lang_details ['text_also_known_as'] . "</font></strong>";
-
-            $temp = "";
-            for ($i = 0; $i < count($ak_temp = $movie->get_data('alsoknow')); $i++) {
-                $ak = $ak_temp [$i];
-                $temp .= $ak ["title"] . $ak ["year"] . ($ak ["country"] != "" ? " (" . $ak ["country"] . ")" : "") . ($ak ["comment"] != "" ? " (" . $ak ["comment"] . ")" : "") . ", ";
-            }
-            $autodata .= rtrim(trim($temp), ",");
+            $autodata .= "<strong><font color=\"DarkRed\">" . $lang_details ['text_title'] . "</font></strong>" . $title . "<br />\n";
+            $autodata .= (($trans_title && $trans_title != $title) ? ("<strong><font color=\"DarkRed\">" . " 译名: " . "</font></strong>" . $trans_title . "<br />\n") : "");
             $runtimes = str_replace("分钟", $lang_details ['text_mins'], $movie->get_data('runtime_all'));
-            $autodata .= "<br />\n<strong><font color=\"DarkRed\">" . $lang_details ['text_year'] . "</font></strong>" . "" . $movie->get_data('year') . "<br />\n";
+            $autodata .= "<strong><font color=\"DarkRed\">" . $lang_details ['text_year'] . "</font></strong>" . "" . $year . "<br />\n";
             $autodata .= "<strong><font color=\"DarkRed\">" . $lang_details ['text_runtime'] . "</font></strong>" . $runtimes . "<br />\n";
             $autodata .= "<strong><font color=\"DarkRed\">" . $lang_details ['text_votes'] . "</font></strong>" . "" . $movie->get_data('votes') . "<br />\n";
             $autodata .= "<strong><font color=\"DarkRed\">" . $lang_details ['text_rating'] . "</font></strong>" . "" . $movie->get_data('rating') . "<br />\n";
@@ -497,40 +494,10 @@ else {
             }
             $autodata .= rtrim(trim($temp), ",");
 
-            $autodata .= "<br />\n<strong><font color=\"DarkRed\">" . $lang_details ['text_produced_by'] . "</font></strong>";
-            $temp = "";
-            for ($i = 0; $i < count($produce); $i++) {
-                // $temp .= "<a target=\"_blank\"
-                // href=\"http://www.imdb.com/Name?" .
-                // "".$produce[$i]["imdb"]."" ." \">" .
-                // "".$produce[$i]["name"]."" . "</a>, ";
-                $temp .= $produce [$i] ["name"] . ", ";
-            }
-            $autodata .= rtrim(trim($temp), ",");
-
-            $autodata .= "<br />\n<strong><font color=\"DarkRed\">" . $lang_details ['text_music'] . "</font></strong>";
-            $temp = "";
-            for ($i = 0; $i < count($compose); $i++) {
-                // $temp .= "<a target=\"_blank\"
-                // href=\"http://www.imdb.com/Name?" .
-                // "".$compose[$i]["imdb"]."" ." \">" .
-                // "".$compose[$i]["name"]."" . "</a>, ";
-                $temp .= $compose [$i] ["name"] . ", ";
-            }
-            $autodata .= rtrim(trim($temp), ",");
-
             $autodata .= "<br /><br />\n\n<strong><font color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font><br />\n";
             $autodata .= "<font color=\"darkred\" size=\"3\">" . $lang_details ['text_plot_outline'] . "</font><br />\n";
             $autodata .= "<font color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font></strong>";
-
-            if (count($plot) == 0) {
-                $autodata .= "<br />\n" . $plot_outline;
-            } else {
-                for ($i = 0; $i < count($plot); $i++) {
-                    $autodata .= "<br />\n<font color=\"DarkRed\">.</font> ";
-                    $autodata .= $plot [$i];
-                }
-            }
+            $autodata .= "<br />\n" . $plot_outline;
 
             $autodata .= "<br /><br />\n\n<strong><font color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font><br />\n";
             $autodata .= "<font color=\"darkred\" size=\"3\">" . $lang_details ['text_cast'] . "</font><br />\n";
@@ -543,56 +510,6 @@ else {
                 $autodata .= "<font color=\"DarkRed\">." . $cast[$i] . "</font><br />\n";
             }
 
-            /*
-             * $autodata .= "<br /><strong><font
-             * color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font><br
-             * />\n"; $autodata .= "<font color=\"darkred\"
-             * size=\"3\">".$lang_details['text_may_also_like']."</font><br
-             * />\n"; $autodata .= "<font
-             * color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font></strong><br
-             * />\n"; $autodata .= "<table
-             * cellpadding=\"10\"><tr>"; if($similiar_movies) {
-             * $counter = 0; foreach($similiar_movies as
-             * $similiar_movies_each) { $on_site = "";
-             * $imdb_config_inst = new imdb_config();
-             * if($imdb_id_new =
-             * parse_imdb_id($imdb_config_inst->imdbsite .
-             * $similiar_movies_each['Link'])) { $similiar_res =
-             * sql_query("SELECT id FROM torrents WHERE url = "
-             * . sqlesc((int)$imdb_id_new) . " AND id !=
-             * ".sqlesc($id)." ORDER BY RAND() LIMIT 1") or
-             * sqlerr(__FILE__, __LINE__); while($similiar_arr =
-             * mysql_fetch_array($similiar_res)) { $on_site =
-             * "<strong><a href=\""
-             * .htmlspecialchars(get_protocol_prefix() .
-             * $BASEURL . "/details.php?id=" .
-             * $similiar_arr['id'] . "&hit=1")."\">" .
-             * $lang_details['text_local_link'] .
-             * "</a></strong>"; } } $autodata .= ($counter == 5
-             * ? "</tr><tr>" : "" ) . "<td align=\"center\"
-             * style=\"border: 0px; padding-left: 20px;
-             * padding-right: 20px; padding-bottom: 10px\"><a
-             * href=\"" . $movie->protocol_prefix .
-             * $movie->imdbsite . $similiar_movies_each['Link']
-             * . "\" title=\"\"><img style=\"border:0px;\"
-             * src=\"" . $similiar_movies_each['Local'] . "\"
-             * alt=\"" . $similiar_movies_each['Name'] . "\"
-             * /><br />" . $similiar_movies_each['Name'] .
-             * "</a><br />" . ($on_site != "" ? $on_site :
-             * "&nbsp;") . "</td>"; $counter++; } } $autodata .=
-             * "</tr></table>";
-             */
-
-            // $autodata .= "<br />\n\n<strong><font
-            // color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font><br
-            // />\n";
-            // $autodata .= "<font color=\"darkred\"
-            // size=\"3\">".$lang_details['text_recommended_comment']."</font><br
-            // />\n";
-            // $autodata .= "<font
-            // color=\"navy\">------------------------------------------------------------------------------------------------------------------------------------</font></strong>";
-
-            // $autodata .= "<br />".$comment;
             $Cache->new_page('detail_page_imdb_' . $imdb_id);
             if (!$Cache->get_page()) {
                 $Cache->add_whole_row();

@@ -1,7 +1,6 @@
 <?php
 require_once("include/bittorrent.php");
-require ("imdb/imdb2.class.php");
-require ("imdb/douban.php");
+require("douban/douban.class.php");
 dbconn();
 loggedinorreturn();
 global $updateextinfo_class;
@@ -30,7 +29,7 @@ switch ($siteid)
 		{
 			$thenumbers = $imdb_id;
 			
-			$movie = new imdb($imdb_id);
+			$movie = new Douban($imdb_id, 'imdb');
 			$movie->clear_cache();
 			set_cachetimestamp($id,"cache_stamp");
 			$Cache->delete_value('imdb_id_'.$thenumbers.'_movie_name');
