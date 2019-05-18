@@ -127,13 +127,13 @@ if (isset($CURUSER)) {
             $arrConn = [];
             if (!empty($e["ipv4"])){
                 if (check_tjuip(ip2long($e['ipv4']))){
-                    $arrConn[] = $lang_viewpeerlist['text_ipv4_in'];
+                    $arrConn[] = '<span>' . $lang_viewpeerlist['text_ipv4_in'] . '</span>>';
                 }else{
                     $arrConn[] = '<span style="color:red;">' . $lang_viewpeerlist['text_ipv4_out'] . '</span>';
                 }
             }
             if (!empty($e["ipv6"])){
-                $arrConn[] = $lang_viewpeerlist['text_ipv6'];
+                $arrConn[] = '<span style="font-weight: bold">' . $lang_viewpeerlist['text_ipv6'] . '</span>';
             }
             empty($arrConn) && $arrConn[] = $lang_viewpeerlist['text_unknown'];
 
