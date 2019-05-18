@@ -3781,9 +3781,11 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                     break;
                 case 'double_sticky':
                     $stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />&nbsp;";
+                    $stickyicon .= $stickyicon;
                     break;
                 case 'triple_sticky':
                     $stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />&nbsp;";
+                    $stickyicon .= $stickyicon . $stickyicon;
                     break;
                 default:
                     $stickyicon = "";
