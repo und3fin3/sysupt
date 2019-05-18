@@ -3367,9 +3367,6 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
 
                     $stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "\" />";
 
-                    $stickyOnBtn = '<a href="">' . $stickyicon . '</a>&nbsp;&nbsp;';
-                    $stickyOffBtn = '<a href="">' . $stickyicon . '</a>&nbsp;&nbsp;';
-
                     $topAble = false;
                     if ($type == 'torrent'){
                         // 只有种子支持
@@ -3400,9 +3397,9 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                         $topActionBar = '';
                         if ($topAble){
                             if ($row['is_top'] == 0){
-                                $topActionBar = $stickyOnBtn;
+                                $topActionBar = '<a href="comment.php?action=sticky&amp;sticky=1&amp;cid=' . $row ['id'] . "&amp;type=" . $type . "\">" . $stickyicon . '</a>&nbsp;&nbsp;';
                             }else{
-                                $topActionBar = $stickyOffBtn;
+                                $topActionBar = '<a href="comment.php?action=sticky&amp;sticky=0&amp;cid=' . $row ['id'] . "&amp;type=" . $type . "\">" . $stickyicon . '</a>&nbsp;&nbsp;';
                             }
 
                         }

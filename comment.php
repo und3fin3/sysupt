@@ -297,7 +297,48 @@ if ($action == "add") {
     stdfoot();
 
     die ();
-} else
+} elseif ($action == "sticky"){
+
+    if ($type != "torrent"){
+        stderr($lang_comment ['std_error'], $lang_comment ['std_permission_denied']);
+    }
+
+    $commentid = 0 + $_GET ["cid"];
+    int_check($commentid, true);
+
+    $res = sql_query("SELECT torrent as pid,is_sticky FROM comments WHERE id=$commentid") or sqlerr(__FILE__, __LINE__);
+    $arr = mysql_fetch_array($res);
+    if ($arr) {
+        $parent_id = $arr ["pid"];
+        $isTop = $arr ["is_sticky"];
+    } else
+        stderr($lang_comment ['std_error'], $lang_comment ['std_invalid_id']);
+
+
+    if (get_user_class() < $commanage_class){
+        $res = sql_query("SELECT name, owner FROM torrents WHERE id = $parent_id") or sqlerr(__FILE__, __LINE__);
+        $arr = mysql_fetch_array($res);
+        if ($arr['owner'] != $CURUSER ["id"]){
+            stderr($lang_comment ['std_error'], $lang_comment ['std_permission_denied']);
+        }
+    }
+
+    $sticky = 0 + $_GET['sticky'];
+    int_check($sticky, true);
+    if ($isTop != $is_sticky){
+        $res = mysql_query("UPDATE comments SET is_sticky=" . $sticky . " WHERE id = " . $commentid) or sqlerr(__FILE__, __LINE__);
+
+        $actSticky = $sticky == 0 ? "取消置顶" : "置顶";
+
+        write_log("$CURUSER[username] 编辑了评论 $commentid $actSticky");
+    }
+
+    $returnto = $_GET ["returnto"] ? $_GET ["returnto"] : htmlspecialchars($_SERVER ["HTTP_REFERER"]);
+
+    header("Location: $returnto");
+
+    die ();
+}else
     stderr($lang_comment ['std_error'], $lang_comment ['std_unknown_action']);
 
 die ();

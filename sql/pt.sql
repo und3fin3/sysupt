@@ -4382,8 +4382,8 @@ ALTER TABLE `users`
 --
 -- 增加种子评论置顶功能
 --
-ALTER TABLE `comments` ADD COLUMN is_top tinyint(4) unsigned NOT NULL DEFAULT 0 COMMENT '评论置顶';
-ALTER TABLE `comments` ADD INDEX idx_ttid(`torrent`,`is_top`,`id`);
+ALTER TABLE `comments` ADD COLUMN is_sticky tinyint(4) unsigned NOT NULL DEFAULT 0 COMMENT '评论置顶';
+ALTER TABLE `comments` ADD INDEX idx_tsid(`torrent`,`is_sticky`,`id`);
 
 COMMIT;
 
