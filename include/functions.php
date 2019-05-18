@@ -3396,7 +3396,7 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                         }
                         $topActionBar = '';
                         if ($topAble){
-                            if ($row['is_top'] == 0){
+                            if ($row['is_sticky'] == 0){
                                 $topActionBar = '<a href="comment.php?action=sticky&amp;sticky=1&amp;cid=' . $row ['id'] . "&amp;type=" . $type . "\">" . $stickyicon . '</a>&nbsp;&nbsp;';
                             }else{
                                 $topActionBar = '<a href="comment.php?action=sticky&amp;sticky=0&amp;cid=' . $row ['id'] . "&amp;type=" . $type . "\">" . $stickyicon . '</a>&nbsp;&nbsp;';
@@ -3404,7 +3404,7 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
 
                         }
 
-                        print ("<div style=\"margin-top: 8pt; margin-bottom: 8pt;\"><table id=\"cid" . $row ["id"] . "\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td class=\"embedded\" width=\"99%\">" . ($row['is_top'] > 0 ? $stickyicon . "&nbsp;" : "") . "#" . $row ["id"] . "&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_by'] . "</font>");
+                        print ("<div style=\"margin-top: 8pt; margin-bottom: 8pt;\"><table id=\"cid" . $row ["id"] . "\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td class=\"embedded\" width=\"99%\">" . ($row['is_sticky'] > 0 ? $stickyicon . "&nbsp;" : "") . "#" . $row ["id"] . "&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_by'] . "</font>");
                         print (get_username($row ["user"], false, true, true, false, false, true));
                         print ("&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_at'] . "</font>" . gettime($row ["added"]) . ($row ["editedby"] && get_user_class() >= $commanage_class ? " - [<a href=\"comment.php?action=vieworiginal&amp;cid=" . $row ['id'] . "&amp;type=" . $type . "\">" . $lang_functions ['text_view_original'] . "</a>]" : "") . "</td><td class=\"embedded nowrap\" width=\"1%\">" . $topActionBar . "<a href=\"#top\"><img class=\"top\" src=\"pic/trans.gif\" alt=\"Top\" title=\"Top\" /></a>&nbsp;&nbsp;</td></tr></table></div>");
                         $avatar = ($CURUSER ["avatars"] == "yes" ? htmlspecialchars(trim($userRow ["avatar"])) : "");

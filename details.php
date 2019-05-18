@@ -787,13 +787,13 @@ style=\"display: none;\">" . get_username($CURUSER ['id']) . " </span><span id=\
 
             $allrows = array();
             // 取出置顶贴
-            $subres = sql_query("SELECT id, text, user, added, editedby, editdate, is_top FROM comments WHERE torrent = $id AND is_top > 0 ORDER BY is_top DESC, id ASC") or sqlerr(__FILE__, __LINE__);
+            $subres = sql_query("SELECT id, text, user, added, editedby, editdate, is_sticky FROM comments WHERE torrent = $id AND is_sticky > 0 ORDER BY is_sticky DESC, id ASC") or sqlerr(__FILE__, __LINE__);
             while ($subrow = mysql_fetch_array($subres)) {
                 $allrows [] = $subrow;
             }
 
             // 取出非置顶
-            $subres = sql_query("SELECT id, text, user, added, editedby, editdate, is_top FROM comments WHERE torrent = $id AND is_top = 0 ORDER BY id $limit") or sqlerr(__FILE__, __LINE__);
+            $subres = sql_query("SELECT id, text, user, added, editedby, editdate, is_sticky FROM comments WHERE torrent = $id AND is_sticky = 0 ORDER BY id $limit") or sqlerr(__FILE__, __LINE__);
             while ($subrow = mysql_fetch_array($subres)) {
                 $allrows [] = $subrow;
             }
