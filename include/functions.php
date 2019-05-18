@@ -4191,7 +4191,7 @@ function getimdb($imdb_id, $cache_stamp, $mode = 'minor')
     global $lang_functions;
     global $showextinfo;
 
-    $movie = new imdb ($imdb_id);
+    $movie = new Douban ($imdb_id, 'imdb');
 
     $movie->get_movie();
 
@@ -5435,9 +5435,10 @@ function open_luckydraw()
  */
 function update_imdb()
 {
-    if (class_exists('imdb') != true)
+    if (class_exists('Douban') != true){
         global $rootpath;
-    require_once($rootpath . "imdb/imdb2.class.php");
+        require_once($rootpath . "douban/douban.class.php");
+    }
 
     // get the web page
     $url = "https://www.imdb.com/chart/top/";
@@ -5498,7 +5499,7 @@ function update_imdb()
 
 function translate_title($imdb_id)
 {
-    $imdb = new imdb($imdb_id);
+    $imdb = new Douban($imdb_id, 'imdb');
     $imdb->get_movie();
     return $imdb->get_data("transname");
 }
