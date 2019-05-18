@@ -3775,17 +3775,16 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
             $dispname = mb_substr($dispname, 0, $max_length_of_torrent_name - 2, "UTF-8") . "..";
 
         if ($row ['pos_state_until'] != "0000-00-00 00:00:00" && $CURUSER ['appendsticky'] == 'yes') {
+            $stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />";
             switch ($row ['pos_state']) {
                 case 'sticky':
-                    $stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />&nbsp;";
+                    $stickyicon = $stickyicon . "&nbsp;";
                     break;
                 case 'double_sticky':
-                    $stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />&nbsp;";
-                    $stickyicon .= $stickyicon;
+                    $stickyicon = $stickyicon . $stickyicon . "&nbsp;";
                     break;
                 case 'triple_sticky':
-                    $stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />&nbsp;";
-                    $stickyicon .= $stickyicon . $stickyicon;
+                    $stickyicon = $stickyicon . $stickyicon . $stickyicon . "&nbsp;";
                     break;
                 default:
                     $stickyicon = "";
