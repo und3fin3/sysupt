@@ -129,7 +129,7 @@ if (isset($CURUSER)) {
                 if (check_tjuip(ip2long($e['ipv4']))){
                     $arrConn[] = $lang_viewpeerlist['text_ipv4_in'];
                 }else{
-                    $arrConn[] = '<span style="color:red; font-weight: bold;">' . $lang_viewpeerlist['text_ipv4_out'] . '</span>';
+                    $arrConn[] = '<span style="color:red;">' . $lang_viewpeerlist['text_ipv4_out'] . '</span>';
                 }
             }
             if (!empty($e["ipv6"])){
@@ -138,7 +138,7 @@ if (isset($CURUSER)) {
             empty($arrConn) && $arrConn[] = $lang_viewpeerlist['text_unknown'];
 
 
-            $s .= "<td class=rowfollow align=center width=1%><nobr>" . implode('/', $arrConn) . "</nobr></td>\n";
+            $s .= "<td class=rowfollow align=center width=1%><nobr>" . implode('&nbsp;/&nbsp;', $arrConn) . "</nobr></td>\n";
 
             $s .= "<td class=rowfollow align=center width=1%><nobr>" . mksize($e["uploaded"]) . "</nobr></td>\n";
 
