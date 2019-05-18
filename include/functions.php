@@ -3365,7 +3365,26 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                     begin_main_frame();
                     begin_frame();
 
-                    $stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />";
+                    $stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "\" />";
+
+                    $stickyOnBtn = '<a href="">' . $stickyicon . '</a>&nbsp;&nbsp;';
+                    $stickyOffBtn = '<a href="">' . $stickyicon . '</a>&nbsp;&nbsp;';
+
+                    $topAble = false;
+                    if ($type == 'torrent'){
+                        // 只有种子支持
+                        if(get_user_class() >= $commanage_class){
+                            $topAble = true;
+                        }else{
+                            $tsql = sql_query("SELECT owner FROM torrents where id=" . $parent_id);
+                            $arr = mysql_fetch_array($tsql);
+                            if (!$arr)
+                                stderr("Error", "Invalid torrent id!");
+                            if ($arr ['owner'] == $CURUSER["id"]){
+                                $topAble = true;
+                            }
+                        }
+                    }
 
                     $count = 0;
                     if ($Advertisement->enable_ad())
@@ -3378,9 +3397,19 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                                     echo "<div align=\"center\" style=\"margin-top: 10px\" id=\"ad_comment_" . $count . "\">" . $commentad [$count - 1] . "</div>";
                             }
                         }
+                        $topActionBar = '';
+                        if ($topAble){
+                            if ($row['is_top'] == 0){
+                                $topActionBar = $stickyOnBtn;
+                            }else{
+                                $topActionBar = $stickyOffBtn;
+                            }
+
+                        }
+
                         print ("<div style=\"margin-top: 8pt; margin-bottom: 8pt;\"><table id=\"cid" . $row ["id"] . "\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\"><tr><td class=\"embedded\" width=\"99%\">" . ($row['is_top'] > 0 ? $stickyicon . "&nbsp;" : "") . "#" . $row ["id"] . "&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_by'] . "</font>");
                         print (get_username($row ["user"], false, true, true, false, false, true));
-                        print ("&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_at'] . "</font>" . gettime($row ["added"]) . ($row ["editedby"] && get_user_class() >= $commanage_class ? " - [<a href=\"comment.php?action=vieworiginal&amp;cid=" . $row ['id'] . "&amp;type=" . $type . "\">" . $lang_functions ['text_view_original'] . "</a>]" : "") . "</td><td class=\"embedded nowrap\" width=\"1%\"><a href=\"#top\"><img class=\"top\" src=\"pic/trans.gif\" alt=\"Top\" title=\"Top\" /></a>&nbsp;&nbsp;</td></tr></table></div>");
+                        print ("&nbsp;&nbsp;<font color=\"gray\">" . $lang_functions ['text_at'] . "</font>" . gettime($row ["added"]) . ($row ["editedby"] && get_user_class() >= $commanage_class ? " - [<a href=\"comment.php?action=vieworiginal&amp;cid=" . $row ['id'] . "&amp;type=" . $type . "\">" . $lang_functions ['text_view_original'] . "</a>]" : "") . "</td><td class=\"embedded nowrap\" width=\"1%\">" . $topActionBar . "<a href=\"#top\"><img class=\"top\" src=\"pic/trans.gif\" alt=\"Top\" title=\"Top\" /></a>&nbsp;&nbsp;</td></tr></table></div>");
                         $avatar = ($CURUSER ["avatars"] == "yes" ? htmlspecialchars(trim($userRow ["avatar"])) : "");
                         if (!$avatar)
                             $avatar = "pic/default_avatar.png";
