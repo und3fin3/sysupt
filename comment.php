@@ -314,13 +314,14 @@ if ($action == "add") {
     } else
         stderr($lang_comment ['std_error'], $lang_comment ['std_invalid_id']);
 
-
+    $isOwner = false;
     if (get_user_class() < $commanage_class){
         $res = sql_query("SELECT name, owner FROM torrents WHERE id = $parent_id") or sqlerr(__FILE__, __LINE__);
         $arr = mysql_fetch_array($res);
         if ($arr['owner'] != $CURUSER ["id"]){
             stderr($lang_comment ['std_error'], $lang_comment ['std_permission_denied']);
         }
+        $isOwner = true;
     }
 
     $sticky = 0 + $_GET['sticky'];
@@ -330,7 +331,7 @@ if ($action == "add") {
 
         $actSticky = $sticky == 0 ? "取消置顶" : "置顶";
 
-        write_log("$CURUSER[username] 编辑了评论 $commentid $actSticky");
+        write_log(($isOwner ? "发布者 " : "管理员 ") ."$CURUSER[username] 编辑了评论 $commentid $actSticky");
     }
 
     $returnto = $_GET ["returnto"] ? $_GET ["returnto"] : htmlspecialchars($_SERVER ["HTTP_REFERER"]);
