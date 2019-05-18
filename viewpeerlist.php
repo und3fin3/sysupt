@@ -127,7 +127,7 @@ if (isset($CURUSER)) {
             $arrConn = [];
             if (!empty($e["ipv4"])){
                 if (check_tjuip(ip2long($e['ipv4']))){
-                    $arrConn[] = '<span>' . $lang_viewpeerlist['text_ipv4_in'] . '</span>>';
+                    $arrConn[] = '<span>' . $lang_viewpeerlist['text_ipv4_in'] . '</span>';
                 }else{
                     $arrConn[] = '<span style="color:red;">' . $lang_viewpeerlist['text_ipv4_out'] . '</span>';
                 }
