@@ -56,9 +56,9 @@ function getcheckboxvalue(textid,number) {
 	Q.value = "";
 
 	for (var i=1;i<=number;i++) {
-		id = textid + i;
+		var id = textid + i;
 		var e = document.getElementById(id);
-		if ( e.checked == true) {
+		if ( e !== null && e.checked === true) {
 			Q.value = Q.value + e.value + "/"
 		}
 	}
@@ -92,7 +92,7 @@ function QueryString()
      //构造参数对象并初始化   
      var name,value,i;   
      var str=location.href;//获得浏览器地址栏URL串   
-     var num=str.indexOf("?")   
+     var num=str.indexOf("?");
      str=str.substr(num+1);//截取“?”后面的参数串   
      var arrtmp=str.split("&");//将各参数分离形成参数数组   
      for(i=0;i < arrtmp.length;i++)  
