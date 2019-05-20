@@ -2350,9 +2350,7 @@ CREATE TABLE `torrents` (
   `bonus_sale` enum('2up_free','2x_half','2up','free','half_down','normal') NOT NULL DEFAULT 'normal',
   `exclusive` enum('yes','no') NOT NULL DEFAULT 'no',
   `tjuptrip` enum('yes','no') NOT NULL DEFAULT 'no',
-  `connectable` varchar(11) DEFAULT '-/-/-',
-  `douban_id` int(10) UNSIGNED DEFAULT NULL,
-  `douban_rating` varchar(5) DEFAULT NULL
+  `connectable` varchar(11) DEFAULT '-/-/-'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2961,7 +2959,7 @@ ALTER TABLE `files`
 -- 表的索引 `formatanime`
 --
 ALTER TABLE `formatanime`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`name`);
 
 --
 -- 表的索引 `formatdocum`

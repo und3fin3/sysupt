@@ -34,14 +34,8 @@ function tr_textcheckbox($x, $y, $z, $star = "")
     $num = count($listarray);
     $show = "<tr class=\"rowfollow\" ><td class=\"no_border\" valign=\"top\" align=\"right\"><label><strong>" . $x . "</strong><input type=\"text\" size=\"50\" maxlength=\"100\" id=\"" . $y . "\" name=\"" . $y . "\"></label>$star<br>";
     foreach ($listarray as $row) {
-        if (substr_count($row['name'], '<text>'))
-            $show .= str_replace('<text>', '', $row['name']);
-        elseif ($row['name'] == '<linebreak>')
-            $show .= "<br />";
-        else {
-            $id = $y . $row['id'];
-            $show .= "<label><input id=" . $id . " type=checkbox value=" . $row['name'] . " name=" . $row['name'] . " onClick=getcheckboxvalue('" . $y . "'," . $num . ") />" . $row['name'] . "</label>";
-        }
+        $id = $y . $row['id'];
+        $show .= "<label><input id=" . $id . " type=checkbox value=" . $row['name'] . " name=" . $row['name'] . " onClick=getcheckboxvalue('" . $y . "'," . $num . ") />" . $row['name'] . "</label>";
     }
     $show .= "</td></tr><div class=\"clear1\"></div>";
 
