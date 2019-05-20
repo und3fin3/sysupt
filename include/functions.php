@@ -3397,9 +3397,9 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                         $topActionBar = '';
                         if ($topAble){
                             if ($row['is_sticky'] == 0){
-                                $topActionBar = '<a href="comment.php?action=sticky&amp;sticky=1&amp;cid=' . $row ['id'] . "&amp;type=" . $type . "\">" . $stickyicon . '</a>&nbsp;&nbsp;';
+                                $topActionBar = '<a href="comment.php?action=sticky&amp;sticky=1&amp;cid=' . $row ['id'] . "&amp;type=" . $type . "\">" . $lang_functions['text_set_sticky'] . '</a>&nbsp;&nbsp;';
                             }else{
-                                $topActionBar = '<a href="comment.php?action=sticky&amp;sticky=0&amp;cid=' . $row ['id'] . "&amp;type=" . $type . "\">" . $stickyicon . '</a>&nbsp;&nbsp;';
+                                $topActionBar = '<a href="comment.php?action=sticky&amp;sticky=0&amp;cid=' . $row ['id'] . "&amp;type=" . $type . "\">" . $lang_functions['text_unset_sticky'] . '</a>&nbsp;&nbsp;';
                             }
 
                         }
@@ -3803,16 +3803,15 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
             $dispname = mb_substr($dispname, 0, $max_length_of_torrent_name - 2, "UTF-8") . "..";
 
         if ($row ['pos_state_until'] != "0000-00-00 00:00:00" && $CURUSER ['appendsticky'] == 'yes') {
-            $stickyicon = "<img class=\"sticky\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />";
             switch ($row ['pos_state']) {
                 case 'sticky':
-                    $stickyicon = $stickyicon . "&nbsp;";
+                    $stickyicon = "<img class=\"sticky_1\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />";
                     break;
                 case 'double_sticky':
-                    $stickyicon = $stickyicon . $stickyicon . "&nbsp;";
+                    $stickyicon = "<img class=\"sticky_2\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />";
                     break;
                 case 'triple_sticky':
-                    $stickyicon = $stickyicon . $stickyicon . $stickyicon . "&nbsp;";
+                    $stickyicon = "<img class=\"sticky_3\" src=\"pic/trans.gif\" alt=\"Sticky\" title=\"" . $lang_functions ['title_sticky'] . "至" . $row ['pos_state_until'] . "\" />";
                     break;
                 default:
                     $stickyicon = "";

@@ -308,5 +308,7 @@ $lang_functions = array
     'text_tjuptrip' => "官方",
     'text_keepseed' => "保种",
     'text_pub4_notice' => "校园网环境下请及时关闭“离校模式”，避免校园网流量损失",
-    'text_school' => "校"
+    'text_school' => "校",
+    'text_set_sticky' => "设为置顶",
+    'text_unset_sticky' => "取消置顶"
 );

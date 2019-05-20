@@ -326,12 +326,12 @@ if ($action == "add") {
 
     $sticky = 0 + $_GET['sticky'];
     int_check($sticky, true);
-    if ($isTop != $is_sticky){
+    if ($isTop != $sticky){
         $res = mysql_query("UPDATE comments SET is_sticky=" . $sticky . " WHERE id = " . $commentid) or sqlerr(__FILE__, __LINE__);
 
         $actSticky = $sticky == 0 ? "取消置顶" : "置顶";
 
-        write_log(($isOwner ? "发布者 " : "管理员 ") ."$CURUSER[username] 编辑了评论 $commentid $actSticky");
+        write_log(($isOwner ? "发布者 " : "管理员 ") ."$CURUSER[username] 编辑了种子 {$arr['name']} 评论 $commentid $actSticky");
     }
 
     $returnto = $_GET ["returnto"] ? $_GET ["returnto"] : htmlspecialchars($_SERVER ["HTTP_REFERER"]);

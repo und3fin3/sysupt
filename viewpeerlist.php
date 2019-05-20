@@ -46,7 +46,7 @@ if (isset($CURUSER)) {
             /*	($enablelocation_tweak == 'yes' || get_user_class() >= $userprofile_class ? "<td class=colhead align=center width=1%>".$lang_viewpeerlist['col_location']."</td>" : "<td class=colhead align=center width=1%>".$lang_viewpeerlist['ip_type']."</td>").*/
             ($enablelocation_tweak == 'yes' || get_user_class() >= $userprofile_class ? "<td class=colhead align=center width=1%>" . $lang_viewpeerlist['col_location'] . "</td>" : "") .
 
-            "<td class=colhead align=center width=1%>" . $lang_viewpeerlist['col_connectable'] . "</td>".
+            "<td class=colhead align=center width=1%>" . $lang_viewpeerlist['ip_type'] . "</td>".
 
             "<td class=colhead align=center width=1%>" . $lang_viewpeerlist['col_uploaded'] . "</td>" .
 
