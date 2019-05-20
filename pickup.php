@@ -135,6 +135,26 @@ if (get_user_class() >= $torrentsticky_class) {
             $updateset [] = "pos_state = 'normal'";
             $updateset [] = "pos_state_until = '0000-00-00 00:00:00'";
         }
+    }elseif ((0 + $_POST ["sel_posstate"]) == 2) {
+        if ($_POST ["posstateuntil"] && strtotime($torrentAddedTimeString) <= strtotime($_POST ["posstateuntil"])) {
+            $updateset [] = "pos_state = 'double_sticky'";
+            $updateset [] = "pos_state_until = " . sqlesc($_POST ["posstateuntil"]);
+            if ($row ["pos_state"] != 'double_sticky')
+                $posstate = "二级置顶 ";
+        } else {
+            $updateset [] = "pos_state = 'normal'";
+            $updateset [] = "pos_state_until = '0000-00-00 00:00:00'";
+        }
+    }elseif ((0 + $_POST ["sel_posstate"]) == 3) {
+        if ($_POST ["posstateuntil"] && strtotime($torrentAddedTimeString) <= strtotime($_POST ["posstateuntil"])) {
+            $updateset [] = "pos_state = 'triple_sticky'";
+            $updateset [] = "pos_state_until = " . sqlesc($_POST ["posstateuntil"]);
+            if ($row ["pos_state"] != 'triple_sticky')
+                $posstate = "三级置顶 ";
+        } else {
+            $updateset [] = "pos_state = 'normal'";
+            $updateset [] = "pos_state_until = '0000-00-00 00:00:00'";
+        }
     }
 }
 
@@ -180,8 +200,8 @@ $returl = "details.php?id=$id";
 if (isset ($_POST ["returnto"]))
     $returl = $_POST ["returnto"];
 
-if ((0 + $_POST ["sel_posstate"]) == 1 && $row ["pos_state"] != 'sticky') {
-    $pre_to_shoutbox ['text'] = "[b][color=red]" . $row ['name'] . "[/color][/b]被置顶啦：[url=details.php?id=" . mysql_real_escape_string($id) . "&hit=1]大家这里使劲戳[/url]";
+if ((0 + $_POST ["sel_posstate"]) > 1 && $row ["pos_state"] == 'normal') {
+    $pre_to_shoutbox ['text'] = "[b][color=red]" . $row ['name'] . "[/color][/b]被置顶啦：[url=details.php?id=" . mysql_real_escape_string($id) . "&hit=1]大家使劲戳戳戳[/url]";
     $pre_to_shoutbox ['type'] = "sb";
     $pre_to_shoutbox ['ip'] = "北洋媛隐身啦～啦啦啦～";
     sql_query("INSERT INTO shoutbox (userid, date, text, type, ip) VALUES (0, " . sqlesc(time()) . ", " . sqlesc($pre_to_shoutbox ['text']) . ", " . sqlesc($pre_to_shoutbox ['type']) . ", '$pre_to_shoutbox[ip]' )") or sqlerr(__FILE__, __LINE__);

@@ -62,7 +62,7 @@ $(document).ready(function() {
             $("#gotop").fadeIn(400); //淡出
             $(".navbar").stop().fadeTo(400, 0.2);
         } else {
-            $("#gotop").fadeOut(400); //如果返回或者没有超过,就淡入.必须加上stop()停止之前动画,否则会出现闪动
+            $("#gotop").stop().fadeOut(400); //如果返回或者没有超过,就淡入.必须加上stop()停止之前动画,否则会出现闪动
             $(".navbar").stop().fadeTo(400, 1);
         }
     });

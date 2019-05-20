@@ -718,7 +718,8 @@ CREATE TABLE `comments` (
   `editedby` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `editdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `offer` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
-  `request` mediumint(8) NOT NULL DEFAULT 0
+  `request` mediumint(8) NOT NULL DEFAULT 0,
+  `is_sticky` tinyint(4) unsigned NOT NULL DEFAULT 0 COMMENT '评论置顶'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2892,7 +2893,8 @@ ALTER TABLE `comments`
   ADD KEY `user` (`user`),
   ADD KEY `torrent_id` (`torrent`,`id`),
   ADD KEY `offer_id` (`offer`,`id`),
-  ADD KEY `text` (`text`(10));
+  ADD KEY `text` (`text`(10)),
+  ADD KEY `idx_ttid` (`torrent`,`is_sticky`,`id`);
 
 --
 -- 表的索引 `connect`
@@ -4378,6 +4380,7 @@ ALTER TABLE `usercss`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
