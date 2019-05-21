@@ -539,7 +539,7 @@ $returl = "details.php?id=$id&edited=1";
 if (isset ($_POST ["returnto"]))
     $returl = $_POST ["returnto"];
 
-if ((0 + $_POST ["sel_posstate"]) == 1 && $row ["pos_state"] != 'sticky') {
+if ((0 + $_POST ["sel_posstate"]) > 1 && $row ["pos_state"] == 'normal') {
     $pre_to_shoutbox ['text'] = "[b][color=red]" . ($nameset ? $nameset : $row ['name']) . "[/color][/b]被置顶啦：[url=details.php?id=" . mysql_real_escape_string($id) . "&hit=1]大家这里戳戳戳[/url]";
     $pre_to_shoutbox ['type'] = "sb";
     $pre_to_shoutbox ['ip'] = "北洋媛隐身啦～啦啦啦～";
