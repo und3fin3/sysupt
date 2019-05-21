@@ -214,6 +214,26 @@ if (get_user_class() >= $torrentsticky_class) {
             $updateset [] = "pos_state = 'normal'";
             $updateset [] = "pos_state_until = '0000-00-00 00:00:00'";
         }
+    }elseif ((0 + $_POST ["sel_posstate"]) == 2) {
+        if ($_POST ["posstateuntil"] && strtotime($torrentAddedTimeString) <= strtotime($_POST ["posstateuntil"])) {
+            $updateset [] = "pos_state = 'double_sticky'";
+            $updateset [] = "pos_state_until = " . sqlesc($_POST ["posstateuntil"]);
+            if ($row ["pos_state"] != 'double_sticky')
+                $posstate = "二级置顶 ";
+        } else {
+            $updateset [] = "pos_state = 'normal'";
+            $updateset [] = "pos_state_until = '0000-00-00 00:00:00'";
+        }
+    }elseif ((0 + $_POST ["sel_posstate"]) == 3) {
+        if ($_POST ["posstateuntil"] && strtotime($torrentAddedTimeString) <= strtotime($_POST ["posstateuntil"])) {
+            $updateset [] = "pos_state = 'triple_sticky'";
+            $updateset [] = "pos_state_until = " . sqlesc($_POST ["posstateuntil"]);
+            if ($row ["pos_state"] != 'triple_sticky')
+                $posstate = "三级置顶 ";
+        } else {
+            $updateset [] = "pos_state = 'normal'";
+            $updateset [] = "pos_state_until = '0000-00-00 00:00:00'";
+        }
     }
 }
 
