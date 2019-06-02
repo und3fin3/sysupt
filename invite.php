@@ -140,7 +140,7 @@ if ($type == 'new') {
     } else {
         ?>
         <script type="text/javascript">
-            var clipboard = ClipboardJS(".to_clipboard");
+            var clipboard = new ClipboardJS(".to_clipboard");
             clipboard.on("success", function (e) {
                 alert("复制成功");
             });
