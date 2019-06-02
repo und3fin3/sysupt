@@ -206,7 +206,7 @@ if ($action) {
                 //School select
                 if ($showschool == 'yes') {
                     $schools = "<option value=35>---- " . $lang_usercp['select_none_selected'] . " ----</option>n";
-                    $sc_r = sql_query("SELECT id,name FROM schools ORDER BY name") or die;
+                    $sc_r = sql_query("SELECT id,name FROM schools ORDER BY CONVERT(name USING gbk) COLLATE gbk_chinese_ci ASC") or die;
                     while ($sc_a = mysql_fetch_array($sc_r))
                         $schools .= "<option value=$sc_a[id]" . ($sc_a['id'] == $CURUSER['school'] ? " selected" : "") . ">$sc_a[name]</option>n";
                     tr($lang_usercp['row_school'], "<select name=school>$schools</select>", 1);

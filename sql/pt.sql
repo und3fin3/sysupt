@@ -1946,8 +1946,7 @@ CREATE TABLE `rules` (
 
 CREATE TABLE `schools` (
   `id` smallint(5) UNSIGNED NOT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `ip` varchar(255) DEFAULT NULL
+  `name` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
