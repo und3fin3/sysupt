@@ -22,8 +22,10 @@ if (empty($passkey)) {
         $bookmarkarray = return_torrent_bookmark_array($user['id']);
         if ($bookmarkarray) {
             $whereidin = implode(",", $bookmarkarray);
-            $where .= ($where ? " AND " : "") . "torrents.id IN(" . $whereidin . ")";
+        } else {
+            $whereidin = 0;
         }
+        $where .= ($where ? " AND " : "") . "torrents.id IN (" . $whereidin . ")";
     }
 }
 $searchstr = mysql_real_escape_string(trim($_GET["search"]));
