@@ -118,10 +118,6 @@ function sql_query($query)
 
 function sqlesc($value)
 {
-    // Stripslashes
-    if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
-        $value = stripslashes($value);
-    }
     // Quote if not a number or a numeric string
     if (!is_numeric($value) || $value[0] == '0' || $value[0] == '+') {
         $value = "'" . mysql_real_escape_string($value) . "'";
