@@ -834,17 +834,18 @@ if ($_GET ["finish_offer"]) {
         } else
             $timeoutnote = "";
         $msg = $lang_offers_target [get_user_lang($arr ["userid"])] ['msg_offer_voted_on'] . "[b][url=offers.php?id=$offid&off_details=1]" . $arr ['name'] . "[/url][/b]." . $lang_offers_target [get_user_lang($arr ["userid"])] ['msg_find_offer_option'] . $timeoutnote;
-        sql_query("UPDATE offers SET allowed = 'allowed',allowedtime ='" . sqlesc($finishvotetime) . "' WHERE id = $offid") or sqlerr(__FILE__, __LINE__);
+        sql_query("UPDATE offers SET allowed = 'allowed',allowedtime =" . sqlesc($finishvotetime) . " WHERE id = $offid") or sqlerr(__FILE__, __LINE__);
     } else if (($no - $yes) >= $minoffervotes) {
         $msg = $lang_offers_target [get_user_lang($arr ["userid"])] ['msg_offer_voted_off'] . "[b][url=offers.php?id=$offid&off_details=1]" . $arr ['name'] . "[/url][/b]." . $lang_offers_target [get_user_lang($arr ["userid"])] ['msg_offer_deleted'];
         sql_query("UPDATE offers SET allowed = 'denied' WHERE id = $offid") or sqlerr(__FILE__, __LINE__);
     } else {
+        $msg = $lang_offers_target [get_user_lang($arr ["userid"])] ['msg_voted_on'] . "[b][url=offers.php?id=$offid&off_details=1]" . $arr ['name'] . "[/url][/b].";
         sql_query("UPDATE offers SET allowed = 'pending' WHERE id = $offid") or sqlerr(__FILE__, __LINE__);
     }
 
     // ===use this line if you DO HAVE subject in your PM system
-    $subject = $lang_offers_target [get_user_lang($arr ['userid'])] ['msg_your_offer'] . $arr ['name'] . $lang_offers_target [get_user_lang($arr ['userid'])] ['msg_voted_on'];
-    sql_query("INSERT INTO messages (sender, subject, receiver, added, msg) VALUES(0, " . sqlesc($subject) . ", $arr[userid], '" . sqlesc($finishvotetime) . "', " . sqlesc($msg) . ")") or sqlerr(__FILE__, __LINE__);
+    $subject = $lang_offers_target [get_user_lang($arr ['userid'])] ['msg_your_offer'] . $arr ['name'] . $lang_offers_target [get_user_lang($arr ['userid'])] ['msg_status_change'];
+    sql_query("INSERT INTO messages (sender, subject, receiver, added, msg) VALUES(0, " . sqlesc($subject) . ", $arr[userid], " . sqlesc($finishvotetime) . ", " . sqlesc($msg) . ")") or sqlerr(__FILE__, __LINE__);
     // ===use this line if you DO NOT subject in your PM system
     // sql_query("INSERT INTO messages (sender, receiver, added, msg) VALUES(0,
     // $arr[userid], '" . date("Y-m-d H:i:s") . "', " . sqlesc($msg) . ")") or
