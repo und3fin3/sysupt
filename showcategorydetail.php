@@ -95,25 +95,25 @@ if ($catid == 401) {
     tr_text("中文名", "cname", $star);
     tr_text("英文名", "ename", $star . "英文名为0day名，如：The.Kings.Speech.2010.BDRip.XviD-AMIABLE");
     //tr_text("Imdb编号","imdbnum","如：tt0120815");
-    tr_text("发行时间", "issuedate", $star);
+    //tr_text("发行时间", "issuedate", $star);
 
-    tr_textcheckbox("电影语言", "language", "langtvseries", $star);
+    //tr_textcheckbox("电影语言", "language", "langtvseries", $star);
     //tr_textcheckbox("电影类别","specificcat","catmovie",$star);
-    tr_textradio("电影文件格式", "format", "formatmovie", $star);
-    tr_select("字幕情况", "subsinfo", "subsinfo", $star);
+    //tr_textradio("电影文件格式", "format", "formatmovie", $star);
+    //tr_select("字幕情况", "subsinfo", "subsinfo", $star);
     tr_textcheckbox("制作国家/地区", "district", "districtmovie", $star);
 
 } elseif ($catid == "402") {
     tr_uploadinfo("剧集", "forums.php?action=viewtopic&forumid=5&topicid=57");
     tr_text("中文名", "cname", $star);
     tr_text("英文名", "ename");
-    tr_text("别名", "tvalias");
-    tr_text("集数", "tvseasoninfo");
+    //tr_text("别名", "tvalias");
+    //tr_text("集数", "tvseasoninfo");
 
     tr_textcheckbox("剧集类型", "specificcat", "catseries", $star);
-    tr_textcheckbox("剧集文件格式", "format", "formattvseries");
-    tr_select("字幕情况", "subsinfo", "subsinfo");
-    tr_textcheckbox("剧集语言", "language", "langtvseries", $star);
+    //tr_textcheckbox("剧集文件格式", "format", "formattvseries");
+    //tr_select("字幕情况", "subsinfo", "subsinfo");
+    //tr_textcheckbox("剧集语言", "language", "langtvseries", $star);
 } elseif ($catid == "403") {
     tr_uploadinfo("综艺", "forums.php?action=viewtopic&forumid=5&topicid=70");
     tr_text("中文名", "cname");

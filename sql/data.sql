@@ -951,18 +951,33 @@ INSERT INTO `faq` (`id`, `link_id`, `lang_id`, `type`, `question`, `answer`, `fl
 --
 
 INSERT INTO `formatanime` (`id`, `name`, `sort_index`) VALUES
-(1, 'RMVB', 1),
+(1, 'RMVB', 6),
 (2, 'MP4', 2),
-(3, 'DVDRip', 3),
-(4, 'TVRip', 4),
-(5, 'DVDISO', 5),
-(6, 'BDMV', 6),
-(7, 'BDRip', 7),
-(8, 'HDTVRip', 8),
-(9, '有损音频', 10),
-(10, '无损音频', 11),
-(11, '其他', 99),
-(12, 'HQ-HDTVRip', 9);
+(3, 'DVDRip', 18),
+(4, 'TVRip', 19),
+(5, 'DVDISO', 23),
+(6, 'BDMV', 21),
+(7, 'BDRip', 20),
+(8, 'HDTVRip', 22),
+-- (9, '有损音频', 10),
+-- (10, '无损音频', 11),
+-- (11, '其他', 99),
+(12, 'HQ-HDTVRip', 24),
+(13, 'MKV', 3),
+(14, '<text>视频', 1),
+(15, '<text>音频', 8),
+(16, '<text>漫画', 13),
+(17, 'M2TS', 4),
+(18, 'VOB', 5),
+(19, 'WAV', 9),
+(20, 'FLAC', 10),
+(21, 'MP3', 11),
+(22, 'ZIP', 14),
+(23, 'RAR', 15),
+(24, '<linebreak>', 7),
+(25, '<linebreak>', 12),
+(26, '<linebreak>', 16),
+(27, '<text>来源', 17);
 
 --
 -- 转存表中的数据 `formatdocum`
@@ -994,17 +1009,18 @@ INSERT INTO `formatgame` (`id`, `name`, `sort_index`) VALUES
 (1, '光盘镜像', 2),
 (2, '压缩包', 3),
 (3, '安装包', 4),
-(4, '<text>视频格式', 6),
-(5, 'FLV', 7),
-(6, 'AVI', 8),
-(7, 'MKV', 9),
-(8, 'MP4', 10),
-(9, '<text>原声格式', 12),
-(10, '无损', 13),
-(11, 'MP3', 14),
-(12, '<linebreak>', 11),
-(13, '<linebreak>', 5),
-(14, '<text>游戏格式', 1);
+(4, '<text>视频格式', 7),
+(5, 'FLV', 8),
+(6, 'AVI', 9),
+(7, 'MKV', 10),
+(8, 'MP4', 11),
+(9, '<text>原声格式', 13),
+(10, '无损', 14),
+(11, 'MP3', 15),
+(12, '<linebreak>', 12),
+(13, '<linebreak>', 6),
+(14, '<text>游戏格式', 1),
+(15, '正版备份', 5);
 
 --
 -- 转存表中的数据 `formathqaudio`
