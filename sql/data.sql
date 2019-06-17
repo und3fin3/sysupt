@@ -515,6 +515,18 @@ INSERT INTO `catplatform` (`id`, `name`, `sort_index`) VALUES
 (19, '其它移动平台', 0);
 
 --
+-- 转存表中的数据 `platformsoftware`
+--
+
+INSERT INTO `platformsoftware` (`id`, `name`, `sort_index`) VALUES
+(1, 'Windows', 0),
+(2, 'Linux', 0),
+(3, 'macOS', 0),
+(4, 'Android', 0),
+(5, 'iOS', 0),
+(6, '其他', 0);
+
+--
 -- 转存表中的数据 `catseries`
 --
 
@@ -539,7 +551,11 @@ INSERT INTO `catsoftware` (`id`, `name`, `sort_index`) VALUES
 (5, '多媒体类', 0),
 (6, '行业软件', 0),
 (7, '编程开发', 0),
-(8, '安全相关', 0);
+(8, '安全相关', 0),
+(9, '办公软件', 0),
+(10, '教育软件', 0),
+(11, '硬件驱动', 0),
+(12, '系统补丁', 0);
 
 --
 -- 转存表中的数据 `catsports`

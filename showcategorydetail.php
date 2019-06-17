@@ -178,13 +178,14 @@ if ($catid == 401) {
 } elseif ($catid == "408") {
     tr_uploadinfo("软件", "forums.php?action=viewtopic&forumid=5&topicid=71");
     tr_text("中文名", "cname");
-    tr_text("英文名", "ename", "<b>请注意填写操作系统和位数，如 Win 64bit 或 Mac 等</b>");
+    tr_text("英文名", "ename");
     tr_text("发行时间", "issuedate");
     tr_text("版本", "version");
 
     tr_textcheckbox("软件类型", "specificcat", "catsoftware");
     tr_textcheckbox("软件文件格式", "format", "formatsoftware");
     tr_textcheckbox("软件语言", "language", "langsoftware");
+    tr_textcheckbox("平台/系统", "platform", "platformsoftware");
 } elseif ($catid == "409") {
     tr_uploadinfo("游戏", "forums.php?action=viewtopic&forumid=5&topicid=58");
     tr_text("中文名", "cname", $star);

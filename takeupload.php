@@ -571,6 +571,7 @@ if (!count($errfile)) {
 $cname = (trimcomma($_POST ["cname"]));
 $ename = (trimcomma($_POST ["ename"]));
 $specificcat = (trimcomma($_POST ["specificcat"]));
+$platform = (trimcomma($_POST["platform"]));
 $issuedate = (trimcomma($_POST ["issuedate"]));
 $subsinfo = (trimcomma($_POST ["subsinfo"]));
 $district = (trimcomma($_POST ["district"]));
@@ -690,6 +691,8 @@ if ($catid == 407) {
 }
 if ($catid == 408) {
     $version = (trimcomma($_POST ["version"]));
+    if ($platform != "")
+        $nameset .= "[" . $platform . "]";
     if ($specificcat != "")
         $nameset .= "[" . $specificcat . "]";
     if ($cname != "")

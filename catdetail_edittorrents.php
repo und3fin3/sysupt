@@ -101,6 +101,7 @@ $ename = $row['ename'];
 $issuedate = $row['issuedate'];
 $subsinfo = $row['subsinfo'];
 $language = $row['language'];
+$platform = $row['platform'];
 $format = $row['format'];
 $specificcat = $row['specificcat'];
 $district = $row['district'];
@@ -203,6 +204,7 @@ if ($catid == 401) {
     tr_textcheckbox("软件类型", "specificcat", "catsoftware", $specificcat);
     tr_textcheckbox("软件文件格式", "format", "formatsoftware", $format);
     tr_textcheckbox("软件语言", "language", "langsoftware", $language);
+    tr_textcheckbox("平台/系统", "platform", "platformsoftware", $platform);
 } elseif ($catid == "409") {
     $company = $row['company'];
     $platform = $row['platform'];

@@ -592,6 +592,18 @@ CREATE TABLE `catplatform` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `platformsoftware`
+--
+
+CREATE TABLE `platformsoftware` (
+  `id` smallint(5) UNSIGNED NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `sort_index` smallint(5) UNSIGNED NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `catseries`
 --
 
@@ -2854,6 +2866,12 @@ ALTER TABLE `catsoftware`
   ADD PRIMARY KEY (`name`);
 
 --
+-- 表的索引 `platformsoftware`
+--
+ALTER TABLE `platformsoftware`
+  ADD PRIMARY KEY (`name`);
+
+--
 -- 表的索引 `catsports`
 --
 ALTER TABLE `catsports`
@@ -2966,7 +2984,7 @@ ALTER TABLE `formatanime`
 -- 表的索引 `formatdocum`
 --
 ALTER TABLE `formatdocum`
-  ADD PRIMARY KEY (`name`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- 表的索引 `formatgame`
