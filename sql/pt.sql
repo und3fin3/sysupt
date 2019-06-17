@@ -2960,7 +2960,7 @@ ALTER TABLE `files`
 -- 表的索引 `formatanime`
 --
 ALTER TABLE `formatanime`
-  ADD PRIMARY KEY (`name`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- 表的索引 `formatdocum`

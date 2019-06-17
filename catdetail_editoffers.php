@@ -48,8 +48,14 @@ function tr_textcheckbox($x, $y, $listname, $z = "", $star = "")
     $num = count($listarray);
     $show = "<tr class=\"rowfollow\" ><td class=\"no_border\" valign=\"top\" align=\"right\"><label><strong>" . $x . "</strong><input type=\"text\" size=\"50\" maxlength=\"100\" id=\"" . $y . "\" name=\"" . $y . "\"  value=\"" . $z . "\"></label>$star<br>";
     foreach ($listarray as $row) {
-        $id = $y . $row['id'];
-        $show .= "<label><INPUT id=" . $id . " type=checkbox value=" . $row['name'] . " name=" . $row['name'] . " onClick=getcheckboxvalue('" . $y . "'," . $num . ")>" . $row['name'] . "</label>";
+        if (substr_count($row['name'], '<text>'))
+            $show .= str_replace('<text>', '', $row['name']);
+        elseif ($row['name'] == '<linebreak>')
+            $show .= "<br />";
+        else {
+            $id = $y . $row['id'];
+            $show .= "<label><input id=" . $id . " type=checkbox value=" . $row['name'] . " name=" . $row['name'] . " onClick=getcheckboxvalue('" . $y . "'," . $num . ")>" . $row['name'] . "</label>";
+        }
     }
     $show .= "</td></tr><div class=\"clear1\"></div>";
 
@@ -102,31 +108,31 @@ $version = $row['version'];
 $resolution = $row['resolution'];
 
 if ($catid == 401) {
-    $imdbnum = $row['imdbnum'];
+//    $imdbnum = $row['imdbnum'];
 
     tr_text("中文名", "cname", $cname, $star);
     tr_text("英文名", "ename", $ename, $star . "英文名为0day名，如：The.Kings.Speech.2010.BDRip.XviD-AMIABLE");
     //tr_text("Imdb编号","imdbnum",$imdbnum,"如：tt0120815");
-    tr_text("发行时间", "issuedate", $issuedate, $star);
-    tr_textcheckbox("电影语言", "language", "langtvseries", $language, $star);
+//    tr_text("发行时间", "issuedate", $issuedate, $star);
+//    tr_textcheckbox("电影语言", "language", "langtvseries", $language, $star);
 
     //tr_textcheckbox("电影类别","specificcat","catmovie",$specificcat,$star);
-    tr_textradio("电影文件格式", "format", "formatmovie", $format, $star);
-    tr_select("字幕情况", "subsinfo", $subsinfo, $star);
+//    tr_textradio("电影文件格式", "format", "formatmovie", $format, $star);
+//    tr_select("字幕情况", "subsinfo", $subsinfo, $star);
     tr_textcheckbox("制作国家/地区", "district", "districtmovie", $district, $star);
 } elseif ($catid == "402") {
-    $tvalias = $row['tvalias'];
-    $tvseasoninfo = $row['tvseasoninfo'];
+//    $tvalias = $row['tvalias'];
+//    $tvseasoninfo = $row['tvseasoninfo'];
 
     tr_text("中文名", "cname", $cname, $star);
     tr_text("英文名", "ename", $ename);
-    tr_text("别名", "tvalias", $tvalias);
-    tr_text("剧集季度信息", "tvseasoninfo", $tvseasoninfo);
+//    tr_text("别名", "tvalias", $tvalias);
+//    tr_text("剧集季度信息", "tvseasoninfo", $tvseasoninfo);
 
     tr_textcheckbox("剧集类型", "specificcat", "catseries", $specificcat, $star);
-    tr_textcheckbox("剧集文件格式", "format", "formattvseries", $format);
-    tr_select("字幕情况", "subsinfo", $subsinfo);
-    tr_textcheckbox("剧集语言", "language", "langtvseries", $language, $star);
+//    tr_textcheckbox("剧集文件格式", "format", "formattvseries", $format);
+//    tr_select("字幕情况", "subsinfo", $subsinfo);
+//    tr_textcheckbox("剧集语言", "language", "langtvseries", $language, $star);
 } elseif ($catid == "403") {
     $tvshowscontent = $row['tvshowscontent'];
     $tvshowsguest = $row['tvshowsguest'];
