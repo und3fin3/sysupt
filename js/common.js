@@ -440,7 +440,7 @@ document.getElementById("giftcustom").disabled = false;
 // givebonus.js
 function confirmgive(bonus)
 {
-	if   (confirm("Present "   +   bonus   +   " bonus as a gift?"))   return   true;  
+	if   (confirm("Present "   +   bonus   +   " bonus as a gift?"))   return   true;
 		return false;
 }
 
@@ -453,14 +453,14 @@ if(confirmgive(bonus))
 
 if(bonus<bonus0)
 {
-	
+
 	document.getElementById("nothanksbonus").innerHTML = "";
 document.getElementById("addcuruserbonus").innerHTML = document.getElementById("curuserbonus").innerHTML+"("+bonus+".0)";
 	var list=ajax.posts('givebonus.php','torrentid='+torrentid+'&bonus='+bonus);
 	var aa="successful and thanks for "+bonus+" bonus!";
 	alert(aa);
 	}
-	
+
 else
 {
 	var aa="failure:your bonus less than "+bonus;
@@ -480,7 +480,7 @@ if(bonus<bonus0)
 {
 	var nothanksbonus="nothanksbonus"+torrentid;
 	var addcuruserbonus="addcuruserbonus"+torrentid;
-	
+
 	document.getElementById(nothanksbonus).innerHTML = "";
 document.getElementById(addcuruserbonus).innerHTML = document.getElementById("curuserbonus").innerHTML+"("+bonus+".0)";
 
@@ -492,11 +492,11 @@ document.getElementById(addcuruserbonus).innerHTML = document.getElementById("cu
 	var forumid=document.getElementById("spanforumid").innerHTML;
 
 	var list=ajax.posts('givebon.php','torrentid='+torrentid+'&bonus='+bonus+'&useridgift='+useridgift+'&forumname='+forumname+'&subject='+subject+'&topicid='+topicid+'&forumid='+forumid);
-	
+
 	var aa="successful and thanks for "+bonus+" bonus!";
 	alert(aa);
 	}
-	
+
 else
 {
 	var aa="failure:your bonus less than "+bonus;
@@ -544,4 +544,30 @@ function show_all_uploaders(checkbox) {
         $(this).css('display', 'table-row');
     });
     $(checkbox).attr("onclick", "only_show_not_passed_uploaders(this);");
+}
+
+function get_external_data() {
+    var url = $("#external_url").val();
+    if (url.search("imdb.com") === -1 && url.search("douban.com") === -1 && url.search("themoviedb.org") === -1) {
+        alert("请填写正确的外部链接！");
+    } else {
+        if ($("#descr").val() && !confirm("辅助填写将删除已填写简介，是否继续？")) {
+            return;
+        }
+        var external_api_base_url = "https://api.issacc.bid/infogen";
+        var api_url = "";
+        if (url.search("imdb.com") !== -1){
+            api_url = external_api_base_url + "?site=douban&sid=" + /tt(\d+)/i.exec(url);
+        }else{
+            api_url = external_api_base_url + "?url=" + url;
+        }
+        $.get(api_url, function(data){
+            if (data.error !== null){
+                alert(data.error);
+            }else{
+                $("#descr").val(data.format);
+                $("input[name='url'][type='text']").val(data.imdb_link);
+            }
+        });
+    }
 }
