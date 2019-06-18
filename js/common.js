@@ -557,7 +557,7 @@ function get_external_data() {
         var external_api_base_url = "https://api.issacc.bid/infogen";
         var api_url = "";
         if (url.search("imdb.com") !== -1){
-            api_url = external_api_base_url + "?site=douban&sid=" + /tt(\d+)/i.exec(url);
+            api_url = external_api_base_url + "?site=douban&sid=" + /tt(\d+)/i.exec(url)[0];
         }else{
             api_url = external_api_base_url + "?url=" + url;
         }
