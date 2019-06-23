@@ -547,27 +547,24 @@ function show_all_uploaders(checkbox) {
 }
 
 function get_external_data() {
-    var url = $("#external_url").val();
-    if (url.search("imdb.com") === -1 && url.search("douban.com") === -1 && url.search("themoviedb.org") === -1) {
-        alert("请填写正确的外部链接！");
-    } else {
-        if ($("#descr").val() && !confirm("辅助填写将删除已填写简介，是否继续？")) {
-            return;
-        }
-        var external_api_base_url = "https://api.issacc.bid/infogen";
-        var api_url = "";
-        if (url.search("imdb.com") !== -1){
-            api_url = external_api_base_url + "?site=douban&sid=" + /tt(\d+)/i.exec(url)[0];
-        }else{
-            api_url = external_api_base_url + "?url=" + url;
-        }
-        $.get(api_url, function(data){
-            if (data.error !== null){
-                alert(data.error);
-            }else{
-                $("#descr").val(data.format);
-                $("input[name='url'][type='text']").val(data.imdb_link);
-            }
-        });
+    const url = $("#external_url").val();
+
+    if ($("#descr").val() && !confirm("辅助填写将删除已填写简介，是否继续？")) {
+        return;
     }
+    let external_api_base_url = "https://api.issacc.bid/infogen";
+    let api_url = "";
+    if (url.search("imdb.com") !== -1) {
+        api_url = external_api_base_url + "?site=douban&sid=" + /tt(\d+)/i.exec(url)[0];
+    } else {
+        api_url = external_api_base_url + "?url=" + url;
+    }
+    $.get(api_url, function (data) {
+        if (data.error !== null) {
+            alert(data.error);
+        } else {
+            $("#descr").val(data.format);
+            $("input[name='url'][type='text']").val(data.imdb_link);
+        }
+    });
 }
