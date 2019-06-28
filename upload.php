@@ -129,7 +129,7 @@ else {
             if ($smalldescription_main == 'yes')
                 tr($lang_upload['row_small_description'], "<input type=\"text\" style=\"width: 650px;\" name=\"small_descr\" /><br /><font class=\"medium\">" . $lang_upload['text_small_description_note'] . "</font>", 1);
 
-            tr("外部链接", "<input type='text' id='external_url' name='external_url' style='width: 500px'>&nbsp;<input type='button' value='辅助填写' onclick='get_external_data()'>（辅助填写可为你填写IMDb链接和简介）<br><font class=\"medium\">来自<strong><a href=\"http://www.imdb.com\">IMDb</a></strong> / <strong><a href=\"https://movie.douban.com\">豆瓣</a></strong> / <strong><a href=\"https://www.themoviedb.org/?language=zh-CN\">TMDB</a></strong>的链接，如 <strong>https://www.imdb.com/title/tt0111161/</strong> 或 <strong>https://movie.douban.com/subject/1292052/</strong> 或 <strong>https://www.themoviedb.org/movie/278-the-shawshank-redemption?language=zh-CN</strong></font>", 1);
+            tr("外部链接", "<input type='text' id='external_url' name='external_url' style='width: 500px'>&nbsp;<input type='button' value='辅助填写' onclick='get_external_data()'>（辅助填写可为你填写IMDb链接和简介）<br><font class=\"medium\">来自<strong><a href=\"http://www.imdb.com\">IMDb</a> / <a href=\"https://movie.douban.com\">豆瓣</a> / <a href=\"https://www.themoviedb.org/?language=zh-CN\">TMDB</a> / <a href='https://store.steampowered.com'>Steam</a> / <a href='https://indienova.com'>Indienova</a> / <a href='https://www.epicgames.com/store/zh-CN/'>Epic</a> / <a href='https://bangumi.tv/'>Bangumi</a></strong>的链接</font>", 1);
 
             get_external_tr();
             if ($enablenfo_main == 'yes')
