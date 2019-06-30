@@ -423,6 +423,10 @@ if ($catid == 407) {
 if ($catid == 408) {
     $version = (trimcomma($_POST ["version"]));
     $updateinfoset [] = "version = " . sqlesc($version);
+    $platform = (trimcomma($_POST ["platform"]));
+    $updateinfoset [] = "platform = " . sqlesc($platform);
+    if ($platform != "")
+        $nameset .= "[" . $platform . "]";
     if ($specificcat != "")
         $nameset .= "[" . $specificcat . "]";
     if ($cname != "")
