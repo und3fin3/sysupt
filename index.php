@@ -509,6 +509,11 @@ if ($showstats_main == "yes") {
                         $Cache->add_whole_row();
                         $torrents = number_format(get_row_count("torrents"));
                         $dead = number_format(get_row_count("torrents", "WHERE visible='no'"));
+                        if ($torrents == 0) {
+                            $dead_rate = 0;
+                        } else {
+                            $dead_rate = round($dead / $torrents * 100, 1);
+                        }
                         $seeders = get_row_count("peers", "WHERE seeder='yes'");
                         $leechers = get_row_count("peers", "WHERE seeder='no'");
                         if ($leechers == 0)
@@ -532,7 +537,7 @@ if ($showstats_main == "yes") {
                         <tr>
                             <?php
                             twotd($lang_index ['row_torrents'], $torrents);
-                            twotd($lang_index ['row_dead_torrents'], $dead);
+                            twotd($lang_index ['row_dead_torrents'], $dead . "({$dead_rate}%)");
                             ?>
                         </tr>
                         <tr>
