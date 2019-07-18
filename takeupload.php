@@ -542,8 +542,9 @@ if (!count($errfile)) {
     /**
      * ****************************************************************
      */
-    if (is_array(mysql_fetch_row(sql_query("select info_hash from torrents where pulling_out = '0' AND " . hash_where("info_hash", $infohash))))) {
-        bark($lang_takeupload ['std_torrent_existed']);
+    $exist_hash = sql_query("select id, info_hash from torrents where pulling_out = '0' AND " . hash_where("info_hash", $infohash));
+    if ($arr = mysql_fetch_row($exist_hash)) {
+        stderr($lang_takeupload ['std_upload_failed'], $lang_takeupload ['std_torrent_existed'] . "<a href='details.php?id=" . $arr[0] . "&hit=1'><b>点此进入种子页</b></a>", false);
     }
     $ret = sql_query("INSERT INTO torrents (filename, owner, visible, anonymous, name, size, numfiles, type, url, small_descr, descr, ori_descr, category, source, medium, codec, audiocodec, standard, processing, team, save_as, sp_state, added, sp_time, last_action, nfo, info_hash, exclusive, tjuptrip, pos_state, pos_state_until) VALUES (" . sqlesc($fname) . ", " . sqlesc($CURUSER ["id"]) . ", 'yes', " . sqlesc($anonymous) . ", " . sqlesc($torrent) . ", " . sqlesc($totallen) . ", " . count($filelist) . ", " . sqlesc($type) . ", " . sqlesc($url) . ", " . sqlesc($small_descr) . ", " . sqlesc($descr) . ", " . sqlesc($descr) . ", " . sqlesc($catid) . ", " . sqlesc($sourceid) . ", " . sqlesc($mediumid) . ", " . sqlesc($codecid) . ", " . sqlesc($audiocodecid) . ", " . sqlesc($standardid) . ", " . sqlesc($processingid) . ", " . sqlesc($teamid) . ", " . sqlesc($dname) . ", " . sqlesc($sp_state) . ", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc($nfo) . ", " . sqlesc($infohash) . ", " . sqlesc($exclusive) . ", " . sqlesc($tjuptrip) . ", " . sqlesc($pos_state) . ", " . sqlesc($pos_until) . ")");
     if (!$ret) {

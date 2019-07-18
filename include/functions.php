@@ -3109,11 +3109,7 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
 
                 function genbark($x, $y)
                 {
-                    stdhead($y);
-                    print ("<h1>" . htmlspecialchars($y) . "</h1>\n");
-                    print ("<p>" . htmlspecialchars($x) . "</p>\n");
-                    stdfoot();
-                    exit ();
+                    stderr($y, $x);
                 }
 
                 function mksecret($len = 20)
