@@ -399,7 +399,7 @@ if ($action == "post") {
     $body = trim($_POST ["body"]);
     $hassubject = false;
     if (check_emotion($body))
-        stderr($lang_comment ['std_error'], "你不认为帖子内容很没劲吗,返回重写吧！");
+        stderr($lang_forums ['std_error'], "你不认为帖子内容很没劲吗,返回重写吧！（纯表情或字数过少）");
     switch ($type) {
         case 'new' :
             {
