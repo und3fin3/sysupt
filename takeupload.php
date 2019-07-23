@@ -225,7 +225,7 @@ unset ($dict ['value'] ['nodes']); // remove cached peers (Bitcomet & Azareus)
 $dict = bdec(benc($dict)); // double up on the becoding solves the
 // occassional
 // misgenerated infohash
-list ($ann, $info) = dict_check($dict, "announce(string):info");
+list ($info) = dict_check($dict, "info");
 
 $infohash = pack("H*", sha1($info ["string"]));
 function hex_esc2($matches)
