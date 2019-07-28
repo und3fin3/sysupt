@@ -507,8 +507,8 @@ if ($showstats_main == "yes") {
                     $Cache->new_page('stats_torrents', 1800, true);
                     if (!$Cache->get_page()) {
                         $Cache->add_whole_row();
-                        $torrents = number_format(get_row_count("torrents"));
-                        $dead = number_format(get_row_count("torrents", "WHERE visible='no'"));
+                        $torrents = get_row_count("torrents");
+                        $dead = get_row_count("torrents", "WHERE visible='no'");
                         if ($torrents == 0) {
                             $dead_rate = 0;
                         } else {
@@ -536,8 +536,8 @@ if ($showstats_main == "yes") {
                         ?>
                         <tr>
                             <?php
-                            twotd($lang_index ['row_torrents'], $torrents);
-                            twotd($lang_index ['row_dead_torrents'], $dead . "({$dead_rate}%)");
+                            twotd($lang_index ['row_torrents'], number_format($torrents));
+                            twotd($lang_index ['row_dead_torrents'], number_format($dead) . " ({$dead_rate}%)");
                             ?>
                         </tr>
                         <tr>
