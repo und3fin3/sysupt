@@ -1,6 +1,5 @@
 <?php
 require_once('include/bittorrent_announce.php');
-require_once('include/benc.php');
 dbconn_announce();
 global $BASEURL, $seebanned_class, $REPORTMAIL, $waitsystem, $uploaderdouble_torrent, $cheaterdet_security, $nodetect_security;
 
@@ -49,106 +48,58 @@ if (!$az)
 // 4. GET IP AND CHECK PORT
 
 $ip = getip(); // avoid to get the spoof ip from some agent
-if (!$port || $port > 0xffff)
-    err("002-端口号错误");
+$query_ip['ipv6'] = $_GET ['ipv6'] ?? "";
+$query_ip['ipv4'] = $_GET ['ipv4'] ?? "";
+$query_ip['ip'] = $_GET ['ip'] ?? "";
 
-if (!validateIPv6($ip)) {
-    if (isset ($_GET ['ipv6']))
-        $ipv6 = rtrim(strip_tags($_GET ['ipv6']));
-
-    if ($ipv6 == "::1")
-        unset ($ipv6);
-
-    if (substr($ipv6, 0, 5) == 'fe80:')
-        unset ($ipv6);
-
-    if (substr($ipv6, 0, 7) == '2001:0:')
-        unset ($ipv6); // 在具备v4地址（校内用户）的情况下直接禁用所有teredo隧道！
-
-    if (substr($ipv6, 0, 5) == '2002:')
-        unset ($ipv6);
-
-    if (substr($ipv6, 0, 26) == '2001:da8:200:900e:200:5efe')
-        unset ($ipv6);
-
-    if ($_SERVER['HTTP_HOST'] == 'pttracker4.tjupt.org')
-        unset ($ipv6);
-} else {
+// handle IPv6 address
+// `ipv6` param in query, then `ip` param, then remote ip
+if (validateIPv6($query_ip['ipv6'])) {
+    $ipv6 = $query_ip['ipv6'];
+} else if (validateIPv6($query_ip['ip'])) {
+    $ipv6 = $query_ip['ip'];
+} else if (validateIPv6($ip)) {
     $ipv6 = $ip;
 }
 
-/*
-IPv6 Tracker only
-
-Seems that we cannot get CloudFlare to not report an A record
-And after on campus users dial via PPPoE, Windows will
-use IPv4 instead of IPv6 to contact the tracker.
-
-This way we validate IPv6 connectivity inside the tracker
-*/
-if ($_SERVER['HTTP_HOST'] == 'pttracker6.tjupt.org') {
-    if (!validateIPv6($ipv6)) {
-        err("403-此Tracker仅允许IPv6用户访问");
-    }
-    $ip = $ipv6;
-    $ipv4 = '';
-}
-
-
-// ----check ip
-
-$nip = ip2long($ip);
-
-if ($nip) { // $nip would be false for IPv6 address
-    $res = sql_query("SELECT * FROM bans WHERE $nip >= first AND $nip <= last") or sqlerr(__FILE__, __LINE__);
-    if (mysql_num_rows($res) > 0) {
-        // header("HTTP/1.0 403 Forbidden");
-        err("403-该IP被封禁，请与{$REPORTMAIL}联系！");
-        // die;
-    }
-
+// IPv4 same with IPv6
+if (validateIPv4($query_ip['ipv4'])) {
+    $ipv4 = $query_ip['ipv4'];
+} else if (validateIPv4($query_ip['ip'])) {
+    $ipv4 = $query_ip['ip'];
+} else if (validateIPv4($ip)) {
     $ipv4 = $ip;
-} elseif (!validateIPv6($ip)) { // 校验IP地址的合法性
-    err("403-IP地址不合法，请与{$REPORTMAIL}联系！");
 }
 
-if ($_SERVER['HTTP_HOST'] == 'pttracker4.tjupt.org') {
-    if ($az['enablepublic4'] != 'yes') {
-        err("403-您未允许Tracker服务器向您提供公网IPv4地址，如需要请前往控制面板修改");
-    }
-    unset($ipv6);
+// check banned IPv4 address
+$nip = ip2long($ipv4);
+$res = sql_query("SELECT * FROM bans WHERE $nip >= first AND $nip <= last") or sqlerr(__FILE__, __LINE__);
+if (mysql_num_rows($res) > 0) err("403-该IP被封禁，请与{$REPORTMAIL}联系！");
 
-    if (check_tjuip($nip) && $az['showtjuipnotice'] == 'no')
-        sql_query("UPDATE users SET showtjuipnotice = 'yes' WHERE id = " . sqlesc($az['id']));
-}
+// warn the user who enables `public4` in campus
+if (check_tjuip($nip) && $az['enablepublic4'] == 'yes' && $az['showtjuipnotice'] == 'no')
+    sql_query("UPDATE users SET showtjuipnotice = 'yes' WHERE id = " . sqlesc($az['id']));
 
-// This is a validated IPv6 address
-// if ($ipv6) {
-// IPv6 does not support compact peer list
-$compact = 0;
-// }
-
-if (isset ($ipv6)) { // IPv6地址封禁
+// check banned IPv6 address
+if (isset ($ipv6)) {
     $longipv6 = IPv6ToLong($ipv6);
     $res = sql_query("SELECT * FROM banipv6 WHERE ip0 = $longipv6[0]  AND ip1=$longipv6[1] AND ip2=$longipv6[2] AND (type='school' OR
 	( ip3=$longipv6[3] AND  type='building' OR 
 	( ip4=$longipv6[4] AND ip5=$longipv6[5] AND ip6=$longipv6[6] AND ip7=$longipv6[7] )))") or sqlerr(__FILE__, __LINE__);
 
-    if (mysql_num_rows($res) > 0) {
-        err("403-该IP被封禁，请与{$REPORTMAIL}联系！");
-    }
+    if (mysql_num_rows($res) > 0) err("403-该IP被封禁，请与{$REPORTMAIL}联系！");
 }
 
-// check port and connectable
-
+// check port
+if (!$port || $port > 0xffff)
+    err("002-端口号错误");
 if (portblacklisted($port))
     err("005-端口 " . $port . " 在黑名单里，请更换端口");
 
 // 5. GET PEER LIST
 
 // Number of peers that the client would like to receive from the tracker.This
-// value is permitted to be zero. If omitted, typically defaults to 50
-// peers.
+// value is permitted to be zero. If omitted, typically defaults to 50 peers.
 
 $rsize = 50;
 
@@ -210,9 +161,6 @@ elseif ($torrent ['banned'] == 'yes' && $az ['class'] < $seebanned_class) {
 $torrentid = $torrent ["id"];
 
 $numpeers = $torrent ["seeders"] + $torrent ["leechers"];
-// $leechers = mysql_fetch_assoc ( sql_query ( "SELECT count(ipv4)+count(ipv6) as leechers FROM peers WHERE torrent = " . $torrentid . " AND seeder = 'no'  " ) );
-// $seeders = mysql_fetch_assoc ( sql_query ( "SELECT count(ipv4)+count(ipv6) as seeders  FROM peers WHERE torrent = " . $torrentid . " AND seeder = 'yes' " ) );
-// $numpeers = $seeders ["seeders"] + $leechers ["leechers"];
 
 if ($seeder == 'yes') { // Don't report seeds to other seeders
     $only_leech_query = " AND seeder = 'no' ";
@@ -242,7 +190,20 @@ elseif ($annintertwoage && ($annintertwo > $announce_wait) && (TIMENOW - $torren
 $real_annnounce_interval *= rand(1000, 1400) / 1000; // random interval avoid BOOM
 $real_annnounce_interval = ceil($real_annnounce_interval);
 
-$peer_list = "";
+$rep_dict = [
+    "interval" => (int)$real_annnounce_interval,
+    "min interval" => (int)$announce_wait,
+    "complete" => (int)$torrent["seeders"],
+    "incomplete" => (int)$torrent["leechers"],
+    "peers" => []  // By default it is a array object, only when `&compact=1` then it should be a string
+];
+
+if ($compact == 1) {
+    $rep_dict["peers"] = "";  // Change `peers` from array to string
+    if (validateIPv6($ip))
+        $rep_dict["peers6"] = "";   // If peer use IPv6 address , we should add packed string in `peers6`
+}
+
 unset ($self);
 // bencoding the peers info get for this announce
 while ($row = mysql_fetch_assoc($res)) {
@@ -252,48 +213,38 @@ while ($row = mysql_fetch_assoc($res)) {
         $self = $row;
         continue;
     }
-    /*
-    if ($row ['ipv6'] == "") { // peer中的纯v4地址
-        if (! ($nip || substr ( $ip, 0, 14 ) == '2001:da8:a000:' || substr($ip,0,10)=='2403:ac00:' )) // 如果客户端不是校内地址
-            continue;
+
+    if (isset($event) && $event == "stopped") {
+        continue;
     }
-    
+
     if ($compact == 1) {
-        $longip = ip2long ( $row ['ipv4'] );
-        if (!check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org') {
-            continue;
-        } else if (check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttrackertju.tjupt.org') {
-            continue;
+        if (validateIPv6($row["ipv6"])) {
+            $rep_dict['peers6'] .= inet_pton($row["ipv6"]) . pack("n", $row["port"]);
         }
-        if ($longip) // Ignore ipv6 address
-            $peer_list .= pack ( "Nn", sprintf ( "%d", $longip ), $row ['port'] );
-    } elseif ($no_peer_id == 1) {
-        if ($row ['ipv4'] != "") {
-            $longip = ip2long($row ['ipv4']);
-            if (!check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org') {
-                continue;
-            } else if (check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttrackertju.tjupt.org') {
+        if (validateIPv4($row["ipv4"])) {
+            if (!check_tjuip(ip2long($row['ipv4'])) && $az['enablepublic4'] == 'no') {
                 continue;
             }
-            $peer_list .= "d" . benc_str("ip") . benc_str($row ["ipv4"]) . benc_str("port") . "i" . $row ["port"] . "e" . "e";
+            $rep_dict['peers'] .= inet_pton($row["ipv4"]) . pack("n", $row["port"]);
         }
-            if ($row ['ipv6'] != "")
-            $peer_list .= "d" . benc_str ( "ip" ) . benc_str ( $row ["ipv6"] ) . benc_str ( "port" ) . "i" . $row ["port"] . "e" . "e";
     } else {
-    */
-    if ($row ['ipv4'] != "") {
-        $longip = ip2long($row ['ipv4']);
-        if (!check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttracker4.tjupt.org') {
-            continue;
+        if (validateIPv6($row["ipv6"])) {
+            $rep_dict['peers'][] = [
+                'ip' => $row["ipv6"],
+                'port' => $row["port"]
+            ];
         }
-        if (check_tjuip($longip) && $_SERVER['HTTP_HOST'] != 'pttrackertju.tjupt.org') {
-            continue;
+        if (validateIPv4($row["ipv4"])) {
+            if (!check_tjuip(ip2long($row['ipv4'])) && $az['enablepublic4'] == 'no') {
+                continue;
+            }
+            $rep_dict['peers'][] = [
+                'ip' => $row["ipv4"],
+                'port' => $row["port"]
+            ];
         }
-        $peer_list .= "d" . benc_str("ip") . benc_str($row ["ipv4"]) . benc_str("peer id") . benc_str($row ["peer_id"]) . benc_str("port") . "i" . $row ["port"] . "e" . "e";
     }
-    if ($row ['ipv6'] != "")
-        $peer_list .= "d" . benc_str("ip") . benc_str($row ["ipv6"]) . benc_str("peer id") . benc_str($row ["peer_id"]) . benc_str("port") . "i" . $row ["port"] . "e" . "e";
-    //}
 }
 
 $selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
@@ -310,17 +261,11 @@ if (!isset ($self)) {
 if (validateIPv6($ip))
     $ipv4 = $self ['ipv4'];
 
-// if($self['prevts'] > (TIMENOW - 120))$real_annnounce_interval += 60;
-
 // min announce time
-/* Because of multi-tracker, I disabled this error.
 if (isset ( $self ) && $self ['prevts'] > (TIMENOW - $announce_wait) && $event != "stopped" && $event != "completed")
 	err ( '008-您的刷新过于频繁，请等候 ' . $announce_wait . ' 秒再尝试' );
-*/
 
-// current peer_id, or you could say session with tracker not found in table
-// peers
-
+// current peer_id, or you could say session with tracker not found in table `peers`
 if (!isset ($self)) {
     $valid = @mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM peers WHERE torrent=$torrentid AND userid=" . sqlesc($userid)));
     if ($valid [0] >= 1 && $seeder == 'no')
@@ -525,16 +470,7 @@ if (count($USERUPDATESET) && $userid) {
 
 /* 与下载客户端交互 */
 
-$resp = "d" . benc_str("interval") . "i" . $real_annnounce_interval . "e" . benc_str("min interval") . "i" . $announce_wait . "e" . benc_str("complete") . "i" . $torrent ['seeders'] . "e" . benc_str("incomplete") . "i" . $torrent ['leechers'] . "e" . benc_str("peers");
-
-if ($compact == 1)
-    $resp .= benc_str($peer_list);
-else
-    $resp .= "l" . $peer_list . "e";
-
-$resp .= "e";
-
-benc_resp_raw($resp);
+benc_resp($rep_dict);
 
 /* 与下载客户端交互 */
 

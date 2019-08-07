@@ -1,8 +1,12 @@
 <?php
 require_once("include/bittorrent.php");
 require_once("include/tjuip_helper.php");
+
+use OurBits\Bencode;
+
 dbconn();
-global $CURUSER, $torrent_dir, $seebanned_class, $torrentnameprefix, $max_torrent_size, $iplog1;
+global $CURUSER, $torrent_dir, $seebanned_class, $torrentnameprefix, $max_torrent_size, $iplog1,
+       $multi_tracker_behaviour, $announce_urls;
 set_time_limit(120);
 $id = (int)$_GET["id"];
 if (!$id)
@@ -17,8 +21,6 @@ if ($passkey) {
         die("account disabed or parked");
     $oldip = $user['ip'];
     $user['ip'] = getip();
-    if (!validateIPv6($user['ip']) && $user['enablepublic4'] != 'yes' && !check_tjuip(ip2long($user['ip'])))
-        die("account disable public IPv4");
     $CURUSER = $user;
 } else {
     loggedinorreturn();
@@ -33,11 +35,6 @@ if ($passkey) {
         header("Location: downloadnotice.php?torrentid=" . $id . "&type=ratio");
     }
 }
-// IPv4 Tracker come back!
-// pttracker4 is public network IPv4 tracker for future consideration
-$announce_urls[0] = "pttrackertju.tjupt.org/announce.php";
-$announce_urls[1] = "pttracker6.tjupt.org/announce.php";
-$announce_urls[2] = "pttracker4.tjupt.org/announce.php";
 
 //User may choose to download torrent from RSS. So log ip changes when downloading torrents.
 if ($iplog1 == "yes") {
@@ -47,16 +44,6 @@ if ($iplog1 == "yes") {
 //User may choose to download torrent from RSS. So update his last_access and ip when downloading torrents.
 sql_query("UPDATE users SET last_access = " . sqlesc(date("Y-m-d H:i:s")) . ", ip = " . sqlesc($CURUSER['ip']) . "  WHERE id = " . sqlesc($CURUSER['id']));
 
-/*
-@ini_set('zlib.output_compression', 'Off');
-@set_time_limit(0);
-
-if (@ini_get('output_handler') == 'ob_gzhandler' AND @ob_get_length() !== false)
-{	// if output_handler = ob_gzhandler, turn it off and remove the header sent by PHP
-	@ob_end_clean();
-	header('Content-Encoding:');
-}
-*/
 // HTTPS Tracker Only
 $ssl_torrent = "https://";
 $base_announce_url = $announce_urls[0];
@@ -73,46 +60,26 @@ if ($row['banned'] == 'yes' && get_user_class() < $seebanned_class)
         permissiondenied();
 sql_query("UPDATE torrents SET hits = hits + 1 WHERE id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 
-require_once "include/benc.php";
-
 if (strlen($CURUSER['passkey']) != 32) {
     $CURUSER['passkey'] = md5($CURUSER['username'] . date("Y-m-d H:i:s") . $CURUSER['passhash']);
     sql_query("UPDATE users SET passkey=" . sqlesc($CURUSER['passkey']) . " WHERE id=" . sqlesc($CURUSER['id']));
 }
 
-$dict = bdec_file($fn, $max_torrent_size);
-$dict['value']['announce']['value'] = $ssl_torrent . $base_announce_url . "?passkey=$CURUSER[passkey]";
-$dict['value']['announce']['string'] = strlen($dict['value']['announce']['value']) . ":" . $dict['value']['announce']['value'];
-$dict['value']['announce']['strlen'] = strlen($dict['value']['announce']['string']);
+$dict = Bencode::load($fn);
+$dict['announce'] = $ssl_torrent . $base_announce_url . "?passkey=" . $CURUSER['passkey'];
 
-if (count($announce_urls) > 1) // add multi-tracker
-{
-    $dict['value']['announce-list']['type'] = "list";
-    $dict['value']['announce-list']['string'] = "l";
-    for ($i = 0; $i < count($announce_urls); $i++) {
-        $dict['value']['announce-list']['value'][$i]['type'] = "list";
-        $dict['value']['announce-list']['value'][$i]['value'][0]["type"] = "string";
-        $dict['value']['announce-list']['value'][$i]['value'][0]["value"] = $ssl_torrent . $announce_urls[$i] . "?passkey=$CURUSER[passkey]";
-        $dict['value']['announce-list']['value'][$i]['value'][0]["string"] = strlen($dict['value']['announce-list']['value'][$i]['value'][0]["value"]) . ":" . $dict['value']['announce-list']['value'][$i]['value'][0]["value"];
-        $dict['value']['announce-list']['value'][$i]['value'][0]["strlen"] = strlen($dict['value']['announce-list']['value'][$i]['value'][0]["string"]);
-        $dict['value']['announce-list']['value'][$i]['string'] = "l" . $dict['value']['announce-list']['value'][$i]['value'][0]["string"] . "e";
-        $dict['value']['announce-list']['value'][$i]['strlen'] = strlen($dict['value']['announce-list']['value'][$i]['string']);
-        $dict['value']['announce-list']['string'] = $dict['value']['announce-list']['string'] . $dict['value']['announce-list']['value'][$i]['string'];
+// add multi-tracker
+if (count($announce_urls) > 1) {
+    foreach ($announce_urls as $announce_url) {
+        if ($multi_tracker_behaviour == 'separate') {
+            /** d['announce-list'] = [ [tracker1], [backup1], [backup2] ] */
+            $dict['announce-list'][] = [$ssl_torrent . $announce_url . "?passkey=" . $CURUSER['passkey']];
+        } else {
+            /** d['announce-list'] = [[ tracker1, tracker2, tracker3 ]] */
+            $dict['announce-list'][0][] = $ssl_torrent . $announce_url . "?passkey=" . $CURUSER['passkey'];
+        }
     }
-    $dict['value']['announce-list']['string'] = $dict['value']['announce-list']['string'] . "e";
-    $dict['value']['announce-list']['strlen'] = strlen($dict['value']['announce-list']['string']);
 }
-/*
-header ("Expires: Tue, 1 Jan 1980 00:00:00 GMT");
-header ("Last-Modified: ".date("D, d M Y H:i:s"));
-header ("Cache-Control: no-store, no-cache, must-revalidate");
-header ("Cache-Control: post-check=0, pre-check=0", false);
-header ("Pragma: no-cache");
-header ("X-Powered-By: ".VERSION." (c) ".date("Y")." ".$SITENAME."");
-header ("Accept-Ranges: bytes");
-header ("Connection: close");
-header ("Content-Transfer-Encoding: binary");
-*/
 
 header("Content-Type: application/x-bittorrent");
 
@@ -131,4 +98,4 @@ if (str_replace("Gecko", "", $_SERVER['HTTP_USER_AGENT']) != $_SERVER['HTTP_USER
 //header ("Content-Disposition: attachment; filename=".$row["filename"]."");
 //ob_implicit_flush(true);
 //$dict = preg_replace('/^%EF%BB%BF/', '', $dict);
-print(benc($dict));
+print(Bencode::encode($dict));

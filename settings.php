@@ -54,7 +54,7 @@ if ($action == 'savesettings_main')    // save main
 } elseif ($action == 'savesettings_basic')    // save basic
 {
     stdhead($lang_settings['head_save_basic_settings']);
-    $validConfig = array('SITENAME', 'BASEURL', 'announce_url', 'mysql_host', 'mysql_user', 'mysql_pass', 'mysql_db');
+    $validConfig = array('SITENAME', 'BASEURL', 'announce_url', 'multi_tracker_behaviour', 'mysql_host', 'mysql_user', 'mysql_pass', 'mysql_db');
     GetVar($validConfig);
     if (!mysql_connect($mysql_host, $mysql_user, $mysql_pass)) {
         stdmsg($lang_settings['std_error'], $lang_settings['std_mysql_connect_error'] . $lang_settings['std_click'] . "<a class=\"altlink\" href=\"settings.php\">" . $lang_settings['std_here'] . "</a>" . $lang_settings['std_to_go_back']);
@@ -359,7 +359,8 @@ if ($action == 'savesettings_main')    // save main
     print ("<form method='post' action='" . $_SERVER["SCRIPT_NAME"] . "'><input type='hidden' name='action' value='savesettings_basic'>");
     tr($lang_settings['row_site_name'], "<input type='text' style=\"width: 300px\" name=SITENAME value='" . ($BASIC["SITENAME"] ? $BASIC["SITENAME"] : "Nexus") . "'> " . $lang_settings['text_site_name_note'], 1);
     tr($lang_settings['row_base_url'], "<input type='text' style=\"width: 300px\" name=BASEURL value='" . ($BASIC["BASEURL"] ? $BASIC["BASEURL"] : $_SERVER["HTTP_HOST"]) . "'> " . $lang_settings['text_it_should_be'] . $_SERVER["HTTP_HOST"] . $lang_settings['text_base_url_note'], 1);
-    tr($lang_settings['row_announce_url'], "<input type='text' style=\"width: 300px\" name=announce_url value='" . ($BASIC["announce_url"] ? $BASIC["announce_url"] : $_SERVER["HTTP_HOST"] . "/announce.php") . "'> " . $lang_settings['text_it_should_be'] . $_SERVER["HTTP_HOST"] . "/announce.php", 1);
+    tr($lang_settings['row_announce_url'], "<input type='text' style=\"width: 300px\" name=announce_url value='" . ($BASIC["announce_url"] ? $BASIC["announce_url"] : $_SERVER["HTTP_HOST"] . "/announce.php") . "'> " . $lang_settings['text_it_should_be'] . $_SERVER["HTTP_HOST"] . "/announce.php" . $lang_settings['text_multi_tracker'], 1);
+    tr($lang_settings['row_multi_tracker_behaviour'], "<input type='radio' id='multi_tracker_behaviour_separate' name='multi_tracker_behaviour' value='separate' " . ($BASIC ['multi_tracker_behaviour'] == "separate" ? " checked=\"checked\"" : "") . "> <label for='multi_tracker_behaviour_separate'>{$lang_settings['text_separate']}</label> <input type='radio' id='multi_tracker_behaviour_union' name='multi_tracker_behaviour' value='union'" . ($BASIC ['multi_tracker_behaviour'] == "union" ? " checked=\"checked\"" : "") . " ><label for='multi_tracker_behaviour_union'>{$lang_settings['text_union']}</label>" . $lang_settings['text_multi_tracker_behaviour'], 1);
     tr($lang_settings['row_mysql_host'], "<input type='text' style=\"width: 300px\" name=mysql_host value='" . ($BASIC["mysql_host"] ? $BASIC["mysql_host"] : "localhost") . "'> " . $lang_settings['text_mysql_host_note'], 1);
     tr($lang_settings['row_mysql_user'], "<input type='text' style=\"width: 300px\" name=mysql_user value='" . ($BASIC["mysql_user"] ? $BASIC["mysql_user"] : "root") . "'> " . $lang_settings['text_mysql_user_note'], 1);
     tr($lang_settings['row_mysql_password'], "<input type='password' style=\"width: 300px\" name=mysql_pass value=''> " . $lang_settings['text_mysql_password_note'], 1);

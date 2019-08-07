@@ -31,7 +31,8 @@ $lang_takeupload = array
 	'autoseedseedbox' => "本资源由发种机器人seedbox发布，请该资源所属分类管理员协助将介绍信息补充完整。",
 	'std_banned_title1' => "资源“",
 	'std_banned_title2' => "”当前不允许在本站发布。",
-	'std_banned_title_hit' => "请查看本站的上传规则以及各类资源的发布标准细则。你可以在候选区提交候选并等待管理员审核。"
+	'std_banned_title_hit' => "请查看本站的上传规则以及各类资源的发布标准细则。你可以在候选区提交候选并等待管理员审核。",
+	'std_missing_tmp_file' => "未接收到文件，请联系管理组"
 	
 );
 

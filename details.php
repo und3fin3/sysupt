@@ -10,7 +10,6 @@ global $showextinfo, $CURUSER, $torrentmanage_class, $seebanned_class, $viewanon
 
 if ($showextinfo ['imdb'] == 'yes'){
     require_once("douban/douban.class.php");
-    require_once("vendor/imdbphp/imdbphp/bootstrap.php");
 }
 
 loggedinorreturn();

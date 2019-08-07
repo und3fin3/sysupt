@@ -76,8 +76,8 @@ if (file_exists('config/allconfig.php')) {
 
 $SITENAME = $BASIC ['SITENAME'];
 $BASEURL = $BASIC ['BASEURL'];
-$announce_urls = array();
-$announce_urls [] = $BASIC ['announce_url'];
+$announce_urls = explode(',', $BASIC ['announce_url']);
+$multi_tracker_behaviour = $BASIC ['multi_tracker_behaviour'];
 $mysql_host = $BASIC ['mysql_host'];
 $mysql_user = $BASIC ['mysql_user'];
 $mysql_pass = $BASIC ['mysql_pass'];

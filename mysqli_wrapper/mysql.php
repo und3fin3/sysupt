@@ -684,5 +684,17 @@ if (!extension_loaded('mysql') && !function_exists('mysql_connect')) {
 		return false;
 	}
 
+	/**
+	 * Implement multi_query
+	 * @link https://php.net/manual/en/mysqli.multi-query.php
+	 * @param $query
+	 * @param mysqli|null $mysqli
+	 * @return bool
+	 */
+	function mysql_multi_query($query, mysqli $mysqli = null)
+	{
+		return getLinkIdentifier($mysqli)->multi_query($query);
+	}
+
 }
 ?>

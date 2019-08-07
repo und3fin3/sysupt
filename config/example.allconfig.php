@@ -154,6 +154,7 @@ $BASIC=array(
     'SITENAME' => 'TJUPT',
     'BASEURL' => 'SITE_BASE_URL',
     'announce_url' => 'TRACKER_URL/announce.php',
+    'multi_tracker_behaviour' => 'separate',
     'mysql_host' => 'localhost:3306',
     'mysql_user' => 'MYSQL_USERNAME',
     'mysql_pass' => 'MYSQL_PASSWORD',
@@ -274,7 +275,7 @@ $MAIN=array(
     'invite_timeout' => '7',
     'seeding_leeching_time_calc_start' => '',
     'startsubid' => NULL,
-    'logo' => 'https://via.placeholder.com/1180x300.png?text=Banner+Here',
+    'logo' => 'https://placeimg.com/1000/300/any',
     'logo_url' => '',
 );
 $SECURITY=array(

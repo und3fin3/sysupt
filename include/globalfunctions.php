@@ -109,11 +109,23 @@ function validateIPv6($IP)
     return filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
 }
 
+function validateIPv4($IP)
+{
+    return filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+}
+
 function sql_query($query)
 {
     global $query_name;
     $query_name[] = $query;
     return mysql_query($query);
+}
+
+function sql_multi_query($query)
+{
+    global $query_name;
+    $query_name[] = $query;
+    return mysql_multi_query(implode(';', $query));
 }
 
 function sqlesc($value)
@@ -146,5 +158,20 @@ if (!function_exists('getallheaders')) {
             }
         }
         return $headers;
+    }
+}
+
+if (!function_exists('is_indexed_array')) {
+    /** 索引数组：所有键名都为数值型，注意字符串类型的数字键名会被转换为数值型。
+     * 判断数组是否为索引数组
+     * @param array $arr
+     * @return bool
+     */
+    function is_indexed_array(array $arr): bool
+    {
+        if (is_array($arr)) {
+            return count(array_filter(array_keys($arr), 'is_string')) === 0;
+        }
+        return false;
     }
 }

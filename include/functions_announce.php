@@ -5,6 +5,8 @@ if (!defined('IN_TRACKER'))
 include_once($rootpath . 'include/globalfunctions.php');
 include_once($rootpath . 'include/config.php');
 
+use OurBits\Bencode;
+
 function dbconn_announce()
 {
     global $mysql_host, $mysql_user, $mysql_pass, $mysql_db;
@@ -37,7 +39,7 @@ function emu_getallheaders()
 function block_browser()
 {
     $agent = $_SERVER["HTTP_USER_AGENT"];
-    if (preg_match("/^Mozilla/", $agent) || preg_match("/^Opera/", $agent) || preg_match("/^Links/", $agent) || preg_match("/^Lynx/", $agent))
+    if (preg_match('/(Mozilla|Browser|WebKit|Opera|Links|Lynx|[Bb]ot)/', $agent))
         err("禁止使用浏览器直接访问");
 // check headers
     if (function_exists('getallheaders')) { //getallheaders() is only supported when PHP is installed as an Apache module
@@ -54,7 +56,7 @@ function block_browser()
 
 function benc_resp($d)
 {
-    benc_resp_raw(benc(array('type' => 'dictionary', 'value' => $d)));
+    benc_resp_raw(Bencode::encode($d));
 }
 
 function benc_resp_raw($x)
@@ -70,9 +72,11 @@ function benc_resp_raw($x)
         echo $x;
 }
 
-function err($msg, $userid = 0, $torrentid = 0)
+function err($msg)
 {
-    benc_resp(array('failure reason' => array('type' => 'string', 'value' => $msg)));
+    benc_resp([
+        "failure reason" => $msg,
+    ]);
     exit();
 }
 

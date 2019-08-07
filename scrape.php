@@ -1,6 +1,5 @@
 <?php
 require_once('include/bittorrent_announce.php');
-require_once('include/benc.php');
 dbconn_announce();
 
 // BLOCK ACCESS WITH WEB BROWSERS AND CHEATS!
@@ -30,15 +29,15 @@ if (count($info_hash_array[1]) < 1) {
         err("Torrent not registered with this tracker.");
     }
 
-    $r = "d" . benc_str("files") . "d";
+    $torrent_details = [];
     while ($row = mysql_fetch_assoc($res)) {
-        $r .= "20:" . hash_pad($row["info_hash"]) . "d" .
-            benc_str("complete") . "i" . $row["seeders"] . "e" .
-            benc_str("downloaded") . "i" . $row["times_completed"] . "e" .
-            benc_str("incomplete") . "i" . $row["leechers"] . "e" .
-            "e";
+        $torrent_details[$row["info_hash"]] = [
+            'complete' => (int)$row["seeders"],
+            'downloaded' => (int)$row["times_completed"],
+            'incomplete' => (int)$row["leechers"]
+        ];
     }
-    $r .= "ee";
+    $d = ['files' => $torrent_details];
 
-    benc_resp_raw($r);
+    benc_resp($d);
 }

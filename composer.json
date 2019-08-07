@@ -11,6 +11,12 @@
     "ext-zlib": "*",
     "ext-xml": "*",
     "ext-memcache": "*",
-    "imdbphp/imdbphp": "^6.2"
+    "imdbphp/imdbphp": "^6.2",
+    "ext-ctype": "*"
+  },
+  "autoload": {
+    "files": [
+      "classes/Bencode.php"
+    ]
   }
 }
