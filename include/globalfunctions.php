@@ -106,7 +106,7 @@ function getip()
 
 function validateIPv6($IP)
 {
-    return filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+    return filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
 }
 
 function validateIPv4($IP)

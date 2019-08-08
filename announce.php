@@ -53,13 +53,13 @@ $query_ip['ipv4'] = $_GET ['ipv4'] ?? "";
 $query_ip['ip'] = $_GET ['ip'] ?? "";
 
 // handle IPv6 address
-// `ipv6` param in query, then `ip` param, then remote ip
-if (validateIPv6($query_ip['ipv6'])) {
+// client may send local ipv6 address to server, so we use `remote addr` first, then query param
+if (validateIPv6($ip)) {
+    $ipv6 = $ip;
+} else if (validateIPv6($query_ip['ipv6'])) {
     $ipv6 = $query_ip['ipv6'];
 } else if (validateIPv6($query_ip['ip'])) {
     $ipv6 = $query_ip['ip'];
-} else if (validateIPv6($ip)) {
-    $ipv6 = $ip;
 }
 
 // IPv4 same with IPv6
@@ -77,10 +77,12 @@ if (isset($ipv4)) {
     $res = sql_query("SELECT * FROM bans WHERE $nip >= first AND $nip <= last") or sqlerr(__FILE__, __LINE__);
     if (mysql_num_rows($res) > 0) err("403-该IP被封禁，请与{$REPORTMAIL}联系！");
 
-// warn the user who enables `public4` in campus
+    // warn the user who enables `public4` in campus
     if (check_tjuip($nip) && $az['enablepublic4'] == 'yes' && $az['showtjuipnotice'] == 'no')
         sql_query("UPDATE users SET showtjuipnotice = 'yes' WHERE id = " . sqlesc($az['id']));
 
+    // drop teredo IPv6 address for campus users
+    if (check_tjuip($nip) && substr($ipv6, 0, 7) == '2001:0:') unset ($ipv6);
 }
 
 // check banned IPv6 address
@@ -265,8 +267,8 @@ if (validateIPv6($ip))
     $ipv4 = $self ['ipv4'];
 
 // min announce time
-if (isset ( $self ) && $self ['prevts'] > (TIMENOW - $announce_wait) && $event != "stopped" && $event != "completed")
-	err ( '008-您的刷新过于频繁，请等候 ' . $announce_wait . ' 秒再尝试' );
+if (isset ($self) && $self ['prevts'] > (TIMENOW - $announce_wait) && $event != "stopped" && $event != "completed")
+    err('008-您的刷新过于频繁，请等候 ' . $announce_wait . ' 秒再尝试');
 
 // current peer_id, or you could say session with tracker not found in table `peers`
 if (!isset ($self)) {
