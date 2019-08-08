@@ -71,14 +71,17 @@ if (validateIPv4($query_ip['ipv4'])) {
     $ipv4 = $ip;
 }
 
-// check banned IPv4 address
-$nip = ip2long($ipv4);
-$res = sql_query("SELECT * FROM bans WHERE $nip >= first AND $nip <= last") or sqlerr(__FILE__, __LINE__);
-if (mysql_num_rows($res) > 0) err("403-该IP被封禁，请与{$REPORTMAIL}联系！");
+if (isset($ipv4)) {
+    $nip = ip2long($ipv4);
+    // check banned IPv4 address
+    $res = sql_query("SELECT * FROM bans WHERE $nip >= first AND $nip <= last") or sqlerr(__FILE__, __LINE__);
+    if (mysql_num_rows($res) > 0) err("403-该IP被封禁，请与{$REPORTMAIL}联系！");
 
 // warn the user who enables `public4` in campus
-if (check_tjuip($nip) && $az['enablepublic4'] == 'yes' && $az['showtjuipnotice'] == 'no')
-    sql_query("UPDATE users SET showtjuipnotice = 'yes' WHERE id = " . sqlesc($az['id']));
+    if (check_tjuip($nip) && $az['enablepublic4'] == 'yes' && $az['showtjuipnotice'] == 'no')
+        sql_query("UPDATE users SET showtjuipnotice = 'yes' WHERE id = " . sqlesc($az['id']));
+
+}
 
 // check banned IPv6 address
 if (isset ($ipv6)) {
