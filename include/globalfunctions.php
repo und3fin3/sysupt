@@ -89,7 +89,11 @@ function getip()
 
 function validateIPv6($IP)
 {
-    $IP = IPLib\Factory::addressFromString($IP)->toString(true);
+    try {
+        $IP = IPLib\Factory::addressFromString($IP)->toString(true);
+    } catch (Exception $e) {
+        return false;
+    }
     return filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
 }
 
