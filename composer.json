@@ -12,7 +12,8 @@
     "ext-xml": "*",
     "ext-memcache": "*",
     "imdbphp/imdbphp": "^6.2",
-    "ext-ctype": "*"
+    "ext-ctype": "*",
+    "mlocati/ip-lib": "^1.8"
   },
   "autoload": {
     "files": [

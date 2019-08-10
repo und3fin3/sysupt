@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "743b052f094d0d14cdf91b9d9fa9cb9f",
+    "content-hash": "957cdba9fdd8adc979d1b09b9444e859",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -386,6 +386,62 @@
             ],
             "description": "Library for retrieving film and tv information from IMDb",
             "time": "2019-06-02T11:05:00+00:00"
+        },
+        {
+            "name": "mlocati/ip-lib",
+            "version": "1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mlocati/ip-lib.git",
+                "reference": "c8d6d1fc370e748c3400a9cc614b26af2ae3b197"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mlocati/ip-lib/zipball/c8d6d1fc370e748c3400a9cc614b26af2ae3b197",
+                "reference": "c8d6d1fc370e748c3400a9cc614b26af2ae3b197",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "ext-pdo_sqlite": "*",
+                "phpunit/dbunit": "^1.4 || ^2 || ^3 || ^4",
+                "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "IPLib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michele Locati",
+                    "role": "Author",
+                    "email": "mlocati@gmail.com",
+                    "homepage": "https://github.com/mlocati"
+                }
+            ],
+            "description": "Handle IPv4, IPv6 addresses and ranges",
+            "homepage": "https://github.com/mlocati/ip-lib",
+            "keywords": [
+                "IP",
+                "address",
+                "addresses",
+                "ipv4",
+                "ipv6",
+                "matching",
+                "network",
+                "networking",
+                "range",
+                "subnet"
+            ],
+            "time": "2019-07-30T16:27:54+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1117,7 +1173,7 @@
         },
         {
             "name": "tightenco/collect",
-            "version": "v5.8.30",
+            "version": "v5.8.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tightenco/collect.git",
