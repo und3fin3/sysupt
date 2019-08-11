@@ -88,7 +88,7 @@ function checkTorrentDict($dict, $key, $type = null)
 
     if (!is_array($dict)) bark($lang_takeupload['std_not_a_dictionary']);
     $value = $dict[$key];
-    if (!$value) bark($lang_takeupload['std_dictionary_is_missing_key']);
+    if (!$value && $value !== 0) bark($lang_takeupload['std_dictionary_is_missing_key']);
     if (!is_null($type)) {
         $isFunction = 'is_' . $type;
         if (function_exists($isFunction) && !$isFunction($value)) {
