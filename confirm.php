@@ -10,7 +10,7 @@ if (!$id)
 
 dbconn();
 
-$res = sql_query("SELECT passhash, secret, editsecret, status FROM users WHERE id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
+$res = sql_query("SELECT id, passhash, secret, editsecret, status FROM users WHERE id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);
 $row = mysql_fetch_assoc($res);
 
 if (!$row)
