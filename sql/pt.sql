@@ -2597,7 +2597,8 @@ CREATE TABLE `users` (
   `width` enum('wide','narrow') NOT NULL DEFAULT 'wide',
   `jc_manager` enum('yes','no') NOT NULL DEFAULT 'no',
   `enablepublic4` enum('yes','no') NOT NULL DEFAULT 'no',
-  `qq` int(15) DEFAULT NULL
+  `qq` int(15) DEFAULT NULL,
+  `page` varchar(15) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
