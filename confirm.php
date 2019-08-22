@@ -33,11 +33,11 @@ if (!mysql_affected_rows())
 
 if ($securelogin == "yes") {
     $securelogin_indentity_cookie = true;
-    $passh = md5('0'.$row["passhash"] . $_SERVER["REMOTE_ADDR"]);
+    $passh = md5($row["passhash"] . $_SERVER["REMOTE_ADDR"]);
 } else    // when it's op, default is not use secure login
 {
     $securelogin_indentity_cookie = false;
-    $passh = md5('0'.$row["passhash"]);
+    $passh = md5($row["passhash"]);
 }
 logincookie($row["id"], $passh, 1, 0x7fffffff, $securelogin_indentity_cookie);
 //sessioncookie($row["id"], $passh,false);
