@@ -1,6 +1,10 @@
 <?php
 require_once('include/bittorrent_announce.php');
 dbconn_announce();
+
+use IPLib\Address\IPv6;
+use IPLib\Range\Subnet;
+
 global $BASEURL, $seebanned_class, $REPORTMAIL, $waitsystem, $uploaderdouble_torrent, $cheaterdet_security, $nodetect_security;
 
 // 1. BLOCK ACCESS WITH WEB BROWSERS AND CHEATS!
@@ -69,6 +73,11 @@ if (validateIPv4($query_ip['ipv4'])) {
     $ipv4 = $query_ip['ip'];
 } else if (validateIPv4($ip)) {
     $ipv4 = $ip;
+}
+
+// 在校内IP访问pttracker6时，返回一个错误，让客户端切换至pttrackertju
+if ($_SERVER['HTTP_HOST'] == 'pttracker6.tjupt.org' && ((isset($ipv4) && check_tjuip(ip2long($ipv4))) || (isset($ipv6) && check_tjuipv6($ipv6)))) {
+    err("为保证连接性，自动切换至校内tracker（并非错误，不必在意）");
 }
 
 if (isset($ipv4)) {
@@ -498,4 +507,10 @@ function check_tjuip($nip)
         }
     }
     return TRUE;
+}
+
+function check_tjuipv6($ipv6)
+{
+    $ipv6 = IPv6::fromString($ipv6);
+    return Subnet::fromString('2001:da8:a000::/48')->contains($ipv6) || Subnet::fromString('2403:ac00::/32')->contains($ipv6);
 }
