@@ -91,6 +91,8 @@ function validateIPv6($IP)
 {
     $IP = filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
     if ($IP) {
+        // IPLib不能正确处理ISATAP隧道地址，因此遇到带.的地址直接放行(https://github.com/mlocati/ip-lib/issues/31)
+        if (strpos($IP, '.') !== false) return true;
         $IP = IPLib\Factory::addressFromString($IP)->toString(true);
         return filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
     } else return false;
