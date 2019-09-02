@@ -389,8 +389,12 @@ else {
                 $moviename = $movie->get_data('title');
             }
             $douban_rating = $movie->get_data('rating');
-            $imdb = new \Imdb\Title($imdb_id);
-            $imdb_rating = $imdb->rating();
+            try {
+                $imdb = new \Imdb\Title($imdb_id);
+                $imdb_rating = $imdb->rating();
+            } catch (Exception $e) {
+                $imdb_rating = 0;
+            }
             if ($row['imdb_rating'] != $imdb_rating) {
                 sql_query("UPDATE torrents SET imdb_rating = '{$imdb_rating}' WHERE url = " . sqlesc($row ["url"]));
             }
