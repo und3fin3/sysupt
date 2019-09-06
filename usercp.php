@@ -157,8 +157,11 @@ if ($action) {
                     $result = sql_query($query);
                     if (!$result)
                         sqlerr(__FILE__, __LINE__);
-                    else
+                    else {
+                        // 删除tracker用户缓存以更新离校模式状态
+                        $Cache->delete_value('user_passkey_' . $CURUSER['passkey'] . '_content');
                         header("Location: usercp.php?action=personal&type=saved");
+                    }
                 }
                 stdhead($lang_usercp['head_control_panel'] . $lang_usercp['head_personal_settings'], true);
 
