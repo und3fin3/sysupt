@@ -18,7 +18,7 @@ if (!auth_token($token, $sign, $type . $username . $qq . $id . $passkey)) {
 switch ($type) {
     case "get_username_validation":
         {
-            $arr = @mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM users WHERE username = " . sqlesc($username))) or mysql_error();
+            $arr = @mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM users WHERE username = " . sqlesc($username) . " AND enabled = 'yes'")) or mysql_error();
             if ($arr[0] > 0) {
                 $response = new API_Response("", 0, "Username is valid!");
             } else {
