@@ -96,6 +96,7 @@ $lang_functions = array
     'text_website_offline_warning' => "<b>警告</b>：站点当前不在线！点击<a href=settings.php>这里</a>改变设置。",
     'text_there_is' => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;有",
     'text_new_report' => "条新举报信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+    'text_new_user_need_verify' => "个新用户等待验证&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
     'text_new_staff_message' => "条新管理组信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
     'text_search' => "搜索",
     'text_profile' => "个人资料",

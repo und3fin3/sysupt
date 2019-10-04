@@ -10,7 +10,7 @@ global $uploadtorrent_bonus, $uploadsubtitle_bonus, $starttopic_bonus, $starttop
        $receivethanks_bonus, $adclickbonus_advertisement, $prolinkpoint_bonus, $funboxreward_bonus, $ratiolimit_bonus,
        $bonusnoadtime_advertisement, $bonus_tweak, $CURUSER, $bonusgift_bonus, $enablenoad_advertisement, $nodetect_security,
        $perseeding_bonus, $donortimes_bonus, $bonusnoad_advertisement, $buyinvite_class, $maxseeding_bonus, $noad_advertisement,
-       $dlamountlimit_bonus, $enablead_advertisement, $nzero_bonus, $bzero_bonus, $l_bonus, $enablebonusnoad_advertisement, $SITENAME;
+       $dlamountlimit_bonus, $enablead_advertisement, $nzero_bonus, $bzero_bonus, $l_bonus, $enablebonusnoad_advertisement, $SITENAME, $temporary_invite;
 
 if (!$invite_bonus = $Cache->get_value('invite_bonus')) {
     // $totalalive = get_row_count ( "users", "WHERE status!='pending' AND class > 0 AND enabled='yes'" );
@@ -204,7 +204,7 @@ if (!$action) {
     print ("<tr><td class=\"colhead\" align=\"center\">" . $lang_mybonus ['col_option'] . "</td>" . "<td class=\"colhead\" align=\"left\">" . $lang_mybonus ['col_description'] . "</td>" . "<td class=\"colhead\" align=\"center\">" . $lang_mybonus ['col_points'] . "</td>" . "<td class=\"colhead\" align=\"center\">" . $lang_mybonus ['col_trade'] . "</td>" . "</tr>");
     for ($i = 1, $j = 0; $i < 20; $i++) {
         $bonusarray = bonusarray($i);
-        if (($i == 7 && $bonusgift_bonus == 'no') || ($i == 8 && ($enablead_advertisement == 'no' || !($enablebonusnoad_advertisement == 'yes'))) || ($i >= 14 && $i < 20))
+        if (($i == 7 && $bonusgift_bonus == 'no') || ($i == 8 && ($enablead_advertisement == 'no' || !($enablebonusnoad_advertisement == 'yes'))) || ($i >= 14 && $i < 20) || ($i == 4 && $temporary_invite != 'yes'))
             continue; // 11到19为预留待开发项目
         if ($i == 20)
             print ("<tr><td class=\"colhead\" colspan=\"4\" align=\"center\"><font class=\"big\">注意：以下内容属于趣味游戏，不是兑换项目。</font></td></tr>\n");
@@ -521,12 +521,15 @@ if ($action == "exchange") {
             stdfoot();
         }        // === trade for invites
         elseif ($art == "invite") {
+            if ($temporary_invite != 'yes') {
+                die ("临时邀请暂未开放！");
+            }
+
             if (get_user_class() < $buyinvite_class)
                 die (get_user_class_name($buyinvite_class, false, false, true) . $lang_mybonus ['text_plus_only']);
-            $invites = $CURUSER ['invites'];
-            $inv = $invites + $bonusarray ['menge'];
             $bonuscomment = date("Y-m-d") . " 使用 " . $points . " 购买了一个邀请名额。\n" . htmlspecialchars($bonuscomment);
-            sql_query("UPDATE users SET invites = " . sqlesc($inv) . ", seedbonus = seedbonus - $points, bonuscomment = " . sqlesc($bonuscomment) . " WHERE id = " . sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+            sql_query("UPDATE users SET seedbonus = seedbonus - $points, bonuscomment = " . sqlesc($bonuscomment) . " WHERE id = " . sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
+            sql_query("INSERT INTO temp_invite (uid, expired) VALUES (" . sqlesc($CURUSER['id']) . ", " . sqlesc(date('Y-m-d H:i:s', strtotime('+1 day'))) . " )");
             stdmsg($lang_mybonus ['successful'], $lang_mybonus ['text_success_invites']);
             stdfoot();
         } elseif ($art == "invite_for_sale") {

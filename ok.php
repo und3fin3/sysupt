@@ -41,5 +41,8 @@ if ($type == "adminactivate") {
         print($lang_ok['std_cookies_disabled_note']);
         stdfoot();
     }
+} elseif ($type == 'needverify') {
+    stdhead($lang_ok['head_user_signup']);
+    stdmsg("等待验证", "你的注册已经成功，但是由于系统检测你可能并非教育网用户，需要等待管理员手动验证。我们会尽快确认并将验证结果发送至你的邮箱，请注意查看。");
 } else
     die();

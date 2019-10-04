@@ -8,7 +8,7 @@ $lang_login = array
 	'p_fail_ban' => "次连续登录失败将导致你的IP地址被禁用！",
 	'p_you_have' => "你还有",
 	'p_remaining_tries' => "次尝试机会",
-	'p_no_account_signup' => "还没有账号? 马上<a href=\"signup.php\"><b>注册</b></a>！",
+	'p_no_account_signup' => "还没有账号? 马上<a href=\"signup/signup\"><b>注册</b></a>！",
 	'p_banuser' => "<b>帐号被封禁？<a href=\"punishment.php\">点这里看封禁原因！</a></b>",
 	'p_forget_pass_recover' => "忘记了密码? 通过<a href=\"recover.php\"><b>邮件</b></a>来找回密码",
 	'p_resend_confirm' => "没有收到验证邮件或验证链接无法打开? <a href=\"confirm_resend.php\"><b>重新发送验证邮件</b></a>",

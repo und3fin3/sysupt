@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "957cdba9fdd8adc979d1b09b9444e859",
+    "content-hash": "6dedb647ea9c0828aac3b6ea78ad16e4",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -348,16 +348,16 @@
         },
         {
             "name": "imdbphp/imdbphp",
-            "version": "v6.2.2",
+            "version": "v6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tboothman/imdbphp.git",
-                "reference": "1cf649303c6cd12bf080487190a0d0d0fa340254"
+                "reference": "b45c4c1c9e9d6e84c0083e00f9c34ed6f8364275"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tboothman/imdbphp/zipball/1cf649303c6cd12bf080487190a0d0d0fa340254",
-                "reference": "1cf649303c6cd12bf080487190a0d0d0fa340254",
+                "url": "https://api.github.com/repos/tboothman/imdbphp/zipball/b45c4c1c9e9d6e84c0083e00f9c34ed6f8364275",
+                "reference": "b45c4c1c9e9d6e84c0083e00f9c34ed6f8364275",
                 "shasum": ""
             },
             "require": {
@@ -385,20 +385,72 @@
                 "GPL-2.0-or-later"
             ],
             "description": "Library for retrieving film and tv information from IMDb",
-            "time": "2019-06-02T11:05:00+00:00"
+            "time": "2019-09-13T17:38:18+00:00"
         },
         {
-            "name": "mlocati/ip-lib",
-            "version": "1.8.0",
+            "name": "itbdw/ip-database",
+            "version": "v2.0.7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mlocati/ip-lib.git",
-                "reference": "c8d6d1fc370e748c3400a9cc614b26af2ae3b197"
+                "url": "https://github.com/itbdw/ip-database.git",
+                "reference": "134835a851b45d4cccd7ea33215c313de74c6aca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mlocati/ip-lib/zipball/c8d6d1fc370e748c3400a9cc614b26af2ae3b197",
-                "reference": "c8d6d1fc370e748c3400a9cc614b26af2ae3b197",
+                "url": "https://api.github.com/repos/itbdw/ip-database/zipball/134835a851b45d4cccd7ea33215c313de74c6aca",
+                "reference": "134835a851b45d4cccd7ea33215c313de74c6aca",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.4|~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "itbdw\\Ip\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "马秉尧"
+                },
+                {
+                    "name": "itbdw",
+                    "email": "itbudaoweng@gmail.com",
+                    "homepage": "http://github.com/itbdw",
+                    "role": "Developer"
+                }
+            ],
+            "description": "IP位置数据库（解析为国家、省、市、县、运营商）",
+            "keywords": [
+                "China",
+                "Chinese",
+                "IP",
+                "database",
+                "location",
+                "位置",
+                "地区",
+                "数据库",
+                "纯真"
+            ],
+            "time": "2019-08-01T03:09:19+00:00"
+        },
+        {
+            "name": "mlocati/ip-lib",
+            "version": "1.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mlocati/ip-lib.git",
+                "reference": "b844659e3b87a461d1a8fe8e3e374aa6c4a5d902"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mlocati/ip-lib/zipball/b844659e3b87a461d1a8fe8e3e374aa6c4a5d902",
+                "reference": "b844659e3b87a461d1a8fe8e3e374aa6c4a5d902",
                 "shasum": ""
             },
             "require": {
@@ -422,9 +474,9 @@
             "authors": [
                 {
                     "name": "Michele Locati",
-                    "role": "Author",
                     "email": "mlocati@gmail.com",
-                    "homepage": "https://github.com/mlocati"
+                    "homepage": "https://github.com/mlocati",
+                    "role": "Author"
                 }
             ],
             "description": "Handle IPv4, IPv6 addresses and ranges",
@@ -441,20 +493,20 @@
                 "range",
                 "subnet"
             ],
-            "time": "2019-07-30T16:27:54+00:00"
+            "time": "2019-09-20T08:26:10+00:00"
         },
         {
             "name": "monolog/monolog",
-            "version": "1.24.0",
+            "version": "1.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266"
+                "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
-                "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
+                "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
                 "shasum": ""
             },
             "require": {
@@ -519,7 +571,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2018-11-05T09:00:11+00:00"
+            "time": "2019-09-06T13:49:17+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -806,17 +858,61 @@
             "time": "2019-03-08T08:55:37+00:00"
         },
         {
-            "name": "symfony/http-foundation",
-            "version": "v4.3.3",
+            "name": "rhilip/ipv6wry",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "8b778ee0c27731105fbf1535f51793ad1ae0ba2b"
+                "url": "https://github.com/Rhilip/ipv6wry-php.git",
+                "reference": "5bed54a8d7f6daf15784edf7727ec69c07ad51dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/8b778ee0c27731105fbf1535f51793ad1ae0ba2b",
-                "reference": "8b778ee0c27731105fbf1535f51793ad1ae0ba2b",
+                "url": "https://api.github.com/repos/Rhilip/ipv6wry-php/zipball/5bed54a8d7f6daf15784edf7727ec69c07ad51dc",
+                "reference": "5bed54a8d7f6daf15784edf7727ec69c07ad51dc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/IpLocation.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Rhilip",
+                    "email": "rhilipruan@gmail.com",
+                    "homepage": "https://blog.rhilip.info/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "The Parser Library of ipv6wry.db in PHP",
+            "keywords": [
+                "China",
+                "geoip",
+                "ipv6wry"
+            ],
+            "time": "2019-09-25T10:10:03+00:00"
+        },
+        {
+            "name": "symfony/http-foundation",
+            "version": "v4.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-foundation.git",
+                "reference": "d804bea118ff340a12e22a79f9c7e7eb56b35adc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/d804bea118ff340a12e22a79f9c7e7eb56b35adc",
+                "reference": "d804bea118ff340a12e22a79f9c7e7eb56b35adc",
                 "shasum": ""
             },
             "require": {
@@ -858,20 +954,20 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2019-07-23T11:21:36+00:00"
+            "time": "2019-08-26T08:55:16+00:00"
         },
         {
             "name": "symfony/mime",
-            "version": "v4.3.3",
+            "version": "v4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "6b7148029b1dd5eda1502064f06d01357b7b2d8b"
+                "reference": "987a05df1c6ac259b34008b932551353f4f408df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/6b7148029b1dd5eda1502064f06d01357b7b2d8b",
-                "reference": "6b7148029b1dd5eda1502064f06d01357b7b2d8b",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/987a05df1c6ac259b34008b932551353f4f408df",
+                "reference": "987a05df1c6ac259b34008b932551353f4f408df",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +976,7 @@
                 "symfony/polyfill-mbstring": "^1.0"
             },
             "require-dev": {
-                "egulias/email-validator": "^2.0",
+                "egulias/email-validator": "^2.1.10",
                 "symfony/dependency-injection": "~3.4|^4.1"
             },
             "type": "library",
@@ -917,7 +1013,7 @@
                 "mime",
                 "mime-type"
             ],
-            "time": "2019-07-19T16:21:19+00:00"
+            "time": "2019-08-22T08:16:11+00:00"
         },
         {
             "name": "symfony/polyfill-intl-idn",
@@ -1097,16 +1193,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v4.3.3",
+            "version": "v4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "e4110b992d2cbe198d7d3b244d079c1c58761d07"
+                "reference": "641043e0f3e615990a0f29479f9c117e8a6698c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/e4110b992d2cbe198d7d3b244d079c1c58761d07",
-                "reference": "e4110b992d2cbe198d7d3b244d079c1c58761d07",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/641043e0f3e615990a0f29479f9c117e8a6698c6",
+                "reference": "641043e0f3e615990a0f29479f9c117e8a6698c6",
                 "shasum": ""
             },
             "require": {
@@ -1169,20 +1265,20 @@
                 "debug",
                 "dump"
             ],
-            "time": "2019-07-27T06:42:46+00:00"
+            "time": "2019-08-26T08:26:39+00:00"
         },
         {
             "name": "tightenco/collect",
-            "version": "v5.8.31",
+            "version": "v5.8.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tightenco/collect.git",
-                "reference": "957e430c26c51b65c80acc87896023229dc05a21"
+                "reference": "c93a7039e6207ad533a09109838fe80933fcc72c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tightenco/collect/zipball/957e430c26c51b65c80acc87896023229dc05a21",
-                "reference": "957e430c26c51b65c80acc87896023229dc05a21",
+                "url": "https://api.github.com/repos/tightenco/collect/zipball/c93a7039e6207ad533a09109838fe80933fcc72c",
+                "reference": "c93a7039e6207ad533a09109838fe80933fcc72c",
                 "shasum": ""
             },
             "require": {
@@ -1219,7 +1315,7 @@
                 "collection",
                 "laravel"
             ],
-            "time": "2019-07-30T19:16:47+00:00"
+            "time": "2019-09-17T18:57:01+00:00"
         }
     ],
     "packages-dev": [],

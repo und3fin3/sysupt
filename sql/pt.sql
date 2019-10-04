@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2019-02-21 16:23:15
--- 服务器版本： 10.3.12-MariaDB-log
--- PHP 版本： 7.3.1
+-- 生成日期： 2019-10-04 13:46:15
+-- 服务器版本： 10.4.7-MariaDB-log
+-- PHP 版本： 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -592,18 +592,6 @@ CREATE TABLE `catplatform` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `platformsoftware`
---
-
-CREATE TABLE `platformsoftware` (
-  `id` smallint(5) UNSIGNED NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `sort_index` smallint(5) UNSIGNED NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `catseries`
 --
 
@@ -731,7 +719,7 @@ CREATE TABLE `comments` (
   `editdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `offer` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `request` mediumint(8) NOT NULL DEFAULT 0,
-  `is_sticky` tinyint(4) unsigned NOT NULL DEFAULT 0 COMMENT '评论置顶'
+  `is_sticky` tinyint(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT '评论置顶'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1166,8 +1154,25 @@ CREATE TABLE `invites` (
   `inviter` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `invitee` varchar(80) NOT NULL DEFAULT '',
   `hash` char(32) NOT NULL,
-  `time_invited` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `time_invited` datetime NOT NULL DEFAULT current_timestamp(),
+  `remark` varchar(50) NOT NULL DEFAULT '未知',
+  `ipcheck` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `invite_rule`
+--
+
+CREATE TABLE `invite_rule` (
+  `id` int(11) NOT NULL,
+  `email_domain` varchar(40) NOT NULL,
+  `ip_start` mediumtext NOT NULL,
+  `ip_end` mediumtext NOT NULL,
+  `ip_version` tinyint(4) NOT NULL DEFAULT 6,
+  `enable` tinyint(4) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1449,6 +1454,18 @@ CREATE TABLE `marked_topic` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `maxslots`
+--
+
+CREATE TABLE `maxslots` (
+  `id` int(4) NOT NULL,
+  `name` varchar(10) CHARACTER SET utf8 NOT NULL,
+  `maxslot` int(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `media`
 --
 
@@ -1488,6 +1505,19 @@ CREATE TABLE `modpanel` (
   `url` varchar(256) NOT NULL DEFAULT '',
   `info` varchar(256) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `needverify`
+--
+
+CREATE TABLE `needverify` (
+  `id` int(11) NOT NULL,
+  `uid` int(10) UNSIGNED NOT NULL,
+  `message` text NOT NULL DEFAULT '',
+  `result` tinyint(4) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1656,6 +1686,18 @@ CREATE TABLE `peers` (
   `uploadoffset` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `passkey` char(32) NOT NULL DEFAULT ''
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `platformsoftware`
+--
+
+CREATE TABLE `platformsoftware` (
+  `id` smallint(5) UNSIGNED NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `sort_index` smallint(5) UNSIGNED NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -2042,7 +2084,11 @@ CREATE TABLE `self_invite` (
   `email` varchar(80) NOT NULL DEFAULT '',
   `used_type` enum('none','invite','revive','addbonus') NOT NULL DEFAULT 'none',
   `code` char(32) NOT NULL,
-  `invite_code` char(32) DEFAULT NULL
+  `invite_code` char(32) DEFAULT NULL,
+  `bonus_uid` int(10) UNSIGNED DEFAULT 0,
+  `time` datetime DEFAULT current_timestamp(),
+  `used` tinyint(4) NOT NULL DEFAULT 0,
+  `ip` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2259,6 +2305,18 @@ CREATE TABLE `teams` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `temp_invite`
+--
+
+CREATE TABLE `temp_invite` (
+  `id` int(11) NOT NULL,
+  `uid` int(10) UNSIGNED NOT NULL,
+  `expired` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `thanks`
 --
 
@@ -2345,7 +2403,7 @@ CREATE TABLE `torrents` (
   `promotion_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `anonymous` enum('yes','no') NOT NULL DEFAULT 'no',
   `url` int(10) UNSIGNED DEFAULT NULL,
-  `pos_state` enum('normal','sticky', 'double_sticky', 'triple_sticky') NOT NULL DEFAULT 'normal',
+  `pos_state` enum('normal','sticky','double_sticky','triple_sticky') NOT NULL DEFAULT 'normal',
   `pos_state_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `cache_stamp` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `picktype` enum('hot','classic','recommended','normal','0day','IMDB','study') NOT NULL DEFAULT 'normal',
@@ -2474,7 +2532,7 @@ CREATE TABLE `users` (
   `passhash` varchar(32) NOT NULL DEFAULT '',
   `secret` varbinary(20) NOT NULL,
   `email` varchar(80) NOT NULL DEFAULT '',
-  `status` enum('pending','confirmed') NOT NULL DEFAULT 'pending',
+  `status` enum('pending','confirmed','needverify') NOT NULL DEFAULT 'pending',
   `added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_login` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_access` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -2867,12 +2925,6 @@ ALTER TABLE `catsoftware`
   ADD PRIMARY KEY (`name`);
 
 --
--- 表的索引 `platformsoftware`
---
-ALTER TABLE `platformsoftware`
-  ADD PRIMARY KEY (`name`);
-
---
 -- 表的索引 `catsports`
 --
 ALTER TABLE `catsports`
@@ -2979,13 +3031,13 @@ ALTER TABLE `files`
 -- 表的索引 `formatanime`
 --
 ALTER TABLE `formatanime`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- 表的索引 `formatdocum`
 --
 ALTER TABLE `formatdocum`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- 表的索引 `formatgame`
@@ -3111,6 +3163,14 @@ ALTER TABLE `invites`
   ADD PRIMARY KEY (`id`);
 
 --
+-- 表的索引 `invite_rule`
+--
+ALTER TABLE `invite_rule`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `invite_rule_id_uindex` (`id`),
+  ADD KEY `invite_rule_email_domain_index` (`email_domain`);
+
+--
 -- 表的索引 `iplog`
 --
 ALTER TABLE `iplog`
@@ -3221,6 +3281,12 @@ ALTER TABLE `marked_topic`
   ADD PRIMARY KEY (`id`);
 
 --
+-- 表的索引 `maxslots`
+--
+ALTER TABLE `maxslots`
+  ADD PRIMARY KEY (`name`);
+
+--
 -- 表的索引 `media`
 --
 ALTER TABLE `media`
@@ -3239,6 +3305,12 @@ ALTER TABLE `messages`
 -- 表的索引 `modpanel`
 --
 ALTER TABLE `modpanel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `needverify`
+--
+ALTER TABLE `needverify`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3301,6 +3373,12 @@ ALTER TABLE `peers`
   ADD KEY `userid` (`userid`),
   ADD KEY `torrent` (`torrent`),
   ADD KEY `ipv4` (`ipv4`,`ipv6`,`port`);
+
+--
+-- 表的索引 `platformsoftware`
+--
+ALTER TABLE `platformsoftware`
+  ADD PRIMARY KEY (`name`);
 
 --
 -- 表的索引 `pmboxes`
@@ -3544,6 +3622,12 @@ ALTER TABLE `sysoppanel`
 -- 表的索引 `teams`
 --
 ALTER TABLE `teams`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `temp_invite`
+--
+ALTER TABLE `temp_invite`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3890,12 +3974,6 @@ ALTER TABLE `files`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- 使用表AUTO_INCREMENT `formatgame`
---
-ALTER TABLE `formatgame`
-  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- 使用表AUTO_INCREMENT `formathqaudio`
 --
 ALTER TABLE `formathqaudio`
@@ -3998,6 +4076,12 @@ ALTER TABLE `invites`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- 使用表AUTO_INCREMENT `invite_rule`
+--
+ALTER TABLE `invite_rule`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- 使用表AUTO_INCREMENT `iplog`
 --
 ALTER TABLE `iplog`
@@ -4092,6 +4176,12 @@ ALTER TABLE `messages`
 --
 ALTER TABLE `modpanel`
   MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `needverify`
+--
+ALTER TABLE `needverify`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `news`
@@ -4346,6 +4436,12 @@ ALTER TABLE `teams`
   MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- 使用表AUTO_INCREMENT `temp_invite`
+--
+ALTER TABLE `temp_invite`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- 使用表AUTO_INCREMENT `thanks`
 --
 ALTER TABLE `thanks`
@@ -4398,7 +4494,6 @@ ALTER TABLE `usercss`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

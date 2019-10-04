@@ -722,7 +722,21 @@ $lang_settings = array(
     'text_union' => "Union（所有tracker置于同一tier中）",
     'row_multi_tracker_behaviour' => "多tracker行为",
     'text_multi_tracker_behaviour' => "<br><font color='red'>请参考 <a href='http://www.bittorrent.org/beps/bep_0012.html'>BEP 12</a> 后再进行修改，将会导致下载时announce-list的生成方式变化</font>",
-    'text_multi_tracker' => "<br>可设置多个tracker，以英文逗号「,」分割，请注意tracker顺序。"
+    'text_multi_tracker' => "<br>可设置多个tracker，以英文逗号「,」分割，请注意tracker顺序。",
+    'row_enable_temporary_invite' => "允许临时邀请",
+    'row_enable_temporary_invite_note' => "是否允许用户发出临时邀请。",
+    'row_temporary_invite_checkip' => "临时邀请检查IP",
+    'row_temporary_invite_checkip_note' => "临时邀请是否检查教育网IP和邮箱",
+    'row_enable_permanent_invite' => "允许永久邀请",
+    'row_enable_permanent_invite_note' => "是否允许用户发出永久邀请。",
+    'row_permanent_invite_checkip' => "永久邀请检查IP",
+    'row_permanent_invite_checkip_note' => "永久邀请是否检查教育网IP和邮箱",
+    'row_enable_self_invite' => "允许自助邀请",
+    'row_enable_self_invite_note' => "是否允许用户使用自助邀请。",
+    'row_self_invite_checkip' => "自助邀请检查IP",
+    'row_self_invite_checkip_note' => "自助邀请是否检查教育网IP和邮箱",
+    'row_registration_checkip' => "开放注册检查IP",
+    'row_registration_checkip_note' => "开放注册是否检查教育网IP和邮箱",
 );
 
 ?>

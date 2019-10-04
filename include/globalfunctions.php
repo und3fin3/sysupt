@@ -91,16 +91,20 @@ function validateIPv6($IP)
 {
     $IP = filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
     if ($IP) {
-        // IPLib不能正确处理ISATAP隧道地址，因此遇到带.的地址直接放行(https://github.com/mlocati/ip-lib/issues/31)
-        if (strpos($IP, '.') !== false) return true;
-        $IP = IPLib\Factory::addressFromString($IP)->toString(true);
+        $IP = IPLib\Address\IPv6::fromString($IP)->toString(true);
         return filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
     } else return false;
 }
 
 function validateIPv4($IP)
 {
-    return filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+    $IP = filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+    if ($IP) {
+        $address = IPLib\Address\IPv4::fromString($IP);
+        if (!$address->matches(IPLib\Range\Subnet::fromString('172.16.0.0/12')))
+            return filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+        else return true;
+    } else return false;
 }
 
 function sql_query($query)
@@ -163,4 +167,28 @@ if (!function_exists('is_indexed_array')) {
         }
         return false;
     }
+}
+
+function ip_to_location($ip)
+{
+    if (validateIPv6($ip))
+        return Rhilip\Ipv6Wry\IpLocation::searchIp($ip)['area'];
+    else if (validateIPv4($ip))
+        return itbdw\Ip\IpLocation::getLocation($ip)['area'];
+    else
+        return "Invalid IP address";
+}
+
+function ipv6tolong2($ip)
+{
+    $ip = ExpandIPv6Notation($ip);
+    $parts = explode(':', $ip);
+    $iparr = array('', '');
+    for ($i = 0; $i < 4; $i++) {
+        $iparr[0] .= str_pad(base_convert($parts[$i], 16, 2), 16, 0, STR_PAD_LEFT);
+    }
+    for ($i = 4; $i < 8; $i++) {
+        $iparr[1] .= str_pad(base_convert($parts[$i], 16, 2), 16, 0, STR_PAD_LEFT);
+    }
+    return base_convert($iparr[0], 2, 10) . base_convert($iparr[1], 2, 10);
 }

@@ -1546,7 +1546,8 @@ INSERT INTO `modpanel` (`id`, `name`, `url`, `info`) VALUES
 (16, '禁止发布特定文件类型', 'bannedfiletype.php', '禁止发布种子内包含特定文件类型'),
 (15, '禁止发布特定资源', 'banstitle.php', '禁止发布标题含有指定关键词的资源'),
 (18, '邀请申请区', 'viewinvitebox.php', '查看游客的邀请申请'),
-(17, '字幕区', 'subtitles.php', '管理字幕区');
+(17, '字幕区', 'subtitles.php', '管理字幕区'),
+(19, '验证用户注册', 'verify_signup.php', '审核需要被管理员手动通过的注册请求');
 
 --
 -- 转存表中的数据 `nontjuip`

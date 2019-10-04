@@ -4,7 +4,7 @@ dbconn();
 require_once(get_langfile_path());
 loggedinorreturn();
 parked();
-global $CURUSER, $viewinvite_class, $sendinvite_class, $SITENAME, $restrictemaildomain;
+global $CURUSER, $viewinvite_class, $sendinvite_class, $SITENAME, $restrictemaildomain, $permanent_invite_checkip, $temporary_invite_checkip, $temporary_invite, $permanent_invite;
 
 $id = 0 + $_GET["id"];
 $type = $_GET["type"];
@@ -34,14 +34,27 @@ $res = sql_query("SELECT invites FROM users WHERE id = " . mysql_real_escape_str
 $inv = mysql_fetch_assoc($res);
 
 //for one or more. "invite"/"invites"
-if ($inv["invites"] != 1) {
+if ($CURUSER["invites"] != 1) {
     $_s = $lang_invite['text_s'];
 } else {
     $_s = "";
 }
 
 if ($type == 'new') {
-    if ($CURUSER['invites'] <= 0) {
+
+    if ($temporary_invite != 'yes' && $permanent_invite != 'yes') {
+        stderr($lang_invite['std_sorry'], "邀请系统暂未开放", true, false);
+    }
+
+    $temp_invites = array();
+    $res = sql_query("SELECT * FROM temp_invite WHERE expired >= NOW() ORDER BY expired ASC");
+    while ($row = mysql_fetch_array($res)) {
+        $temp_invites[$row['id']] = $row['expired'];
+    }
+
+    if (($CURUSER['invites'] == 0 && count($temp_invites) == 0)
+        || ($CURUSER['invites'] == 0 && $temporary_invite != 'yes')
+        || (count($temp_invites) == 0 && $permanent_invite != 'yes')) {
         stdmsg($lang_invite['std_sorry'], $lang_invite['std_no_invites_left'] .
             "<a class=altlink href=invite.php?id=$CURUSER[id]>" . $lang_invite['here_to_go_back'], false);
         print("</td></tr></table>");
@@ -50,9 +63,30 @@ if ($type == 'new') {
     }
     $invitation_body = $lang_invite['text_invitation_body'] . $CURUSER['username'];
     //$invitation_body_insite = str_replace("<br />","\n",$invitation_body);
+
+    $invite_ipcheck_status = [
+        'yes' => "需要教育网IP验证",
+        'no' => "无需教育网IP验证"
+    ];
+
+    $invite_types = "<option value=''>请选择邀请类型</option>";
+
+    if ($permanent_invite == 'yes') {
+        if ($CURUSER['invites'] > 0) {
+            $invite_types .= "<option value='-1'>永久邀请 - {$invite_ipcheck_status[$permanent_invite_checkip]}</option>";
+        }
+    }
+
+    if ($temporary_invite == 'yes') {
+        foreach ($temp_invites as $invite_id => $invite_expired_date) {
+            $invite_types .= "<option value='{$invite_id}'>临时邀请 - {$invite_ipcheck_status[$temporary_invite_checkip]} - 有效期至{$invite_expired_date}</option>";
+        }
+    }
+
     print("<form method=post action=takeinvite.php?id=" . htmlspecialchars($id) . ">" .
         "<table border=1 width=737 cellspacing=0 cellpadding=5>" .
-        "<tr align=center><td colspan=2><b>" . $lang_invite['text_invite_someone'] . "$SITENAME ($inv[invites]" . $lang_invite['text_invitation'] . $_s . $lang_invite['text_left'] . ")</b></td></tr>" .
+        "<tr align=center><td colspan=2><b>" . $lang_invite['text_invite_someone'] . "$SITENAME (" . ($inv['invites'] + count($temp_invites)) . $lang_invite['text_invitation'] . $_s . $lang_invite['text_left'] . ")</b></td></tr>" .
+        "<tr><td class='rowhead nowrap' valign='top' align='right'>邀请类型</td><td align='left'><select name='invite_type'>$invite_types</select></td></tr>" .
         "<tr><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" . $lang_invite['text_email_address'] . "</td><td align=left><input type=text size=40 name=email><br /><font align=left class=small>" . $lang_invite['text_email_address_note'] . "</font>" . ($restrictemaildomain == 'yes' ? "<br />" . $lang_invite['text_email_restriction_note'] . allowedemails() : "") . "</td></tr>" .
         "<tr><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" . $lang_invite['text_message'] . "</td><td align=left><textarea name=body rows=8 cols=120>" . $invitation_body .
         "</textarea></td></tr>" .
@@ -156,7 +190,7 @@ if ($type == 'new') {
 
             print("<tr><td class=rowfollow>$arr1[invitee]<td class=rowfollow>");
 
-            print("<a class='to_clipboard' title=\"https://tjupt.org/signup.php?type=invite&invitenumber={$arr1['hash']}\" href=\"\" onclick='return false' data-clipboard-text='https://tjupt.org/signup.php?type=invite&invitenumber={$arr1['hash']}'>" . $arr1['hash'] . "</a></td><td class=rowfollow>$arr1[time_invited]</td></tr>");
+            print("<a class='to_clipboard' title=\"https://tjupt.org/signup/signup?code={$arr1['hash']}\" href=\"\" onclick='return false' data-clipboard-text='https://tjupt.org/signup/signup?code={$arr1['hash']}'>" . $arr1['hash'] . "</a></td><td class=rowfollow>$arr1[time_invited]</td></tr>");
         }
     }
     print("</table>");

@@ -2776,7 +2776,7 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
                 if (!$CURUSER) {
                     ?>
                     <a href="login.php"><font class="big"><b><?php echo $lang_functions['text_login'] ?></b></font></a>
-                    / <a href="signup.php"><font class="big"><b><?php echo $lang_functions['text_signup'] ?></b></font></a>
+                    / <a href="signup/signup"><font class="big"><b><?php echo $lang_functions['text_signup'] ?></b></font></a>
                     <?php
                 } else {
                 begin_main_frame();
@@ -2860,6 +2860,8 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
                 }
 
                 $inboxpic = "<img class=\"" . ($unread ? "inboxnew" : "inbox") . "\" src=\"pic/trans.gif\" alt=\"inbox\" title=\"" . ($unread ? $lang_functions ['title_inbox_new_messages'] : $lang_functions ['title_inbox_no_new_messages']) . "\" />";
+
+                $temp_invite_count = mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM temp_invite WHERE uid = " . sqlesc($CURUSER['id']) . " AND expired > NOW()"))[0];
                 ?>
 
                 <table id="info_block" cellpadding="4" cellspacing="0" border="0"
@@ -2886,7 +2888,7 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
 											<font class='color_bonus'><?php echo $lang_functions['text_bonus'] ?></font>
                                             [<a href="mybonus.php"><?php echo $lang_functions['text_use'] ?></a>|<a href="mybonusapps.php">应用</a>]: <?php echo number_format($CURUSER['seedbonus'], 1) ?>
                                             <font class='color_invite'><?php echo $lang_functions['text_invite'] ?></font>
-                                            [<a href="invite.php?id=<?php echo $CURUSER['id'] ?>"><?php echo $lang_functions['text_send'] ?></a>]: <?php echo $CURUSER['invites'] ?><br/>
+                                            [<a href="invite.php?id=<?php echo $CURUSER['id'] ?>"><?php echo $lang_functions['text_send'] ?></a>]: <?php echo $CURUSER['invites'] . "/" . $temp_invite_count ?><br/>
 											<font class="color_ratio"><?php echo $lang_functions['text_ratio'] ?></font> <?php echo $ratio ?>
                                             <font class='color_uploaded'><?php echo $lang_functions['text_uploaded'] ?></font> <?php echo mksize($CURUSER['uploaded']) ?>
                                             <font class='color_downloaded'> <?php echo $lang_functions['text_downloaded'] ?></font> <?php echo mksize($CURUSER['downloaded']) ?>
@@ -3007,6 +3009,16 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                     }
 
                     if (get_user_class() >= $staffmem_class) {
+                        $numneedverify = $Cache->get_value('staff_needverify_count');
+                        if ($numneedverify == "") {
+                            $numneedverify = get_row_count("needverify", "WHERE result=0");
+                            $Cache->cache_value('staff_needverify_count', $numneedverify, 900);
+                        }
+                        if ($numneedverify) {
+                            $text = $lang_functions ['text_there_is'] . is_or_are($numneedverify) . $numneedverify . $lang_functions ['text_new_user_need_verify'] . add_s($numneedverify);
+                            msgalert("verify_signup.php", $text, "blue");
+                        }
+
                         $numreports = $Cache->get_value('staff_new_report_count');
                         if ($numreports == "") {
                             $numreports = get_row_count("reports", "WHERE dealtwith=0");
