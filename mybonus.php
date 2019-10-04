@@ -139,7 +139,7 @@ function bonusarray($option)
                 $bonus ['art'] = 'invite_for_sale';
                 $bonus ['menge'] = 1;
                 $bonus ['name'] = "出售邀请";
-                $bonus ['description'] = "您可以在这里将当前拥有的邀请资格兑换成魔力值。";
+                $bonus ['description'] = "您可以在这里将当前拥有的<span style='color: red'>永久邀请</span>兑换成魔力值。临时邀请不可出售！";
                 break;
             }
         case 12 :

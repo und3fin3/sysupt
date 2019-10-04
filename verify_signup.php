@@ -2,7 +2,7 @@
 require "include/bittorrent.php";
 dbconn();
 
-global $CURUSER, $SITENAME, $SITEEMAIL;
+global $CURUSER, $SITENAME, $SITEEMAIL, $Cache;
 if ($CURUSER['class'] < UC_MODERATOR) {
     stderr("没有权限", "你无权查看申请列表");
 }
@@ -28,7 +28,7 @@ if ($id && $action) {
     $email = mysql_fetch_row(@sql_query("SELECT email FROM users WHERE id = " . sqlesc($row['uid'])))[0];
     if ($action == 'accept') {
         sql_query("UPDATE users SET status = 'confirmed', enabled = 'yes', downloadpos = 'yes' WHERE id = " . sqlesc($row['uid']));
-        sql_query("UPDATE needverify SET result = {$CURUSER['id']} WHERE id = " . sqlesc($id));
+        sql_query("UPDATE needverify SET result = " . sqlesc($CURUSER['id']) . " WHERE id = " . sqlesc($id));
         $title = $SITENAME . "账户申请已被确认";
         $message = "你的账户申请已被确认，欢迎你加入" . $SITENAME . "。<br>----------------<br>" . $SITENAME . "管理组";
     } else {
@@ -37,6 +37,7 @@ if ($id && $action) {
         $title = $SITENAME . "账户申请已被驳回";
         $message = "你的账户申请已被驳回，有意申诉请加入<a href='//shang.qq.com/wpa/qunwpa?idkey=c584748ff16ae67f8f381f0d4e5f87132551ad01704b90075d90da4f4e659ee4'>北洋园PT临时群：637597613</a>" . "。<br>----------------<br>" . $SITENAME . "管理组";
     }
+    $Cache->delete_value('staff_needverify_count');
     sent_mail($email, $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $title), change_email_encode(get_langfolder_cookie(), $message), "verify_user", false, false, '', get_email_encode(get_langfolder_cookie()));
     header("Location: verify_signup.php");
 } else {

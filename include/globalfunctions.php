@@ -171,11 +171,13 @@ if (!function_exists('is_indexed_array')) {
 
 function ip_to_location($ip)
 {
-    if (validateIPv6($ip))
-        return Rhilip\Ipv6Wry\IpLocation::searchIp($ip)['area'];
-    else if (validateIPv4($ip))
-        return itbdw\Ip\IpLocation::getLocation($ip)['area'];
-    else
+    if (validateIPv6($ip)) {
+        $result = Rhilip\Ipv6Wry\IpLocation::searchIp($ip);
+        return $result['area'] ? $result['area'] : $result['error'];
+    } else if (validateIPv4($ip)) {
+        $result = itbdw\Ip\IpLocation::getLocation($ip);
+        return $result['area'] ? $result['area'] : $result['error'];
+    } else
         return "Invalid IP address";
 }
 

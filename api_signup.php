@@ -206,11 +206,11 @@ EOD;
     }
 
     $code = $_GET['code'];
-    $res = sql_query("SELECT * FROM invites WHERE hash = " . sqlesc($code)) or sqlerr(__FILE__, __LINE__);
-    $inv = mysql_fetch_array($res);
-    if ($code && !$inv) {
+    $res_inv = sql_query("SELECT * FROM invites WHERE hash = " . sqlesc($code)) or sqlerr(__FILE__, __LINE__);
+    $inv = mysql_fetch_array($res_inv);
+    if (isset($code) && !$inv) {
         echo json_encode(new API_Response(null, -1, "邀请码错误、已被注册或已过期！"));
-    } elseif (!$code) {
+    } elseif (!isset($code)) {
         if ($registration != 'yes') {
             if ($self_invite != 'yes') {
                 echo json_encode(new API_Response(null, -2, "暂未开放注册！"));
