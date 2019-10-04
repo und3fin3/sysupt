@@ -28,12 +28,12 @@ if ($id && $action) {
     $email = mysql_fetch_row(@sql_query("SELECT email FROM users WHERE id = " . sqlesc($row['uid'])))[0];
     if ($action == 'accept') {
         sql_query("UPDATE users SET status = 'confirmed', enabled = 'yes', downloadpos = 'yes' WHERE id = " . sqlesc($row['uid']));
-        sql_query("UPDATE needverify SET result = " . sqlesc($CURUSER['id']) . " WHERE id = " . sqlesc($id));
+        sql_query("UPDATE needverify SET result = 1, verified_by = " . sqlesc($CURUSER['id']) . " WHERE id = " . sqlesc($id));
         $title = $SITENAME . "账户申请已被确认";
         $message = "你的账户申请已被确认，欢迎你加入" . $SITENAME . "。<br>----------------<br>" . $SITENAME . "管理组";
     } else {
         sql_query("UPDATE users SET status = 'confirmed', enabled = 'no', downloadpos = 'no' WHERE id = " . sqlesc($row['uid']));
-        sql_query("UPDATE needverify SET result = -1 WHERE id = " . sqlesc($id));
+        sql_query("UPDATE needverify SET result = -1, verified_by = " . sqlesc($CURUSER['id']) . " WHERE id = " . sqlesc($id));
         $title = $SITENAME . "账户申请已被驳回";
         $message = "你的账户申请已被驳回，有意申诉请加入<a href='//shang.qq.com/wpa/qunwpa?idkey=c584748ff16ae67f8f381f0d4e5f87132551ad01704b90075d90da4f4e659ee4'>北洋园PT临时群：637597613</a>" . "。<br>----------------<br>" . $SITENAME . "管理组";
     }
@@ -74,10 +74,10 @@ if ($id && $action) {
                 $status = "<a href='verify_signup.php?id={$row['id']}&action=accept'><span style='color: green'>通过</span></a>&nbsp;&nbsp;&nbsp;<a href='verify_signup.php?id={$row['id']}&action=reject'><span style='color: red'>驳回</span></a>";
                 break;
             case -1:
-                $status = "<a href='verify_signup.php?id={$row['id']}&action=recheck'><span style='color: red'>已被驳回</span></a>";
+                $status = "<a href='verify_signup.php?id={$row['id']}&action=recheck'><span style='color: red'>已被驳回</span></a> - " . get_username($row['verified_by']);
                 break;
-            default:
-                $status = "<a href='verify_signup.php?id={$row['id']}&action=recheck'><span style='color: green'>已被通过</span></a> - " . get_username($row['result']);
+            case 1:
+                $status = "<a href='verify_signup.php?id={$row['id']}&action=recheck'><span style='color: green'>已被通过</span></a> - " . get_username($row['verified_by']);
                 break;
         }
 

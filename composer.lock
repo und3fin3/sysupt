@@ -859,16 +859,16 @@
         },
         {
             "name": "rhilip/ipv6wry",
-            "version": "0.1.2",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Rhilip/ipv6wry-php.git",
-                "reference": "5bed54a8d7f6daf15784edf7727ec69c07ad51dc"
+                "reference": "070e35ace70afac0a50e04e681d947ef7c58be4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Rhilip/ipv6wry-php/zipball/5bed54a8d7f6daf15784edf7727ec69c07ad51dc",
-                "reference": "5bed54a8d7f6daf15784edf7727ec69c07ad51dc",
+                "url": "https://api.github.com/repos/Rhilip/ipv6wry-php/zipball/070e35ace70afac0a50e04e681d947ef7c58be4f",
+                "reference": "070e35ace70afac0a50e04e681d947ef7c58be4f",
                 "shasum": ""
             },
             "require": {
@@ -899,7 +899,7 @@
                 "geoip",
                 "ipv6wry"
             ],
-            "time": "2019-09-25T10:10:03+00:00"
+            "time": "2019-10-04T16:24:12+00:00"
         },
         {
             "name": "symfony/http-foundation",

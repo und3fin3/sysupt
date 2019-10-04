@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2019-10-04 13:46:15
+-- 生成日期： 2019-10-04 17:10:00
 -- 服务器版本： 10.4.7-MariaDB-log
 -- PHP 版本： 7.3.9
 
@@ -1454,18 +1454,6 @@ CREATE TABLE `marked_topic` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `maxslots`
---
-
-CREATE TABLE `maxslots` (
-  `id` int(4) NOT NULL,
-  `name` varchar(10) CHARACTER SET utf8 NOT NULL,
-  `maxslot` int(4) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `media`
 --
 
@@ -1516,7 +1504,8 @@ CREATE TABLE `needverify` (
   `id` int(11) NOT NULL,
   `uid` int(10) UNSIGNED NOT NULL,
   `message` text NOT NULL DEFAULT '',
-  `result` tinyint(4) NOT NULL DEFAULT 0
+  `result` tinyint(4) NOT NULL DEFAULT 0,
+  `verified_by` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2085,8 +2074,8 @@ CREATE TABLE `self_invite` (
   `used_type` enum('none','invite','revive','addbonus') NOT NULL DEFAULT 'none',
   `code` char(32) NOT NULL,
   `invite_code` char(32) DEFAULT NULL,
-  `bonus_uid` int(10) UNSIGNED DEFAULT 0,
-  `time` datetime DEFAULT current_timestamp(),
+  `bonus_uid` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `time` datetime NOT NULL DEFAULT current_timestamp(),
   `used` tinyint(4) NOT NULL DEFAULT 0,
   `ip` varchar(50) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -3279,12 +3268,6 @@ ALTER TABLE `loginattempts`
 --
 ALTER TABLE `marked_topic`
   ADD PRIMARY KEY (`id`);
-
---
--- 表的索引 `maxslots`
---
-ALTER TABLE `maxslots`
-  ADD PRIMARY KEY (`name`);
 
 --
 -- 表的索引 `media`
