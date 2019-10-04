@@ -85,13 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($type == 'invite') {
         $code = $data['code'];
-        $res = sql_query("SELECT * FROM invites WHERE hash = " . sqlesc($code)) or sqlerr(__FILE__, __LINE__);
+        $res = sql_query("SELECT * FROM invites WHERE hash = '" . mysql_real_escape_string($code) . "' LIMIT 1") or sqlerr(__FILE__, __LINE__);
         $inv = mysql_fetch_array($res);
         if (!$inv) {
             echo json_encode(new API_Response(null, -1, "邀请码错误、已被注册或已过期！"));
             die();
         }
-        sql_query("DELETE FROM invites WHERE hash = " . sqlesc($code));
+        sql_query("DELETE FROM invites WHERE hash = '" . mysql_real_escape_string($code) . "' LIMIT 1");
     }
 
     global $registration_checkip;
@@ -206,7 +206,7 @@ EOD;
     }
 
     $code = $_GET['code'];
-    $res_inv = sql_query("SELECT * FROM invites WHERE hash = " . sqlesc($code)) or sqlerr(__FILE__, __LINE__);
+    $res_inv = sql_query("SELECT * FROM invites WHERE hash = '" . mysql_real_escape_string($code) . "' LIMIT 1") or sqlerr(__FILE__, __LINE__);
     $inv = mysql_fetch_array($res_inv);
     if (isset($code) && !$inv) {
         echo json_encode(new API_Response(null, -1, "邀请码错误、已被注册或已过期！"));
