@@ -47,7 +47,7 @@ if ($type == 'new') {
     }
 
     $temp_invites = array();
-    $res = sql_query("SELECT * FROM temp_invite WHERE expired >= NOW() ORDER BY expired ASC");
+    $res = sql_query("SELECT * FROM temp_invite WHERE uid = " . sqlesc($CURUSER['id']) . " AND expired >= NOW() ORDER BY expired ASC");
     while ($row = mysql_fetch_array($res)) {
         $temp_invites[$row['id']] = $row['expired'];
     }
