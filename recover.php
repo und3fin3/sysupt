@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $res = sql_query("SELECT * FROM users WHERE email=" . sqlesc($email) . " LIMIT 1") or sqlerr(__FILE__, __LINE__);
     $arr = mysql_fetch_assoc($res);
     if (!$arr) failedlogins($lang_recover['std_email_not_in_database'], true);
-    if ($arr['status'] == "pending") failedlogins($lang_recover['std_user_account_unconfirmed'], true);
+    if ($arr['status'] != "confirmed") failedlogins($lang_recover['std_user_account_unconfirmed'], true);
 
     $sec = mksecret();
 

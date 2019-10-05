@@ -30,7 +30,7 @@ $row = mysql_fetch_array($res);
 
 if (!$row)
     failedlogins();
-if ($row['status'] == 'pending')
+if ($row['status'] != 'confirmed')
     failedlogins($lang_takelogin['std_user_account_unconfirmed']);
 global $password;
 if ($row["passhash"] != md5($row["secret"] . $password . $row["secret"]))
