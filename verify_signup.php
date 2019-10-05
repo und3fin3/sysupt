@@ -93,7 +93,7 @@ if ($id && $action) {
 
         ?>
         <tr>
-            <td class="rowfollow"><?php echo $row['added'] ?></td>
+            <td class="rowfollow"><?php echo $user['added'] ?></td>
             <td class="rowfollow"><?php echo get_username($row['uid']) ?></td>
             <td class="rowfollow"><?php echo $ip . " 「" . ip_to_location($ip) . "」" ?></td>
             <td class="rowfollow"><?php echo $inviter . ' -> ' . $reason ?></td>
