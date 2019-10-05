@@ -10,6 +10,7 @@ if ($CURUSER['class'] < UC_MODERATOR) {
 $id = 0 + $_GET['id'];
 $action = $_GET['action'];
 $recheck = 0 + $_GET['recheck'];
+$reason = $_GET['reason'];
 
 if ($id && $action) {
     $res = sql_query("SELECT * FROM needverify WHERE id = " . sqlesc($id));
@@ -32,10 +33,13 @@ if ($id && $action) {
         $title = $SITENAME . "账户申请已被确认";
         $message = "你的账户申请已被确认，欢迎你加入" . $SITENAME . "。<br>----------------<br>" . $SITENAME . "管理组";
     } else {
+        if (!isset($reason)) {
+            stderr("驳回原因", "<form action='verify_signup.php' method='get'>请写明驳回原因：<input type='hidden' name='id' value='$id'><input type='hidden' name='action' value='$action'><input type='text' name='reason'/>&nbsp;<button type='submit'>驳回</button></form>", 0);
+        }
         sql_query("UPDATE users SET status = 'confirmed', enabled = 'no', downloadpos = 'no' WHERE id = " . sqlesc($row['uid']));
         sql_query("UPDATE needverify SET result = -1, verified_by = " . sqlesc($CURUSER['id']) . " WHERE id = " . sqlesc($id));
         $title = $SITENAME . "账户申请已被驳回";
-        $message = "你的账户申请已被驳回，有意申诉请加入<a href='//shang.qq.com/wpa/qunwpa?idkey=c584748ff16ae67f8f381f0d4e5f87132551ad01704b90075d90da4f4e659ee4'>北洋园PT临时群：637597613</a>" . "。<br>----------------<br>" . $SITENAME . "管理组";
+        $message = "你的账户申请已被驳回，原因为「{$reason}」。有意申诉请加入<a href='//shang.qq.com/wpa/qunwpa?idkey=c584748ff16ae67f8f381f0d4e5f87132551ad01704b90075d90da4f4e659ee4'>北洋园PT临时群：637597613</a>" . "。<br>----------------<br>" . $SITENAME . "管理组";
     }
     $Cache->delete_value('staff_needverify_count');
     sent_mail($email, $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $title), change_email_encode(get_langfolder_cookie(), $message), "verify_user", false, false, '', get_email_encode(get_langfolder_cookie()));
@@ -87,7 +91,7 @@ if ($id && $action) {
             <td class="rowfollow"><?php echo $ip . " 「" . ip_to_location($ip) . "」" ?></td>
             <td class="rowfollow"><?php echo $inviter . ' -> ' . $reason ?></td>
             <td class="rowfollow"><?php echo $email ?></td>
-            <td class="rowfollow" style="width: 40%"><?php echo $row['message'] ?></td>
+            <td class="rowfollow" style="width: 40%"><?php echo format_comment($row['message']) ?></td>
             <td class="rowfollow"><?php echo $status ?></td>
         </tr>
         <?php
