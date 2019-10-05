@@ -48,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode(new API_Response(null, -6, "该邮箱域已被禁用！"));
         die();
     }
-    $res = sql_query("SELECT * FROM self_invite WHERE email = " . sqlesc($email) . " LIMIT 1");
-    $a = mysql_fetch_array($res);
-    if ($a !== null && $a['used'] == 1) {
+    $res = sql_query("SELECT COUNT(*) FROM users WHERE email = " . sqlesc($email));
+    $a = mysql_fetch_row($res)[0];
+    if ($a != 0) {
         echo json_encode(new API_Response(null, -6, "此邮箱已经被使用！"));
         die();
     }
