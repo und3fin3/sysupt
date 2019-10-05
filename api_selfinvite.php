@@ -65,8 +65,10 @@ if (!$get_code) {
         if ($a !== null) {
             if ($type == $a['used_type']) {
                 if ($type == 'invite') {
+                    $code = $a['code'];
                     sql_query("UPDATE self_invite SET ip = " . sqlesc($ip) . " WHERE email = " . sqlesc($email));
                 } elseif ($a['bonus_uid'] == $uid) {
+                    $code = $a['code'];
                     sql_query("UPDATE self_invite SET ip = " . sqlesc($ip) . " WHERE email = " . sqlesc($email));
                 } else {
                     $code = md5(mt_rand(1, 10000) . $ip . TIMENOW . $email);

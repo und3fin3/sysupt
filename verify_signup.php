@@ -57,7 +57,7 @@ if ($id && $action) {
     </tr>
     <?php
 
-    $res = sql_query("SELECT * FROM needverify ORDER BY FIELD(result, 0, 1, -1), uid ASC");
+    $res = sql_query("SELECT * FROM needverify ORDER BY FIELD(result, 0, 1, -1), id DESC");
     while ($row = mysql_fetch_array($res)) {
         $ip = mysql_fetch_row(@sql_query("SELECT ip FROM iplog WHERE userid = " . sqlesc($row['uid']) . " ORDER BY id ASC LIMIT 1"))[0];
         $user = mysql_fetch_array(@sql_query("SELECT modcomment, invited_by, email FROM users WHERE id = " . sqlesc($row['uid']) . " LIMIT 1"));
