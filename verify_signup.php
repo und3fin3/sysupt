@@ -45,13 +45,20 @@ if ($id && $action) {
     sent_mail($email, $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $title), change_email_encode(get_langfolder_cookie(), $message), "verify_user", false, false, '', get_email_encode(get_langfolder_cookie()));
     header("Location: verify_signup.php");
 } else {
-    if (mysql_fetch_row(sql_query("SELECT COUNT(*) FROM needverify"))[0] == 0) {
-        stderr("无结果", "审核列表中无数据");
+    $showall = $_GET['showall'] == 1 ? "" : " WHERE result = 0 ";
+    if (mysql_fetch_row(sql_query("SELECT COUNT(*) FROM needverify" . $showall))[0] == 0) {
+        stderr("无结果", "审核列表中无数据。<a href='verify_signup.php?showall=1' class='faqlink'>点此查看全部</a>", 0);
     }
     stdhead();
+    if ($showall) {
+        echo "<p style='text-align: center'><a href='verify_signup.php?showall=1'>查看全部</a></p>";
+    } else {
+        echo "<p style='text-align: center'><a href='verify_signup.php'>仅看未审核</a></p>";
+    }
     begin_table();
     ?>
     <tr>
+        <td class="colhead">申请时间</td>
         <td class='colhead'>用户名</td>
         <td class='colhead'>IP/位置</td>
         <td class='colhead'>邀请者/获邀途径</td>
@@ -60,11 +67,10 @@ if ($id && $action) {
         <td class='colhead'>状态</td>
     </tr>
     <?php
-
-    $res = sql_query("SELECT * FROM needverify ORDER BY FIELD(result, 0, 1, -1), id DESC");
+    $res = sql_query("SELECT * FROM needverify " . $showall . " ORDER BY FIELD(result, 0, 1, -1), id DESC");
     while ($row = mysql_fetch_array($res)) {
         $ip = mysql_fetch_row(@sql_query("SELECT ip FROM iplog WHERE userid = " . sqlesc($row['uid']) . " ORDER BY id ASC LIMIT 1"))[0];
-        $user = mysql_fetch_array(@sql_query("SELECT modcomment, invited_by, email FROM users WHERE id = " . sqlesc($row['uid']) . " LIMIT 1"));
+        $user = mysql_fetch_array(@sql_query("SELECT added, modcomment, invited_by, email FROM users WHERE id = " . sqlesc($row['uid']) . " LIMIT 1"));
 
         preg_match('/受邀原因：(.*?)；邀请邮箱：(.*?)。/i', $user['modcomment'], $matches);
         $reason = $matches[1];
@@ -87,6 +93,7 @@ if ($id && $action) {
 
         ?>
         <tr>
+            <td class="rowfollow"><?php echo $row['added'] ?></td>
             <td class="rowfollow"><?php echo get_username($row['uid']) ?></td>
             <td class="rowfollow"><?php echo $ip . " 「" . ip_to_location($ip) . "」" ?></td>
             <td class="rowfollow"><?php echo $inviter . ' -> ' . $reason ?></td>
