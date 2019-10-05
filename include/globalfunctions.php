@@ -180,17 +180,3 @@ function ip_to_location($ip)
     } else
         return "Invalid IP address";
 }
-
-function ipv6tolong2($ip)
-{
-    $ip = ExpandIPv6Notation($ip);
-    $parts = explode(':', $ip);
-    $iparr = array('', '');
-    for ($i = 0; $i < 4; $i++) {
-        $iparr[0] .= str_pad(base_convert($parts[$i], 16, 2), 16, 0, STR_PAD_LEFT);
-    }
-    for ($i = 4; $i < 8; $i++) {
-        $iparr[1] .= str_pad(base_convert($parts[$i], 16, 2), 16, 0, STR_PAD_LEFT);
-    }
-    return base_convert($iparr[0], 2, 10) . base_convert($iparr[1], 2, 10);
-}

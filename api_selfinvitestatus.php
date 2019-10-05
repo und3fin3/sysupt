@@ -8,18 +8,20 @@ global $self_invite, $self_invite_checkip;
 $ip = getip();
 if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
     $ip_version = "6";
-    $long_ip = ipv6tolong2($ip);
+    $iplib_ip = IPLib\Address\IPv6::fromString($ip);
 } else {
     $ip_version = "4";
-    $long_ip = ip2long($ip);
+    $iplib_ip = IPLib\Address\IPv4::fromString($ip);
 }
 
 $loc = ip_to_location($ip);
 
 $emails = array();
-$res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND ip_start <= {$long_ip} AND ip_end >= {$long_ip}");
+$res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version}");
 while ($row = mysql_fetch_array($res)) {
-    $emails = array_merge($emails, explode(',', $row['email_domain']));
+    $range = IPLib\Range\Subnet::fromString($row['ip_range']);
+    if ($range->contains($iplib_ip))
+        $emails = array_merge($emails, explode(',', $row['email_domain']));
 }
 
 $result = array(

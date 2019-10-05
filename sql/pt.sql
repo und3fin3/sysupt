@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2019-10-04 17:10:00
+-- 生成日期： 2019-10-05 09:12:55
 -- 服务器版本： 10.4.7-MariaDB-log
 -- PHP 版本： 7.3.9
 
@@ -1167,9 +1167,8 @@ CREATE TABLE `invites` (
 
 CREATE TABLE `invite_rule` (
   `id` int(11) NOT NULL,
-  `email_domain` varchar(40) NOT NULL,
-  `ip_start` mediumtext NOT NULL,
-  `ip_end` mediumtext NOT NULL,
+  `email_domain` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `ip_range` varchar(50) NOT NULL,
   `ip_version` tinyint(4) NOT NULL DEFAULT 6,
   `enable` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

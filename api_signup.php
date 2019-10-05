@@ -99,18 +99,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($need_ipcheck) {
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             $ip_version = "6";
-            $long_ip = ipv6tolong2($ip);
+            $iplib_ip = IPLib\Address\IPv6::fromString($ip);
         } else {
             $ip_version = "4";
-            $long_ip = ip2long($ip);
+            $iplib_ip = IPLib\Address\IPv4::fromString($ip);
         }
         $check_result = false;
         $email_domain = strtolower(explode('@', $email)[1]);
         $invite_email_domain = strtolower(explode('@', $inv['invitee'])[1]);
-        $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND ip_start <= {$long_ip} AND ip_end >= {$long_ip}");
+        $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND (FIND_IN_SET(" . sqlesc($invite_email_domain) . ", email_domain) OR FIND_IN_SET(" . sqlesc($invite_email_domain) . ", email_domain))");
         while ($rule = mysql_fetch_array($res)) {
-            $emails = explode(',', $rule['email_domain']);
-            if (in_array($email_domain, $emails) || in_array($invite_email_domain, $emails)) $check_result = true;
+            $range = IPLib\Range\Subnet::fromString($rule['ip_range']);
+            if ($range->contains($iplib_ip)) $check_result = true;
         }
     } else $check_result = true;
 
@@ -222,14 +222,17 @@ EOD;
             if ($registration_checkip == 'yes') {
                 if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
                     $ip_version = "6";
-                    $long_ip = ipv6tolong2($ip);
+                    $iplib_ip = IPLib\Address\IPv6::fromString($ip);
                 } else {
                     $ip_version = "4";
-                    $long_ip = ip2long($ip);
+                    $iplib_ip = IPLib\Address\IPv4::fromString($ip);
                 }
                 $check_result = false;
-                $res = sql_query("SELECT COUNT(*) FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND ip_start <= {$long_ip} AND ip_end >= {$long_ip}");
-                if (mysql_fetch_row($res)[0] > 0) $check_result = true;
+                $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} ");
+                while ($rule = mysql_fetch_array($res)) {
+                    $range = IPLib\Range\Subnet::fromString($rule['ip_range']);
+                    if ($range->contains($iplib_ip)) $check_result = true;
+                }
             }
 
             echo json_encode(new API_Response([
@@ -247,17 +250,17 @@ EOD;
         if ($inv['ipcheck'] == 1) {
             if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
                 $ip_version = "6";
-                $long_ip = ipv6tolong2($ip);
+                $iplib_ip = IPLib\Address\IPv6::fromString($ip);
             } else {
                 $ip_version = "4";
-                $long_ip = ip2long($ip);
+                $iplib_ip = IPLib\Address\IPv4::fromString($ip);
             }
             $check_result = false;
             $email_domain = explode('@', $inv['invitee']);
-            $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND ip_start <= {$long_ip} AND ip_end >= {$long_ip}");
+            $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND FIND_IN_SET(" . sqlesc($email_domain) . " , email_domain)");
             while ($rule = mysql_fetch_array($res)) {
-                $emails = explode(',', $rule['email_domain']);
-                if (in_array($email_domain, $emails)) $check_result = true;
+                $range = IPLib\Range\Subnet::fromString($rule['ip_range']);
+                if ($range->contains($iplib_ip)) $check_result = true;
             }
         }
 
