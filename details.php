@@ -8,7 +8,7 @@ global $showextinfo, $CURUSER, $torrentmanage_class, $seebanned_class, $viewanon
        $submanage_class, $enablenfo_main, $uploadsub_class, $viewnfo_class, $Advertisement, $delownsub_class,
        $updateextinfo_class, $torrentstructure_class, $lang_details, $askreseed_class, $max_dead_torrent_time, $torrentnameprefix;
 
-if ($showextinfo ['imdb'] == 'yes'){
+if ($showextinfo ['imdb'] == 'yes') {
     require_once("douban/douban.class.php");
 }
 
@@ -54,7 +54,7 @@ else {
             if (isset ($_GET ["returnto"]))
                 print ("<p><b>" . $lang_details ['text_go_back'] . "<a href=\"" . htmlspecialchars($_GET ["returnto"]) . "\">" . $lang_details ['text_whence_you_came'] . "</a></b></p>");
         }
-        $sp_torrent = get_torrent_promotion_append($row ['sp_state'], 'word');
+        $sp_torrent = get_torrent_promotion_append($row ['sp_state'], 'word', true, $row['added'], $row['promotion_time_type'], $row['promotion_until']);
 
         $s = htmlspecialchars($row ["name"]) . ($sp_torrent ? "&nbsp;&nbsp;&nbsp;" . $sp_torrent : "");
         if ($row ["pulling_out"] == 1) {

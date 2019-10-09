@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $check_result = false;
         $email_domain = strtolower(explode('@', $email)[1]);
         $invite_email_domain = strtolower(explode('@', $inv['invitee'])[1]);
-        $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND (FIND_IN_SET(" . sqlesc($invite_email_domain) . ", email_domain) OR FIND_IN_SET(" . sqlesc($invite_email_domain) . ", email_domain))");
+        $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND (FIND_IN_SET(" . sqlesc($invite_email_domain) . ", email_domain) OR FIND_IN_SET(" . sqlesc($email_domain) . ", email_domain))");
         while ($rule = mysql_fetch_array($res)) {
             $range = IPLib\Range\Subnet::fromString($rule['ip_range']);
             if ($range->contains($iplib_ip)) $check_result = true;
