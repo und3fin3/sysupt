@@ -23,7 +23,7 @@ if (!$invite_bonus = $Cache->get_value('invite_bonus')) {
 }
 function bonusarray($option)
 {
-    global $onegbupload_bonus, $fivegbupload_bonus, $tengbupload_bonus, $hundredgbupload_bonus, $oneinvite_bonus, $customtitle_bonus, $vipstatus_bonus, $basictax_bonus, $taxpercentage_bonus, $bonusnoadpoint_advertisement, $bonusnoadtime_advertisement, $enablebonusnoad_advertisement, $invite_bonus, $custumcolor_bonus, $rename_bonus;
+    global $onegbupload_bonus, $fivegbupload_bonus, $tengbupload_bonus, $hundredgbupload_bonus, $oneinvite_bonus, $customtitle_bonus, $vipstatus_bonus, $basictax_bonus, $taxpercentage_bonus, $bonusnoadpoint_advertisement, $bonusnoadtime_advertisement, $enablebonusnoad_advertisement, $invite_bonus, $custumcolor_bonus, $rename_bonus, $temporary_invite;
     global $lang_mybonus;
     global $Cache, $CURUSER;
     $bonus = array();
@@ -70,7 +70,7 @@ function bonusarray($option)
                 $bonus ['art'] = 'invite';
                 $bonus ['menge'] = 1;
                 $bonus ['name'] = $lang_mybonus ['text_buy_invite'];
-                $bonus ['description'] = $lang_mybonus ['text_buy_invite_note'];
+                $bonus ['description'] = $lang_mybonus ['text_buy_invite_note'] . "临时邀请". ($temporary_invite == 'yes' ? "需要教育网IP验证":"无需教育网IP验证") . "。";
                 break;
             }
         case 5 :
@@ -423,7 +423,7 @@ if ($action == "exchange") {
                 }
             case 4 :
                 {
-                    $confirm = "你正在使用" . $_POST ['ori_points'] . "个魔力值兑换1个邀请名额。<input type=hidden name=ori_points value=\"" . $_POST ["ori_points"] . "\">";
+                    $confirm = "你正在使用" . $_POST ['ori_points'] . "个魔力值兑换1个临时邀请名额，临时邀请不可出售，请谨慎兑换。<input type=hidden name=ori_points value=\"" . $_POST ["ori_points"] . "\">";
                     break;
                 }
             case 5 :
@@ -529,7 +529,7 @@ if ($action == "exchange") {
                 die (get_user_class_name($buyinvite_class, false, false, true) . $lang_mybonus ['text_plus_only']);
             $bonuscomment = date("Y-m-d") . " 使用 " . $points . " 购买了一个邀请名额。\n" . htmlspecialchars($bonuscomment);
             sql_query("UPDATE users SET seedbonus = seedbonus - $points, bonuscomment = " . sqlesc($bonuscomment) . " WHERE id = " . sqlesc($userid)) or sqlerr(__FILE__, __LINE__);
-            sql_query("INSERT INTO temp_invite (uid, expired) VALUES (" . sqlesc($CURUSER['id']) . ", " . sqlesc(date('Y-m-d H:i:s', strtotime('+1 day'))) . " )");
+            sql_query("INSERT INTO temp_invite (uid, expired) VALUES (" . sqlesc($CURUSER['id']) . ", " . sqlesc(date('Y-m-d H:i:s', strtotime('+3 day'))) . " )");
             stdmsg($lang_mybonus ['successful'], $lang_mybonus ['text_success_invites']);
             stdfoot();
         } elseif ($art == "invite_for_sale") {

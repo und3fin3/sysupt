@@ -134,7 +134,7 @@ $lang_mybonus = array (
 		'text_enable_account' => "复活",
 		'text_enable_account_note' => "你可以花费一定的魔力值让某个因为分享率过低而被禁用的帐号恢复使用。<br/><br/><b>注意：</b><br>请不要复活因为违规而封禁的帐号，否则您的帐号也将受到牵连。<br/>帐号在复活之后同样需要在14日之内改善分享率，不然该帐号将再次被禁。",
 		'text_enter_enable_account_name' => "请输入需要复活的用户名：",
-		'text_buy_invite_note' => "如果有足够的魔力值，你可以用它来换取邀请名额。交易完成后，你的魔力值会减少，邀请名额数则会增加。",
+		'text_buy_invite_note' => "如果有足够的魔力值，你可以用它来换取<span style='color: red'>临时邀请</span>，临时邀请无法售出，有效期为3天过期自动失效。",
 		'text_custom_title' => "自定义头衔",
 		'text_custom_title_note' => "如果有足够的魔力值，你就可以给自己定一个头衔了。交易完成后，你的魔力值会减少，你的头衔将变成自定义的。<br/><b>注意</b>：头衔中禁止出现脏话、攻击性的词汇或用户等级相关的或相近的词汇，包括但不限于：User, VIP, Retiree, Uploader, Moderator, Administrator, SysOp, Staff Leader, Admin, 主管, 程序员, 维护开发员, 管理员, 类管, 发布员, 养老族... <br/><br/>经管理组认定为不宜使用的头衔将被恢复为默认，魔力值不予退还；情节恶劣者予以警告、禁用或删除账号。",
 		'text_vip_status' => "贵宾待遇",
