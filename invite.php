@@ -18,7 +18,7 @@ if (($CURUSER['id'] != $id && get_user_class() < $viewinvite_class) || !is_valid
     stderr($lang_invite['std_sorry'], $lang_invite['std_permission_denied']);
 if (get_user_class() < $sendinvite_class)
     stderr($lang_invite['std_sorry'], $lang_invite['std_only'] . get_user_class_name($sendinvite_class, false, true, true) . $lang_invite['std_or_above_can_invite'], false);
-$res = sql_query("SELECT username FROM users WHERE id = " . mysql_real_escape_string($id)) or sqlerr();
+$res = sql_query("SELECT username, invites FROM users WHERE id = " . mysql_real_escape_string($id)) or sqlerr();
 $user = mysql_fetch_assoc($res);
 stdhead($lang_invite['head_invites']);
 print("<table width=700 class=main border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>");
@@ -30,11 +30,8 @@ if ($sent == 1) {
     print("<p align=center><font color=red>" . $msg . "</font></p>");
 }
 
-$res = sql_query("SELECT invites FROM users WHERE id = " . mysql_real_escape_string($id)) or sqlerr();
-$inv = mysql_fetch_assoc($res);
-
 //for one or more. "invite"/"invites"
-if ($CURUSER["invites"] != 1) {
+if ($user["invites"] != 1) {
     $_s = $lang_invite['text_s'];
 } else {
     $_s = "";
@@ -47,21 +44,21 @@ if ($type == 'new') {
     }
 
     $temp_invites = array();
-    $res = sql_query("SELECT * FROM temp_invite WHERE uid = " . sqlesc($CURUSER['id']) . " AND expired >= NOW() ORDER BY expired ASC");
+    $res = sql_query("SELECT * FROM temp_invite WHERE uid = " . sqlesc($id) . " AND expired >= NOW() ORDER BY expired ASC");
     while ($row = mysql_fetch_array($res)) {
         $temp_invites[$row['id']] = $row['expired'];
     }
 
-    if (($CURUSER['invites'] == 0 && count($temp_invites) == 0)
-        || ($CURUSER['invites'] == 0 && $temporary_invite != 'yes')
+    if (($user['invites'] == 0 && count($temp_invites) == 0)
+        || ($user['invites'] == 0 && $temporary_invite != 'yes')
         || (count($temp_invites) == 0 && $permanent_invite != 'yes')) {
         stdmsg($lang_invite['std_sorry'], $lang_invite['std_no_invites_left'] .
-            "<a class=altlink href=invite.php?id=$CURUSER[id]>" . $lang_invite['here_to_go_back'], false);
+            "<a class=altlink href=invite.php?id=$id>" . $lang_invite['here_to_go_back'], false);
         print("</td></tr></table>");
         stdfoot();
         die;
     }
-    $invitation_body = $lang_invite['text_invitation_body'] . $CURUSER['username'];
+    $invitation_body = $lang_invite['text_invitation_body'] . $user['username'];
     //$invitation_body_insite = str_replace("<br />","\n",$invitation_body);
 
     $invite_ipcheck_status = [
@@ -72,7 +69,7 @@ if ($type == 'new') {
     $invite_types = "<option value=''>请选择邀请类型</option>";
 
     if ($permanent_invite == 'yes') {
-        if ($CURUSER['invites'] > 0) {
+        if ($user['invites'] > 0) {
             $invite_types .= "<option value='-1'>永久邀请 - {$invite_ipcheck_status[$permanent_invite_checkip]}</option>";
         }
     }
@@ -85,7 +82,7 @@ if ($type == 'new') {
 
     print("<form method=post action=takeinvite.php?id=" . htmlspecialchars($id) . ">" .
         "<table border=1 width=737 cellspacing=0 cellpadding=5>" .
-        "<tr align=center><td colspan=2><b>" . $lang_invite['text_invite_someone'] . "$SITENAME (" . ($inv['invites'] + count($temp_invites)) . $lang_invite['text_invitation'] . $_s . $lang_invite['text_left'] . ")</b></td></tr>" .
+        "<tr align=center><td colspan=2><b>" . $lang_invite['text_invite_someone'] . "$SITENAME (" . ($user['invites'] + count($temp_invites)) . $lang_invite['text_invitation'] . $_s . $lang_invite['text_left'] . ")</b></td></tr>" .
         "<tr><td class='rowhead nowrap' valign='top' align='right'>邀请类型</td><td align='left'><select name='invite_type'>$invite_types</select></td></tr>" .
         "<tr><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" . $lang_invite['text_email_address'] . "</td><td align=left><input type=text size=40 name=email><br /><font align=left class=small>" . $lang_invite['text_email_address_note'] . "</font>" . ($restrictemaildomain == 'yes' ? "<br />" . $lang_invite['text_email_restriction_note'] . allowedemails() : "") . "</td></tr>" .
         "<tr><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" . $lang_invite['text_message'] . "</td><td align=left><textarea name=body rows=8 cols=120>" . $invitation_body .
@@ -102,9 +99,11 @@ if ($type == 'new') {
     $ret = sql_query("SELECT id, username, email, uploaded, downloaded, status, warned, enabled, donor, email FROM users WHERE invited_by = " . mysql_real_escape_string($id)) or sqlerr();
     $num = mysql_num_rows($ret);
 
+    $temp_invite_count = mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM temp_invite WHERE uid = " . sqlesc($id) . " AND expired >= NOW()"))[0];
+
     print("<table border=1 width=737 cellspacing=0 cellpadding=5>" .
         "<h2 align=center>" . $lang_invite['text_invite_status'] . " ($number)</h2>");
-    print("<tr><td colspan=7 align=center><form method=post action=invite.php?id=" . htmlspecialchars($id) . "&type=new><input type=submit " . ($CURUSER['invites'] <= 0 ? "disabled " : "") . " value='" . $lang_invite['sumbit_invite_someone'] . "'></form></td></tr>");
+    print("<tr><td colspan=7 align=center><form method=post action=invite.php?id=" . htmlspecialchars($id) . "&type=new><input type=submit " . (($user['invites'] <= 0 && $temp_invite_count <= 0) ? "disabled " : "") . " value='" . $lang_invite['sumbit_invite_someone'] . "'></form></td></tr>");
     print("<form method=post action=takeconfirm.php?id=" . htmlspecialchars($id) . ">");
     if (!$num) {
         print("<tr><td colspan=7 align=center>" . $lang_invite['text_no_invites'] . "</tr>");
