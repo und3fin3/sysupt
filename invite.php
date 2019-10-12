@@ -49,10 +49,10 @@ if ($type == 'new') {
         $temp_invites[$row['id']] = $row['expired'];
     }
 
-    if (($user['invites'] == 0 && count($temp_invites) == 0)
+    if ((($user['invites'] == 0 && count($temp_invites) == 0)
         || ($user['invites'] == 0 && $temporary_invite != 'yes')
-        || (count($temp_invites) == 0 && $permanent_invite != 'yes')
-        || $user['class'] < UC_MODERATOR) {
+        || (count($temp_invites) == 0 && $permanent_invite != 'yes'))
+        && $user['class'] < UC_MODERATOR) {
         stdmsg($lang_invite['std_sorry'], $lang_invite['std_no_invites_left'] .
             "<a class=altlink href=invite.php?id=$id>" . $lang_invite['here_to_go_back'], false);
         print("</td></tr></table>");
