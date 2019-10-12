@@ -50,7 +50,7 @@ if ($invite_id == 0) {
         stderr($lang_takeinvite['std_error'], "？？？");
 
     $remark = $invite_id == -2 ? "临时邀请" : "永久邀请";
-    $ipcheck = 0 + $invite_id == -2 ? $permanent_invite_checkip == 'yes' : $temporary_invite_checkip == 'yes';
+    $ipcheck = 0 + $invite_id == -2 ? $temporary_invite_checkip == 'yes' : $permanent_invite_checkip == 'yes';
 } else if ($invite_id == -1) {
     if ($CURUSER['invites'] <= 0)
         stderr($lang_takeinvite['std_error'], $lang_takeinvite['std_no_invite']);
