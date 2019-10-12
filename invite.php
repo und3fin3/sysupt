@@ -18,7 +18,7 @@ if (($CURUSER['id'] != $id && get_user_class() < $viewinvite_class) || !is_valid
     stderr($lang_invite['std_sorry'], $lang_invite['std_permission_denied']);
 if (get_user_class() < $sendinvite_class)
     stderr($lang_invite['std_sorry'], $lang_invite['std_only'] . get_user_class_name($sendinvite_class, false, true, true) . $lang_invite['std_or_above_can_invite'], false);
-$res = sql_query("SELECT username, invites FROM users WHERE id = " . mysql_real_escape_string($id)) or sqlerr();
+$res = sql_query("SELECT username, invites, class FROM users WHERE id = " . mysql_real_escape_string($id)) or sqlerr();
 $user = mysql_fetch_assoc($res);
 stdhead($lang_invite['head_invites']);
 print("<table width=700 class=main border=0 cellspacing=0 cellpadding=0><tr><td class=embedded>");
@@ -51,7 +51,8 @@ if ($type == 'new') {
 
     if (($user['invites'] == 0 && count($temp_invites) == 0)
         || ($user['invites'] == 0 && $temporary_invite != 'yes')
-        || (count($temp_invites) == 0 && $permanent_invite != 'yes')) {
+        || (count($temp_invites) == 0 && $permanent_invite != 'yes')
+        || $user['class'] < UC_MODERATOR) {
         stdmsg($lang_invite['std_sorry'], $lang_invite['std_no_invites_left'] .
             "<a class=altlink href=invite.php?id=$id>" . $lang_invite['here_to_go_back'], false);
         print("</td></tr></table>");
@@ -68,16 +69,22 @@ if ($type == 'new') {
 
     $invite_types = "<option value=''>请选择邀请类型</option>";
 
-    if ($permanent_invite == 'yes') {
-        if ($user['invites'] > 0) {
-            $invite_types .= "<option value='-1'>永久邀请 - {$invite_ipcheck_status[$permanent_invite_checkip]}</option>";
+    if ($CURUSER['class'] < UC_MODERATOR) {
+        if ($permanent_invite == 'yes') {
+            if ($user['invites'] > 0) {
+                $invite_types .= "<option value='-1'>永久邀请 - {$invite_ipcheck_status[$permanent_invite_checkip]}</option>";
+            }
         }
-    }
 
-    if ($temporary_invite == 'yes') {
-        foreach ($temp_invites as $invite_id => $invite_expired_date) {
-            $invite_types .= "<option value='{$invite_id}'>临时邀请 - {$invite_ipcheck_status[$temporary_invite_checkip]} - 有效期至{$invite_expired_date}</option>";
+        if ($temporary_invite == 'yes') {
+            foreach ($temp_invites as $invite_id => $invite_expired_date) {
+                $invite_types .= "<option value='{$invite_id}'>临时邀请 - {$invite_ipcheck_status[$temporary_invite_checkip]} - 有效期至{$invite_expired_date}</option>";
+            }
         }
+
+    } else {
+        $invite_types .= "<option value='-2'>{$invite_ipcheck_status['yes']}</option>";
+        $invite_types .= "<option value='-3'>{$invite_ipcheck_status['no']}</option>";
     }
 
     print("<form method=post action=takeinvite.php?id=" . htmlspecialchars($id) . ">" .
@@ -103,7 +110,7 @@ if ($type == 'new') {
 
     print("<table border=1 width=737 cellspacing=0 cellpadding=5>" .
         "<h2 align=center>" . $lang_invite['text_invite_status'] . " ($number)</h2>");
-    print("<tr><td colspan=7 align=center><form method=post action=invite.php?id=" . htmlspecialchars($id) . "&type=new><input type=submit " . (($user['invites'] <= 0 && $temp_invite_count <= 0) ? "disabled " : "") . " value='" . $lang_invite['sumbit_invite_someone'] . "'></form></td></tr>");
+    print("<tr><td colspan=7 align=center><form method=post action=invite.php?id=" . htmlspecialchars($id) . "&type=new><input type=submit " . (($user['invites'] <= 0 && $temp_invite_count <= 0) && $user['class'] < UC_MODERATOR ? "disabled " : "") . " value='" . $lang_invite['sumbit_invite_someone'] . "'></form></td></tr>");
     print("<form method=post action=takeconfirm.php?id=" . htmlspecialchars($id) . ">");
     if (!$num) {
         print("<tr><td colspan=7 align=center>" . $lang_invite['text_no_invites'] . "</tr>");

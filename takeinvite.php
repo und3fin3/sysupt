@@ -45,6 +45,12 @@ if ($b[0] != 0)
 
 if ($invite_id == 0) {
     stderr($lang_takeinvite['std_error'], $lang_takeinvite['head_invitation_failed']);
+} else if ($invite_id == -2 || $invite_id == -3) {
+    if ($CURUSER['class'] < UC_MODERATOR)
+        stderr($lang_takeinvite['std_error'], "？？？");
+
+    $remark = $invite_id == -2 ? "临时邀请" : "永久邀请";
+    $ipcheck = 0 + $invite_id == -2 ? $permanent_invite_checkip == 'yes' : $temporary_invite_checkip == 'yes';
 } else if ($invite_id == -1) {
     if ($CURUSER['invites'] <= 0)
         stderr($lang_takeinvite['std_error'], $lang_takeinvite['std_no_invite']);

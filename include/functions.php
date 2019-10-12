@@ -2888,7 +2888,7 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
 											<font class='color_bonus'><?php echo $lang_functions['text_bonus'] ?></font>
                                             [<a href="mybonus.php"><?php echo $lang_functions['text_use'] ?></a>|<a href="mybonusapps.php">应用</a>]: <?php echo number_format($CURUSER['seedbonus'], 1) ?>
                                             <font class='color_invite'><?php echo $lang_functions['text_invite'] ?></font>
-                                            [<a href="invite.php?id=<?php echo $CURUSER['id'] ?>"><?php echo $lang_functions['text_send'] ?></a>]: <?php echo $CURUSER['invites'] . "/" . $temp_invite_count ?><br/>
+                                            [<a href="invite.php?id=<?php echo $CURUSER['id'] ?>"><?php echo $lang_functions['text_send'] ?></a>]: <?php echo $CURUSER['class'] < UC_MODERATOR ? ($CURUSER['invites'] . "/" . $temp_invite_count) : "∞"?><br/>
 											<font class="color_ratio"><?php echo $lang_functions['text_ratio'] ?></font> <?php echo $ratio ?>
                                             <font class='color_uploaded'><?php echo $lang_functions['text_uploaded'] ?></font> <?php echo mksize($CURUSER['uploaded']) ?>
                                             <font class='color_downloaded'> <?php echo $lang_functions['text_downloaded'] ?></font> <?php echo mksize($CURUSER['downloaded']) ?>

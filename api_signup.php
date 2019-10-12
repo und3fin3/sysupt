@@ -105,9 +105,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $iplib_ip = IPLib\Address\IPv4::fromString($ip);
         }
         $check_result = false;
-        $email_domain = strtolower(explode('@', $email)[1]);
-        $invite_email_domain = strtolower(explode('@', $inv['invitee'])[1]);
-        $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND (FIND_IN_SET(" . sqlesc($invite_email_domain) . ", email_domain) OR FIND_IN_SET(" . sqlesc($email_domain) . ", email_domain))");
+        if ($inv['inviter'] == 0) {
+            $email_domain = strtolower(explode('@', $email)[1]);
+            $invite_email_domain = strtolower(explode('@', $inv['invitee'])[1]);
+            $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND (FIND_IN_SET(" . sqlesc($invite_email_domain) . ", email_domain) OR FIND_IN_SET(" . sqlesc($email_domain) . ", email_domain))");
+        } else {
+            $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version}");
+        }
         while ($rule = mysql_fetch_array($res)) {
             $range = IPLib\Range\Subnet::fromString($rule['ip_range']);
             if ($range->contains($iplib_ip)) $check_result = true;
@@ -256,8 +260,13 @@ EOD;
                 $iplib_ip = IPLib\Address\IPv4::fromString($ip);
             }
             $check_result = false;
-            $email_domain = explode('@', $inv['invitee']);
-            $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND FIND_IN_SET(" . sqlesc($email_domain) . " , email_domain)");
+            if ($inv['inviter'] == 0) {
+                // 自助邀请
+                $email_domain = explode('@', $inv['invitee']);
+                $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND FIND_IN_SET(" . sqlesc($email_domain) . " , email_domain)");
+            } else {
+                $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version}");
+            }
             while ($rule = mysql_fetch_array($res)) {
                 $range = IPLib\Range\Subnet::fromString($rule['ip_range']);
                 if ($range->contains($iplib_ip)) $check_result = true;
