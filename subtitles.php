@@ -66,11 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["action"] == "upload" && ($in
         exit;
     }
 
-    $accept_ext = array('sub' => 'sub', 'srt' => 'srt', 'zip' => 'zip', 'rar' => 'rar', 'ace' => 'ace', 'txt' => 'txt', 'SUB' => 'SUB', 'SRT' => 'SRT', 'ZIP' => 'ZIP', 'RAR' => 'RAR', 'ACE' => 'ACE', 'TXT' => 'TXT', 'ssa' => 'ssa', 'ass' => 'ass', 'cue' => 'cue');
+    $accept_ext = ['sub', 'srt', 'zip', 'rar', 'ace', 'txt', 'ssa', 'ass', 'cue', '7z'];
     $ext_l = strrpos($file['name'], ".");
     $ext = strtolower(substr($file['name'], $ext_l + 1, strlen($file['name']) - ($ext_l + 1)));
 
-    if (!array_key_exists($ext, $accept_ext)) {
+    if (!in_array($ext, $accept_ext)) {
         echo($lang_subtitles['std_wrong_subs_format']);
         exit;
     }
