@@ -109,20 +109,18 @@ function topiclist($page = 1, $pagesize = 20)
 stdhead("收藏的帖子");
 global $CURUSER;
 if ($_GET["action"] == "add") {
-    if ($tid = $_GET["topicid"]) {
-        $res = sql_query("SELECT * from topics where id = $tid");
+    if ($tid = 0 + $_GET["topicid"]) {
+        $res = sql_query("SELECT * from topics where id = " . sqlesc($tid));
         if ($row = mysql_fetch_array($res)) {
-            $uid = $CURUSER['id'];
-            sql_query("insert INTO marked_topic (tid, uid) VALUES ( $tid , $uid)") or sqlerr(__FILE__, __LINE__);
+            sql_query("insert INTO marked_topic (tid, uid) VALUES ( {$row['id']} , {$CURUSER['id']})") or sqlerr(__FILE__, __LINE__);
         }
     }
 }
 if ($_GET["action"] == "delete") {
-    if ($tid = $_GET["topicid"]) {
-        $uid = $CURUSER['id'];
-        $res = sql_query("SELECT * from marked_topic where tid = $tid and uid = $uid");
+    if ($tid = 0 + $_GET["topicid"]) {
+        $res = sql_query("SELECT * from marked_topic where tid = " . sqlesc($tid) . " and uid = {$CURUSER['id']}");
         if ($row = mysql_fetch_array($res)) {
-            sql_query("DELETE FROM marked_topic WHERE tid = $tid and uid = $uid") or sqlerr(__FILE__, __LINE__);
+            sql_query("DELETE FROM marked_topic WHERE tid = {$row['id']} and uid = {$CURUSER['id']}") or sqlerr(__FILE__, __LINE__);
         }
     }
 }
