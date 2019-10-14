@@ -48,8 +48,7 @@ if ($invite_id == 0) {
 } else if ($invite_id == -2 || $invite_id == -3) {
     if ($CURUSER['class'] < UC_MODERATOR)
         stderr($lang_takeinvite['std_error'], "？？？");
-
-    $remark = $invite_id == -2 ? "临时邀请" : "永久邀请";
+    $remark = $_POST['invite_reason'] ?? ($invite_id == -2 ? "未填-临时邀请" : "未填-永久邀请");
     $ipcheck = 0 + $invite_id == -2 ? $temporary_invite_checkip == 'yes' : $permanent_invite_checkip == 'yes';
 } else if ($invite_id == -1) {
     if ($CURUSER['invites'] <= 0)

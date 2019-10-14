@@ -50,8 +50,8 @@ if ($type == 'new') {
     }
 
     if ((($user['invites'] == 0 && count($temp_invites) == 0)
-        || ($user['invites'] == 0 && $temporary_invite != 'yes')
-        || (count($temp_invites) == 0 && $permanent_invite != 'yes'))
+            || ($user['invites'] == 0 && $temporary_invite != 'yes')
+            || (count($temp_invites) == 0 && $permanent_invite != 'yes'))
         && $user['class'] < UC_MODERATOR) {
         stdmsg($lang_invite['std_sorry'], $lang_invite['std_no_invites_left'] .
             "<a class=altlink href=invite.php?id=$id>" . $lang_invite['here_to_go_back'], false);
@@ -91,6 +91,7 @@ if ($type == 'new') {
         "<table border=1 width=737 cellspacing=0 cellpadding=5>" .
         "<tr align=center><td colspan=2><b>" . $lang_invite['text_invite_someone'] . "$SITENAME (" . ($user['invites'] + count($temp_invites)) . $lang_invite['text_invitation'] . $_s . $lang_invite['text_left'] . ")</b></td></tr>" .
         "<tr><td class='rowhead nowrap' valign='top' align='right'>邀请类型</td><td align='left'><select name='invite_type'>$invite_types</select></td></tr>" .
+        ($CURUSER['class'] < UC_MODERATOR ? "" : "<tr><td class='rowhead nowrap' valign='top' align='right'>邀请原因</td><td align='left'><input type='text' name='invite_reason'/>&nbsp;管理无限邀请，请简单的备案一下发邀原因~</td></tr>") .
         "<tr><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" . $lang_invite['text_email_address'] . "</td><td align=left><input type=text size=40 name=email><br /><font align=left class=small>" . $lang_invite['text_email_address_note'] . "</font>" . ($restrictemaildomain == 'yes' ? "<br />" . $lang_invite['text_email_restriction_note'] . allowedemails() : "") . "</td></tr>" .
         "<tr><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" . $lang_invite['text_message'] . "</td><td align=left><textarea name=body rows=8 cols=120>" . $invitation_body .
         "</textarea></td></tr>" .

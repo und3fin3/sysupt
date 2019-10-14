@@ -16,6 +16,7 @@ $id = $CURUSER['id'];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $addr = explode(PHP_EOL, $_POST['addr']);
     $event = str_replace("<br />", "<br />", nl2br(trim(strip_tags($_POST["event"]))));
+    $ipcheck = 0 + $_POST['ipcheck'] == 1 ? 1 : 0;
     if (!$event) {
         stderr("发送失败", "请添加活动名称", false);
         exit;
@@ -28,10 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $ret = sql_query("SELECT username FROM users WHERE id = " . sqlesc($id)) or sqlerr();
             $arr = mysql_fetch_assoc($ret);
             $hash = md5(mt_rand(1, 10000) . $CURUSER['username'] . TIMENOW . $CURUSER['passhash']);
-            sql_query("INSERT INTO invites (inviter, invitee, hash, time_invited) VALUES ('" . mysql_real_escape_string($id) . "', '" . mysql_real_escape_string($a) . "', '" . mysql_real_escape_string($hash) . "', " . sqlesc(date("Y-m-d H:i:s")) . ")");
+            sql_query("INSERT INTO invites (inviter, invitee, hash, time_invited, remark, ipcheck) VALUES ('" . mysql_real_escape_string($id) . "', '" . mysql_real_escape_string($a) . "', '" . mysql_real_escape_string($hash) . "', " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc($event) . ", " . sqlesc($ipcheck) . ")");
             $title = "{$SITENAME}网站邀请函";
             $message = "你好，<br /><br />恭喜你从【{$event}】活动获得一个{$SITENAME}邀请资格<br />如果你有意加入，请在阅读网站规则后确认该邀请。<br /><br />请点击以下链接确认邀请：" .
-                "<b><a href=\"https://$BASEURL/signup.php?type=invite&invitenumber=$hash\" target=\"_blank\">点击这里</a></b><br />https://$BASEURL/signup.php?type=invite&invitenumber=$hash<br />" .
+                "<b><a href=\"https://$BASEURL/signup/signup?code=$hash\" target=\"_blank\">点击这里</a></b><br />https://$BASEURL/signup/signup?code=$hash<br />" .
                 "请在{$invite_timeout}天内确认该邀请，之后邀请将作废。<br />{$SITENAME}真诚欢迎你加入我们的社区！<br /><br />" .
                 "如果你没有参加过此次活动，请将此邮件转发至{$REPORTMAIL}<br /><br />------<br />{$SITENAME}-" . get_protocol_prefix() . $BASEURL;
             sent_mail($a, $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $title), change_email_encode(get_langfolder_cookie(), $message), "invitesignup", false, false, '', get_email_encode(get_langfolder_cookie()));
@@ -50,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "<table border=1 width=300 cellspacing=0 cellpadding=5>" .
         "<tr><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" . "邮箱地址" . "</td><td align=left><textarea name=addr id=addr cols=40 rows=20></textarea><br /><font align=left class=small>每行一个邮箱地址</font>" . ($restrictemaildomain == 'yes' ? "<br />" . $lang_invite['text_email_restriction_note'] . allowedemails() : "") . "</td></tr>" .
         "<tr><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" . "活动名称" . "</td><td align=left><input type='text' name='event'></td></tr>" .
+        "<tr><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\">" . "IP检测" . "</td><td align=left><input type='checkbox' name='ipcheck' value='1'></td></tr>" .
         "<tr><td align=center colspan=2><input type=submit value='发送'></td></tr>" .
         "</form></table></td></tr></table>");
     stdfoot();
