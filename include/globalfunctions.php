@@ -101,9 +101,9 @@ function validateIPv4($IP)
     $IP = filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
     if ($IP) {
         $address = IPLib\Address\IPv4::fromString($IP);
-        if (!$address->matches(IPLib\Range\Subnet::fromString('172.16.0.0/12')))
-            return filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
-        else return true;
+        if ($address->matches(IPLib\Range\Subnet::fromString('100.64.0.0/10'))) return false;
+        if ($address->matches(IPLib\Range\Subnet::fromString('172.16.0.0/12'))) return true;
+        return filter_var($IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
     } else return false;
 }
 
