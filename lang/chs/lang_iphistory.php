@@ -12,5 +12,6 @@ $lang_iphistory = array
 	'col_hostname' => "主机名",
 	'text_not_available' => "无",
 	'text_duplicate' => "重复",
+	'col_location' => "地理位置"
 );
 ?>

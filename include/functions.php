@@ -1989,7 +1989,7 @@ function school_ip_location($ip, $detail = true)
         if ($rowip['school'] != "")
             $school = "[" . $rowip['school'] . "]";
         else
-            $school = "<a href=\"https://myip.ms/info/whois/$ip\" target=\"_blank\">[转至myip.ms查询该IP]</a>";
+            $school = "[" . ip_to_location($ip) . "]";
     } else {
         if ($rowip['school'] != "")
             $school = $rowip['school'];

@@ -52,21 +52,21 @@ print("<table width=500 border=1 cellspacing=0 cellpadding=5 align=center>\n");
 print("<tr>\n
 <td class=colhead>" . $lang_iphistory['col_last_access'] . "</td>\n
 <td class=colhead>" . $lang_iphistory['col_ip'] . "</td>\n
-<td class=colhead>" . $lang_iphistory['col_hostname'] . "</td>\n
+<td class=colhead>" . $lang_iphistory['col_location'] . "</td>\n
 </tr>\n");
 while ($arr = mysql_fetch_array($res)) {
     $addr = "";
     $ipshow = "";
     if ($arr["ip"]) {
         $ip = $arr["ip"];
-        $dom = @gethostbyaddr($arr["ip"]);
-
-//显示IP对应的主机名
-
-        if ($dom == $arr["ip"] || @gethostbyname($dom) != $arr["ip"])
-            $addr = $lang_iphistory['text_not_available'];
-        else
-            $addr = str_replace(".tju.edu.cn", "", $dom);
+//        $dom = @gethostbyaddr($arr["ip"]);
+//
+////显示IP对应的主机名
+//
+//        if ($dom == $arr["ip"] || @gethostbyname($dom) != $arr["ip"])
+//            $addr = $lang_iphistory['text_not_available'];
+//        else
+//            $addr = str_replace(".tju.edu.cn", "", $dom);
 //$addr = $dom;
 
 
@@ -94,9 +94,9 @@ while ($arr = mysql_fetch_array($res)) {
         */
     }
     $date = gettime($arr["access"]);
-    print("<tr><td>" . $date . "</td>\n");
-    print("<td>" . $ipshow . "</td>\n");
-    print("<td>" . $addr . "</td></tr>\n");
+    print("<tr><td class='rowfollow'>" . $date . "</td>\n");
+    print("<td class='rowfollow'>" . $ipshow . "</td>\n");
+    print("<td class='rowfollow'>" . ip_to_location($arr["ip"]) . "</td></tr>\n");
 }
 
 print("</table>");
