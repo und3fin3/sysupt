@@ -31,7 +31,7 @@ if ($_GET['download'] == 1) {
 
     print(Bencode::encode($dict));
 } else {
-    // block_browser();
+    block_browser();
     foreach (array("passkey", "info_hash", "peer_id", "event", "key") as $x) {
         if (isset ($_GET ["$x"]))
             $GLOBALS [$x] = $_GET [$x];
