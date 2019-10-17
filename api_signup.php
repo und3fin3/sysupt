@@ -114,7 +114,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         while ($rule = mysql_fetch_array($res)) {
             $range = IPLib\Range\Subnet::fromString($rule['ip_range']);
-            if ($range->contains($iplib_ip)) $check_result = true;
+            if ($range->contains($iplib_ip)) {
+                $check_result = true;
+                break;
+            }
         }
     } else $check_result = true;
 
@@ -235,7 +238,10 @@ EOD;
                 $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} ");
                 while ($rule = mysql_fetch_array($res)) {
                     $range = IPLib\Range\Subnet::fromString($rule['ip_range']);
-                    if ($range->contains($iplib_ip)) $check_result = true;
+                    if ($range->contains($iplib_ip)){
+                        $check_result = true;
+                        break;
+                    }
                 }
             }
 
@@ -269,7 +275,10 @@ EOD;
             }
             while ($rule = mysql_fetch_array($res)) {
                 $range = IPLib\Range\Subnet::fromString($rule['ip_range']);
-                if ($range->contains($iplib_ip)) $check_result = true;
+                if ($range->contains($iplib_ip)) {
+                    $check_result = true;
+                    break;
+                }
             }
         }
 
