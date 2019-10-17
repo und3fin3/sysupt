@@ -307,7 +307,7 @@ function check_client($peer_id, $agent)
 function check_aria2($headers, $peer_id, $key)
 {
     global $BASEURL;
-    if (isset($headers["Want-Digest"]) || strpos($peer_id, $key) !== false)
+    if (isset($headers["Want-Digest"]) || strpos(strval($peer_id), strval($key)) !== false)
         return "非法客户端，请到 $BASEURL/faq.php#id29 查看允许客户端列表！";
     else
         return false;

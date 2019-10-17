@@ -24,7 +24,7 @@ foreach (array("port", "downloaded", "uploaded", "left", "compact", "no_peer_id"
 
 // check info_hash, peer_id and passkey
 foreach (array("passkey", "info_hash", "peer_id", "port", "downloaded", "uploaded", "left") as $x) {
-    if (!isset ($x))
+    if (!isset ($$x))
         err("丢失关键信息: $x");
 }
 foreach (array("info_hash", "peer_id") as $x) {

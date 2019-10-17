@@ -1,7 +1,7 @@
 <?php
 if (!defined('IN_TRACKER'))
     die('Hacking attempt!');
-require $rootpath. 'vendor/autoload.php';
+require $rootpath . 'vendor/autoload.php';
 include_once($rootpath . 'classes/class_cache.php'); //Require the caching class
 $Cache = NEW CACHE(); //Load the caching class
 $Cache->setLanguageFolderArray(get_langfolder_list());
