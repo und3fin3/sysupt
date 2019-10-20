@@ -773,19 +773,21 @@ function docleanup($forceAll = 0, $printProgress = false)
     $res = sql_query("select * from invites WHERE time_invited < $dt");
     while ($row = mysql_fetch_array($res)) {
         if ($row['inviter'] != 0) {
-            sql_query("update users set invites = invites + 1 WHERE id = $row[inviter]") or sqlerr(__FILE__, __LINE__);
+            $temp = mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM temp_invite WHERE invite_code = " . sqlesc($row['hash']) . " AND uid = " . sqlesc($row['inviter'])))[0];
+            if (!$temp)
+                sql_query("update users set invites = invites + 1 WHERE id = $row[inviter]") or sqlerr(__FILE__, __LINE__);
+            else
+                sql_query("UPDATE temp_invite SET invite_code = null, expired = " . sqlesc(date('Y-m-d H:i:s', strtotime('+3 day'))) . " WHERE invite_code = '" . mysql_real_escape_string($row['hash']) . "' LIMIT 1");
+
             $invitee = sqlesc($row['invitee']);
-
             $added = sqlesc(date("Y-m-d H:i:s"));
-
             $subject = sqlesc("邀请码回收");
-
             $notifs = sqlesc("由于被邀请者没有在规定时间内注册，你发送给 $invitee 的邀请码已经过期并回收，你可以将其发给别人。");
-
             sql_query("INSERT INTO messages (sender, receiver, subject, msg, added) VALUES(0, '" . $row['inviter'] . "', $subject, $notifs, $added)") or sqlerr(__FILE__, __LINE__);
         }
     }
     sql_query("DELETE FROM invites WHERE time_invited < $dt") or sqlerr(__FILE__, __LINE__);
+    sql_query("DELETE FROM temp_invite WHERE expired < NOW() AND invite_code is null");
     if ($printProgress) {
         printProgress("回收过期邀请码");
     }

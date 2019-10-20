@@ -2861,7 +2861,7 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
 
                 $inboxpic = "<img class=\"" . ($unread ? "inboxnew" : "inbox") . "\" src=\"pic/trans.gif\" alt=\"inbox\" title=\"" . ($unread ? $lang_functions ['title_inbox_new_messages'] : $lang_functions ['title_inbox_no_new_messages']) . "\" />";
 
-                $temp_invite_count = mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM temp_invite WHERE uid = " . sqlesc($CURUSER['id']) . " AND expired > NOW()"))[0];
+                $temp_invite_count = mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM temp_invite WHERE uid = " . sqlesc($CURUSER['id']) . " AND expired > NOW() AND invite_code is null"))[0];
                 ?>
 
                 <table id="info_block" cellpadding="4" cellspacing="0" border="0"

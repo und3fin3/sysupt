@@ -43,6 +43,8 @@ $b = (@mysql_fetch_row(@sql_query("select count(*) from invites where invitee=" 
 if ($b[0] != 0)
     bark($lang_takeinvite['std_invitation_already_sent_to'] . htmlspecialchars($email) . $lang_takeinvite['std_await_user_registeration']);
 
+$hash = md5(mt_rand(1, 10000) . $CURUSER['username'] . TIMENOW . $CURUSER['passhash']);
+
 if ($invite_id == 0) {
     stderr($lang_takeinvite['std_error'], $lang_takeinvite['head_invitation_failed']);
 } else if ($invite_id == -2 || $invite_id == -3) {
@@ -61,7 +63,7 @@ if ($invite_id == 0) {
     $ipcheck = $permanent_invite_checkip == 'yes' ? 1 : 0;
     sql_query("UPDATE users SET invites = invites - 1 WHERE id = " . sqlesc($CURUSER['id'])) or sqlerr(__FILE__, __LINE__);
 } else {
-    $res = sql_query("SELECT COUNT(*) FROM temp_invite WHERE id = " . sqlesc($invite_id) . " AND uid = " . sqlesc($CURUSER['id']) . " AND expired > NOW() ");
+    $res = sql_query("SELECT COUNT(*) FROM temp_invite WHERE id = " . sqlesc($invite_id) . " AND uid = " . sqlesc($CURUSER['id']) . " AND expired > NOW() AND invite_code is null");
     if (mysql_fetch_row($res)[0] == 0)
         stderr($lang_takeinvite['std_error'], "你的账户中无指定ID的邀请码");
     if ($temporary_invite != 'yes') {
@@ -69,10 +71,8 @@ if ($invite_id == 0) {
     }
     $remark = "临时邀请";
     $ipcheck = $temporary_invite_checkip == 'yes' ? 1 : 0;
-    sql_query("DELETE FROM temp_invite WHERE id = " . sqlesc($invite_id)) or sqlerr(__FILE__, __LINE__);
+    sql_query("UPDATE temp_invite SET invite_code = " . sqlesc($hash) . " WHERE id = " . sqlesc($invite_id)) or sqlerr(__FILE__, __LINE__);
 }
-
-$hash = md5(mt_rand(1, 10000) . $CURUSER['username'] . TIMENOW . $CURUSER['passhash']);
 
 sql_query("INSERT INTO invites (inviter, invitee, hash, time_invited, remark, ipcheck) VALUES ( " . sqlesc($CURUSER['id']) . " , " . sqlesc($email) . " , " . sqlesc($hash) . " , " . sqlesc(date("Y-m-d H:i:s")) . " , " . sqlesc($remark) . " , " . sqlesc($ipcheck) . " )");
 

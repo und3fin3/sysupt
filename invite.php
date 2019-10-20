@@ -44,7 +44,7 @@ if ($type == 'new') {
     }
 
     $temp_invites = array();
-    $res = sql_query("SELECT * FROM temp_invite WHERE uid = " . sqlesc($id) . " AND expired >= NOW() ORDER BY expired ASC");
+    $res = sql_query("SELECT * FROM temp_invite WHERE uid = " . sqlesc($id) . " AND expired >= NOW() AND invite_code is null ORDER BY expired ASC");
     while ($row = mysql_fetch_array($res)) {
         $temp_invites[$row['id']] = $row['expired'];
     }
@@ -107,7 +107,7 @@ if ($type == 'new') {
     $ret = sql_query("SELECT id, username, email, uploaded, downloaded, status, warned, enabled, donor, email FROM users WHERE invited_by = " . mysql_real_escape_string($id)) or sqlerr();
     $num = mysql_num_rows($ret);
 
-    $temp_invite_count = mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM temp_invite WHERE uid = " . sqlesc($id) . " AND expired >= NOW()"))[0];
+    $temp_invite_count = mysql_fetch_row(@sql_query("SELECT COUNT(*) FROM temp_invite WHERE uid = " . sqlesc($id) . " AND expired >= NOW() AND invite_code is null"))[0];
 
     print("<table border=1 width=737 cellspacing=0 cellpadding=5>" .
         "<h2 align=center>" . $lang_invite['text_invite_status'] . " ($number)</h2>");
