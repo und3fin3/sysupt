@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2019-10-05 09:12:55
--- 服务器版本： 10.4.7-MariaDB-log
--- PHP 版本： 7.3.9
+-- 生成日期： 2019-10-20 16:26:54
+-- 服务器版本： 10.4.8-MariaDB-log
+-- PHP 版本： 7.3.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -2299,7 +2299,8 @@ CREATE TABLE `teams` (
 CREATE TABLE `temp_invite` (
   `id` int(11) NOT NULL,
   `uid` int(10) UNSIGNED NOT NULL,
-  `expired` datetime NOT NULL
+  `expired` datetime NOT NULL,
+  `invite_code` char(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
