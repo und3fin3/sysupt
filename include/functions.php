@@ -2148,6 +2148,7 @@ function dbconn($autoclean = false)
     sql_query("SET collation_connection = 'utf8_general_ci'");
     mysql_select_db($mysql_db) or die ('dbconn: mysql_select_db: ' . mysql_error());
     userlogin();
+    handle_error();
 
     if (!$useCronTriggerCleanUp && $autoclean) {
         register_shutdown_function("autoclean");
@@ -5995,4 +5996,23 @@ function disable_public_ipv4()
     if ($nip && !check_tjuip($nip)) {
         httperr(403);
     }
+}
+
+function handle_error()
+{
+    global $CURUSER,$enablesqldebug_tweak, $sqldebug_tweak;
+
+    $whoops = new \Whoops\Run;
+    if ($enablesqldebug_tweak == 'yes' && $CURUSER['class'] >= $sqldebug_tweak){
+        $handler = new \Whoops\Handler\PrettyPageHandler;
+    } else {
+        $handler = function($exception, $inspector, $run){
+            echo "<b><p style='color: red; font-size: 1.5rem'>Whoops! Looks like something went wrong...</p><p style='color: gray; font-size: 0.5rem'>" . $exception->getMessage() ."</p></b>";
+            return \Whoops\Handler\Handler::DONE;
+        };
+    }
+    $whoops->prependHandler($handler);
+    $whoops->register();
+
+    restore_error_handler();
 }

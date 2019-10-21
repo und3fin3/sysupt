@@ -15,7 +15,8 @@
     "ext-ctype": "*",
     "mlocati/ip-lib": "1.*",
     "rhilip/ipv6wry": "0.*",
-    "itbdw/ip-database": "^2.0"
+    "itbdw/ip-database": "^2.0",
+    "filp/whoops": "2.*"
   },
   "autoload": {
     "files": [
