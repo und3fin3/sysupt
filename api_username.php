@@ -38,11 +38,21 @@ switch ($type) {
         }
     case "verify_id_passkey":
         {
-            $arr = @mysql_fetch_array(@sql_query("SELECT COUNT(*) FROM users WHERE id = " . sqlesc($id) . " AND passkey = " . sqlesc($passkey))) or mysql_error();
+            $arr = @mysql_fetch_array(@sql_query("SELECT COUNT(*) FROM users WHERE id = " . sqlesc($id) . " AND passkey = " . sqlesc($passkey) . " AND enabled = 'yes' AND status = 'confirmed'")) or mysql_error();
             if ($arr[0] > 0) {
                 $response = new API_Response("", 0, "Passkey is valid!");
             } else {
                 $response = new API_Response("", -1, "Passkey is invalid!");
+            }
+            break;
+        }
+    case "verify_id_status":
+        {
+            $arr = @mysql_fetch_array(@sql_query("SELECT enabled FROM users WHERE id = " . sqlesc($id))) or mysql_error();
+            if ($arr['enabled'] == 'yes') {
+                $response = new API_Response("", 0, "User active.");
+            } else {
+                $response = new API_Response("", -1, "User disabled.");
             }
             break;
         }
