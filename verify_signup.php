@@ -60,10 +60,10 @@ if ($id && $action) {
     <tr>
         <td class='colhead' style="width: 8%">状态</td>
         <td class="colhead" style="width: 7%">申请时间</td>
-        <td class='colhead' style="width: 15%">用户名</td>
+        <td class='colhead' style="width: 10%">用户名</td>
         <td class='colhead' style="width: 15%">IP/位置</td>
         <td class='colhead' style="width: 10%">邀请者/获邀途径</td>
-        <td class='colhead' style="width: 10%">邀请/注册邮箱</td>
+        <td class='colhead' style="width: 20%">邀请/注册邮箱</td>
         <td class='colhead'>信息</td>
     </tr>
     <?php
