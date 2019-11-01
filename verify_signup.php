@@ -74,13 +74,17 @@ if ($id && $action) {
         if ($user){
             $datetime = new DateTime($user['added']);
             $added_col = $datetime->format('Y-m-d') . "<br>" . $datetime->format('H:i:s');
+            preg_match('/受邀原因：(.*?)；邀请邮箱：(.*?)。/i', $user['modcomment'], $matches);
+            $reason = $matches[1];
+            $invite_email = $matches[2];
+            $inviter = $user['invited_by'] == 0 ? "<i>系统</i>" : get_username($user['invited_by']);
+            $invite_col = $inviter . ' -> ' . $reason;
+            $email = $user['email'] == $invite_email ? $user['email'] : $invite_email . "<br>" . $user['email'];
+        } else {
+            $added_col = "无此账户";
+            $invite_col = "无此账户";
+            $email = "无此账户";
         }
-
-        preg_match('/受邀原因：(.*?)；邀请邮箱：(.*?)。/i', $user['modcomment'], $matches);
-        $reason = $matches[1];
-        $invite_email = $matches[2];
-        $inviter = $user['invited_by'] == 0 ? "<i>系统</i>" : get_username($user['invited_by']);
-        $email = $user['email'] == $invite_email ? $user['email'] : $invite_email . "<br>" . $user['email'];
 
 
         switch ($row['result']) {
@@ -104,7 +108,7 @@ if ($id && $action) {
             <td class="rowfollow"><?php echo $added_col ?></td>
             <td class="rowfollow"><?php echo get_username($row['uid']) ?></td>
             <td class="rowfollow"><?php echo $ip . "<br>「" . ip_to_location($ip) . "」" ?></td>
-            <td class="rowfollow"><?php echo $inviter . ' -> ' . $reason ?></td>
+            <td class="rowfollow"><?php echo $invite_col ?></td>
             <td class="rowfollow"><?php echo $email ?></td>
             <td class="rowfollow" style="width: 40%"><?php echo format_comment($row['message'], true, true, false, true, 700, false) ?></td>
         </tr>
