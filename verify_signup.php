@@ -55,28 +55,32 @@ if ($id && $action) {
     } else {
         echo "<p style='text-align: center'><a href='verify_signup.php'>仅看未审核</a></p>";
     }
-    begin_table();
     ?>
+    <table class="main" border="1" cellspacing="0" cellpadding="3" style="table-layout:fixed;word-break:break-all; text-align: center;">
     <tr>
-        <td class="colhead">申请时间</td>
-        <td class='colhead'>用户名</td>
-        <td class='colhead'>IP/位置</td>
-        <td class='colhead'>邀请者/获邀途径</td>
-        <td class='colhead'>邀请/注册邮箱</td>
+        <td class='colhead' style="width: 8%">状态</td>
+        <td class="colhead" style="width: 7%">申请时间</td>
+        <td class='colhead' style="width: 15%">用户名</td>
+        <td class='colhead' style="width: 15%">IP/位置</td>
+        <td class='colhead' style="width: 10%">邀请者/获邀途径</td>
+        <td class='colhead' style="width: 10%">邀请/注册邮箱</td>
         <td class='colhead'>信息</td>
-        <td class='colhead'>状态</td>
     </tr>
     <?php
-    $res = sql_query("SELECT * FROM needverify " . $showall . " ORDER BY FIELD(result, 0, 1, -1), id DESC");
+    $res = sql_query("SELECT * FROM needverify " . $showall . " ORDER BY id DESC");
     while ($row = mysql_fetch_array($res)) {
         $ip = mysql_fetch_row(@sql_query("SELECT ip FROM iplog WHERE userid = " . sqlesc($row['uid']) . " ORDER BY id ASC LIMIT 1"))[0];
         $user = mysql_fetch_array(@sql_query("SELECT added, modcomment, invited_by, email FROM users WHERE id = " . sqlesc($row['uid']) . " LIMIT 1"));
+        if ($user){
+            $datetime = new DateTime($user['added']);
+            $added_col = $datetime->format('Y-m-d') . "<br>" . $datetime->format('H:i:s');
+        }
 
         preg_match('/受邀原因：(.*?)；邀请邮箱：(.*?)。/i', $user['modcomment'], $matches);
         $reason = $matches[1];
         $invite_email = $matches[2];
         $inviter = $user['invited_by'] == 0 ? "<i>系统</i>" : get_username($user['invited_by']);
-        $email = $user['email'] == $invite_email ? $user['email'] : $invite_email . "/" . $user['email'];
+        $email = $user['email'] == $invite_email ? $user['email'] : $invite_email . "<br>" . $user['email'];
 
 
         switch ($row['result']) {
@@ -84,22 +88,25 @@ if ($id && $action) {
                 $status = "<a href='verify_signup.php?id={$row['id']}&action=accept'><span style='color: green'>通过</span></a>&nbsp;&nbsp;&nbsp;<a href='verify_signup.php?id={$row['id']}&action=reject'><span style='color: red'>驳回</span></a>";
                 break;
             case -1:
-                $status = "<a href='verify_signup.php?id={$row['id']}&action=recheck'><span style='color: red'>已被驳回</span></a> - " . get_username($row['verified_by']);
+                $status = "<a href='verify_signup.php?id={$row['id']}&action=recheck'><span style='color: red'>已被驳回</span></a><br>" . get_username($row['verified_by']);
                 break;
             case 1:
-                $status = "<a href='verify_signup.php?id={$row['id']}&action=recheck'><span style='color: green'>已被通过</span></a> - " . get_username($row['verified_by']);
+                $status = "<a href='verify_signup.php?id={$row['id']}&action=recheck'><span style='color: green'>已被通过</span></a><br>" . get_username($row['verified_by']);
                 break;
+            default:
+                $status = '未知状态';
+
         }
 
         ?>
         <tr>
-            <td class="rowfollow"><?php echo $user['added'] ?></td>
+            <td class="rowfollow"><?php echo $status ?></td>
+            <td class="rowfollow"><?php echo $added_col ?></td>
             <td class="rowfollow"><?php echo get_username($row['uid']) ?></td>
-            <td class="rowfollow"><?php echo $ip . " 「" . ip_to_location($ip) . "」" ?></td>
+            <td class="rowfollow"><?php echo $ip . "<br>「" . ip_to_location($ip) . "」" ?></td>
             <td class="rowfollow"><?php echo $inviter . ' -> ' . $reason ?></td>
             <td class="rowfollow"><?php echo $email ?></td>
-            <td class="rowfollow" style="width: 40%"><?php echo format_comment($row['message']) ?></td>
-            <td class="rowfollow"><?php echo $status ?></td>
+            <td class="rowfollow" style="width: 40%"><?php echo format_comment($row['message'], true, true, false, true, 700, false) ?></td>
         </tr>
         <?php
     }
