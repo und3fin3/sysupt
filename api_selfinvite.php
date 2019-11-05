@@ -37,7 +37,7 @@ if (!$get_code) {
         $res = sql_query("SELECT * FROM self_invite WHERE email = " . sqlesc($email) . " LIMIT 1");
         $a = mysql_fetch_array($res);
         if ($a !== null && $a['used'] == 1) {
-            echo json_encode(new API_Response(null, -4, "此邮箱已经被使用！"));
+            echo json_encode(new API_Response(null, -4, "此邮箱已经被使用！如果你已经收到邀请确认邮件但未完成注册申请，请通过邮件内的链接重新进入注册页面。"));
             die();
         }
 
@@ -89,7 +89,8 @@ if (!$get_code) {
 您好，<br /><br />
 您正在使用{$SITENAME}的自助邀请系统。<br />
 如果这是您主动申请的，请在阅读网站规则后确认本申请。<br /><br />
-请点击以下链接确认申请：<br />
+邀请有效期为7天，请尽快完成注册申请。<br /><br />
+请连接校园网并点击下面的链接开始注册：（非校园网环境下可能会需要补充更多信息以证明你的校园身份）<br />
 <b><a href="https://$BASEURL/signup/self_invite_confirm?code=$code" target="_blank">https://$BASEURL/signup/self_invite_confirm?code=$code</a></b><br /><br />
 本申请由IP为 {$ip} 的用户主动申请。如果这不是您本人所为，请将此邮件转发至{$REPORTMAIL}(在主题里标明“垃圾邮件举报”)<br /><br />
 ------<br />
@@ -104,7 +105,7 @@ EOD;
     $res = sql_query("SELECT * FROM self_invite WHERE code = " . sqlesc($get_code) . " LIMIT 1");
     $arr = mysql_fetch_array($res);
     if ($arr === null) {
-        echo json_encode(new API_Response(null, -2, "错误的确认代码，请重新申请或联系管理员！"));
+        echo json_encode(new API_Response(null, -2, "错误的确认代码，请重新申请或加QQ群637597613联系管理员！"));
     } else {
         if ($arr['used'] == 1) {
             if ($arr['used_type'] == 'invite') {
