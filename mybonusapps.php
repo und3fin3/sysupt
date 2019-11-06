@@ -1,4 +1,7 @@
 <?php
+
+use Ghunti\HighchartsPHP\Highchart;
+
 require_once('include/bittorrent.php');
 dbconn();
 require_once(get_langfile_path());
@@ -195,11 +198,6 @@ if ($action == "viewluck") {
     if ($lucklog2 == "") {
         print ("<tr><td class=\"rowfollow\" align=\"left\"><h1>北洋媛很伤心，最近没有人来碰运气，呜呜呜……</h1></td></tr>");
     } else {
-        require_once('HighRoller/HighRoller.php');
-        require_once('HighRoller/HighRollerSeriesData.php');
-        require_once('HighRoller/HighRollerLineChart.php');
-        require_once('HighRoller/HighRollerScatterChart.php');
-
         $lucklog2 = json_decode($lucklog2);
 
         $chartData_time = array();
@@ -235,8 +233,9 @@ if ($action == "viewluck") {
             );
         }
 
-        echo HighRoller::setHighChartsLocation("js/highcharts/highcharts.js");
-        $linechart1 = new HighRollerLineChart ();
+        $linechart1 = new Highchart();
+        $linechart1->printScripts();
+
         $linechart1->chart->renderTo = 'linechart';
         $linechart1->chart->type = 'spline';
         $linechart1->chart->zoomType = 'x';
@@ -247,17 +246,15 @@ if ($action == "viewluck") {
         $linechart1->plotOptions->series->type = 'area';
         $linechart1->plotOptions->series->name = '收益率';
 
-        $series11 = new HighRollerSeriesData ();
-        $series11->addName('收益率')->addData($chartData_rate);
+        $linechart1->series[0]->name = '收益率';
+        $linechart1->series[0]->data = $chartData_rate;
 
-        $linechart1->addSeries($series11);
         print ('<h1>北洋媛碰运气盈亏情况统计</h1>');
         print ('<div id="linechart"></div>');
-        print ('<script type="text/javascript">' . $linechart1->renderChart() . '</script>');
-
+        print ('<script type="text/javascript">' . $linechart1->render() . '</script>');
         print ("<br /><br />");
 
-        $linechart2 = new HighRollerLineChart ();
+        $linechart2 = new Highchart ();
         $linechart2->chart->renderTo = 'linechart2';
         $linechart2->chart->type = 'spline';
         $linechart2->chart->zoomType = 'x';
@@ -270,22 +267,19 @@ if ($action == "viewluck") {
         $linechart2->tooltip->crosshairs = true;
         $linechart2->tooltip->shared = true;
 
-        $series21 = new HighRollerSeriesData ();
-        $series21->addName('投入魔力值')->addData($chartData_bpay);
-        $series22 = new HighRollerSeriesData ();
-        $series22->addName('收获魔力值')->addData($chartData_bget);
-        $series23 = new HighRollerSeriesData ();
-        $series23->addName('净赚魔力值')->addData($chartData_gain);
+        $linechart2->series[0]->name = '投入魔力值';
+        $linechart2->series[0]->data = $chartData_bpay;
+        $linechart2->series[1]->name = '收获魔力值';
+        $linechart2->series[1]->data = $chartData_bget;
+        $linechart2->series[2]->name = '净赚魔力值';
+        $linechart2->series[2]->data = $chartData_gain;
 
-        $linechart2->addSeries($series21);
-        $linechart2->addSeries($series22);
-        $linechart2->addSeries($series23);
         print ('<div id="linechart2"></div>');
-        print ('<script type="text/javascript">' . $linechart2->renderChart() . '</script>');
+        print ('<script type="text/javascript">' . $linechart2->render() . '</script>');
 
         print ("<br /><br />");
 
-        $scatterchart = new HighRollerScatterChart ();
+        $scatterchart = new Highchart ();
         $scatterchart->chart->renderTo = 'scatterchart';
         $scatterchart->chart->type = 'scatter';
         $scatterchart->chart->zoomType = 'xy';
@@ -293,11 +287,11 @@ if ($action == "viewluck") {
         $scatterchart->xAxis->title->text = '投入魔力值（百个）';
         $scatterchart->yAxis->title->text = '净赚魔力值（百个）';
 
-        $series31 = new HighRollerSeriesData ();
-        $series31->addName('魔力值收支')->addData($chartData_xy);
-        $scatterchart->addSeries($series31);
+        $linechart2->series[0]->name = '魔力值收支';
+        $linechart2->series[0]->data = $chartData_xy;
+
         print ('<div id="scatterchart"></div>');
-        print ('<script type="text/javascript">' . $scatterchart->renderChart() . '</script>');
+        print ('<script type="text/javascript">' . $scatterchart->render() . '</script>');
     }
 }
 

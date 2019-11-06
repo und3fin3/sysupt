@@ -1,4 +1,7 @@
 <?php
+
+use Ghunti\HighchartsPHP\Highchart;
+
 require "include/bittorrent.php";
 dbconn();
 require_once(get_langfile_path());
@@ -243,13 +246,6 @@ else {
             stdhead($lang_log ['head_site_log']);
             logmenu('chartlog');
 
-            require_once('HighRoller/HighRoller.php');
-            require_once('HighRoller/HighRollerSeriesData.php');
-            require_once('HighRoller/HighRollerLineChart.php');
-            require_once('HighRoller/HighRollerPieChart.php');
-
-            echo HighRoller::setHighChartsLocation("js/highcharts/highcharts.js");
-
             // ---新增资源统计---
             $res_new_date = $Cache->get_value('chartlog_res_new_date');
             $res_new_count = $Cache->get_value('chartlog_res_new_count');
@@ -280,7 +276,9 @@ else {
                 $res_new_count = json_decode($res_new_count);
                 $res_new_size = json_decode($res_new_size);
             }
-            $linechart1 = new HighRollerLineChart ();
+            $linechart1 = new Highchart ();
+            $linechart1->printScripts();
+            $linechart1->chart->type = 'line';
             $linechart1->chart->renderTo = 'linechart1';
             $linechart1->chart->width = 940;
             // $linechart1->chart->type = 'spline';
@@ -293,13 +291,11 @@ else {
             $linechart1->yAxis->min = 0;
             $linechart1->plotOptions->series->name = '新增资源';
 
-            $series11 = new HighRollerSeriesData ();
-            $series11->addName('新增资源数（个）')->addData($res_new_count);
-            $series12 = new HighRollerSeriesData ();
-            $series12->addName('新增资源大小（GB）')->addData($res_new_size);
 
-            $linechart1->addSeries($series11);
-            $linechart1->addSeries($series12);
+            $linechart1->series[0]->name = '新增资源数（个）';
+            $linechart1->series[0]->data = $res_new_count;
+            $linechart1->series[0]->name = '新增资源大小（GB）';
+            $linechart1->series[0]->data = $res_new_size;
 
             // -----资源分类统计-----
             $res_cat_count = $Cache->get_value('chartlog_res_cat_count');
@@ -330,33 +326,33 @@ else {
                 $res_cat_count = json_decode($res_cat_count);
                 $res_cat_size = json_decode($res_cat_size);
             }
-            $piechart1 = new HighRollerPieChart ();
+            $piechart1 = new Highchart ();
+            $piechart1->chart->type = 'pie';
             $piechart1->chart->renderTo = 'piechart1';
             $piechart1->chart->width = 470;
-            $piechart1->title->text = '北洋媛资源分布1';
+            $piechart1->title->text = '北洋媛资源数分布';
             $piechart1->plotOptions->pie->showInLegend = true;
             $piechart1->plotOptions->pie->allowPointSelect = true;
             $piechart1->plotOptions->pie->cursor = 'pointer';
             $piechart1->plotOptions->pie->showInLegend = true;
             $piechart1->plotOptions->pie->dataLabels->enabled = false;
 
-            $series21 = new HighRollerSeriesData ();
-            $series21->addName('资源数（个）')->addData($res_cat_count);
-            $piechart1->addSeries($series21);
+            $piechart1->series[0]->name = '资源数（个）';
+            $piechart1->series[0]->data = $res_cat_count;
 
-            $piechart2 = new HighRollerPieChart ();
+            $piechart2 = new Highchart ();
+            $piechart2->chart->type = 'pie';
             $piechart2->chart->renderTo = 'piechart2';
             $piechart2->chart->width = 470;
-            $piechart2->title->text = '北洋媛资源分布2';
+            $piechart2->title->text = '北洋媛资源大小分布';
             $piechart2->plotOptions->pie->showInLegend = true;
             $piechart2->plotOptions->pie->allowPointSelect = true;
             $piechart2->plotOptions->pie->cursor = 'pointer';
             $piechart2->plotOptions->pie->showInLegend = true;
             $piechart2->plotOptions->pie->dataLabels->enabled = false;
 
-            $series22 = new HighRollerSeriesData ();
-            $series22->addName('资源大小（TB）')->addData($res_cat_size);
-            $piechart2->addSeries($series22);
+            $piechart2->series[0]->name = '资源大小（TB）';
+            $piechart2->series[0]->data = $res_cat_size;
 
             // print ('<h1>北洋媛资源统计</h1>') ;
             print ('<table width=940 border=0 cellspacing=0 cellpadding=0>');
@@ -368,9 +364,9 @@ else {
             print ('<div id="piechart2"></div>');
             print ('</td></tr>');
             print ('</table>');
-            print ('<script type="text/javascript">' . $linechart1->renderChart() . '</script>');
-            print ('<script type="text/javascript">' . $piechart1->renderChart() . '</script>');
-            print ('<script type="text/javascript">' . $piechart2->renderChart() . '</script>');
+            print ('<script type="text/javascript">' . $linechart1->render() . '</script>');
+            print ('<script type="text/javascript">' . $piechart1->render() . '</script>');
+            print ('<script type="text/javascript">' . $piechart2->render() . '</script>');
             stdfoot();
             die ();
             break;
