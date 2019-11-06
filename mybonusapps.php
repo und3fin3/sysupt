@@ -287,8 +287,8 @@ if ($action == "viewluck") {
         $scatterchart->xAxis->title->text = '投入魔力值（百个）';
         $scatterchart->yAxis->title->text = '净赚魔力值（百个）';
 
-        $linechart2->series[0]->name = '魔力值收支';
-        $linechart2->series[0]->data = $chartData_xy;
+        $scatterchart->series[0]->name = '魔力值收支';
+        $scatterchart->series[0]->data = $chartData_xy;
 
         print ('<div id="scatterchart"></div>');
         print ('<script type="text/javascript">' . $scatterchart->render() . '</script>');
