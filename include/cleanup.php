@@ -1206,6 +1206,83 @@ function docleanup($forceAll = 0, $printProgress = false)
             printProgress("发放发布员工资");
         }
     }
+
+    // 发布上周注册周报
+    $register_log_sent = $Cache->get_value('register_log_sent');
+    if (date('w') == 1 && !$register_log_sent) {
+        $last_monday = date('Y-m-d H:i:s', strtotime('-1 monday', time()));
+        $last_sunday = date('Y-m-d H:i:s', strtotime('monday', time()) - 1);
+
+        $res = sql_query("SELECT * FROM users WHERE added BETWEEN " . sqlesc($last_monday) . " AND " . sqlesc($last_sunday));
+        $register_ways = [];
+        $inviters = [];
+        $register_num = 0;
+        $invite_email_domains = [];
+        $uids = [];
+        while ($user = mysql_fetch_array($res)) {
+            $register_num += 1;
+            $uids[] = $user['id'];
+            $datetime = new DateTime($user['added']);
+            preg_match('/受邀原因：(.*?)；邀请邮箱：(.*?)。/i', $user['modcomment'], $matches);
+            $reason = $matches[1];
+            $invite_email = $matches[2];
+            $inviter = $user['invited_by'] == 0 ? "系统" : ("@" . get_user_row($user['invited_by'])['username']);
+            $inviters[$inviter] += 1;
+            $register_ways[$reason] += 1;
+
+            if ($reason == '自助邀请') {
+                $email_domain = strtolower(explode('@', $invite_email)[1]);
+                $invite_email_domains[$email_domain] += 1;
+            }
+        }
+        arsort($register_ways);
+        arsort($inviters);
+        arsort($invite_email_domains);
+
+        $staffmsg = "注册周报出炉，上周（" . $last_monday . "至" . $last_sunday . "）共有{$register_num}位用户加入了{$SITENAME}，详情如下：";
+
+        // 1. 注册途径
+        $staffmsg .= "\n\n一、注册途径计数";
+        foreach ($register_ways as $way => $count) {
+            $staffmsg .= "\n$way -> $count";
+        }
+
+        // 2. 自助邀请自动通过情况
+        $res = sql_query("SELECT * FROM needverify WHERE uid IN (" . join(", ", $uids) . ")");
+        $verify_admins = [];
+        $result_count = [];
+        $non_auto_pass_uids = [];
+        while ($row = mysql_fetch_array($res)) {
+            $verify_admins[$row['verified_by']] += 1;
+            $result_count[$row['result']] += 1;
+            $non_auto_pass_uids[] = $row['uid'];
+        }
+        arsort($verify_admins);
+
+        $staffmsg .= "\n\n二、自助邀请通过情况统计";
+        $staffmsg .= "\n本周共有" . $register_ways['自助邀请'] . "名用户通过自助邀请注册帐号。";
+        $staffmsg .= "\n共有" . ($register_ways['自助邀请'] - $result_count[1] - $result_count[0] - $result_count[-1]) . "名用户由白名单自动通过，自动通过率" . round(($register_ways['自助邀请'] - $result_count[1] - $result_count[0] - $result_count[-1]) * 100 / $register_ways['自助邀请'], 2) . "%。";
+        if ($result_count[1] + $result_count[0] + $result_count[-1]) {
+            $staffmsg .= "\n剩余" . (0 + $result_count[1] + $result_count[0] + $result_count[-1]) . "名用户进入人工审核，通过" . (0 + $result_count[1]) . "人，驳回" . (0 + $result_count[-1]) . "人。" . "管理员审核次数排行如下~";
+            foreach ($verify_admins as $admin => $count) {
+                $staffmsg .= "\n@" . get_user_row($admin)['username'] . " -> $count";
+            }
+        }
+
+        // 3. 自助邀请邮箱域分布
+        $staffmsg .= "\n\n三、自助邀请邮箱域计数";
+        foreach ($invite_email_domains as $domain => $count) {
+            $staffmsg .= "\n$domain -> $count";
+        }
+
+        $subject = "注册周报~";
+        sql_query("INSERT INTO staffmessages (sender, added, subject, msg) VALUES(9999, " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc($subject) . ", " . sqlesc($staffmsg) . ")") or sqlerr(__FILE__, __LINE__);
+        $Cache->delete_value('staff_message_count');
+        $Cache->delete_value('staff_new_message_count');
+
+        $Cache->cache_value('register_log_sent', 1, 86400);
+    }
+
     // Priority Class 5: cleanup every 15 days
     $res = sql_query("SELECT value_u FROM avps WHERE arg = 'lastcleantime5'");
     $row = mysql_fetch_array($res);
