@@ -5,7 +5,7 @@ dbconn();
 require_once(get_langfile_path("takesignup.php", true));
 require_once(get_langfile_path("takesignup.php", false, get_langfolder_cookie()));
 global $lang_takesignup, $BASEURL, $SITENAME, $SITEEMAIL, $smtptype, $showschool, $registration, $registration_checkip,
-       $self_invite;
+       $self_invite, $CURUSER;
 
 $ip = getip();
 
@@ -19,6 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $gender = $data['gender'];
     $message = $data['message'];
     $type = $data['type'];
+
+    if ($CURUSER) {
+        write_log("{$CURUSER['id']} ({$CURUSER['username']}) 触发了代注册检测，提交的注册邮箱为{$email}。", 'mod');
+        echo json_encode(new API_Response(null, -999, "代注册是违规行为，你的行为已被记录！"));
+        die();
+    }
 
     // ------检查基础注册信息------
     if (empty($email) || empty($username) || empty($password) || empty($country) || empty($gender)) {
@@ -269,7 +275,7 @@ EOD;
             $check_result = false;
             if ($inv['inviter'] == 0) {
                 // 自助邀请
-                $email_domain = explode('@', $inv['invitee']);
+                $email_domain = explode('@', $inv['invitee'])[1];
                 $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version} AND FIND_IN_SET(" . sqlesc($email_domain) . " , email_domain)");
             } else {
                 $res = sql_query("SELECT * FROM invite_rule WHERE enable = 1 AND ip_version = {$ip_version}");
