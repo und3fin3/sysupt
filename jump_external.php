@@ -5,7 +5,8 @@
  * Date: 15/7/26
  * Time: 上午12:40
  */
-
+// Deprecated
+die();
 require "include/bittorrent.php";
 dbconn();
 loggedinorreturn();

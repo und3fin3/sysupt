@@ -235,19 +235,25 @@ function formatAdUrl($adid, $url, $content, $newWindow = true)
 
 function formatUrl($url, $newWindow = false, $text = '', $linkClass = '')
 {
-    if (!$text) {
-        $text = $url;
+    $allowed = ['', 'http', 'https'];
+    $scheme = parse_url($url, PHP_URL_SCHEME);
+    if ($scheme === false) {
+        print($scheme);
+        return addTempCode("<span>错误链接" . ($text ? " :: $text" : "") . " :: $url</span>");
+    } else if (!in_array(strtolower($scheme), $allowed, true)) {
+        return addTempCode("<span>未知链接" . ($text ? " :: $text" : "") . " :: $url</span>");
+    } else {
+        if (!$text) {
+            $text = $url;
+        }
+        $url_host = strtolower(parse_url($url, PHP_URL_HOST));
+        $host_whitelist = ['www.tjupt.org', 'tjupt.org', NULL];
+        if (!in_array($url_host, $host_whitelist)) {
+            return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"$url\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">站外链接 :: $text</a>");
+        }
+        $url = preg_replace('/(https?:\/\/)?(www.)?tjupt.org\//i', '', $url);
+        return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"$url\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>");
     }
-    $url_host = strtolower(parse_url($url, PHP_URL_HOST));
-    $host_whitelist = array('www.tjupt.org',
-                            'tjupt.org',
-							NULL //no domain
-							);
-	if (!in_array($url_host, $host_whitelist)) {
-	    return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"/jump_external.php?ext_url=" . urlencode($url) . "\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>");
-    }
-    $url = preg_replace('/(https?:\/\/)?(www.)?tjupt.org/i', '', $url);
-    return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"$url\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>");
 }
 
 function formatCode($text)
