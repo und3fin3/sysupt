@@ -61,11 +61,20 @@ while ($row = mysql_fetch_array($cheatersres)) {
 }
 ?>
 <tr>
-    <td class="colhead" colspan="12" style="text-align: right"><input type="submit" name="setdealt"
-                                                                      value="<?php echo $lang_cheaterbox['submit_set_dealt'] ?>"/><input
-                type="submit" name="delete" value="<?php echo $lang_cheaterbox['submit_delete'] ?>"/></td>
+    <td class="colhead" colspan="12" style="text-align: right">
+        <input type="button" id="checkall" onclick="checkAll()" value="全选">
+        <input type="submit" name="setdealt" value="<?php echo $lang_cheaterbox['submit_set_dealt'] ?>"/>
+        <input type="submit" name="delete" value="<?php echo $lang_cheaterbox['submit_delete'] ?>"/></td>
 </tr>
 </form>
+<script>
+    function checkAll() {
+        let delcheaters = document.getElementsByName('delcheater[]');
+        for (let i = 0; i < delcheaters.length; i++) {
+            delcheaters[i].checked = true;
+        }
+    }
+</script>
 <?php
 print("</table>");
 print($pagerbottom);
