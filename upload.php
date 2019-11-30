@@ -97,7 +97,7 @@ else {
             ?>
 
             <?php
-            tr($lang_upload['row_torrent_file'] . "<font color=\"red\">*</font>", "<input type=\"file\" class=\"file\" id=\"torrent\" name=\"file\" onchange=\"getname()\" accept='application/x-bittorrent' />\n", 1);
+            tr($lang_upload['row_torrent_file'] . "<font color=\"red\">*</font>", "<input type=\"file\" class=\"file\" id=\"torrent\" name=\"file\" onchange=\"get_torrent_name()\" accept='application/x-bittorrent' style='width: 300px'/><span id='torrent_name' style='margin-left: 20px; color: red;'></span>\n", 1);
 
             if ($allowtorrents) {
                 $disablespecial = " onchange=\"disableother('browsecat','specialcat')\"";

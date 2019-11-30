@@ -49,7 +49,7 @@ if (!isset($CURUSER) || $CURUSER["uploadpos"] == 'no' || !user_can_upload()) {
     if (isset($_GET["returnto"]))
         print("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars($_GET["returnto"]) . "\" />");
     print("<table border=\"1\" cellspacing=\"0\" cellpadding=\"5\" width=\"940\">\n");
-    tr("种子文件<font color=\"red\">*</font>", "<input type=\"file\" class=\"file\" id=\"torrent\" name=\"file\" onchange=\"getname()\" />\n", 1);
+    tr("种子文件<font color=\"red\">*</font>", "<input type=\"file\" class=\"file\" id=\"torrent\" name=\"file\" onchange=\"get_torrent_name()\" accept='application/x-bittorrent' style='width: 300px'/><span id='torrent_name' style='margin-left: 20px; color: red;'></span>\n", 1);
     //print("<tr><td class='colhead' colspan='2' align='center'>".htmlspecialchars($row["name"])."</td></tr>");
     //tr($lang_edit['row_torrent_name']."<font color=\"red\">*</font>", "<input type=\"text\" style=\"width: 650px;\" name=\"name\" value=\"" . htmlspecialchars($row["name"]) . "\" />", 1);
 

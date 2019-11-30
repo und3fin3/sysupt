@@ -19,7 +19,7 @@ function tr_text($x)
 
 $offerid = 0 + $_GET["offerid"];
 
-tr_text("种子文件<font color=\"red\">*</font><input type=\"file\" class=\"file\" id=\"torrent\" name=\"file\" onchange=\"getname()\" />\n");
+tr_text("种子文件<font color=\"red\">*</font><input type=\"file\" class=\"file\" id=\"torrent\" name=\"file\" accept='application/x-bittorrent' style='width: 500px'/>\n");
 
 /**********************************************显示候选详细信息**************************************************/
 $res = sql_query("SELECT * FROM offers WHERE id = " . $offerid . " LIMIT 1")

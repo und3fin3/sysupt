@@ -568,3 +568,15 @@ function get_external_data() {
         }
     });
 }
+
+function get_torrent_name() {
+	const file_jq = $("#torrent");
+	let torrent_name = file_jq[0].files[0].name;
+	let regex = /(?:\[.+?\][\.\s]*)?(.*)(?:\..+)?\.torrent/g;
+	torrent_name = regex.exec(torrent_name);
+	if (torrent_name === null){
+		alert("请选择种子(.torrent)文件！");
+		file_jq.val("");
+	}
+	$("#torrent_name").text(torrent_name[1]);
+}
