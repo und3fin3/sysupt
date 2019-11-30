@@ -485,7 +485,7 @@ function docleanup($forceAll = 0, $printProgress = false)
     }
 
     $res = sql_query("SELECT id, username FROM users WHERE enabled = 'no' AND downloadpos = 'no' AND last_login = '0000-00-00 00:00:00' AND DATE_ADD(added,INTERVAL 7 DAY) < NOW() AND id IN (SELECT uid FROM needverify WHERE result = -1)");
-    while ($arr = mysql_fetch_array($res)){
+    while ($arr = mysql_fetch_array($res)) {
         write_log("系统删除了帐号 $arr[id] ($arr[username]) (未通过验证帐号超过7天未进行申诉)", 'normal');
         sql_query("DELETE FROM users WHERE id = $arr[id]") or sqlerr(__FILE__, __LINE__);
     }
@@ -1190,10 +1190,16 @@ function docleanup($forceAll = 0, $printProgress = false)
                 sql_query("UPDATE users SET seedbonus = seedbonus + $salary, bonuscomment = " . sqlesc($bonuscomment) . " WHERE id = $user[id]") or sqlerr(__FILE__, __LINE__);
             sql_query("UPDATE uploaders SET rate = " . sqlesc($rate) . ", deleted_last = " . $deleted['deleted_torrents'] . ", deleted_torrents = 0  WHERE uid = $user[id]") or sqlerr(__FILE__, __LINE__);
 
+            if ($rate == 'S' || $rate == 'S+') {
+                sql_query("UPDATE users SET invites = invites + 1 WHERE id = {$user['id']}") or sqlerr(__FILE__, __LINE__);
+            }
+
             // 发PM
             if (!($user['class'] > UC_UPLOADER && $salary == 0)) {
                 $subject = "发工资啦~";
                 $msg = "亲爱的 " . $user ["username"] . " ，上月你的评级为 [b]" . rate_color($rate, "bbcode") . "[/b]，工资 [b][color=Blue]" . $salary . "[/color][/b] 个魔力值已发放，请笑纳~";
+                if ($rate == 'S' || $rate == 'S+')
+                    $msg .= "\n此外，由于超额完成任务，一枚「永久邀请」已发放到您的账户，请继续努力~";
                 $dt = sqlesc(date("Y-m-d H:i:s"));
                 sql_query("INSERT INTO messages (sender, receiver, added, subject, msg) VALUES(0, $user[id], $dt, " . sqlesc($subject) . ", " . sqlesc($msg) . ")") or sqlerr(__FILE__, __LINE__);
                 sql_query("INSERT INTO uploader_autosalary (user_id, user_class, salary, salarytime) VALUES($user[id], $user[class], " . sqlesc($salary) . ", " . $dt . ")") or sqlerr(__FILE__, __LINE__);
