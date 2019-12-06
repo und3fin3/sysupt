@@ -287,15 +287,20 @@ else {
             $linechart1->xAxis->title->text = null;
             $linechart1->xAxis->categories = $res_new_date;
             $linechart1->xAxis->tickInterval = 3;
-            $linechart1->yAxis->title->text = null;
-            $linechart1->yAxis->min = 0;
+            $linechart1->yAxis[0]->title->text = "新增资源数（个）";
+            $linechart1->yAxis[0]->min = 0;
+            $linechart1->yAxis[1]->title->text = "新增资源大小（GB）";
+            $linechart1->yAxis[1]->min = 0;
+            $linechart1->yAxis[1]->opposite = True;
             $linechart1->plotOptions->series->name = '新增资源';
 
 
             $linechart1->series[0]->name = '新增资源数（个）';
             $linechart1->series[0]->data = $res_new_count;
+            $linechart1->series[0]->yAxis = 0;
             $linechart1->series[1]->name = '新增资源大小（GB）';
             $linechart1->series[1]->data = $res_new_size;
+            $linechart1->series[1]->yAxis = 1;
 
             // -----资源分类统计-----
             $res_cat_count = $Cache->get_value('chartlog_res_cat_count');
