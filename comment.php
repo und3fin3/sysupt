@@ -113,9 +113,9 @@ if ($action == "add") {
         pm_at_users($text, $msg, $type);
 
         if ($type == "torrent")
-            header("Refresh: 0; url=details.php?id=$parent_id#$newid");
+            header("Refresh: 0; url=details.php?id=$parent_id#cid$newid");
         else if ($type == "offer")
-            header("Refresh: 0; url=offers.php?id=$parent_id&off_details=1#$newid");
+            header("Refresh: 0; url=offers.php?id=$parent_id&off_details=1#cid$newid");
         else if ($type == "request")
             header("Refresh: 0; url=viewrequests.php?action=view&id=$parent_id&req_details=1#cid$newid");
         die ();
