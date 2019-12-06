@@ -294,8 +294,8 @@ else {
 
             $linechart1->series[0]->name = '新增资源数（个）';
             $linechart1->series[0]->data = $res_new_count;
-            $linechart1->series[0]->name = '新增资源大小（GB）';
-            $linechart1->series[0]->data = $res_new_size;
+            $linechart1->series[1]->name = '新增资源大小（GB）';
+            $linechart1->series[1]->data = $res_new_size;
 
             // -----资源分类统计-----
             $res_cat_count = $Cache->get_value('chartlog_res_cat_count');
