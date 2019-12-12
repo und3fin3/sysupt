@@ -3511,7 +3511,7 @@ ALTER TABLE `seedbox_torrents` ADD FULLTEXT KEY `name` (`name`);
 --
 ALTER TABLE `self_invite`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`(10)),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `code` (`code`),
   ADD KEY `id` (`id`);
 
