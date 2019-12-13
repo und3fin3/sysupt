@@ -402,7 +402,7 @@ else {
         //print ("<td class=\"embedded\"><form method=\"get\" action=\"http://shooter.cn/sub/\" target=\"_blank\"><input type=\"text\" name=\"searchword\" id=\"keyword\" style=\"width: 250px\" value=\"" . $moviename . "\" /><input type=\"submit\" value=\"" . $lang_details ['submit_search_at_shooter'] . "\" /></form></td><td class=\"embedded\"><form method=\"get\" action=\"http://www.opensubtitles.org/en/search2/\" target=\"_blank\"><input type=\"hidden\" id=\"moviename\" name=\"MovieName\" /><input type=\"hidden\" name=\"action\" value=\"search\" /><input type=\"hidden\" name=\"SubLanguageID\" value=\"all\" /><input onclick=\"document.getElementById('moviename').value=document.getElementById('keyword').value;\" type=\"submit\" value=\"" . $lang_details ['submit_search_at_opensubtitles'] . "\" /></form></td>\n") ;
         print ("<td class=\"embedded\" />");
         print ("<input type=\"text\" id=\"moviename\" style=\"width: 250px\" value=\"" . $moviename . "\" />");
-        print ("<input type=\"button\" onclick=\"window.open('http://www.subhd.com/search/'+document.getElementById('moviename').value)\" value=\"" . $lang_details ['submit_search_at_subhd'] . "\"/>");
+        print ("<input type=\"button\" onclick=\"window.open('http://www.subhd.tv/search/'+document.getElementById('moviename').value)\" value=\"" . $lang_details ['submit_search_at_subhd'] . "\"/>");
         print ("</td>");
         print ("</tr></table>");
         print ("</td></tr>\n");
