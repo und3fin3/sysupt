@@ -79,7 +79,6 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === 'baf1608c33254d00611ac
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
 sudo mv composer.phar /usr/local/bin/composer
-composer install
 
 # Install nginx 1.17.6
 echo "deb http://nginx.org/packages/mainline/debian `lsb_release -cs` nginx"     | sudo tee /etc/apt/sources.list.d/nginx.list
