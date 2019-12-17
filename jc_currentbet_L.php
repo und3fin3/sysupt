@@ -395,7 +395,7 @@ if (!in_array($action, $allowedaction)) {
                             <script type="text/javascript">
                             function zOpenInner(){
                         		var content = "<font color=red><h1>发布竞猜须知</h1></font><br/>";
-                        		content = content + "<font color=white>1）请保证你所发的竞猜内容的正确性。<br/><br/>2）竞猜至少在比赛开始前15分钟结束，竞猜时间至少持续1天。<br/></br>3）提交竞猜后尚需审核，请在竞猜开始前至少一天提交竞猜。<br/><br/>4）普通用户每天允许成功发布一次竞猜，请珍惜机会。<br/><br/>5）请在提交理由中附上竞猜的相关链接，方便管理员审核。<br/><br/>6）如果不能提交竞猜，请使用非IE内核的浏览器操作。<br/><br/>7)  如有其它不明白之处，请先移步常见问题,仍未解决的直接联系管理员（站内）<br/><br/><br/>【声明】该细则解释权归北洋园PT管理组，有任何问题请<a href=\"sendmessage.php?receiver=31029\" class=\"altlink\" target=\"_blank\">联系管理员</a></font>";
+                        		content = content + "<font color=white>1）请保证你所发的竞猜内容的正确性。<br/><br/>2）竞猜至少在比赛开始前15分钟结束，竞猜时间至少持续1天。<br/></br>3）提交竞猜后尚需审核，请在竞猜开始前至少一天提交竞猜。<br/><br/>4）普通用户每天允许成功发布一次竞猜，请珍惜机会。<br/><br/>5）请在提交理由中附上竞猜的相关链接，方便管理员审核。<br/><br/>6）如果不能提交竞猜，请使用非IE内核的浏览器操作。<br/><br/>7)  如有其它不明白之处，请先移步常见问题,仍未解决的直接联系管理员（站内）<br/><br/><br/>【声明】该细则解释权归SYSUPT管理组，有任何问题请<a href=\"sendmessage.php?receiver=31029\" class=\"altlink\" target=\"_blank\">联系管理员</a></font>";
                         		$('#lightbox').css({"zoom":"100%"});
 								$('#lightbox').html(content);
 								$('#curtain').fadeIn();

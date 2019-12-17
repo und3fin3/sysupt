@@ -40,7 +40,7 @@ $lang_self_invite = array
 	'domain_not_permission' => "该邮件域不能用于自助邀请。请使用@*.edu.cn或@*.ac.cn的邮箱注册",
 	'email_address_banned' => "E-mail地址被禁用，请与管理组联系！",
 	'input_email_address' => "请输入你的E-mail地址：",
-	'welcome' => "欢迎来到北洋园PT自助邀请系统。<br />",
+	'welcome' => "欢迎来到SYSUPT自助邀请系统。<br />",
     'readme' => "如果你是教育网用户，在这里你可以凭<font color='red'>@*.edu.cn或@*.ac.cn</font>为后缀的邮箱获得一个本站帐号。<br />当然，你也可以放弃这一权利。作为补偿，你可以得到一定的魔力值，并且还可以使一个被禁用的帐号恢复使用。<br /><a target=_blank class=faqlink href=http://candle.tju.edu.cn>点击这里注册天大邮箱</a>",
     'warning' => "<br/><br/><b>注意</b>:<br/>每个邮箱只能申请一次账号，账号、获取魔力值和复活一个被禁用户三者只能选其一。<br/>如果你已经用你的邮箱申请过一次账号，那么不论此账号是否仍在使用，你都不能通过此邮箱获得第二个账号。请向您的朋友索要邀请码加入本站。",
 	'do_not_treat_us' => "不要试图从非法途径获得邀请。",

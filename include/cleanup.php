@@ -104,7 +104,7 @@ function docleanup($forceAll = 0, $printProgress = false)
             $user = mysql_fetch_assoc($user_query);
             $star = ($user['donor'] == 'yes' || $reward['star'] == 'yes') ? 'yes' : 'no';
             $vip = ($user['class'] < UC_VIP && $reward['vip'] == 'yes') ? UC_VIP : $user['class'];
-            $stafffor = $reward['vip'] == 'yes' ? ($user['stafffor'] . "\n感谢 " . $user['username'] . " 对北洋园PT的捐赠") : $user['stafffor'];
+            $stafffor = $reward['vip'] == 'yes' ? ($user['stafffor'] . "\n感谢 " . $user['username'] . " 对SYSUPT的捐赠") : $user['stafffor'];
             $bonuscomment = date("Y-m-d") . " 捐赠奖励 ★ " . $reward['bonus'] . " 魔力值";
             if ($reward['invite'] > 0) {
                 $bonuscomment .= "，" . $reward['invite'] . " 个邀请码";
@@ -130,7 +130,7 @@ function docleanup($forceAll = 0, $printProgress = false)
             if ($reward['vip'] == 'yes' && $user['class'] < UC_VIP) {
                 $msg .= "\t ★ VIP身份（不计算下载量，只计算上传量，永久保留账号）\n";
             }
-            $msg .= "[size=4][color=red]北洋园PT衷心感谢您的捐赠，您的支持是我们发展的动力！[/color][/size]";
+            $msg .= "[size=4][color=red]SYSUPT衷心感谢您的捐赠，您的支持是我们发展的动力！[/color][/size]";
             sql_query("INSERT INTO messages (sender, receiver, added, msg, subject) VALUES(0, " . $donation['uid'] . ", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc($msg) . ", " . sqlesc($title) . ")") or sqlerr(__FILE__, __LINE__);
         }
     }

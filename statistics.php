@@ -134,7 +134,7 @@ stdhead("历史数据统计");
     <table class="main" width="940" border="0" cellspacing="0" cellpadding="0">
         <tr>
             <td class="embedded">
-                <h1 align="center" class="pagetitle">北洋园PT :: 历史数据统计</h1>
+                <h1 align="center" class="pagetitle">SYSUPT :: 历史数据统计</h1>
                 <form id="filter_form" method="post">
                     <table>
                         <tr>

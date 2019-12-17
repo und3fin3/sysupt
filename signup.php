@@ -124,7 +124,7 @@ $s .= "\n</select>";
                                             class=small><?php echo($restrictemaildomain == 'yes' ? $lang_signup['text_email_note'] . allowedemails() : "") ?>
                                 </td>
                             </tr>
-                            </font></br>不推荐用edu邮箱，因为这可能不是你的常用邮箱，忘记邮箱密码会导致无法通过邮件找回北洋园PT账号的密码。</br>
+                            </font></br>不推荐用edu邮箱，因为这可能不是你的常用邮箱，忘记邮箱密码会导致无法通过邮件找回SYSUPT账号的密码。</br>
                             建议用网易、新浪、QQ等你的常用邮箱，如果收不到验证邮件请查看垃圾箱或邮件网关拦截记录。</td></tr></table>
                     </td>
                 </tr>

@@ -39,7 +39,7 @@ if ($id && $action) {
         sql_query("UPDATE users SET status = 'confirmed', enabled = 'no', downloadpos = 'no' WHERE id = " . sqlesc($row['uid']));
         sql_query("UPDATE needverify SET result = -1, verified_by = " . sqlesc($CURUSER['id']) . " WHERE id = " . sqlesc($id));
         $title = $SITENAME . "账户申请已被驳回";
-        $message = "你的账户申请已被驳回，原因为「{$reason}」。请勿重新申请/注册，如有问题请加入<a href='//shang.qq.com/wpa/qunwpa?idkey=c584748ff16ae67f8f381f0d4e5f87132551ad01704b90075d90da4f4e659ee4'>北洋园PT临时群：637597613</a>申诉。<br>----------------<br>" . $SITENAME . "管理组";
+        $message = "你的账户申请已被驳回，原因为「{$reason}」。请勿重新申请/注册，如有问题请加入<a href='//shang.qq.com/wpa/qunwpa?idkey=c584748ff16ae67f8f381f0d4e5f87132551ad01704b90075d90da4f4e659ee4'>SYSUPT临时群：637597613</a>申诉。<br>----------------<br>" . $SITENAME . "管理组";
     }
     $Cache->delete_value('staff_needverify_count');
     sent_mail($email, $SITENAME, $SITEEMAIL, change_email_encode(get_langfolder_cookie(), $title), change_email_encode(get_langfolder_cookie(), $message), "verify_user", false, false, '', get_email_encode(get_langfolder_cookie()));

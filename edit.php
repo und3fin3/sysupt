@@ -239,7 +239,7 @@ if (!isset ($CURUSER) || ($CURUSER ["id"] != $row ["owner"] && get_user_class() 
     tr("<input name=\"reasontype\" type=\"radio\" value=\"2\" />&nbsp;" . $lang_edit ['radio_dupe'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />", 1);
     tr("<input name=\"reasontype\" type=\"radio\" value=\"3\" />&nbsp;" . $lang_edit ['radio_nuked'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />", 1);
     tr("<input name=\"reasontype\" type=\"radio\" value=\"4\" />&nbsp;" . $lang_edit ['radio_rules'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />" . $lang_edit ['text_req'], 1);
-    print ("<tr><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\"><input name=\"reasontype\" type=\"radio\" value=\"5\" />&nbsp;合集</td><td class=\"rowfollow\" valign=\"top\" align=\"left\"> 合集已出，删除单集和小合集，感谢您对北洋园PT的贡献。</td></tr>");
+    print ("<tr><td class=\"rowhead nowrap\" valign=\"top\" align=\"right\"><input name=\"reasontype\" type=\"radio\" value=\"5\" />&nbsp;合集</td><td class=\"rowfollow\" valign=\"top\" align=\"left\"> 合集已出，删除单集和小合集，感谢您对SYSUPT的贡献。</td></tr>");
     tr("<input name=\"reasontype\" type=\"radio\" value=\"6\" checked=\"checked\" />&nbsp;" . $lang_edit ['radio_other'], "<input type=\"text\" style=\"width: 200px\" name=\"reason[]\" />" . $lang_edit ['text_req'], 1);
     print ("<tr><td class=\"toolbox\" colspan=\"2\" align=\"center\"><input type=\"submit\" style='height: 25px' value=\"" . $lang_edit ['submit_delete_it'] . "\" /></td></tr>\n");
     print ("</table>");

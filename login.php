@@ -114,7 +114,7 @@ if (!empty($_GET["returnto"])) {
     <p>注册或登录时遇到问题？请
         <a target="_blank"
            href="//shang.qq.com/wpa/qunwpa?idkey=c584748ff16ae67f8f381f0d4e5f87132551ad01704b90075d90da4f4e659ee4">
-            <img border="0" src="pic/qqgroup.png" alt="北洋园PT临时群" title="北洋园PT临时群">
+            <img border="0" src="pic/qqgroup.png" alt="SYSUPT临时群" title="SYSUPT临时群">
         </a>（请勿加群索要邀请码）</p>
 <?php
 $ip = getip();

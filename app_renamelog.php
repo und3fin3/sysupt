@@ -9,7 +9,7 @@ $lang_app_renamelog = array(
     'std_error' => "这谁家熊孩子啊",
     'std_invalid_action' => '别到处乱跑了，回家吃饭去吧！',
     'text_no_permission' => "<b>错误！</b>你没有该权限。",
-    'head_karma_page' => "北洋园用户改名历史",
+    'head_karma_page' => "SYSU用户改名历史",
     'text_karma_system' => " <b>园道&bull;轮回天生</b> 使用记录",
     'text_no_log' => "还没有人用过哦~<br/><br/><a href='mybonus.php'>返回</a>",
     'return_to_bonus_system' => "<a class='faqlink' href='mybonus.php'>返回魔力值系统</a>"
