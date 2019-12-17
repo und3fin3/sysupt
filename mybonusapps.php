@@ -28,8 +28,8 @@ function bonusarray($option)
                 $bonus ['points'] = 100;
                 $bonus ['art'] = 'enableaccount';
                 $bonus ['menge'] = 0;
-                $bonus ['name'] = "21点";
-                $bonus ['description'] = "传统的21点游戏,您要抓足够接近21点，和对手对抗。<br />A在总分不超过21时作11，总分超过21则作1。J,Q,K作为10。";
+                $bonus ['name'] = "21周";
+                $bonus ['description'] = "传统的21周游戏,您要上学足够接近21周，和对手对抗。<br />A在总周数不超过21时作11，总周数超过21则作1。J,Q,K作为10。";
                 break;
             }
         case 3 :
@@ -116,7 +116,7 @@ if ($action == "default") {
         if ($i == 1) { // 碰运气
             $otheroption = "<b>" . $lang_mybonusapps ['text_to_be_play'] . "</b><input type=\"text\" name=\"luckbonus\" id=\"luckbonus\" style=\"width: 80px\" value=\"1000\" />" . $lang_mybonusapps ['text_karma_points'];
             print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "</br></br>" . $otheroption . "</td><td class=\"rowfollow nowrap\" align='center'>" . $lang_mybonusapps ['text_min'] . "10<br />" . $lang_mybonusapps ['text_max'] . "1,000</td>");
-        } elseif ($i == 2) { // 21点
+        } elseif ($i == 2) { // 21周
             print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "<br /><br /></td><td class=\"rowfollow nowrap\" align='center'>每局100</td>");
         } elseif ($i == 3) { // 幸运抽奖
             $otheroption = '';
