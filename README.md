@@ -1,6 +1,8 @@
 # SYSUPT Code
 
-[SYSUPT](https://tjupt.org) is a site based on NexusPHP. All modifications made are here.
+[SYSUPT](https://21weeks.icu) is a site based on NexusPHP. All modifications made are here.
+
+This is a fork from [TJUPT](https://github.com/zcqian/tjupt)
 
 ## First of all 写在前面的话
 After uploading to the production environment, you should delete all "SYSUPT mark" including but not limited to:<br>
