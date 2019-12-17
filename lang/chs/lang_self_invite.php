@@ -28,7 +28,7 @@ $lang_self_invite = array
 	'text_banned_by_admin' => "该账户因为违规被禁用，不允许解禁！",
 	'add_bonus_for' => "成功为帐号",
 	'is_success' => "增加".$add_bonus."魔力值",
-    'std_is_in_use' => "已经被使用，需要重新发送邀请信息请点击<a href=\"JAVAscript:document.sendagain.submit();\"><b>这里</b></a><br />注意：发送垃圾邮件的行为将被严格禁止。<br />如果你没有收到我们的邀请邮件，请加QQ群637597613联系我们。",
+    'std_is_in_use' => "已经被使用，需要重新发送邀请信息请点击<a href=\"JAVAscript:document.sendagain.submit();\"><b>这里</b></a><br />注意：发送垃圾邮件的行为将被严格禁止。<br />如果你没有收到我们的邀请邮件，请加QQ群210998529联系我们。",
 	//'std_is_in_use' => "已经被使用，需要重新填写邮箱请点击<a href=\"self_invite.php\"><b>这里</b></a><br />",
 	'mail_one' => "您好，<br /><br />您正在使用".$SITENAME."的自助邀请系统申请加入本社区。<br />如果你有意加入，请在阅读网站规则后确认本申请。<br /><br />请点击以下链接确认申请：<br />",
 	'mail_two' => $SITENAME."真诚欢迎你加入我们的社区！<br /><br />本邀请由IP为 ",
@@ -45,5 +45,5 @@ $lang_self_invite = array
     'warning' => "<br/><br/><b>注意</b>:<br/>每个邮箱只能申请一次账号，账号、获取魔力值和复活一个被禁用户三者只能选其一。<br/>如果你已经用你的邮箱申请过一次账号，那么不论此账号是否仍在使用，你都不能通过此邮箱获得第二个账号。请向您的朋友索要邀请码加入本站。",
 	'do_not_treat_us' => "不要试图从非法途径获得邀请。",
 	'testing' => "该功能尚未开放！",
-    'notice' => "<b>如果无法收到邮件请查看垃圾箱或检查网关拦截记录！<br/>如有问题请加QQ群637597613咨询</b>"
+    'notice' => "<b>如果无法收到邮件请查看垃圾箱或检查网关拦截记录！<br/>如有问题请加QQ群210998529咨询</b>"
 );
