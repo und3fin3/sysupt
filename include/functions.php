@@ -1725,6 +1725,12 @@ function change_email_encode($lang, $content)
     return iconv("utf-8", get_email_encode($lang) . "//IGNORE", $content);
 }
 
+function msgalert($url, $text, $bgcolor = "red") {
+    print ("<p><table border=\"0\" cellspacing=\"0\" cellpadding=\"10\"><tr><td style='border: none; padding: 10px; background: " . $bgcolor . "'>\n");
+    print ("<b><a href=\"" . $url . "\"><font color=\"white\">" . $text . "</font></a></b>");
+    print ("</td></tr></table></p><br />");
+}
+
 function safe_email($email)
 {
     $email = str_replace("<", "", $email);
@@ -2960,12 +2966,7 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                         echo "<div align=\"center\" style=\"margin-bottom: 10px\" id=\"ad_belownav\">" . $belownavad [0] . "</div>";
                 }
                 if ($varmsgalert) {
-                    function msgalert($url, $text, $bgcolor = "red")
-                    {
-                        print ("<p><table border=\"0\" cellspacing=\"0\" cellpadding=\"10\"><tr><td style='border: none; padding: 10px; background: " . $bgcolor . "'>\n");
-                        print ("<b><a href=\"" . $url . "\"><font color=\"white\">" . $text . "</font></a></b>");
-                        print ("</td></tr></table></p><br />");
-                    }
+                    
 
                     if ($CURUSER ['leechwarn'] == 'yes') {
                         $kicktimeout = gettime($CURUSER ['leechwarnuntil'], false, false, true);
