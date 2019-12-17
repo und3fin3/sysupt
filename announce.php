@@ -267,8 +267,8 @@ if (validateIPv6($ip))
     $ipv4 = $self ['ipv4'];
 
 // min announce time
-if (isset ($self) && $self ['prevts'] > (TIMENOW - $announce_wait) && $event != "stopped" && $event != "completed")
-    err('008-您的刷新过于频繁，请等候 ' . $announce_wait . ' 秒再尝试');
+// if (isset ($self) && $self ['prevts'] > (TIMENOW - $announce_wait) && $event != "stopped" && $event != "completed")
+//    err('008-您的刷新过于频繁，请等候 ' . $announce_wait . ' 秒再尝试');
 
 // current peer_id, or you could say session with tracker not found in table `peers`
 if (!isset ($self)) {
