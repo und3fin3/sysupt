@@ -1587,7 +1587,7 @@ function parse_imdb_id($url)
         if (preg_match("/tt(\d+)/i", $url, $matches)) $url = $matches[1];
         if (is_numeric($url)) return (strlen($url) < 7) ? str_pad($url, 7, '0', STR_PAD_LEFT) : $url;
     }
-    return false;
+    return null;
 }
 
 function build_imdb_url($imdb_id)

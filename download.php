@@ -45,7 +45,7 @@ if ($iplog1 == "yes") {
 sql_query("UPDATE users SET last_access = " . sqlesc(date("Y-m-d H:i:s")) . ", ip = " . sqlesc($CURUSER['ip']) . "  WHERE id = " . sqlesc($CURUSER['id']));
 
 // HTTPS Tracker Only
-$ssl_torrent = "https://";
+$ssl_torrent = "http://";
 $base_announce_url = $announce_urls[0];
 
 $res = sql_query("SELECT name, filename, save_as,  size, owner,banned FROM torrents WHERE pulling_out ='0' AND id = " . sqlesc($id)) or sqlerr(__FILE__, __LINE__);

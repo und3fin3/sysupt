@@ -38,7 +38,9 @@ $updateset = array();
 // $dname = $row["save_as"];
 
 $url = parse_imdb_id($_POST ['url']);
-
+if ($url == '') {
+	$url = 0;
+}
 if ($enablenfo_main == 'yes') {
     $nfoaction = $_POST ['nfoaction'];
     if ($nfoaction == "update") {
@@ -287,6 +289,9 @@ $updateinfoset [] = "specificcat = " . sqlesc($specificcat);
 $issuedate = (trimcomma($_POST ["issuedate"]));
 $updateinfoset [] = "issuedate = " . sqlesc($issuedate);
 $subsinfo = (trimcomma($_POST ["subsinfo"]));
+if ($subsinfo == '') {
+	$subsinfo = 0;
+}
 $updateinfoset [] = "subsinfo = " . sqlesc($subsinfo);
 $district = (trimcomma($_POST ["district"]));
 $updateinfoset [] = "district = " . sqlesc($district);

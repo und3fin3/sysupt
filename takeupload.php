@@ -45,13 +45,15 @@ if (get_user_class() >= $beanonymous_class && $_POST ['uplver'] == 'yes') { // $
     $anon = "用户 " . $CURUSER ["username"];
 }
 // 禁转&TJUPT小组作品
-if (get_user_class() >= UC_UPLOADER) {
+if (false && get_user_class() >= UC_UPLOADER) {
     $exclusive = $_POST ['exclusive'] ? "yes" : "no";
     $tjuptrip = $_POST ['tjuptrip'] ? "yes" : "no";
 }
 
 $url = parse_imdb_id($_POST ['url']);
-
+if ($url == '') {
+	$url = 0;
+}
 $nfo = '';
 if ($enablenfo_main == 'yes') { // NFO文件
     $nfofile = $_FILES ['nfo'];
@@ -481,6 +483,7 @@ if (!count($errfile)) {
     if (!$ret) {
         if (mysql_errno() == 1062)
             bark('(2)' . $lang_takeupload ['std_torrent_existed']);
+        bark("mysql puked: " . mysql_error());
     }
     $id = mysql_insert_id();
     if ($sp_state > 7 && $sp_state < 14) {
@@ -502,6 +505,9 @@ $specificcat = (trimcomma($_POST ["specificcat"]));
 $platform = (trimcomma($_POST["platform"]));
 $issuedate = (trimcomma($_POST ["issuedate"]));
 $subsinfo = (trimcomma($_POST ["subsinfo"]));
+if ($subsinfo == '') {
+	$subsinfo = 0;
+}
 $district = (trimcomma($_POST ["district"]));
 $format = (trimcomma($_POST ["format"]));
 $language = (trimcomma($_POST ["language"]));
