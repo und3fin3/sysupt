@@ -23,27 +23,29 @@ The site is running on Debian 10.2.0, nginx 1.17.6, php-fpm 7.4, MySQL 8.0
 
 Please setup the environment before running this site.
 
-Refer to the end of this README for commands.
+### 0. INSTALL PACKAGES
 
-### 1.Change permission of config
+**Refer to the end of this README for package installation.**
+
+### 1. Change permission of config
 ```bash
 chmod -R 777 config torrents bitbucket attachments douban/cache subs
 ```
-### 2.Create Database
+### 2. Create Database
 **Please use Mysql/MariaDB and DISABLE NO_ZERO_DATE, NO_ZERO_IN_DATE AND STRICT_TRANS_TABLES in `sql_mode`!**<br>
 ```bash
 source sql/pt.sql
 source sql/data.sql
 ```
-### 3.Install required package
+### 3. Install required package
 You can find required ext in `composer.json`, enable them in `php.ini`.
 ```bash
 composer install
 ```
-### 4.Edit allconfig.php
+### 4. Edit allconfig.php
 Copy *config/example.allconfig.php* to *config/allconfig.php*,<br/>
 Edit BASIC array, which contains mysql configure.<br>
-### 5.Something you need edit
+### 5. Something you need edit
 Please edit the argument *domain*(.tjupt.org) to your domain name or just delete it in function logincookie(), set_langfolder_cookie() and logoutcookie() (You can find them in include/functions.php), otherwise you will not be able to log in.<br>
 In vim, you can use this command:
 ```bash
@@ -52,7 +54,7 @@ vim include/functions.php
 ```
 
 And there're some edits in tracker(announce.php) for SYSUPT's network environment. You should edit it too. 
-### 6.Login
+### 6. Login
 Username: NexusPHP<br/>
 Password: nexusphp
 
