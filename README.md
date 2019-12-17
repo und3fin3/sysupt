@@ -17,6 +17,12 @@ By the license, using these code is your privilege, but we also recommended you 
 
 ## Build Manual
 
+### Prerequisite
+
+The site is running on Debian 10.2.0, nginx 1.17.6, php-fpm 7.4, MySQL 8.0
+
+Please setup the environment before running this site.
+
 ### 1.Change permission of config
 ```bash
 chmod -R 777 config torrents bitbucket attachments douban/cache subs
