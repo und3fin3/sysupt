@@ -673,7 +673,7 @@ function quick_reply_to(username)
 	<form action=viewrequests.php method=post>
 	<input type=hidden name=action value=takeres />
 	<input type=hidden name=reqid value=\"" . $_GET ["id"] . "\" />
-	请输入种子的id:<br/>https://tjupt.org/details.php?id=<input type=text name=torrentid size=11/><br/>
+	请输入种子的id:<br/>https://sysupt.org/details.php?id=<input type=text name=torrentid size=11/><br/>
 	<input type=submit value=提交 >&nbsp;&nbsp;&nbsp;&nbsp;<input type=button onclick=\"location.href='javascript:history.go(-1)'\" value=\"返回\" ></form>", 0);
 
                 stdfoot();

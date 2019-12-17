@@ -201,7 +201,7 @@ else {
                 tr($lang_upload['row_show_uploader'], "<input type=\"checkbox\" name=\"uplver\" value=\"yes\" />" . $lang_upload['checkbox_hide_uploader_note'], 1);
             }
             if (get_user_class() >= UC_UPLOADER) {
-                tr($lang_upload['row_feature'], "<input type = \"checkbox\" name = \"exclusive\" value = \"yes\" />" . $lang_upload ['checkbox_exclusive'] . "&nbsp;&nbsp;&nbsp;" . "<input type = \"checkbox\" name = \"tjuptrip\" value = \"yes\" />" . $lang_upload ['checkbox_tjuptrip'], 1);
+                tr($lang_upload['row_feature'], "<input type = \"checkbox\" name = \"exclusive\" value = \"yes\" />" . $lang_upload ['checkbox_exclusive'] . "&nbsp;&nbsp;&nbsp;" . "<input type = \"checkbox\" name = \"sysuptrip\" value = \"yes\" />" . $lang_upload ['checkbox_sysuptrip'], 1);
             }
             ?>
             <tr>

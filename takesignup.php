@@ -129,7 +129,7 @@ if (mysql_num_rows($res_check_user) == 1)
 $ret = sql_query("INSERT INTO users (username, passhash, secret, editsecret, email, country, gender, status, class, invites, " . ($type == 'invite' ? "invited_by," : "") . " added, last_access, ip, lang, stylesheet" . ($showschool == 'yes' ? ", school" : "") . ", uploaded) VALUES (" . $wantusername . "," . $wantpasshash . "," . $secret . "," . $editsecret . "," . $email . "," . $country . "," . $gender . ", 'pending', " . $defaultclass_class . "," . $invite_count . ", " . ($type == 'invite' ? "'$inviter'," : "") . " '" . date("Y-m-d H:i:s") . "' , " . " '" . date("Y-m-d H:i:s") . "' , " . " '" . getip() . "' , " . $sitelangid . "," . $defcss . ($showschool == 'yes' ? "," . $school : "") . "," . ($iniupload_main > 0 ? $iniupload_main : 0) . ")") or sqlerr(__FILE__, __LINE__);
 $id = mysql_insert_id();
 if ($type == 'invite') sql_query("DELETE FROM invites WHERE hash = '" . mysql_real_escape_string($code) . "'");
-if ($inviter == 9 && $_SERVER['HTTP_USERNAME'] && $_SERVER['HTTP_INSTITUTION']) sql_query("INSERT INTO carsimapping (tjuptid, username, institution) VALUES($id,'" . $_SERVER['HTTP_USERNAME'] . "','" . $_SERVER['HTTP_INSTITUTION'] . "')") or sqlerr(__FILE__, __LINE__);
+if ($inviter == 9 && $_SERVER['HTTP_USERNAME'] && $_SERVER['HTTP_INSTITUTION']) sql_query("INSERT INTO carsimapping (sysuptid, username, institution) VALUES($id,'" . $_SERVER['HTTP_USERNAME'] . "','" . $_SERVER['HTTP_INSTITUTION'] . "')") or sqlerr(__FILE__, __LINE__);
 sql_query("INSERT INTO iplog (ip, userid, access) VALUES('" . getip() . "' , $id,'" . date("Y-m-d H:i:s") . "')") or sqlerr(__FILE__, __LINE__);
 //delete confirmed invitee's hash code from table invites
 $dt = sqlesc(date("Y-m-d H:i:s"));

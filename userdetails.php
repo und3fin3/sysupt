@@ -312,7 +312,7 @@ if ($CURUSER['id'] == $user['id'] || get_user_class() >= $cruprfmanage_class)
             $try = sql_query("SELECT * FROM carsi_schools WHERE idp = '" . $institution . "' ");
             $schools = mysql_fetch_assoc($try);
             if (!$schools) $schools['school'] = $institution;
-            $res = sql_query("SELECT * FROM carsimapping WHERE tjuptid = " . $CURUSER["id"] . " and username = '" . $username . "' and institution = '" . $institution . "'") or sqlerr();
+            $res = sql_query("SELECT * FROM carsimapping WHERE sysuptid = " . $CURUSER["id"] . " and username = '" . $username . "' and institution = '" . $institution . "'") or sqlerr();
             $bindbutton = "<span id=\"alreadybinded\" style=\"display: none;\"><input class=\"btn\" type=\"button\" value=\"" . $lang_userdetails['alreadybindedbutton'] . "\" disabled=\"disabled\" /></span><span id=\"bindspan\"><input  type=\"button\" id=\"bindcarsi\"  onclick=\"bindcarsi(" . $CURUSER["id"] . ",'" . $username . "','" . $institution . "');\"  value=\"" . $lang_userdetails['bind'] . "\"></span>";
             $unbindbutton = "<span id=\"alreadyunbinded\" style=\"display: none;\"><input class=\"btn\" type=\"button\" value=\"" . $lang_userdetails['alreadyunbindedbutton'] . "\" disabled=\"disabled\" /></span><span id=\"bindspan\"><input  type=\"button\" id=\"bindcarsi\"  onclick=\"unbindcarsi(" . $CURUSER["id"] . ",'" . $username . "','" . $institution . "');\"  value=\"" . $lang_userdetails['unbind'] . "\"></span>";
             if (mysql_num_rows($res) > 0)

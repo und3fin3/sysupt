@@ -9,7 +9,7 @@ header("Pragma: no-cache");
 header("Content-Type: text/xml; charset=utf-8");
 global $CURUSER;
 
-$tjupt_famousname = array(
+$sysupt_famousname = array(
     "北洋媛" => $CURUSER ["username"],
     "游客" => "游客",
     "4舰" => "4thfleet",
@@ -141,9 +141,9 @@ if (isset ($_POST ['str']) && $_POST ['str'] != '') {
         }
 
         if (!$result || count($result) < 5) {
-            if ($tjupt_famousname [$searchstr]) {
+            if ($sysupt_famousname [$searchstr]) {
                 $result [] = array(
-                    'username' => $tjupt_famousname [$searchstr],
+                    'username' => $sysupt_famousname [$searchstr],
                     'usertitle' => $_POST ['str'] . "被推倒了~"
                 );
             }

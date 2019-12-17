@@ -247,11 +247,11 @@ function formatUrl($url, $newWindow = false, $text = '', $linkClass = '')
             $text = $url;
         }
         $url_host = strtolower(parse_url($url, PHP_URL_HOST));
-        $host_whitelist = ['www.tjupt.org', 'tjupt.org', NULL];
+        $host_whitelist = ['www.sysupt.org', 'sysupt.org', NULL];
         if (!in_array($url_host, $host_whitelist)) {
             return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"$url\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">站外链接 :: $text</a>");
         }
-        $url = preg_replace('/(https?:\/\/)?(www.)?tjupt.org\//i', '', $url);
+        $url = preg_replace('/(https?:\/\/)?(www.)?sysupt.org\//i', '', $url);
         return addTempCode("<a" . ($linkClass ? " class=\"$linkClass\"" : '') . " href=\"$url\"" . ($newWindow == true ? " target=\"_blank\"" : "") . ">$text</a>");
     }
 }
@@ -2717,7 +2717,7 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
         <script type="text/javascript" src="/js/fadomatic.js<?php echo $cssupdatedate ?>"></script>
         <script type="text/javascript" src="/js/client.js<?php echo $cssupdatedate ?>"></script>
         <script type="text/javascript" src="/js/jquery-1.8.0.min.js<?php echo $cssupdatedate ?>"></script>
-        <script type="text/javascript" src="/js/tjuptfunctions.js<?php echo $cssupdatedate ?>"></script>
+        <script type="text/javascript" src="/js/sysuptfunctions.js<?php echo $cssupdatedate ?>"></script>
         <?php
         if ($_SERVER ['PHP_SELF'] == "/edit.php" || $_SERVER ['PHP_SELF'] == "/details.php" || $_SERVER ['PHP_SELF'] == "/mybonusapps.php" || $_SERVER ['PHP_SELF'] == "/mybonus.php" || $_SERVER ['PHP_SELF'] == "/app_luckydraw.php" || $_SERVER ['PHP_SELF'] == "/manage.php" || $_SERVER ['PHP_SELF'] == "/jc_currentbet_L.php") {
             echo '<link rel="stylesheet" href="js/jquery-ui-css/jquery-ui-1.8.23.custom.css" /><script type="text/javascript" src="js/jquery-ui-1.8.23.custom.min.js"></script><link rel="stylesheet" href="styles/jquery-ui.css" /><script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>';
@@ -3082,7 +3082,7 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                     $year = substr($datefounded, 0, 4);
                     $yearfounded = ($year ? $year : 2007);
                     print (" (c) " . " <a href=\"" . get_protocol_prefix() . $BASEURL . "\" target=\"_self\">" . $SITENAME . "</a> " . ($icplicense_main ? " " . $icplicense_main . " " : "") . (date("Y") != $yearfounded ? $yearfounded . "-" : "") . date("Y") . " " . VERSION . "<br /><br />");
-                    print ("TJUPT Version: <a href='https://github.com/zcqian/tjupt'>tjupt-git-master</a><br /><br />");
+                    print ("SYSUPT Version: <a href='https://github.com/zcqian/sysupt'>sysupt-git-master</a><br /><br />");
                     print ("All rights reserved. {$SITENAME}版权所有<br /><br />");
                     printf("[page created in <b> %f </b> sec", $totaltime);
                     print (" with <b>" . count($query_name) . "</b> db queries, <b>" . $Cache->getCacheReadTimes() . "</b> reads and <b>" . $Cache->getCacheWriteTimes() . "</b> writes of memcached and <b>" . mksize(memory_get_usage()) . "</b> ram]");
@@ -3860,7 +3860,7 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
             print ("<b> (<font class='new'>" . $lang_functions ['text_new_uppercase'] . "</font>)</b>");
 
         $banned_torrent = ($row ["banned"] == 'yes' ? "<font class=\"tag tag-banned\">" . $lang_functions ['text_banned'] . "</font>" : "");
-        $exclusive_and_tjuptrip_note = ($row ["tjuptrip"] == 'yes' ? "<font class=\"tag tag-tjupt\">" . $lang_functions['text_tjuptrip'] . "</font>" : "") . ($row ["exclusive"] == 'yes' ? "<font class=\"tag tag-exclusive\">" . $lang_functions['text_exclusive'] . "</font>" : "");
+        $exclusive_and_sysuptrip_note = ($row ["sysuptrip"] == 'yes' ? "<font class=\"tag tag-sysupt\">" . $lang_functions['text_sysuptrip'] . "</font>" : "") . ($row ["exclusive"] == 'yes' ? "<font class=\"tag tag-exclusive\">" . $lang_functions['text_exclusive'] . "</font>" : "");
         if ($displaysmalldescr) {
             // small descr
             $dissmall_descr = trim($row ["small_descr"]);
@@ -3939,7 +3939,7 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
         print("</tr><tr>");
         print("<td class='embedded' align='left'></td>");
         print("<td class='embedded' align='center'>");
-        print ("<div id='tag' class='tag-group'>" . $exclusive_and_tjuptrip_note . $keepseed_tag . $picked_torrent . $banned_torrent . "</div>");
+        print ("<div id='tag' class='tag-group'>" . $exclusive_and_sysuptrip_note . $keepseed_tag . $picked_torrent . $banned_torrent . "</div>");
         print($torrent_conn_status);
         print("</td><td class='embedded' align='right'>{$imdb_row}</td>");
 

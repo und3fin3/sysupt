@@ -2,11 +2,11 @@
  * Ajax用户注册验证 JS
  * $Author: Sunday & luck $
  * Download from the Internet 
- * Edit for TJUPT by bmilk@TJUPT 
+ * Edit for SYSUPT by bmilk@SYSUPT 
  * $Date: 2013-03-16 11:15:00 +0800  $
 */
 
-//本来打算用Ajax异步验证，但是调试失败，待更正  bmilk@TJUPT 20130316
+//本来打算用Ajax异步验证，但是调试失败，待更正  bmilk@SYSUPT 20130316
 //XMLHttpRequest 
 	var xmlhttp = false;
 	try {

@@ -11,7 +11,7 @@ dbconn();
 global $youzan_client_id, $youzan_client_secret;
 $request = file_get_contents('php://input');
 echo json_encode(['code' => 0, 'msg' => 'success']);
-file_put_contents('/var/log/tjupt/pay.log', $request . PHP_EOL, FILE_APPEND);
+file_put_contents('/var/log/sysupt/pay.log', $request . PHP_EOL, FILE_APPEND);
 $request = json_decode($request, true);
 if (empty($request) || !isset($request['kdt_id']) || !isset($request['id']) || !isset($request['status']) || !isset($request['sign'])) {
     // hack

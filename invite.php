@@ -197,7 +197,7 @@ if ($type == 'new') {
 
             print("<tr><td class=rowfollow>$arr1[invitee]<td class=rowfollow>");
 
-            print("<a class='to_clipboard' title=\"https://tjupt.org/signup/signup?code={$arr1['hash']}\" href=\"\" onclick='return false' data-clipboard-text='https://tjupt.org/signup/signup?code={$arr1['hash']}'>" . $arr1['hash'] . "</a></td><td class=rowfollow>$arr1[time_invited]</td></tr>");
+            print("<a class='to_clipboard' title=\"https://sysupt.org/signup/signup?code={$arr1['hash']}\" href=\"\" onclick='return false' data-clipboard-text='https://sysupt.org/signup/signup?code={$arr1['hash']}'>" . $arr1['hash'] . "</a></td><td class=rowfollow>$arr1[time_invited]</td></tr>");
         }
     }
     print("</table>");

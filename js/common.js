@@ -507,12 +507,12 @@ else
 }
 
 function bindcarsi(ptid, username, institution){
-	var list=ajax.posts('bindcarsi.php','tjuptid=' + ptid + '&username=' + username + '&institution=' + institution );
+	var list=ajax.posts('bindcarsi.php','sysuptid=' + ptid + '&username=' + username + '&institution=' + institution );
 	document.getElementById("bindspan").innerHTML = document.getElementById("alreadybinded").innerHTML;
 }
 
 function unbindcarsi(ptid, username, institution){
-	var list=ajax.posts('unbindcarsi.php','tjuptid=' + ptid + '&username=' + username + '&institution=' + institution );
+	var list=ajax.posts('unbindcarsi.php','sysuptid=' + ptid + '&username=' + username + '&institution=' + institution );
 	document.getElementById("bindspan").innerHTML = document.getElementById("alreadyunbinded").innerHTML;
 }
 

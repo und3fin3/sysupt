@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 数据库： `tjupt`
+-- 数据库： `sysupt`
 --
 
 -- --------------------------------------------------------
@@ -429,7 +429,7 @@ CREATE TABLE `cards` (
 
 CREATE TABLE `carsimapping` (
   `id` mediumint(8) UNSIGNED NOT NULL,
-  `tjuptid` mediumint(10) UNSIGNED NOT NULL,
+  `sysuptid` mediumint(10) UNSIGNED NOT NULL,
   `username` varchar(40) CHARACTER SET utf8 NOT NULL,
   `institution` varchar(40) CHARACTER SET utf8 NOT NULL,
   `remarks` varchar(20) CHARACTER SET utf8 DEFAULT NULL
@@ -2408,7 +2408,7 @@ CREATE TABLE `torrents` (
   `sale_until` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `bonus_sale` enum('2up_free','2x_half','2up','free','half_down','normal') NOT NULL DEFAULT 'normal',
   `exclusive` enum('yes','no') NOT NULL DEFAULT 'no',
-  `tjuptrip` enum('yes','no') NOT NULL DEFAULT 'no',
+  `sysuptrip` enum('yes','no') NOT NULL DEFAULT 'no',
   `connectable` varchar(11) DEFAULT '-/-/-'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2824,7 +2824,7 @@ ALTER TABLE `cards`
 --
 ALTER TABLE `carsimapping`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `tjuptid` (`tjuptid`,`username`,`institution`);
+  ADD KEY `sysuptid` (`sysuptid`,`username`,`institution`);
 
 --
 -- 表的索引 `carsi_invite`
