@@ -94,7 +94,7 @@ if (get_user_class() >= $torrentmanage_class) {
         $updateset [] = "banned = 'no'";
 }
 $updateset [] = "visible = '" . ($_POST ["visible"] ? "yes" : "no") . "'";
-// 禁转&TJUPT作品
+// 禁转&SYSUPT作品
 if (get_user_class() >= UC_UPLOADER) {
     if ($_POST ["exclusive"]) {
         $updateset [] = "exclusive = 'yes'";
@@ -533,7 +533,7 @@ if ($_POST ["exclusive"] && $row ['exclusive'] != 'yes') {
 if ($_POST ["tjuptrip"] && $row ['tjuptrip'] != 'yes') {
     $spstate = "";
     $pick_info = "";
-    $feature_info .= "TJUPT作品";
+    $feature_info .= "SYSUPT作品";
 }
 if ($CURUSER ["id"] == $row ["owner"]) {
     if ($row ["anonymous"] == 'yes') {

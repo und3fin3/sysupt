@@ -3082,7 +3082,7 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                     $year = substr($datefounded, 0, 4);
                     $yearfounded = ($year ? $year : 2007);
                     print (" (c) " . " <a href=\"" . get_protocol_prefix() . $BASEURL . "\" target=\"_self\">" . $SITENAME . "</a> " . ($icplicense_main ? " " . $icplicense_main . " " : "") . (date("Y") != $yearfounded ? $yearfounded . "-" : "") . date("Y") . " " . VERSION . "<br /><br />");
-                    print ("TJUPT Version: <a href='https://github.com/zcqian/tjupt'>tjupt-git-master</a><br /><br />");
+                    print ("SYSUPT Version: <a href='https://github.com/sysu-ipv6/sysupt'>sysupt-git-master</a><br /><br />");
                     print ("All rights reserved. {$SITENAME}版权所有<br /><br />");
                     printf("[page created in <b> %f </b> sec", $totaltime);
                     print (" with <b>" . count($query_name) . "</b> db queries, <b>" . $Cache->getCacheReadTimes() . "</b> reads and <b>" . $Cache->getCacheWriteTimes() . "</b> writes of memcached and <b>" . mksize(memory_get_usage()) . "</b> ram]");

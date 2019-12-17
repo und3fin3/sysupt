@@ -151,7 +151,7 @@ $AUTHORITY=array(
 );
 $BASIC=array(
     // todo: edit this all
-    'SITENAME' => 'TJUPT',
+    'SITENAME' => 'SYSUPT',
     'BASEURL' => 'SITE_BASE_URL',
     'announce_url' => 'TRACKER_URL/announce.php',
     'multi_tracker_behaviour' => 'separate',
@@ -200,7 +200,7 @@ $CODE=array(
     'mainversion' => 'NexusPHP',
     'subversion' => 'Standard v1.5 Beta 4',
     'releasedate' => '2010-06-15',
-    'website' => '<a href="https://github.com/zcqian/tjupt">https://github.com/zcqian/tjupt</a>',
+    'website' => '<a href="https://github.com/sysu-ipv6/sysupt">https://github.com/sysu-ipv6/sysupt</a>',
 );
 $MAIN=array(
     'site_online' => 'yes',
@@ -275,7 +275,7 @@ $MAIN=array(
     'specialcat' => NULL,
     'waitsystem' => 'no',
     'bitbucket' => 'bitbucket',
-    'torrentnameprefix' => '[TJUPT]',
+    'torrentnameprefix' => '[SYSUPT]',
     'showforumstats' => 'yes',
     'verification' => 'email',
     'invite_count' => '0',
@@ -354,7 +354,7 @@ $TWEAK=array(
     'enablelocation' => 'no',
     'titlekeywords' => '',
     'metakeywords' => 'PT 校园 资源',
-    'metadescription' => 'TJUPT',
+    'metadescription' => 'SYSUPT',
     'enablesqldebug' => 'yes',
     'sqldebug' => '15',
     'cssdate' => '',

@@ -44,7 +44,7 @@ if (get_user_class() >= $beanonymous_class && $_POST ['uplver'] == 'yes') { // $
     $anonymous = "no";
     $anon = "用户 " . $CURUSER ["username"];
 }
-// 禁转&TJUPT小组作品
+// 禁转&SYSUPT小组作品
 if (false && get_user_class() >= UC_UPLOADER) {
     $exclusive = $_POST ['exclusive'] ? "yes" : "no";
     $tjuptrip = $_POST ['tjuptrip'] ? "yes" : "no";
@@ -166,16 +166,16 @@ $dict['info']['private'] = 1;
 // Remove un-need field in the torrent
 if ($dict['created by'] == "hdchina.org") {
     $dict['created by'] = "[$BASEURL]";
-    $dict['comment'] = "Torrent From TJUPT";
+    $dict['comment'] = "Torrent From SYSUPT";
 }
 if ($dict['created by'] == "http://cgbt.org") {
     $dict['created by'] = "[$BASEURL]";
-    $dict['comment'] = "Torrent From TJUPT";
+    $dict['comment'] = "Torrent From SYSUPT";
 }
 if (isset ($dict['info']['ttg_tag'])) {
     unset ($dict['info']['ttg_tag']);
     $dict['created by'] = "[$BASEURL]";
-    $dict['comment'] = "Torrent From TJUPT";
+    $dict['comment'] = "Torrent From SYSUPT";
 }
 // The following line requires uploader to re-download torrents after uploading
 // even the torrent is set as private and with uploader's passkey in it.
@@ -401,7 +401,7 @@ if ($largesize_torrent && $totallen > ($largesize_torrent * 1073741824)) // Larg
 }
 if ($catid == 404)
     $sp_state = 11; // 资料类特殊优惠
-// TJUPT作品优惠
+// SYSUPT作品优惠
 $pos_until = "0000-00-00 00:00:00";
 $pos_state = 'normal';
 if ($tjuptrip == 'yes') {
@@ -750,7 +750,7 @@ if ($nameset != "") {
 }
 /* Shut up!
 if ($tjuptrip == 'yes') {
-    $pre_to_shoutbox ['text'] = "TJUPT小组作品[b][color=red]" . $nameset . "[/color][/b]发布啦：[url=details.php?id=" . mysql_real_escape_string($id) . "&hit=1]大家这里使劲戳[/url]";
+    $pre_to_shoutbox ['text'] = "SYSUPT小组作品[b][color=red]" . $nameset . "[/color][/b]发布啦：[url=details.php?id=" . mysql_real_escape_string($id) . "&hit=1]大家这里使劲戳[/url]";
     $pre_to_shoutbox ['type'] = "sb";
     $pre_to_shoutbox ['ip'] = "北洋媛隐身啦～啦啦啦～";
     sql_query("INSERT INTO shoutbox (userid, date, text, type, ip) VALUES (0, " . sqlesc(time()) . ", " . sqlesc($pre_to_shoutbox ['text']) . ", " . sqlesc($pre_to_shoutbox ['type']) . ", '$pre_to_shoutbox[ip]' )") or sqlerr(__FILE__, __LINE__);
