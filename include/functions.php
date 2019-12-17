@@ -2783,7 +2783,7 @@ function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
                 if (!$CURUSER) {
                     ?>
                     <a href="login.php"><font class="big"><b><?php echo $lang_functions['text_login'] ?></b></font></a>
-                    / <a href="signup/signup"><font class="big"><b><?php echo $lang_functions['text_signup'] ?></b></font></a>
+                    / <a href="signup.php"><font class="big"><b><?php echo $lang_functions['text_signup'] ?></b></font></a>
                     <?php
                 } else {
                 begin_main_frame();
@@ -3150,22 +3150,22 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                     if ($expires != 0x7fffffff && $expires != 0)
                         $expires = time() + $expires;
 
-                    setcookie("c_secure_uid", base64($id), $expires, "/", ".tjupt.org");
-                    setcookie("c_secure_pass", $passhash, $expires, "/", ".tjupt.org");
+                    setcookie("c_secure_uid", base64($id), $expires, "/");
+                    setcookie("c_secure_pass", $passhash, $expires, "/");
                     if ($ssl)
-                        setcookie("c_secure_ssl", base64("yeah"), $expires, "/", ".tjupt.org");
+                        setcookie("c_secure_ssl", base64("yeah"), $expires, "/");
                     else
-                        setcookie("c_secure_ssl", base64("nope"), $expires, "/", ".tjupt.org");
+                        setcookie("c_secure_ssl", base64("nope"), $expires, "/");
 
                     if ($trackerssl)
-                        setcookie("c_secure_tracker_ssl", base64("yeah"), $expires, "/", ".tjupt.org");
+                        setcookie("c_secure_tracker_ssl", base64("yeah"), $expires, "/");
                     else
-                        setcookie("c_secure_tracker_ssl", base64("nope"), $expires, "/", ".tjupt.org");
+                        setcookie("c_secure_tracker_ssl", base64("nope"), $expires, "/");
 
                     if ($securelogin)
-                        setcookie("c_secure_login", base64("yeah"), $expires, "/", ".tjupt.org");
+                        setcookie("c_secure_login", base64("yeah"), $expires, "/");
                     else
-                        setcookie("c_secure_login", base64("nope"), $expires, "/", ".tjupt.org");
+                        setcookie("c_secure_login", base64("nope"), $expires, "/");
 
                     if ($updatedb)
                         sql_query("UPDATE users SET last_login = NOW(), lang=" . sqlesc(get_langid_from_langcookie()) . " WHERE id = " . sqlesc($id));
@@ -3176,7 +3176,7 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                     if ($expires != 0x7fffffff)
                         $expires = time() + $expires;
 
-                    setcookie("c_lang_folder", $folder, $expires, "/", ".tjupt.org");
+                    setcookie("c_lang_folder", $folder, $expires, "/");
                 }
 
                 function get_protocol_prefix()
@@ -3212,11 +3212,11 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
 
                 function logoutcookie()
                 {
-                    setcookie("c_secure_uid", "", 0x7fffffff, "/", ".tjupt.org");
-                    setcookie("c_secure_pass", "", 0x7fffffff, "/", ".tjupt.org");
+                    setcookie("c_secure_uid", "", 0x7fffffff, "/");
+                    setcookie("c_secure_pass", "", 0x7fffffff, "/");
                     // setcookie("c_secure_ssl", "", 0x7fffffff, "/");
-                    setcookie("c_secure_tracker_ssl", "", 0x7fffffff, "/", ".tjupt.org");
-                    setcookie("c_secure_login", "", 0x7fffffff, "/", ".tjupt.org");
+                    setcookie("c_secure_tracker_ssl", "", 0x7fffffff, "/");
+                    setcookie("c_secure_login", "", 0x7fffffff, "/");
                     // setcookie("c_lang_folder", "", 0x7fffffff, "/");
                 }
 

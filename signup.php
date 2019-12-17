@@ -1,6 +1,6 @@
 ﻿<?php
 // Deprecated
-die();
+// die();
 require_once("include/bittorrent.php");
 require_once("include/tjuip_helper.php");
 dbconn();

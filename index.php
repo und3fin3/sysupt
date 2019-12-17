@@ -81,11 +81,7 @@ while ($Cache->next_row()) {
 echo $Cache->next_row();
 // ------------- end: recent news ------------------//
 ?>
-<td width="25%" valign="top">
-    <iframe height="500" class="share_self"
-            frameborder="0" scrolling="no"
-            src="https://widget.weibo.com/weiboshow/index.php?width=0&height=500&fansRow=2&ptype=1&speed=0&skin=2&isTitle=0&noborder=1&isWeibo=1&isFans=0&uid=2308910882&verifier=fe26ef74"></iframe>
-</td>
+
 </tr>
 </table>
 <?php
