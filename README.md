@@ -23,6 +23,8 @@ The site is running on Debian 10.2.0, nginx 1.17.6, php-fpm 7.4, MySQL 8.0
 
 Please setup the environment before running this site.
 
+Refer to the end of this README for commands.
+
 ### 1.Change permission of config
 ```bash
 chmod -R 777 config torrents bitbucket attachments douban/cache subs
@@ -53,3 +55,38 @@ And there're some edits in tracker(announce.php) for SYSUPT's network environmen
 ### 6.Login
 Username: NexusPHP<br/>
 Password: nexusphp
+
+
+## Appendix
+
+The following commands are used to setup production environment on a Debian 10.2 VM.
+
+```bash
+# Install essential packages
+sudo apt -y install lsb-release apt-transport-https ca-certificates git build-essential curl gnupg2 gcc make autoconf libc-dev pkg-config zlib1g-dev libmemcached-dev
+
+# Install PHP 7.4
+sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+sudo apt update
+sudo apt install php7.4-{common,mysql,xml,xmlrpc,curl,gd,imagick,cli,dev,imap,mbstring,opcache,soap,zip,intl,bcmath,fpm} -y
+
+# Install Composer
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('sha384', 'composer-setup.php') === 'baf1608c33254d00611ac1705c1d9958c817a1a33bce370c0595974b342601bd80b92a3f46067da89e3b06bff421f182') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+sudo mv composer.phar /usr/local/bin/composer
+composer install
+
+# Install nginx 1.17.6
+echo "deb http://nginx.org/packages/mainline/debian `lsb_release -cs` nginx"     | sudo tee /etc/apt/sources.list.d/nginx.list
+sudo apt update
+sudo apt install nginx
+
+# Install MySQL 8.0
+wget https://repo.mysql.com//mysql-apt-config_0.8.13-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.13-1_all.deb
+sudo apt update
+sudo apt -y install mysql-server
+```
