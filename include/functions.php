@@ -2609,7 +2609,7 @@ function get_cat_folder($cat = 101)
     return $catPath [$cat];
 }
 
-function stdhead($title = "", $msgalert = true, $script = "", $place = "") {
+function stdhead($title = "", $varmsgalert = true, $script = "", $place = "") {
     global $lang_functions;
     global $CURUSER, $CURLANGDIR, $USERUPDATESET, $iplog1, $oldip, $SITE_ONLINE, $FUNDS, $SITENAME, $SLOGAN, $logo_main, $logo_url, $BASEURL, $offlinemsg, $showversion, $enabledonation, $staffmem_class, $titlekeywords_tweak, $metakeywords_tweak, $metadescription_tweak, $cssdate_tweak, $deletenotransfertwo_account, $neverdelete_account, $iniupload_main, $enable_public_ipv4;
     global $tstart;
@@ -2959,7 +2959,7 @@ print (" <a href=\"getrss.php\"><img class=\"rss\" alt=\"RSS\" title=\"" . $lang
                     if ($belownavad)
                         echo "<div align=\"center\" style=\"margin-bottom: 10px\" id=\"ad_belownav\">" . $belownavad [0] . "</div>";
                 }
-                if ($msgalert) {
+                if ($varmsgalert) {
                     function msgalert($url, $text, $bgcolor = "red")
                     {
                         print ("<p><table border=\"0\" cellspacing=\"0\" cellpadding=\"10\"><tr><td style='border: none; padding: 10px; background: " . $bgcolor . "'>\n");
