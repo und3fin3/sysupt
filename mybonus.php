@@ -166,7 +166,7 @@ function bonusarray($option)
                 $bonus ['art'] = 'enableaccount';
                 $bonus ['menge'] = 0;
                 $bonus ['name'] = "21周";
-                $bonus ['description'] = "传统的21周游戏,您要上学足够接近21周，和对手对抗。<br />A在总周数不超过21时作11，总周数超过21则作1。J,Q,K作为10。";
+                $bonus ['description'] = "传统的21周游戏,您要上学足够接近21周，和罗俊对抗。<br />A在总周数不超过21时作11，总周数超过21则作1。J,Q,K作为10。";
                 break;
             }
 
