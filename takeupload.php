@@ -44,10 +44,10 @@ if (get_user_class() >= $beanonymous_class && $_POST ['uplver'] == 'yes') { // $
     $anonymous = "no";
     $anon = "用户 " . $CURUSER ["username"];
 }
-// 禁转&SYSUPT小组作品
+// 禁转&TJUPT小组作品
 if (false && get_user_class() >= UC_UPLOADER) {
     $exclusive = $_POST ['exclusive'] ? "yes" : "no";
-    $sysuptrip = $_POST ['sysuptrip'] ? "yes" : "no";
+    $tjuptrip = $_POST ['tjuptrip'] ? "yes" : "no";
 }
 
 $url = parse_imdb_id($_POST ['url']);
@@ -166,16 +166,16 @@ $dict['info']['private'] = 1;
 // Remove un-need field in the torrent
 if ($dict['created by'] == "hdchina.org") {
     $dict['created by'] = "[$BASEURL]";
-    $dict['comment'] = "Torrent From SYSUPT";
+    $dict['comment'] = "Torrent From TJUPT";
 }
 if ($dict['created by'] == "http://cgbt.org") {
     $dict['created by'] = "[$BASEURL]";
-    $dict['comment'] = "Torrent From SYSUPT";
+    $dict['comment'] = "Torrent From TJUPT";
 }
 if (isset ($dict['info']['ttg_tag'])) {
     unset ($dict['info']['ttg_tag']);
     $dict['created by'] = "[$BASEURL]";
-    $dict['comment'] = "Torrent From SYSUPT";
+    $dict['comment'] = "Torrent From TJUPT";
 }
 // The following line requires uploader to re-download torrents after uploading
 // even the torrent is set as private and with uploader's passkey in it.
@@ -401,10 +401,10 @@ if ($largesize_torrent && $totallen > ($largesize_torrent * 1073741824)) // Larg
 }
 if ($catid == 404)
     $sp_state = 11; // 资料类特殊优惠
-// SYSUPT作品优惠
+// TJUPT作品优惠
 $pos_until = "0000-00-00 00:00:00";
 $pos_state = 'normal';
-if ($sysuptrip == 'yes') {
+if ($tjuptrip == 'yes') {
     $sp_state = 2;
     $pos_state = 'double_sticky';
     $pos_until = date("Y-m-d H:i:s", strtotime("+1 days"));
@@ -479,7 +479,7 @@ if (!count($errfile)) {
     if ($arr = mysql_fetch_row($exist_hash)) {
         stderr($lang_takeupload ['std_upload_failed'], $lang_takeupload ['std_torrent_existed'] . "<a href='details.php?id=" . $arr[0] . "&hit=1'><b>点此进入种子页</b></a>", false);
     }
-    $ret = sql_query("INSERT INTO torrents (filename, owner, visible, anonymous, name, size, numfiles, type, url, small_descr, descr, ori_descr, category, source, medium, codec, audiocodec, standard, processing, team, save_as, sp_state, added, sp_time, last_action, nfo, info_hash, exclusive, sysuptrip, pos_state, pos_state_until) VALUES (" . sqlesc($fname) . ", " . sqlesc($CURUSER ["id"]) . ", 'yes', " . sqlesc($anonymous) . ", " . sqlesc($torrent) . ", " . sqlesc($totallen) . ", " . count($filelist) . ", " . sqlesc($type) . ", " . sqlesc($url) . ", " . sqlesc($small_descr) . ", " . sqlesc($descr) . ", " . sqlesc($descr) . ", " . sqlesc($catid) . ", " . sqlesc($sourceid) . ", " . sqlesc($mediumid) . ", " . sqlesc($codecid) . ", " . sqlesc($audiocodecid) . ", " . sqlesc($standardid) . ", " . sqlesc($processingid) . ", " . sqlesc($teamid) . ", " . sqlesc($dname) . ", " . sqlesc($sp_state) . ", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc($nfo) . ", " . sqlesc($infohash) . ", " . sqlesc($exclusive) . ", " . sqlesc($sysuptrip) . ", " . sqlesc($pos_state) . ", " . sqlesc($pos_until) . ")");
+    $ret = sql_query("INSERT INTO torrents (filename, owner, visible, anonymous, name, size, numfiles, type, url, small_descr, descr, ori_descr, category, source, medium, codec, audiocodec, standard, processing, team, save_as, sp_state, added, sp_time, last_action, nfo, info_hash, exclusive, tjuptrip, pos_state, pos_state_until) VALUES (" . sqlesc($fname) . ", " . sqlesc($CURUSER ["id"]) . ", 'yes', " . sqlesc($anonymous) . ", " . sqlesc($torrent) . ", " . sqlesc($totallen) . ", " . count($filelist) . ", " . sqlesc($type) . ", " . sqlesc($url) . ", " . sqlesc($small_descr) . ", " . sqlesc($descr) . ", " . sqlesc($descr) . ", " . sqlesc($catid) . ", " . sqlesc($sourceid) . ", " . sqlesc($mediumid) . ", " . sqlesc($codecid) . ", " . sqlesc($audiocodecid) . ", " . sqlesc($standardid) . ", " . sqlesc($processingid) . ", " . sqlesc($teamid) . ", " . sqlesc($dname) . ", " . sqlesc($sp_state) . ", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc(date("Y-m-d H:i:s")) . ", " . sqlesc($nfo) . ", " . sqlesc($infohash) . ", " . sqlesc($exclusive) . ", " . sqlesc($tjuptrip) . ", " . sqlesc($pos_state) . ", " . sqlesc($pos_until) . ")");
     if (!$ret) {
         if (mysql_errno() == 1062)
             bark('(2)' . $lang_takeupload ['std_torrent_existed']);
@@ -749,8 +749,8 @@ if ($nameset != "") {
     sql_query("UPDATE torrents SET name = " . sqlesc($nameset) . $pick . " WHERE id = $id") or sqlerr(__FILE__, __LINE__);
 }
 /* Shut up!
-if ($sysuptrip == 'yes') {
-    $pre_to_shoutbox ['text'] = "SYSUPT小组作品[b][color=red]" . $nameset . "[/color][/b]发布啦：[url=details.php?id=" . mysql_real_escape_string($id) . "&hit=1]大家这里使劲戳[/url]";
+if ($tjuptrip == 'yes') {
+    $pre_to_shoutbox ['text'] = "TJUPT小组作品[b][color=red]" . $nameset . "[/color][/b]发布啦：[url=details.php?id=" . mysql_real_escape_string($id) . "&hit=1]大家这里使劲戳[/url]";
     $pre_to_shoutbox ['type'] = "sb";
     $pre_to_shoutbox ['ip'] = "北洋媛隐身啦～啦啦啦～";
     sql_query("INSERT INTO shoutbox (userid, date, text, type, ip) VALUES (0, " . sqlesc(time()) . ", " . sqlesc($pre_to_shoutbox ['text']) . ", " . sqlesc($pre_to_shoutbox ['type']) . ", '$pre_to_shoutbox[ip]' )") or sqlerr(__FILE__, __LINE__);

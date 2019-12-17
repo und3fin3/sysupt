@@ -111,7 +111,7 @@ $lang_upload = array
 	'refer_yes'=>"引用！",
     'row_feature' => "特性",
     'checkbox_exclusive' => "禁转",
-    'checkbox_sysuptrip' => "SYSUPT小组作品"
+    'checkbox_tjuptrip' => "TJUPT小组作品"
 );
 
 ?>

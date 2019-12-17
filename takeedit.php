@@ -19,7 +19,7 @@ $id = 0 + $id;
 if (!$id)
     die ();
 
-$res = sql_query("SELECT category, owner, pos_state, sp_state, filename, save_as, anonymous, picktype, picktime, name, added, sysuptrip, exclusive FROM torrents WHERE id = " . mysql_real_escape_string($id));
+$res = sql_query("SELECT category, owner, pos_state, sp_state, filename, save_as, anonymous, picktype, picktime, name, added, tjuptrip, exclusive FROM torrents WHERE id = " . mysql_real_escape_string($id));
 $row = mysql_fetch_array($res);
 if (!$row)
     die ();
@@ -94,17 +94,17 @@ if (get_user_class() >= $torrentmanage_class) {
         $updateset [] = "banned = 'no'";
 }
 $updateset [] = "visible = '" . ($_POST ["visible"] ? "yes" : "no") . "'";
-// 禁转&SYSUPT作品
+// 禁转&TJUPT作品
 if (get_user_class() >= UC_UPLOADER) {
     if ($_POST ["exclusive"]) {
         $updateset [] = "exclusive = 'yes'";
     } else {
         $updateset [] = "exclusive = 'no'";
     }
-    if ($_POST ["sysuptrip"]) {
-        $updateset [] = "sysuptrip = 'yes'";
+    if ($_POST ["tjuptrip"]) {
+        $updateset [] = "tjuptrip = 'yes'";
     } else {
-        $updateset [] = "sysuptrip = 'no'";
+        $updateset [] = "tjuptrip = 'no'";
     }
 }
 
@@ -530,10 +530,10 @@ $feature_info = "";
 if ($_POST ["exclusive"] && $row ['exclusive'] != 'yes') {
     $feature_info .= "禁转 ";
 }
-if ($_POST ["sysuptrip"] && $row ['sysuptrip'] != 'yes') {
+if ($_POST ["tjuptrip"] && $row ['tjuptrip'] != 'yes') {
     $spstate = "";
     $pick_info = "";
-    $feature_info .= "SYSUPT作品";
+    $feature_info .= "TJUPT作品";
 }
 if ($CURUSER ["id"] == $row ["owner"]) {
     if ($row ["anonymous"] == 'yes') {

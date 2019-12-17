@@ -62,7 +62,7 @@ $lang_edit = array
 	'text_audio_codec' => "音频编码",
 	'row_content' => "内容",
 	'checkbox_exclusive' => "禁转",
-	'checkbox_sysuptrip' => "SYSUPT小组作品"
+	'checkbox_tjuptrip' => "TJUPT小组作品"
 );
 
 ?>
