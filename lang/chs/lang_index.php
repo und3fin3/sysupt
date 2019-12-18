@@ -72,7 +72,7 @@ $lang_index = array
 	'text_peers_active_now' => "个当前做种或下载的用户。",
 	'text_disclaimer' => "免责条款",
 	'text_disclaimer_content' => "本站列出的文件并没有保存在本站的服务器上。本站仅负责连接，我们对被传播文件的内容一无所知。本站的链接均由用户自发提供。".$SITENAME."的管理员无法对用户的提交内容或其他行为负责。您不能使用".$SITENAME."传播或下载任何您没有使用许可的文件或材料，由此引起的后果由您自己承担。",
-	'text_browser_note' => "获得本站最佳效果，请使用<a href=\"http://windows.microsoft.com/en-US/internet-explorer/downloads/ie-9/worldwide-languages\" target=\"_blank\"><img class=\"ie\" src=\"pic/trans.gif\" alt=\"Internet Explorer 9\" title=\"下载Internet Explorer 9\" /></a>或<a href=\"http://www.mozilla.com/en-US/firefox/\" target=\"_blank\"><img class=\"firefox\" src=\"pic/trans.gif\" alt=\"Firefox\" title=\"下载Firefox\" /></a>且使用大于1024*768的分辨率。推荐BT客户端为 <a href=\"forums.php?action=viewtopic&topicid=15039\" target=\"_blank\"><img class=\"utorrent\" src=\"pic/trans.gif\" alt=\"uTorrent\" title=\"下载uTorrent\" /></a>",
+	'text_browser_note' => "推荐BT客户端为 <a href=\"//downloads/uTorrent-NPUBits-NF.exe\" target=\"_blank\"><img class=\"utorrent\" src=\"pic/trans.gif\" alt=\"uTorrent\" title=\"下载uTorrent\" /></a>",
 	'title_show_or_hide' => "显示/隐藏",
 	'text_links' => "友情链接",
 	'text_manage_links' => "管理链接",
