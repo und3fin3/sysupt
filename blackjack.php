@@ -164,7 +164,7 @@ if ($game) {
                     sql_query("UPDATE users SET seedbonus = seedbonus + ${percent}*$mb, bjwins = bjwins + 1 WHERE id=" . sqlesc($CURUSER['id']));
                     sql_query("UPDATE users SET seedbonus = seedbonus - $mb, bjlosses = bjlosses + 1 WHERE id=" . sqlesc($a['userid']));
                     $msg = sqlesc("[url=blackjack.php]你可以请进这个页面查看你的胜率。[/url]");
-                    $subject = sqlesc("21周的结果 : 输局 (你有 " . $a['points'] . " 点, " . $CURUSER['username'] . " 有 21 周)");
+                    $subject = sqlesc("21周的结果 : 输局 (你有 " . $a['points'] . " 周, " . $CURUSER['username'] . " 有 21 周)");
                 } else {
 
                     $winorlose = "平局";
@@ -204,7 +204,7 @@ if ($game) {
                     sql_query("UPDATE users SET seedbonus = seedbonus + ${percent}*$mb, bjwins = bjwins + 1 WHERE id=" . sqlesc($a['userid']));
                     sql_query("UPDATE users SET seedbonus = seedbonus - $mb, bjlosses = bjlosses + 1 WHERE id=" . sqlesc($CURUSER['id']));
                     $msg = sqlesc("[url=blackjack.php]你可以请进这个页面查看你的胜率。[/url]");
-                    $subject = sqlesc("21周的结果 : 赢局 (你有 " . $a['points'] . " 点, " . $CURUSER['username'] . " 的周数超过 21)");
+                    $subject = sqlesc("21周的结果 : 赢局 (你有 " . $a['points'] . " 周, " . $CURUSER['username'] . " 的周数超过 21)");
                 }
 
                 sql_query("INSERT INTO messages (sender, receiver, added, msg, subject) VALUES(0, " . $a['userid'] . ", $now, $msg, $subject)");
