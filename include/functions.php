@@ -296,7 +296,7 @@ function format_rid($s, $newWindow = false)
                 $Cache->cache_value('req_' . $rid [$i] . '_req_name', $row, 86400);
             }
             if (!$row) {
-                $rname [$i] = formatUrl('#', 0, '北洋媛被耍了！没有ID为' . $rid [$i] . '的求种', 'faqlink');
+                $rname [$i] = formatUrl('#', 0, '吉祥物被耍了！没有ID为' . $rid [$i] . '的求种', 'faqlink');
             } else {
                 $rname [$i] = formatUrl('viewrequests.php?action=view&id=' . $rid [$i], $newWindow == true ? 1 : 0, $row, 'faqlink');
             }
@@ -326,7 +326,7 @@ function format_sid($s, $newWindow = false)
                 $Cache->cache_value('torrent_' . $sid [$i] . '_seed_name', $row, 86400);
             }
             if (!$row) {
-                $sname [$i] = formatUrl('#', 0, '北洋媛被耍了！没有ID为' . $sid [$i] . '的种子', 'faqlink');
+                $sname [$i] = formatUrl('#', 0, '吉祥物被耍了！没有ID为' . $sid [$i] . '的种子', 'faqlink');
             } else {
                 $sname [$i] = formatUrl('details.php?id=' . $sid [$i] . '&hit=1', $newWindow == true ? 1 : 0, $row, 'faqlink');
             }
@@ -357,7 +357,7 @@ function format_tid($s, $newWindow = false)
                 $Cache->cache_value('topic_' . $tid [$i] . '_topic_name', $row, 86400);
             }
             if (!$row) {
-                $tname [$i] = formatUrl('#', 0, '北洋媛被耍了！没有ID为' . $tid [$i] . '的话题', 'faqlink');
+                $tname [$i] = formatUrl('#', 0, '吉祥物被耍了！没有ID为' . $tid [$i] . '的话题', 'faqlink');
             } else {
                 $tname [$i] = formatUrl('forums.php?action=viewtopic&topicid=' . $tid [$i], $newWindow == true ? 1 : 0, $row, 'faqlink');
             }
@@ -395,7 +395,7 @@ function format_pid($s, $newWindow = false)
                 $Cache->cache_value('post_' . $pid [$i] . '_post_id', $tid, 86400);
             }
             if (!$tid || !$row) {
-                $tname [$i] = formatUrl('#', 0, '北洋媛被耍了！没有ID为' . $tid . '=' . $pid [$i] . '的帖子', 'faqlink');
+                $tname [$i] = formatUrl('#', 0, '吉祥物被耍了！没有ID为' . $tid . '=' . $pid [$i] . '的帖子', 'faqlink');
             } else {
                 $res = sql_query("SELECT id FROM posts WHERE topicid=" . $tid . " ORDER BY added") or sqlerr(__FILE__, __LINE__);
                 $q = 1;
@@ -4161,7 +4161,7 @@ function validusername($username)
 
     // allow Chinese
     $allowedchars = "/^([\x{4e00}-\x{9fa5}A-Za-z0-9]*$)/u";
-    $disallowednames = array("北洋媛", "SYSU", "游客", "程序员", "维护开发员", "管理员", "发布员", "共产党", "邓小平", "贺国强", "胡耀邦", "胡锦涛", "华国锋", "贾庆林", "李长春", "李克强", "刘少奇", "温家宝", "吴邦国", "习近平", "叶剑英", "毛泽东", "赵紫阳", "周恩来", "周永康", "朱德", "朱镕基");
+    $disallowednames = array("吉祥物", "SYSU", "游客", "程序员", "维护开发员", "管理员", "发布员", "共产党", "邓小平", "贺国强", "胡耀邦", "胡锦涛", "华国锋", "贾庆林", "李长春", "李克强", "刘少奇", "温家宝", "吴邦国", "习近平", "叶剑英", "毛泽东", "赵紫阳", "周恩来", "周永康", "朱德", "朱镕基");
     if (!preg_match($allowedchars, $username)) {
         return false;
     }
@@ -5331,7 +5331,7 @@ function pm_at_users($text, $msg, $type)
                 }
             }
             if ($i >= 10 && $CURUSER ["id"]) { // 多于10个则不发送
-                $subject = sqlesc('[北洋媛小贴士]您在发言中@用户过多');
+                $subject = sqlesc('[吉祥物小贴士]您在发言中@用户过多');
                 $msg = sqlesc('每次最多"@"10位用户。为防止垃圾信息，系统不会通知过多的被"@"的用户。');
                 $receiver_id = $CURUSER ["id"];
                 sql_query("INSERT INTO messages (sender, subject, receiver, msg, added) VALUES(0, $subject, $receiver, $msg, $added)") or sqlerr(__FILE__, __LINE__);

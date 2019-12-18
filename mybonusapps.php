@@ -176,12 +176,12 @@ if ($action == "viewluck") {
     print ("<table width=100%>");
 
     if ($lucklog == "") {
-        print ("<tr><td class=\"rowfollow\" align=\"left\"><h1>北洋媛很伤心，最近没有人来碰运气，呜呜呜……</h1></td></tr>");
+        print ("<tr><td class=\"rowfollow\" align=\"left\"><h1>吉祥物很伤心，最近没有人来碰运气，呜呜呜……</h1></td></tr>");
     } else {
         $lucklog = json_decode($lucklog);
         $lucklog = array_reverse($lucklog);
         print ("<tr><td class=\"rowfollow\" align=\"left\">");
-        print ("<h1>北洋媛回忆起了" . count($lucklog) . "条玩家碰运气的信息</h1>");
+        print ("<h1>吉祥物回忆起了" . count($lucklog) . "条玩家碰运气的信息</h1>");
         print ("</td></tr>");
         foreach ($lucklog as $log) {
             print ("<tr><td height=30 class=\"rowfollow\" align=\"left\">");
@@ -196,7 +196,7 @@ if ($action == "viewluck") {
     $lucklog2 = $Cache->get_value('app_luck_log2');
     // var_dump ( $lucklog2 );
     if ($lucklog2 == "") {
-        print ("<tr><td class=\"rowfollow\" align=\"left\"><h1>北洋媛很伤心，最近没有人来碰运气，呜呜呜……</h1></td></tr>");
+        print ("<tr><td class=\"rowfollow\" align=\"left\"><h1>吉祥物很伤心，最近没有人来碰运气，呜呜呜……</h1></td></tr>");
     } else {
         $lucklog2 = json_decode($lucklog2);
 
@@ -249,7 +249,7 @@ if ($action == "viewluck") {
         $linechart1->series[0]->name = '收益率';
         $linechart1->series[0]->data = $chartData_rate;
 
-        print ('<h1>北洋媛碰运气盈亏情况统计</h1>');
+        print ('<h1>吉祥物碰运气盈亏情况统计</h1>');
         print ('<div id="linechart"></div>');
         print ('<script type="text/javascript">' . $linechart1->render() . '</script>');
         print ("<br /><br />");

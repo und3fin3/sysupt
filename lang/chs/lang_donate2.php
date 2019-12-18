@@ -30,7 +30,7 @@ $lang_donate = array
 	'text_donate_explain_note' => "<p align='left'><font size='5'><b>捐赠须知：</b></font></p>
 		<p align='left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;捐赠完全本着自愿行为，<font color='red'><b>SYSUPT绝不以商业营利为目的</b></font>，这里单纯就是一个“人人为我，我为人人”的资源分享平台，但想要维持日常运营成本的确压力山大！</p>
 		<p align='left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;捐助所得款项会用于域名注册费用、Web服务器租金、Tracker服务器和Seedbox服务器购置维护费等各个方面，我们将根据捐赠数额给予捐赠者一定的奖励作为回馈。</p>
-		<p align='left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所有收集到的捐款都会定期公开收支明细，绝对不会被私用。相关明细请查看<a href='forums.php?action=viewtopic&topicid=15430'><font color='#ff7f50'>北洋媛财务报告</font></a>。</p>
+		<p align='left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所有收集到的捐款都会定期公开收支明细，绝对不会被私用。相关明细请查看<a href='forums.php?action=viewtopic&topicid=15430'><font color='#ff7f50'>吉祥物财务报告</font></a>。</p>
 		<p align='left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具体捐赠奖励详情请<a href='forums.php?action=viewtopic&topicid=15429'><font color='blue'>阅读此通知</font></a></p>
 		<p align='left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color='red'><b>感谢你有意捐赠。无论捐赠的数目是多少，我们都表示最真诚的感谢！</b></font></p>",
 	'text_select_other_will_enable' => "选择”其它金额“后可用",

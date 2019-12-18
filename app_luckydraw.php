@@ -50,7 +50,7 @@ function get_loglast()
         $last = $last . '<li>中奖人：' . $winner_usernames . '</li>';
         $last = $last . '</ul>';
     } else {
-        $last = "乃乃乃，不要这样折磨北洋媛了吧~";
+        $last = "乃乃乃，不要这样折磨吉祥物了吧~";
     }
 
     return $last;

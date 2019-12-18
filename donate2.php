@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $anonymous = $_POST['anonymous'] == 'yes' ? 'yes' : 'no';
     $nickname = $anonymous == 'yes' ? $_POST['nickname'] : "";
     $params = [
-        'qr_name' => '捐赠北洋媛',
+        'qr_name' => '捐赠吉祥物',
         'qr_price' => $amount * 100,
         'qr_type' => 'QR_TYPE_DYNAMIC',
     ];

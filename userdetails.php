@@ -25,7 +25,7 @@ function bark($msg)
 $id = 0 + $_GET ["id"];
 if (!$id) {
     $username = $_GET ["username"];
-    if ($username == '北洋媛' || $username == '游客') {
+    if ($username == '吉祥物' || $username == '游客') {
         $id = $CURUSER ['id'];
     } else {
         $id = get_user_id_from_name($username);
