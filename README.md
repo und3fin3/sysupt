@@ -61,6 +61,8 @@ Password: nexusphp
 
 ## Appendix
 
+### Package Installation
+
 The following commands are used to setup production environment on a Debian 10.2 VM.
 
 ```bash
@@ -99,4 +101,26 @@ wget https://repo.mysql.com//mysql-apt-config_0.8.13-1_all.deb
 sudo dpkg -i mysql-apt-config_0.8.13-1_all.deb
 sudo apt update
 sudo apt -y install mysql-server
+```
+
+### Configure Nginx
+
+```nginx
+server {
+    listen	80 default_server;
+    server_name _;
+    
+    location / {
+        root   /var/www/html;
+        index  index.php index.html index.htm;
+    }
+
+    location ~ \.php$ {
+        root           /var/www/html;
+        fastcgi_pass   unix:///run/php/php7.4-fpm.sock;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}
 ```
