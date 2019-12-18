@@ -99,7 +99,7 @@ if (!$Cache->get_page()) {
 
     $mingames = 100;
     $HTMLOUT = '';
-    $HTMLOUT .= "<h1>21点游戏排行榜</h1>";
+    $HTMLOUT .= "<h1>21周游戏排行榜</h1>";
     $arr = mysql_fetch_assoc(sql_query("SELECT sum(bjwins + bjlosses) AS games FROM users WHERE 1 ")) or sqlerr(__FILE__, __LINE__);
     $game = $arr['games'] / 2;
     $HTMLOUT .= "<p>排名数据每30分钟更新一次，只有游戏局数至少为${mingames}的用户才会被收入榜单。</p>截至" . date("Y-m-d H:i:s") . "，系统共进行游戏" . $game . "局。<br/>(已删除用户数据将不纳入统计，出现\"半局\"不要惊讶。)";
@@ -133,6 +133,6 @@ if (!$Cache->get_page()) {
 }
 
 
-stdhead('21点游戏排行榜');
+stdhead('21周游戏排行榜');
 echo $Cache->next_row();
 stdfoot();
