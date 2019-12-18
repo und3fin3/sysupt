@@ -134,7 +134,7 @@ if ($_POST ["sent"] == "yes") {
 		}
 		if ($userid === 10) {
 			$userid = 0;
-			$ip = "北洋媛隐身啦～啦啦啦～";
+			$ip = "吉祥物隐身啦～啦啦啦～";
 		}
 		sql_query ( "INSERT INTO shoutbox (userid, date, text, type, ip) VALUES (" . sqlesc ( $userid ) . ", $date, " . sqlesc ( $text ) . ", " . sqlesc ( $type ) . ", '$ip' )" ) or sqlerr ( __FILE__, __LINE__ );
 		// sql_query("INSERT INTO shoutbox (userid, date, text, type) VALUES ("
@@ -204,19 +204,19 @@ else {
 			// if ($_POST ["type"] != 'helpbox' && $_GET ["type"] != 'helpbox'
 			// && $arr ["type"] == 'hb')
 			// $username .= " " . $lang_shoutbox ['text_to_guest'] . "：";
-		} elseif (get_user_class () >= $sbmanage_class && $arr ["type"] == 'hb' && $arr ["ip"] != "北洋媛隐身啦～啦啦啦～") {
+		} elseif (get_user_class () >= $sbmanage_class && $arr ["type"] == 'hb' && $arr ["ip"] != "吉祥物隐身啦～啦啦啦～") {
 			$username = "<a title=\"IP: " . $arr ["ip"] . " \" href=\"reghistory.php?id=" . $arr ["id"] . "\" target=\"_blank\" >" . $lang_shoutbox ['text_guest'] . "</a>：";
 			$usernamesb = '游客';
-		} elseif ($arr ["type"] == 'hb' && $arr ["ip"] != "北洋媛隐身啦～啦啦啦～") {
+		} elseif ($arr ["type"] == 'hb' && $arr ["ip"] != "吉祥物隐身啦～啦啦啦～") {
 			$username = "<a title=\"IP End With: " . str_replace ( ".", "", strrchr ( $arr ["ip"], "." ) ) . str_replace ( ":", "", strrchr ( $arr ["ip"], ":" ) ) . " \"  href=\"reghistory.php?id=" . $arr ["id"] . "\" target=\"_blank\" >" . $lang_shoutbox ['text_guest'] . "</a>：";
 			$usernamesb = '游客';
 		} else {
 			if ($CURUSER ['id']) {
-				$username = "<a title=\"IP: " . $arr ["ip"] . " \" href=\"userdetails.php?id=" . $CURUSER ['id'] . "\" target=\"_top\"><strong><u><font color='FF00FF'>北洋媛</font></u></strong></a>：";
+				$username = "<a title=\"IP: " . $arr ["ip"] . " \" href=\"userdetails.php?id=" . $CURUSER ['id'] . "\" target=\"_top\"><strong><u><font color='FF00FF'>吉祥物</font></u></strong></a>：";
 			} else {
-				$username = "<strong><u><font color='FF00FF'>北洋媛</font></u></strong>：";
+				$username = "<strong><u><font color='FF00FF'>吉祥物</font></u></strong>：";
 			}
-			$usernamesb = '北洋媛';
+			$usernamesb = '吉祥物';
 		}
 		if ($CURUSER ['timetype'] != 'timealive')
 			$time = strftime ( "%m.%d %H:%M", $arr ["date"] );

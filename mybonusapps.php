@@ -28,8 +28,8 @@ function bonusarray($option)
                 $bonus ['points'] = 100;
                 $bonus ['art'] = 'enableaccount';
                 $bonus ['menge'] = 0;
-                $bonus ['name'] = "21点";
-                $bonus ['description'] = "传统的21点游戏,您要抓足够接近21点，和对手对抗。<br />A在总分不超过21时作11，总分超过21则作1。J,Q,K作为10。";
+                $bonus ['name'] = "21周";
+                $bonus ['description'] = "为积极响应建设双一㐬，越多的学习时间是越好的，您的上学时间需要足够接近21周，如果超过21周，您会立刻进入icu暴毙而亡。<br />A在总周数不超过21时作11，总周数超过21则作1。J,Q,K作为10。";
                 break;
             }
         case 3 :
@@ -116,7 +116,7 @@ if ($action == "default") {
         if ($i == 1) { // 碰运气
             $otheroption = "<b>" . $lang_mybonusapps ['text_to_be_play'] . "</b><input type=\"text\" name=\"luckbonus\" id=\"luckbonus\" style=\"width: 80px\" value=\"1000\" />" . $lang_mybonusapps ['text_karma_points'];
             print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "</br></br>" . $otheroption . "</td><td class=\"rowfollow nowrap\" align='center'>" . $lang_mybonusapps ['text_min'] . "10<br />" . $lang_mybonusapps ['text_max'] . "1,000</td>");
-        } elseif ($i == 2) { // 21点
+        } elseif ($i == 2) { // 21周
             print ("<td class=\"rowfollow\" align='left'><h1>" . $bonusarray ['name'] . "</h1>" . $bonusarray ['description'] . "<br /><br /></td><td class=\"rowfollow nowrap\" align='center'>每局100</td>");
         } elseif ($i == 3) { // 幸运抽奖
             $otheroption = '';
@@ -176,12 +176,12 @@ if ($action == "viewluck") {
     print ("<table width=100%>");
 
     if ($lucklog == "") {
-        print ("<tr><td class=\"rowfollow\" align=\"left\"><h1>北洋媛很伤心，最近没有人来碰运气，呜呜呜……</h1></td></tr>");
+        print ("<tr><td class=\"rowfollow\" align=\"left\"><h1>吉祥物很伤心，最近没有人来碰运气，呜呜呜……</h1></td></tr>");
     } else {
         $lucklog = json_decode($lucklog);
         $lucklog = array_reverse($lucklog);
         print ("<tr><td class=\"rowfollow\" align=\"left\">");
-        print ("<h1>北洋媛回忆起了" . count($lucklog) . "条玩家碰运气的信息</h1>");
+        print ("<h1>吉祥物回忆起了" . count($lucklog) . "条玩家碰运气的信息</h1>");
         print ("</td></tr>");
         foreach ($lucklog as $log) {
             print ("<tr><td height=30 class=\"rowfollow\" align=\"left\">");
@@ -196,7 +196,7 @@ if ($action == "viewluck") {
     $lucklog2 = $Cache->get_value('app_luck_log2');
     // var_dump ( $lucklog2 );
     if ($lucklog2 == "") {
-        print ("<tr><td class=\"rowfollow\" align=\"left\"><h1>北洋媛很伤心，最近没有人来碰运气，呜呜呜……</h1></td></tr>");
+        print ("<tr><td class=\"rowfollow\" align=\"left\"><h1>吉祥物很伤心，最近没有人来碰运气，呜呜呜……</h1></td></tr>");
     } else {
         $lucklog2 = json_decode($lucklog2);
 
@@ -249,7 +249,7 @@ if ($action == "viewluck") {
         $linechart1->series[0]->name = '收益率';
         $linechart1->series[0]->data = $chartData_rate;
 
-        print ('<h1>北洋媛碰运气盈亏情况统计</h1>');
+        print ('<h1>吉祥物碰运气盈亏情况统计</h1>');
         print ('<div id="linechart"></div>');
         print ('<script type="text/javascript">' . $linechart1->render() . '</script>');
         print ("<br /><br />");

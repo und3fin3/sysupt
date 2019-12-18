@@ -10,7 +10,7 @@ header("Content-Type: text/xml; charset=utf-8");
 global $CURUSER;
 
 $tjupt_famousname = array(
-    "北洋媛" => $CURUSER ["username"],
+    "吉祥物" => $CURUSER ["username"],
     "游客" => "游客",
     "4舰" => "4thfleet",
     "螃蟹姐" => "crazicrab",
@@ -155,7 +155,7 @@ if (isset ($_POST ['str']) && $_POST ['str'] != '') {
 if (!$result) {
     $result [] = array(
         'username' => $_POST ['str'],
-        'usertitle' => "北洋媛找不到你的TA"
+        'usertitle' => "吉祥物找不到你的TA"
     );
 }
 echo json_encode($result);

@@ -335,7 +335,7 @@ else {
             $piechart1->chart->type = 'pie';
             $piechart1->chart->renderTo = 'piechart1';
             $piechart1->chart->width = 470;
-            $piechart1->title->text = '北洋媛资源数分布';
+            $piechart1->title->text = '吉祥物资源数分布';
             $piechart1->plotOptions->pie->showInLegend = true;
             $piechart1->plotOptions->pie->allowPointSelect = true;
             $piechart1->plotOptions->pie->cursor = 'pointer';
@@ -349,7 +349,7 @@ else {
             $piechart2->chart->type = 'pie';
             $piechart2->chart->renderTo = 'piechart2';
             $piechart2->chart->width = 470;
-            $piechart2->title->text = '北洋媛资源大小分布';
+            $piechart2->title->text = '吉祥物资源大小分布';
             $piechart2->plotOptions->pie->showInLegend = true;
             $piechart2->plotOptions->pie->allowPointSelect = true;
             $piechart2->plotOptions->pie->cursor = 'pointer';
@@ -359,9 +359,9 @@ else {
             $piechart2->series[0]->name = '资源大小（TB）';
             $piechart2->series[0]->data = $res_cat_size;
 
-            // print ('<h1>北洋媛资源统计</h1>') ;
+            // print ('<h1>吉祥物资源统计</h1>') ;
             print ('<table width=940 border=0 cellspacing=0 cellpadding=0>');
-            print ('<tr><td class=colhead align=center colspan=2>北洋媛资源统计</td></tr>');
+            print ('<tr><td class=colhead align=center colspan=2>吉祥物资源统计</td></tr>');
             print ('<tr><td colspan=2><div id="linechart1"></div></td></tr>');
             print ('<tr><td>');
             print ('<div id="piechart1"></div>');

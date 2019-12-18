@@ -752,7 +752,7 @@ if ($nameset != "") {
 if ($tjuptrip == 'yes') {
     $pre_to_shoutbox ['text'] = "SYSUPT小组作品[b][color=red]" . $nameset . "[/color][/b]发布啦：[url=details.php?id=" . mysql_real_escape_string($id) . "&hit=1]大家这里使劲戳[/url]";
     $pre_to_shoutbox ['type'] = "sb";
-    $pre_to_shoutbox ['ip'] = "北洋媛隐身啦～啦啦啦～";
+    $pre_to_shoutbox ['ip'] = "吉祥物隐身啦～啦啦啦～";
     sql_query("INSERT INTO shoutbox (userid, date, text, type, ip) VALUES (0, " . sqlesc(time()) . ", " . sqlesc($pre_to_shoutbox ['text']) . ", " . sqlesc($pre_to_shoutbox ['type']) . ", '$pre_to_shoutbox[ip]' )") or sqlerr(__FILE__, __LINE__);
 }
 */

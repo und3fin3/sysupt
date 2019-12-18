@@ -32,7 +32,7 @@ b.id="usercp";
 var d = document.createElement('div'); d.id = "drop_menu";
 d.innerHTML = [
 '<div id="moliyuan_dropdown">',
-'<a href="/blackjack.php"> 21点 </a>',
+'<a href="/blackjack.php"> 21周 </a>',
 '<a href="/jc_currentbet_L.php"> 竞猜 </a>',
 '</div>',
 '<div id="ctrlpan_dropdown">',

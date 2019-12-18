@@ -117,9 +117,9 @@ if ($game) {
                 }
 
                 $HTMLOUT .= "</table></td></tr></table>";
-                stdhead('21点');
+                stdhead('21周');
                 print  $HTMLOUT;
-                sql_query("delete from messages where subject like '21点的结果%' AND unread='no'");
+                sql_query("delete from messages where subject like '21周的结果%' AND unread='no'");
                 stdfoot();
                 die();
             }
@@ -150,7 +150,7 @@ if ($game) {
                         <tr><td colspan='2'>
                         <table width='100%' cellspacing='0' cellpadding='5' bgcolor='white'>
                         <tr><td align='center'>" . trim($showcards) . "</td></tr>
-                        <tr><td align='center'><b>你的点数是 ${points} 。</b></td></tr>";
+                        <tr><td align='center'><b>你的周数是 ${points} 。</b></td></tr>";
         }
 
         if ($points == 21) {
@@ -164,17 +164,17 @@ if ($game) {
                     sql_query("UPDATE users SET seedbonus = seedbonus + ${percent}*$mb, bjwins = bjwins + 1 WHERE id=" . sqlesc($CURUSER['id']));
                     sql_query("UPDATE users SET seedbonus = seedbonus - $mb, bjlosses = bjlosses + 1 WHERE id=" . sqlesc($a['userid']));
                     $msg = sqlesc("[url=blackjack.php]你可以请进这个页面查看你的胜率。[/url]");
-                    $subject = sqlesc("21点的结果 : 输局 (你有 " . $a['points'] . " 点, " . $CURUSER['username'] . " 有 21 点)");
+                    $subject = sqlesc("21周的结果 : 输局 (你有 " . $a['points'] . " 周, " . $CURUSER['username'] . " 有 21 周)");
                 } else {
 
                     $winorlose = "平局";
                     $msg = sqlesc("[url=blackjack.php]你可以请进这个页面查看你的胜率。[/url]");
-                    $subject = sqlesc("21点的结果 : 平局 (你和 " . $CURUSER['username'] . "都有21点)");
+                    $subject = sqlesc("21周的结果 : 平局 (你和 " . $CURUSER['username'] . "都有21周)");
                 }
 
                 sql_query("INSERT INTO messages (sender, receiver, added, msg, subject) VALUES(0, " . $a['userid'] . ", $now, $msg, $subject)");
                 sql_query("DELETE FROM blackjack WHERE userid IN (" . sqlesc($CURUSER['id']) . ", " . sqlesc($a['userid']) . ")");
-                $HTMLOUT .= "<tr><td align='center'>你的对手是 " . $a["username"] . ",TA有 " . $a['points'] . " 点, $winorlose.<br />
+                $HTMLOUT .= "<tr><td align='center'>你的对手是 " . $a["username"] . ",TA有 " . $a['points'] . " 周, $winorlose.<br />
 						  <form method='post' action='blackjack.php'>
  <input type='hidden' name='game' value='hit' readonly='readonly' />
  <input type='hidden' name='start' value='yes' readonly='readonly' />
@@ -185,7 +185,7 @@ if ($game) {
             }
 
             $HTMLOUT .= "</table></td></tr></table><br />";
-            stdhead('21点');
+            stdhead('21周');
             print  $HTMLOUT;
             stdfoot();
         } elseif ($points > 21) {
@@ -197,20 +197,20 @@ if ($game) {
 
                     $winorlose = "平局";
                     $msg = sqlesc("[url=blackjack.php]你可以请进这个页面查看你的胜率。[/url]");
-                    $subject = sqlesc("21点的结果 : 平局 (你和 " . $CURUSER['username'] . " 的点数都超过 21)");
+                    $subject = sqlesc("21周的结果 : 平局 (你和 " . $CURUSER['username'] . " 的周数都超过 21)");
                 } else {
 
                     $winorlose = "输局,你失去了" . $mb . "个魔力值";
                     sql_query("UPDATE users SET seedbonus = seedbonus + ${percent}*$mb, bjwins = bjwins + 1 WHERE id=" . sqlesc($a['userid']));
                     sql_query("UPDATE users SET seedbonus = seedbonus - $mb, bjlosses = bjlosses + 1 WHERE id=" . sqlesc($CURUSER['id']));
                     $msg = sqlesc("[url=blackjack.php]你可以请进这个页面查看你的胜率。[/url]");
-                    $subject = sqlesc("21点的结果 : 赢局 (你有 " . $a['points'] . " 点, " . $CURUSER['username'] . " 的点数超过 21)");
+                    $subject = sqlesc("21周的结果 : 赢局 (你有 " . $a['points'] . " 周, " . $CURUSER['username'] . " 的周数超过 21)");
                 }
 
                 sql_query("INSERT INTO messages (sender, receiver, added, msg, subject) VALUES(0, " . $a['userid'] . ", $now, $msg, $subject)");
                 sql_query("DELETE FROM blackjack WHERE userid IN (" . sqlesc($CURUSER['id']) . ", " . sqlesc($a['userid']) . ")");
 
-                $HTMLOUT .= "<tr><td align='center'>你的对手是 " . $a["username"] . ",TA有 " . $a['points'] . " 点, $winorlose.<br /><form method='post' action='blackjack.php'>
+                $HTMLOUT .= "<tr><td align='center'>你的对手是 " . $a["username"] . ",TA有 " . $a['points'] . " 周, $winorlose.<br /><form method='post' action='blackjack.php'>
  <input type='hidden' name='game' value='hit' readonly='readonly' />
  <input type='hidden' name='start' value='yes' readonly='readonly' />
  <input type='submit' value='再来一局' /></form></td></tr>";
@@ -221,7 +221,7 @@ if ($game) {
             }
             $HTMLOUT .= "</table></td></tr></table><br />";
 
-            stdhead('21点');
+            stdhead('21周');
             print  $HTMLOUT;
             stdfoot();
         } else {
@@ -239,7 +239,7 @@ if ($game) {
       <td align='center'><form method='post' action='blackjack.php'><input type='hidden' name='game' value='stop' readonly='readonly' /><input type='submit' value='停牌' /></form></td>
       </tr>";
             $HTMLOUT .= "</table></td></tr></table><br />";
-            stdhead('21点');
+            stdhead('21周');
             print  $HTMLOUT;
             stdfoot();
         }
@@ -262,12 +262,12 @@ if ($game) {
 
                 $winorlose = "平局";
                 $msg = sqlesc("[url=blackjack.php]你可以请进这个页面查看你的胜率。[/url]");
-                $subject = sqlesc("21点的结果 : 平局 (你和" . $CURUSER['username'] . "都有 " . $a['points'] . " 点)");
+                $subject = sqlesc("21周的结果 : 平局 (你和" . $CURUSER['username'] . "都有 " . $a['points'] . " 周)");
             } else {
                 if (($a["points"] < $playerarr['points'] && $a['points'] < 21) || ($a["points"] > $playerarr['points'] && $a['points'] > 21)) {
 
                     $msg = sqlesc("[url=blackjack.php]你可以请进这个页面查看你的胜率。[/url]");
-                    $subject = sqlesc("21点的结果 : 输局 (你有 " . $a['points'] . " 点, " . $CURUSER['username'] . " 有 " . $playerarr['points'] . " 点)");
+                    $subject = sqlesc("21周的结果 : 输局 (你有 " . $a['points'] . " 周, " . $CURUSER['username'] . " 有 " . $playerarr['points'] . " 周)");
                     $winorlose = "赢局,你获得了 " . ($percent * $mb) . "个魔力值";
                     $st_query = "+ " . $mb . ", bjwins = bjwins +";
                     $nd_query = "- " . $mb . ", bjlosses = bjlosses +";
@@ -275,7 +275,7 @@ if ($game) {
 
                     $msg = sqlesc("[url=blackjack.php]你可以请进这个页面查看你的胜率。[/url]");
                     $winorlose = "输局,你失去了 " . $mb . "个魔力值";
-                    $subject = sqlesc("21点的结果 : 赢局 (你有 " . $a['points'] . " 点, " . $CURUSER['username'] . " 有 " . $playerarr['points'] . " 点)");
+                    $subject = sqlesc("21周的结果 : 赢局 (你有 " . $a['points'] . " 周, " . $CURUSER['username'] . " 有 " . $playerarr['points'] . " 周)");
                     $st_query = "- " . $mb . ", bjlosses = bjlosses +";
                     $nd_query = "+ " . $mb . ", bjwins = bjwins +";
                 }
@@ -286,7 +286,7 @@ if ($game) {
 
             sql_query("INSERT INTO messages (sender, receiver, added, msg, subject) VALUES(0, " . $a['userid'] . ", $now, $msg, $subject)");
             sql_query("DELETE FROM blackjack WHERE userid IN (" . sqlesc($CURUSER['id']) . ", " . sqlesc($a['userid']) . ")");
-            $HTMLOUT .= "<tr><td align='center'>你的对手是 " . $a["username"] . " , TA有 " . $a['points'] . " 点, $winorlose.<br />
+            $HTMLOUT .= "<tr><td align='center'>你的对手是 " . $a["username"] . " , TA有 " . $a['points'] . " 周, $winorlose.<br />
 						 <form method='post' action='blackjack.php'>
  <input type='hidden' name='game' value='hit' readonly='readonly' />
  <input type='hidden' name='start' value='yes' readonly='readonly' />
@@ -296,7 +296,7 @@ if ($game) {
             $HTMLOUT .= "<tr><td align='center'>暂时没有其他玩家, 所以你需要等待。<br />游戏结束你将会收到站内信通知。<br /><br /><b><a href='blackjack.php'>返回</a></b><br /></td></tr>";
         }
         $HTMLOUT .= "</table></td></tr></table><br />";
-        stdhead('21点');
+        stdhead('21周');
         print  $HTMLOUT;
         stdfoot();
     }
@@ -313,12 +313,12 @@ if ($game) {
     $tot_games = $tot_wins + $tot_losses;
     $win_perc = ($tot_losses == 0 ? ($tot_wins == 0 ? "---" : "100%") : ($tot_wins == 0 ? "0" : number_format(($tot_wins / $tot_games) * 100, 1)) . '%');
     $plus_minus = ($percent * $tot_wins - $tot_losses < 0 ? '-' : '') . (($percent * $tot_wins - $tot_losses >= 0 ? ($percent * $tot_wins - $tot_losses) : ($tot_losses - $percent * $tot_wins))) * $mb;
-    $HTMLOUT .= "<h1>21点</h1>
+    $HTMLOUT .= "<h1>21周</h1>
         <table cellspacing='0' cellpadding='3' width='400'>
         <tr><td colspan='2' align='center'>
         <table class='message' width='100%' cellspacing='0' cellpadding='10' bgcolor='white'>
         <tr><td align='center'><img src='cards/tp.bmp'  style=\"border: 1px\" alt='' />&nbsp;<img src='cards/vp.bmp'  style=\"border: 1px\" alt='' /></td></tr>
-        <tr><td align='left'>传统的21点游戏,您要抓足够接近21点，和对手对抗。<br />A在总分不超过21时作11，总分超过21则作1。J,Q,K作为10。<br /><br />
+        <tr><td align='left'>为积极响应建设双一㐬，越多的学习时间是越好的，您的上学时间需要足够接近21周，如果超过21周，您会立刻进入icu暴毙而亡。<br />A在总周数不超过21时作11，总周数超过21则作1。J,Q,K作为10。<br /><br />
         <b>当前在线人数: </b>" . $waitarr['c'] . "<br/>
 		<b>提示:</b> 每局赌注为" . $mb . "个魔力值<br/>\n(每局服务器将抽取赌注的" . (100 * (1 - $percent)) . "%作为佣金)<br/>
 		</td></tr>
@@ -350,7 +350,7 @@ if ($game) {
     <tr><td align='left'><b>获胜率</b></td><td align='center'><b>{$win_perc}</b></td></tr>
     <tr><td align='left'><b>+/-</b></td><td align='center'><b>" . (round($plus_minus)) . "个魔力值</b></td></tr>
     </table><br /><b><div align=\"center\"><a href=\"bjstats.php\">排行榜</a></div></b> ";
-    stdhead('21点');
+    stdhead('21周');
     print $HTMLOUT;
     stdfoot();
 }

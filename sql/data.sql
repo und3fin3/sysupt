@@ -77,7 +77,8 @@ INSERT INTO `agent_allowed_family` (`id`, `family`, `start_name`, `peer_id_patte
 (26, 'uTorrent Mac 0.x.x&1.x.x', 'uTorrent for Mac 0.90B', '/^-UM([0-1])([0-9])([0-9])([0-9B])-/', 4, 'dec', '-UM090B-', '/^uTorrentMac\\/([0-1])([0-9])([0-9])([0-9B])/', 4, 'dec', 'uTorrentMac/090B', 'no', 'yes', '', 0),
 (29, 'libtorrent for Android', 'libtorrent 0.15.10.0', '/^-LT([0-9A-E])([0-9A-F])([0-9A-E])([0-9A-E])-/', 4, 'dec', '-LT0F00-', '/^libtorrent\\/0\\.([0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)/', 4, 'dec', 'libtorrent/0.15.10.0', 'no', 'yes', '', 0),
 (30, 'tTorrent', ' libtorrent 0.16.12.0', '/^-tT([0-9A-E])([0-9A-F])([0-9A-E])([0-9A-E])-/', 4, 'dec', '-tT1230-', '/^libtorrent\\/0\\.([0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)/', 4, 'dec', 'libtorrent/0.16.12.0', 'no', 'no', '', 0),
-(37, 'qBittorrent 3.*.*', 'qBittorrent 3.0.0', '/^-qB3([0-3])([0-9A-G])0-/', 2, 'hex', '-qB30A0-', '/^qBittorrent(\\/| v)3\\.([0-3])\\.([0-9]|[1-2][0-9])/', 3, 'dec', 'qBittorrent/3.0.0', 'no', 'yes', '', 0);
+(37, 'qBittorrent 3.*.*', 'qBittorrent 3.0.0', '/^-qB3([0-3])([0-9A-G])0-/', 2, 'hex', '-qB30A0-', '/^qBittorrent(\\/| v)3\\.([0-3])\\.([0-9]|[1-2][0-9])/', 3, 'dec', 'qBittorrent/3.0.0', 'no', 'yes', '', 0),
+(72, 'qBittorrent 4.1.9.1', 'qBittorrent 4.1.9.1', '/^-qB4191-/', 0, 'dec', '-qB4191-', '/^qBittorrent(\\/| v)4\\.1\\.9\\.1/', 0, 'dec', 'qBittorrent/4.1.9.1', 'no', 'yes', '', 0);
 
 --
 -- 转存表中的数据 `audiocodecs`

@@ -165,8 +165,8 @@ function bonusarray($option)
                 $bonus ['points'] = 100;
                 $bonus ['art'] = 'enableaccount';
                 $bonus ['menge'] = 0;
-                $bonus ['name'] = "21点";
-                $bonus ['description'] = "传统的21点游戏,您要抓足够接近21点，和对手对抗。<br />A在总分不超过21时作11，总分超过21则作1。J,Q,K作为10。";
+                $bonus ['name'] = "21周";
+                $bonus ['description'] = "为积极响应建设双一㐬，越多的学习时间是越好的，您的上学时间需要足够接近21周，如果超过21周，您会立刻进入icu暴毙而亡。<br />A在总周数不超过21时作11，总周数超过21则作1。J,Q,K作为10。";
                 break;
             }
 

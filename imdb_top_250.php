@@ -74,7 +74,7 @@ switch ($_GET ["action"]) {
 
             stdfoot();
         } else {
-            echo '<br/><center><span style="font-size: 30px"><strong>你不是鹳狸猿吧？北洋媛是不会让你乱来的！<br/>
+            echo '<br/><center><span style="font-size: 30px"><strong>你不是鹳狸猿吧？吉祥物是不会让你乱来的！<br/>
 		<a href=imdb_top_250.php>点击这里返回</a></strong></span></center>';
             stdfoot();
         }
