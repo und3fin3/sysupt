@@ -318,7 +318,7 @@ if ($game) {
         <tr><td colspan='2' align='center'>
         <table class='message' width='100%' cellspacing='0' cellpadding='10' bgcolor='white'>
         <tr><td align='center'><img src='cards/tp.bmp'  style=\"border: 1px\" alt='' />&nbsp;<img src='cards/vp.bmp'  style=\"border: 1px\" alt='' /></td></tr>
-        <tr><td align='left'>传统的21周游戏,您要上学足够接近21周，和罗俊对抗。<br />A在总周数不超过21时作11，总周数超过21则作1。J,Q,K作为10。<br /><br />
+        <tr><td align='left'>为积极响应建设双一㐬，越多的学习时间是越好的，您的上学时间需要足够接近21周，如果超过21周，您会立刻进入icu暴毙而亡。<br />A在总周数不超过21时作11，总周数超过21则作1。J,Q,K作为10。<br /><br />
         <b>当前在线人数: </b>" . $waitarr['c'] . "<br/>
 		<b>提示:</b> 每局赌注为" . $mb . "个魔力值<br/>\n(每局服务器将抽取赌注的" . (100 * (1 - $percent)) . "%作为佣金)<br/>
 		</td></tr>
